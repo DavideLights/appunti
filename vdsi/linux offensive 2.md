@@ -25,7 +25,6 @@
 * `sudo -l`: mi fa vedere cosa puo' fare l'utente secondo a cosa c'e' scritto in `cat /etc/sudoers`
 * `cat /etc/sudoers` e `cat /etc/sudoers.d/usergroup`: informazioni sui permessi sudo degli utenti.
 * `find -type f \{-perm -u+s -o -perm -g+s \} -exec ls -l {} \; 2>/dev/null`: trova file eseguibili con **SUID**.
-
 ## processi
 * `ps aux`: da informazioni su tutti i processi.
 	* **oss**: se l'output fa schifo e viene tagliato allora faccio `ps aux | cat`. Lo passo a cat prima di fare il grep.

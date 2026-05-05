@@ -103,3 +103,28 @@ $$
 
 
 ![[Pasted image 20260407123204.png|400]]
+
+**Coda priorita**: la uso per estrarre i primi $k$ documenti.
+
+**Approccio TAAT**: Term-at-atime. L'algoritmo elabora un termine della query alla volta. Scorrendo la posting list e aggiornando i punteggi dei documenti.
+
+**Ottimizzazioni**:
+* **memorizzazione dei pesi**: $w_{t,d}$ e' di solito un numero con la virgola, e richiede più memoria rispetto ad un intero, *dunque non si puo' fare*.
+* **memorizzare gli interi**: al posto di $w_{t,d}$ memorizzo $\text{tf}_{t,d}$ nella posting e $\text{idf}_{t}$ nell'header del termine nella posting list.
+* **gemini che vuol dire??? pre-filtering**: Per evitare di scorrere tutte le posting list per ogni termine della query, si può applicare un filtro iniziale (ad esempio, un OR di tutti i termini della query) per selezionare un sottoinsieme più piccolo di documenti candidati da valutare in dettaglio.
+
+**siano**:
+* $d = \text{un documento}$, $c= \text{una collezione di documenti}$
+* $n(t,d) = \text{numero occorrende di } t \text{ in } d$
+* $N(d) = \sum_{t}n(t,d)= \text{ lunghezza di } d$.
+* $\text{na}(d) = \frac{1}{|d|}\sum_{t}n(t,d) = \text{numero medio di occorrenze in } d$
+* $\text{adl}(d,c) = \frac{1}{|c|} \sum_{d \in c} N(d) =  \text{ lunghezza media dei documenti in } c$
+* $\text{ndl}(d,c) = \frac{N(d)}{\text{adl}(c)} = \text{lunghezza di } d \text{ normalizzata nella collezione } c$
+#### Varianti di tf Weighting
+*   **Natural ($\text{TF}_{\text{total}}(t,d) = n(t,d)$):** Semplicemente il conteggio grezzo. Non ha normalizzazione per la lunghezza del documento, favorendo i documenti più lunghi.
+*   **Boolean ($\text{TF}_{\text{bool}}(t,d)$):** 1 se il termine è presente, 0 altrimenti.
+*   **Sum ($\text{TF}_{\text{sum}}(t,d) = n(t,d)/N(d)$):** Normalizza per la lunghezza del documento. Tutti i documenti con la stessa frazione di occorrenze avrebbero lo stesso punteggio.
+*   **Max ($\text{TF}_{\text{max}}(t,d)$):** Normalizza per la frequenza massima del termine nel documento.
+*   **Logarithmic ($\text{TF}_{\text{log}}(t,d) = \log(1+n(t,d))$):** Smorza la crescita della frequenza, come già visto.
+*   **Fraction ($\text{TF}_{\text{frac}}(t,d; k) = n(t,d) / (n(t,d) + k)$):** Introduce un guadagno marginale decrescente. Mentre il logaritmo cresce all'infinito, queste funzioni tendono a saturare verso 1. Il parametro $k$ influisce sulla pendenza di questa saturazione (come mostrato nel grafico della slide).
+*   **BM25:** Una delle funzioni più avanzate e popolari, basata su un **paradigma probabilistico**
