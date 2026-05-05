@@ -169,10 +169,15 @@ $$
 \
 O(R|v_{d},v_{q}) =_{rank} \prod_{t_{i}:x_{i}=y_{i}=1} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} \cdot \prod_{t_{i}:y_{i}=1} \frac{1-p_{i}}{1-u_{i}}
 $$
-
-**si semplifica in**:
+* **costante**: il prodotto a destra e' costante per tutti i documenti, puo' essere ignorato.
+* **prodotto a sinistra**: e' l'unico da calcolare!
 $$
-O(R|v_{d},v_{q}) =_{rank} \prod_{t_{i}:x_{i}=y_{i}=1} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} 
+O(R| v_{d},v_{q})=_{\text{rank}} \log \prod_{\dots} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})}
+$$
+
+Possiamo dire che il **Retrieval Status Value** per un documento $d$ e':
+$$
+RSV_{d} = \log \prod_{t_{i}: x_{i}=y_{i}=1}\frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} = \sum_{\dots} \log \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})}
 $$
 
 > [!note] gemini
@@ -226,7 +231,6 @@ RSV_{d} = \sum_{t_{i}:x_{i}=y_{i}=1} \log \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} 
 $$
 
 **quando va bene questo RSV**? per pochi documenti ci sta.
-
 ## differenze tra vector space ed BIM
 1. non sono piu di tanto differenti
 2. **gemini** che vuol dire? In either case you build an information retrieval scheme in the exact same way.

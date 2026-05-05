@@ -7,8 +7,6 @@
 
 **netcat**: `nc [-u] <addr> <port>` (dove **-u** sta per **udp**)
 **nmap**: `nmap -sV [-sU] [-p<ports>] <ipaddress>`
-
-
 ## TCP connect scan `-sT`
 ![[Pasted image 20260429092308.png]]
 **tpc connect scan**: tento di aprire una connessione, successivamente la chiudo. Si fa con `-sT`
