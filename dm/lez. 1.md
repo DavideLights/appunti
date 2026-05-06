@@ -1,3 +1,8 @@
+## riconoscimento dei quadrati
+**features**:
+* bassa varianza tra le distanza dal centroide del quadrato
+* bassa varianza tra le distanza dal bounding box
+
 ## Numpy
 **homogeneus multidimensional array**: e' l'array di numpy. Una tavola di elementi, tutti dello stesso tipo indicizzati da una tupla di numeri non-negativi.
 

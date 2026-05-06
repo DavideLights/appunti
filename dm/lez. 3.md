@@ -22,25 +22,6 @@
 
 **ricerca dei vicini**: si cercano in $O(k log n)$
 
-## scipi e codice
-```python
-from scipy.spatial import KDTree
-import matplotlib.pyplot as plt
-
-points = [(1,2), (3,4), (5,6), (7,8)]
-p = (1,3)
-
-plt.scatter([x for x,y in points], [y for x,y in points], color='blue')
-plt.scatter([p[0]], [p[1]], color='red')
-
-tree = KDTree(points)
-# ritorna distanza e indice nella struttura usata per creare KDTree
-dist, idx = tree.query(p)
-print(points[idx], dist)
-```
-
-* `tree.query(p)`: ritorna distanza e indici (nella struttura dati passata a KDTree) per ogni punto trovato.
-
 # Liste python e ndarray
 
 | python           | numpy                                  | costo python | costo numpy             |
@@ -52,3 +33,6 @@ print(points[idx], dist)
 | **slicing**      | ritorna una vista sull'array originale | `O(k)`       | `O(1)` in **lettura**   |
 | somma vettoriale | ...                                    | `O(n)`       | `O(n)` ma e' piu veloce |
 | moltiplicazione  | ...                                    | `arr * 3`    | `O(n)`                  |
+* **copia**: costa in numpy costa $O(n)$
+* **slicing**: costa solo $O(1)$, ritorno una **vista** sull'originale.
+* **somma e moltiplicazione vettoriale**: sono efficienti in numpy con tempo $O(n)$ molto efficiente.
