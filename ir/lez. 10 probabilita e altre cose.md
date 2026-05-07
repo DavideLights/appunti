@@ -2,7 +2,7 @@
 $$
 RSV_{d} = \log \prod_{t_{i}: x_{i} = y_{i}} \frac{p(x_{i}=1|R,v_{q})p(x_{i} =0| \bar{R},v_{q})}{p(x_{i}=1|\bar{R},v_{q})p(x_{i} =0| R,v_{q})}
 $$
-**come detto in [[lez. 9 approccio probabilistico]] approssimiamo**:
+**come detto in [[lez. 9 approccio probabilistico old]] approssimiamo**:
 * $p(x_{i} =1| \bar{R},v_{q})$ con $p(x_{i}=1)$
 * $p(x_{i} =0| \bar{R},v_{q})$ con $p(x_{i}=0)$
 
