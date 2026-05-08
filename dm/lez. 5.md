@@ -15,3 +15,16 @@
 > gemini spiegami quando!
 
 
+$$
+y = w_0 + \sum_{i=1}^d w_{i}x_{i}
+$$
+**assumiamo**: $x_{0} = 1 \to x=(1,x_{1},\dots,x_{d})$
+
+$$
+y = \sum_{i=1}^d w_{i}x_{i} = w \cdot x
+$$
+**poiche**: $x_{0}w_{0}=1 \cdot w_{0} = w_{0}$
+
+**matrice di addestramento**: se ho $n$ campioni da $d$ feature, allora $x\in R^{n \times d}$ e' la mia matrice per l'addestramento.
+
+**output**: per ogni campione ho un valore $y_{i}$ in output, questi costituiscono dunque il vettore  $y \in R^n$.
