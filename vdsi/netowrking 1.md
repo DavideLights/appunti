@@ -76,9 +76,12 @@ zones
 * `dig hostname`
 * `dig hostname record-name`
 * `dig @dns-server hostname record-name`
-* `dig @dns-server hostname any`
+* **ANY**: `dig @dns-server hostname any`
 
 `dig` vs `host`: `host` e' piu semplice da leggere rispetto ad `host`
+
+* `host -t ns megacorpone.com`: mostra il DNS autoritativo per `megacorpone.com`
+* `host -t mx megacorpone.com`: mostra il server di posta di `magacorpone.com`
 
 **discovering host**:
 1. **forward lookup bruteforce**: prova liste di potenziali hostname per identitifcare sottodomini che espongono certi servizi.
@@ -178,22 +181,29 @@ done
 **ogni porta ha il suo linguaggio**: quando interrogo una porta devo farlo usando il suo protocollo.
 1. **identificare il protocollo di trasporto**: `TCP, UPD, ...`
 2. **identificare il protocollo a livello di applicazione**: `HTTP, SSH, FTP, ...`
-# TCP
+# TCP e UDP
 ![[Pasted image 20260428152305.png]]
 **durante il three-way-handshake**:
 * **negoziazione parametri**: parametri di rete, della connessione TCP.
 * **se l'handshake viene completato**: allora la porta e' aperta.
 
+## TCP SYN SCAN
+
 ```bash
 nc -n -vv -w 1 -z <ip addr> <port range>
 ```
-
+* `-vv`: molto verboso
+* `-w 1`: un secondo
+* `-n`: niente DNS
+* `-z`: **non inviare dati, scansiona e rileva daemon attivi!**
 ## UDP scan
 **a differenza di TCP**:
 * **niente three-way handshake**
 * **stateless**
-* `nc -nv -u -z -w 1 <ip address> <port range>`
-* guardare 
+
+```bash
+nc -nv -u -z -w 1 <ip address> <port range>
+```
 
 **come si fa lo scan udp**? viene mandato un pacchetto udp vuoto alla porta.
 * **se porta aperta**: non ricevo niente dalla target machine
@@ -201,22 +211,22 @@ nc -n -vv -w 1 -z <ip addr> <port range>
 
 **falsi positivi**: avviene se un firewall blocca il messaggio ICMP.
 **list**: spesso scansiono solo una lista predeterminata di porte interessanti, dove so che ci sara qualcosa di interessante.
-
-
 ## nmap
 **default**: scansiona le 1000 porte TCP piu popolari su un target in input
 **port states**:
 ![[Pasted image 20260428215407.png]]
 
 
+**filtered**: vuol dire che un firewall ha bloccato il mio syn oppure ho perso la risposta.
+
 **-p**: specifica un range di porte. `nmap <ip address> -p25-150`
 **CIDR**: per specificare un range di indirizzi
 
-**identita**: vogliamo nascondere il nostro ip da cui parte la scansione
-* **-S: spoof**, qualsiasi risposta viene re-direzionato allo spoofed ip.
+**nascondere la nostra identita**: vogliamo nascondere il nostro ip da cui parte la scansione
+* **-S: spoof**, qualsiasi risposta viene re-direzionata allo spoofed ip.
 * **-D**: posso offuscare l'indirizzo ip scegliendolo randomicamente da una lista. `nmap <ip address> -D <fake ip list>`
 
-**icmp**: nmap usa icmp di default, ma molti firewall lo bloccano.
+**icmp**: *nmap usa icmp di default, ma molti firewall lo bloccano*, con `-P0` sopprimo icmp.
 * `ping`: nmap di default scansiona mandando una **echo request** ed aspettando una **echo reply** via icmp.
 * **a che serve ping**? serve a controllare se il target e' acceso (up)
 * **-P0**: sopprime icmp.

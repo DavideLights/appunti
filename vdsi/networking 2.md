@@ -1,3 +1,4 @@
+https://nmap.org/book/port-scanning-options.html#port-scanning-options-scantypes
 ## banner
 **banner**: e' un messaggio che viene mandato immediatamente dopo una connessione, *o in risposta ad una richiesta*. e contiene:
 * service type (HTTP, FTP, SSH)
@@ -5,9 +6,15 @@
 * version information
 * os details
 
-**netcat**: `nc [-u] <addr> <port>` (dove **-u** sta per **udp**)
-**nmap**: `nmap -sV [-sU] [-p<ports>] <ipaddress>`
+**come si fa banner grabbing**?
+	**netcat**: `nc [-u] <addr> <port>` (dove **-u** sta per **udp**)
+	**nmap**: `nmap -sV [-sU] [-p<ports>] <ipaddress>`
 ## TCP connect scan `-sT`
+
+```bash
+nmap -sT -p<ports> <ipaddress>
+```
+
 ![[Pasted image 20260429092308.png]]
 **tpc connect scan**: tento di aprire una connessione, successivamente la chiudo. Si fa con `-sT`
 **closed port**: mando `SYN` e ricevo `RST`
@@ -28,6 +35,9 @@ follow
 **dunque**: il `tcp` scan e' l'ultima risorsa se non ho accesso aprivilegi elevati.
 
 ## TCP SYN Scan `-sS`
+```bash
+nmap -sS -p<ports> <ipaddress>
+```
 **obiettivo**: rispetto al connect scan, voglio fare il **reset** della connessione prima che il *TCP handshake sia completato*.
 
 ![[Pasted image 20260429112021.png]]
@@ -53,12 +63,12 @@ follow
 **pacchetti custom**: dunque nmap usa frame `TCP` creati ad-hoc per attaccare. Per crearli ha bisogno dei privilegi di sistema.
 **3 tipi di scan stealth**: `fin scan`, `xmas scan`, `null scan`
 
-**fin scan**:
+**fin scan**: `-sF`
 ![[Pasted image 20260429113249.png]]
 
-**xmas scan**:
+**xmas scan**: `-sX`
 ![[Pasted image 20260429113328.png]]
-**null scan**:
+**null scan**: `-sN`
 ![[Pasted image 20260429113402.png]]
 
 **sono stealth perche**: non creano connessioni
@@ -77,7 +87,7 @@ The user running stealth scans needs to have root privilege
 
 **perche usare le stealth scan**?  usano meno banda di rete rispetto a `TCP SYN` scan e mi da molte informazioni su sistemi non-Windows.
 
-**version detection**: `nmap -sV` gemini spiega!!!!
+**version detection**: `nmap -sV`. una volta trovata una porta attiva, mi collego con il suo protocollo e cerco di capire che software esegue mandando dei pacchetti fatti apposta.
 
 ## udp scan `-sU`
 **handshaking**: `udp` non lo fa, dunque non ci sono `SYN`, `FIN` da gestire o da sfruttare. dunque lo scanning `udp` e' più semplice.
