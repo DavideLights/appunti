@@ -59,3 +59,29 @@ ho perso un po di slide
 **slide sull'architettura della SDR**: ...
 
 
+**modulazione fm**: modula la frequenza in base al segnale audio
+* **demulatore**: dalla variazione delle frequenze ottiene il segnale audio!
+* **sottocampionare**: devo campionare il segnale alla velocita del lettore
+
+
+**pilot tone**: serve a sincronizzarsi, e' un picco ad una frequenza centrale
+
+
+**che succ**? ogni radio trasmette ad una determinata frequenza. Frequency Division multiple acces
+* dunque ogni stazione prende una fetta di frequenza
+* tra una stazione e l'altra esiste una **guard band**, evita interferimenti tra stazioni
+* nelle guard band c'e' solo rumore, il **noise floor**, un rumore randomico che e' attorno ad una costante (si comporta come rumore bianco)
+* quando qualcuno trasmette emerge un segnale dal noise floor.
+
+**potenza del segnale**: si misura come il picco nella trasmissione, e dipende chiaramente da cosa si sta trasmettendo
+* **potenza del rumore**: devo ascoltare il noise floor e ottenere il picco minimo.
+
+**banda**: nella banda assegnata alla trasmittente, la trasmissione avviene in una banda che emerge rispetto al noise floor
+
+**come misurare la banda**: devo cercare dove inizia il segnale che si discosta significativamente dal rumore e dove questo finisce. La distanza tra questi due "tempi" indica la banda.
+
+come misurare le frequenze centrali
+
+
+## reporting!
+number stations: websdr.
