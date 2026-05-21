@@ -90,28 +90,44 @@ funziona bene su qualsiasi metrica dioporco
 
 ## tiered indexes
 **due liste**: `high` e `low` per ogni termine.
-* recupera documenti da `high`
-* se non bastano passa a `low`
+* recupera $K$ documenti da `high`, ossia di documenti con $g(d)$ alta!
+* se non ne trovo almeno $K$,  passa a `low`
 * **oss**: potrei avere ovviamente piu' tier di liste.
 
 ![[Pasted image 20260515114658.png]]
 **problematiche**:
 * ho dunque delle liste ordinate per $g(d)$
-* vorrei calcolare lo score per documenti con $wf_{t,d}$
-* ...
+* vorrei calcolare lo score per documenti non $\text{wf}_{t,d}$
 
-**early termination**: attraversa e recupera i primi $K$ e fai l'unione dei risultati dei documenti per tutti i termini della query.
+**ordinare per** $\text{wf}_{t,d}$, **early termination**: attraversa e recupera i primi $K$ e fai l'unione dei risultati dei documenti per tutti i termini della query.
+	* **idea**: posso fermarmi quando recupero un numero $r$ di documenti o quando $\text{wf}_{t,d}$ scende sotto un certo threshold.
+	* **ordinamento**: le posing non sono tutte ordinate allo stesso modo. non facilmente confrontabili.
 
-**idf-ordered**: ordina i termini per idf. prendi documenti per idf piu' alto.
+**idf-ordered**: ordina i termini per idf decrescente . prendi documenti per idf piu' alto. *man mano che scorro i termini mi fermo se sono poco importanti.*
 ## safe ranking
 **e' possibile ottenere un metodo safe ed efficiente?**
-* ho un termine con la sua posting list, ad ogni entry ho come informazione la frequenza della parola nel documento.
-* quando posso fermarmi nel recuperare candidati quando attraverso la posting?
-* associo la variabile `finger` alla posting, ossia tiene in memoria il massimo valore di chi viene dopo.
-* **treshold** calcolata a run time 
+* **treshold**: posso impostarlo per esempio al $K^{th}$ score piu alto calcolato fino ad'ora
+* **pruning**: taglio via tutti i documenti sotto al threshold
+* **index structure**: i posting sono ordinati per docID
+* **iteratore**: sulla posting devo mettere un iteratore speciale che ti porta al primo $\text{docID}$ con score più alto di un valore$X$.
+* **finger**: indica la mia posizione
+* **invariante**: tutti i documenti con $\text{docID}$ piu basso hanno rispetto alla posizione del **finger** sono gia stati processati ed ho fatto una di queste due azioni
+	* **pruned**: sono stati tagliati
+	* **cosine**: l'ho calcolata
+* **upper bound**: per ogni termine $t$ ho l'upperbound $UB_{t} = w_{t}(\text{docID})$ dove $\text{docID}$ e' un qualsiasi documento dopo il finger.
+* **che termini considero**? prendo i termini della query e ordino i loro documenti per $\text{docID}$
+
+* **treshold** calcolata a run time, per esempio come peso del $K\text{-esimo}$ miglior documento trovato fin'ora.
 ![[Pasted image 20260515120116.png]]
 
-![[Pasted image 20260515120411.png]]![[Pasted image 20260515120513.png]]
+![[Pasted image 20260515120411.png]]
+* **treshold**: ipotizziamo a $6.8$, calcolato a runtime
+* **pivot**: so che i documenti prima del pivot sono senza speranza, poiche' il loro contributo non mi fa superare il treshold, e li posso saltare con l'iteratore introdotto prima
+* **obiettivo**: muovermi con gli indici finche non supero il treshold
+* **upper-bound**: e' il massimo contributo che offrono i documenti che vengono dopo il finger.
+
+**infatti**:
+![[Pasted image 20260515120513.png]]
 
 
 
