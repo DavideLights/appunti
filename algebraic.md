@@ -1,16 +1,13 @@
 
 # PDF 1 — Vettori, coordinate, rette/piani, primi sistemi lineari
 
-## 2. Concetti da sapere
-### introduzione
-**spazi affini**, insieme di vettori.
-* $\mathcal A^2$: piano, corrisponde al piano cartesiano.
-* $\mathcal A^3$: spazio, coordinate x,y,z
-* $\mathcal A^1$: retta
+## 1. Cosa tratta
 
-$V^2_{O}$: e' l'insieme dei vettori $\vec{OA} \text{ per ogni } A \in R^2$
- 
-[DEFINIZIONE] **Vettore applicato in $O$**  
+Questo PDF introduce il passaggio dalla geometria intuitiva con vettori applicati alla descrizione algebrica tramite coordinate. Parte da vettori nel piano e nello spazio, definisce somma e prodotto per scalare, poi usa queste idee per scrivere equazioni vettoriali e parametriche di rette e piani. Nella seconda parte introduce i sistemi lineari, la forma matriciale ($Ax=b$), la compatibilità e i sistemi triangolari superiori.
+
+## 2. Concetti da sapere
+
+[DEFINIZIONE] **Vettore applicato**  
 Nel piano o nello spazio, un vettore è pensato come un segmento orientato, con un primo estremo e un secondo estremo. Esempio: $\overrightarrow{OP}$.
 
 [DEFINIZIONE] **Somma di due vettori**  
@@ -18,157 +15,68 @@ Dati due vettori applicati $\overrightarrow{OA}$ e $\overrightarrow{OB}$, la som
 
 $$ \overrightarrow{OA}+\overrightarrow{OB}=\overrightarrow{OC} $$
 
-dove $C$ è il **quarto vertice del parallelogramma**.
+dove $C$ è il quarto vertice del parallelogramma.
 
 [TEOREMA] **L’insieme dei vettori è un gruppo commutativo rispetto alla somma**  
 Bisogna ricordare che la somma di vettori è associativa, ha elemento neutro, ogni vettore ha opposto e vale la commutatività.
 
-**~~Proprietà~~**:
-* **associativa**: $(a+b)+c = a + (b+c)$. Si dimostra facendo vedere che in entrambi i modi si costruisce lo stesso parallelogramma.
-* **esistenza elemento nullo**: $a+a_{0} = a_{0}+a = a$, ossia $\overrightarrow{OO}$
-* **esistenza opposto**: $a + a'= a' + a = a_{0}$, $-\overrightarrow{OA}$
-* **commutativa**: $a +b = b +a$
-
 [DEFINIZIONE] **Prodotto di un vettore per uno scalare**  
 Dato $t \in \mathbb{R}$ e un vettore $\overrightarrow{OA}$, il vettore $t\overrightarrow{OA}$:
+
 - ha lunghezza moltiplicata per $|t|$;
-- ha **stesso verso** se $t>0$;
-- ha **verso opposto** se $t<0$;
+- ha stesso verso se $t>0$;
+- ha verso opposto se $t<0$;
 - è il vettore nullo se $t=0$.
 
 [FORMULA] Proprietà del prodotto per scalare:
-* $\lambda(\overrightarrow{OA}+\overrightarrow{OB})= \lambda \overrightarrow{OA}+\lambda \overrightarrow{OB}$
-* $(\lambda+\mu)\overrightarrow{OA} =\lambda\overrightarrow{OA}+\mu\overrightarrow{OA}$
-* $(\lambda\mu)\overrightarrow{OA} = \lambda(\mu\overrightarrow{OA})$
-* $1\cdot \overrightarrow{OA}=\overrightarrow{OA}$ ed $0 \cdot \overrightarrow{OA} = \overrightarrow{OO}$
 
-> [!nota] esempi scemi
-> * $3 \overrightarrow{OA} = \overrightarrow{OA} + \overrightarrow{OA} + \overrightarrow{OA}$
-> * $-2 \overrightarrow{OA} = (-\overrightarrow{OA}) + (-\overrightarrow{OA})$
+$$ \lambda(\overrightarrow{OA}+\overrightarrow{OB}) \lambda \overrightarrow{OA}+\lambda \overrightarrow{OB} $$
 
-### vettori e piani 
+$$ (\lambda+\mu)\overrightarrow{OA} \lambda\overrightarrow{OA}+\mu\overrightarrow{OA} $$
+
+$$ (\lambda\mu)\overrightarrow{OA} \lambda(\mu\overrightarrow{OA}) $$
+
+$$ 1\cdot \overrightarrow{OA}=\overrightarrow{OA} $$
+
 [DEFINIZIONE] **Coordinate rispetto a due vettori non paralleli**  
-Se $\vec i,\vec j$ sono due vettori **non paralleli** nel piano, ogni vettore $\overrightarrow{OP}$ si scrive in **modo unico** come:
+Se $\vec i,\vec j$ sono due vettori non paralleli nel piano, ogni vettore $\overrightarrow{OP}$ si scrive in modo unico come:
 
-$$ \overrightarrow{OP}=x_1\vec i+x_2\vec j$$
-**~~dimostrazione~~**: con le intersezioni delle due rette passanti per $\vec{i}$ e $\vec{j}$ posso rappresentare tutti i vettori $\overrightarrow{OP}$ .
+$$ \overrightarrow{OP}=x_1\vec i+x_2\vec j $$
 
-**coordinate**: La coppia $(x_1,x_2)$ sono le coordinate del vettore ed $(x_{1},x_{2}) \in R^2$, dunque siamo passati da $V^2_{O}$ in $R^2$
-
-
-[DEFINIZIONE] **Rappresentare un Vettore, notazione rispetto alle leezioni!**
-$\overrightarrow{OP} = \begin{vmatrix} x_{1}\\ x_{2}  \end{vmatrix}$ con $x_{1},x_{2}$ coordinate rispetto ai vettori $\vec{i}, \vec{j}$
-
- [ESEMPIO]: siano $\vec{i} = \begin{vmatrix} 1 \\ 0  \end{vmatrix}$ e $\vec{j} = \begin{vmatrix} 0 \\ 1  \end{vmatrix}$, allora
-$$
-\overrightarrow{OP} = \begin{vmatrix} 1 \\ \frac{1}{2}
-	
-\end{vmatrix} = 1 \vec{i} + \frac{1}{2}\vec{j} = 1 \begin{vmatrix} 1 \\ 0  \end{vmatrix} + \frac{1}{2}\begin{vmatrix} 0 \\ 1  \end{vmatrix}
-$$
-[DEFINIZIONE] Regole sui Vettori
-* $0= \begin{vmatrix} 0\\0 \end{vmatrix}$
-* $\lambda \begin{vmatrix} x_{1} \\ x_{2} \end{vmatrix} = \begin{vmatrix} \lambda x_{1} \\ \lambda x_{2} \end{vmatrix}$
-* $\begin{vmatrix} x_{1}\\ x_{2} \end{vmatrix} + \begin{vmatrix} y_{1}\\ y_{2} \end{vmatrix} = \begin{vmatrix} x_{1}+y_{1} \\ x_{2}+y_{2} \end{vmatrix}$
+La coppia $(x_1,x_2)$ sono le coordinate del vettore.
 
 [METODO] **Descrivere una retta nel piano**  
-*Una retta si descrive scegliendo*:
+Una retta si descrive scegliendo:
+
 - un punto $P_0$ della retta;
-- un vettore direttore $\overrightarrow{OP}$, parallelo alla retta.
-* allora: $\overrightarrow{OP} = \overrightarrow{OP_0}+t\overrightarrow{OQ}$, con $t\in\mathbb{R}$.
+- un vettore direttore $\vec q$, parallelo alla retta.
 
-![[Pasted image 20260605152628.png]]
-~~**Spiegazione**~~:
-* sia $r_{0}$ la retta parallela ad $r$, passante per $O$
-* sia $P_{0} \in r$
-* **allora**: $P \in r \iff \overrightarrow{OP}-\overrightarrow{OP}_{0} \in r$
-* sia $Q \in r_{0}$
-* **allora**: $\overrightarrow{OP} - \overrightarrow{OP_{0}}$ e' parallelo ad $\overrightarrow{OQ}$ 
-* **quindi**: $\overrightarrow{OP} - \overrightarrow{OP_{0}} = t\overrightarrow{OQ}$ per qualche $t$.
-*  *e da questa formula si ricava quella esposta sopra*.
+Allora:
 
-[ESEMPIO] **Trova la linea attraverso $\begin{vmatrix} 0 \\ 1 \end{vmatrix}$ ed $\begin{vmatrix} 1 \\ 2 \end{vmatrix}$**
-![[Pasted image 20260605153629.png]]
-scelgo: 
-* $P_{0} = \begin{vmatrix} 0\\1 \end{vmatrix} \in r$ , ed $Q = \begin{vmatrix} 1 \\ 1   \end{vmatrix} \in r_{0}$, con $r_{0}$ parallela ad $r$ che passa per l'origine
-* allora $\overrightarrow{OP} = \begin{vmatrix} 0\\1 \end{vmatrix} + t \begin{vmatrix} 1\\1 \end{vmatrix} = \begin{vmatrix} t\\1+t \end{vmatrix}$
+$$ \overrightarrow{OP} \overrightarrow{OP_0}+t\vec q $$
 
-[DEFINIZIONE] **equazione vettoriale di una retta** 
-* se $P_{0} = \begin{vmatrix} x_0\\x_1 \end{vmatrix}$, $Q = \begin{vmatrix} l\\m \end{vmatrix}$ ed $P = \begin{vmatrix} x\\ y \end{vmatrix}$
-$$(*): \overrightarrow{OP} = \overrightarrow{OP_{0}} + t\overrightarrow{OQ} \iff \begin{vmatrix} x\\ y \end{vmatrix} = \begin{vmatrix} x_{0}\\ y_{0} \end{vmatrix} + t \begin{vmatrix} l\\m \end{vmatrix}$$
-[DEFINIZIONE] **vettore direzione** $\overrightarrow{OQ}$
-$\overrightarrow{OQ}$ e' il vettore direzione dell'equazione parametrica $(*)$
-
-[DEFINIZIONE] Equazioni Parametriche per $(*)$
-* $x = x_{0} + tl$
-* $y = y_{0} + tm$
+con $t\in\mathbb{R}$.
 
 [METODO] **Retta passante per due punti**  
 Se la retta passa per $P_1$ e $P_2$, un vettore direttore è:
-$$ \overrightarrow{OQ} = \overrightarrow{OP_2}-\overrightarrow{OP_1} $$
+
+$$ \overrightarrow{P_1P_2} \overrightarrow{OP_2}-\overrightarrow{OP_1} $$
+
 quindi:
-$$ \overrightarrow{OP} = \overrightarrow{OP_1} + t(\overrightarrow{OP_2}-\overrightarrow{OP_1}) $$
+
+$$ \overrightarrow{OP} \overrightarrow{OP_1} + t(\overrightarrow{OP_2}-\overrightarrow{OP_1}) $$
 
 [METODO] **Piano nello spazio**  
-Un piano $\pi$ si descrive scegliendo:
+Un piano si descrive scegliendo:
+
 - un punto $P_0$;
-- $\pi_{0}$ parallelo a $\pi$ passante per $O$
-- due vettori non paralleli tra loro $\vec i,\vec j$ .
-- $\vec{i}, \vec{j}$ contenti in $\pi_{0}$
+- due vettori non paralleli $\vec i,\vec j$ paralleli al piano.
 
 Allora:
-$$ \overrightarrow{OP} = \overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
+
+$$ \overrightarrow{OP} \overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
 
 con $t_1,t_2\in\mathbb{R}$.
-
-[METODO] **Piano a partire da tre punti allineati**
-Siano $P_{1},P_{2},P_{3}$ dei punti allineati:
-* $\vec{i} = \overrightarrow{OP_{2}} - \overrightarrow{OP_{1}}$
-* $\vec{j} = \overrightarrow{OP_{3}} - \overrightarrow{OP_{1}}$
-$$
-\overrightarrow{OP} = \overrightarrow{OP_{1}} + t_{1}(\overrightarrow{OP_{2}} - \overrightarrow{OP_{1}}) + t_{2}(\overrightarrow{OP_{3}} - \overrightarrow{OP_{1}})
-$$
-
-[METODO] **Intersezione tra rette**
-Due rette si intersecano se $\exists t_{1},t_{2} \in R$ tali che:
-$$
-\overrightarrow{OP_{0}} + t_{1} \overrightarrow{OQ}
- = \overrightarrow{OP_{0}'} + t_{2}\overrightarrow{OQ}
- \iff \overrightarrow{OP_{0}'} -\overrightarrow{OP_{0}}
- =  t_{1} \overrightarrow{OQ} - t_{2}\overrightarrow{OQ'}
-$$
-**ossia**: due rette si intersecano se $\overrightarrow{OP_{0}'} -\overrightarrow{OP_{0}}$ appartiene al piano generato da $t_{1} \overrightarrow{OQ} - t_{2}\overrightarrow{OQ}$.
-
-**in equazioni parametriche**:
-* $x_{0}' - x_0 = t_{1} l-t_{2}l'$
-* $y_{0}' -y_{0} = t_{1} m -t_{2} m'$
-
-con $(t_{1},t_{2})$ la soluzione del sistema, allora il punto d'intersezione e':
-$$
-\begin{vmatrix}
-	x_{0}+lt_{1} \\ y_{0} + mt_{1}
-\end{vmatrix}
-$$
-
-[ESEMPIO] **trova intersezione fra la retta passante per $\begin{vmatrix} 1\\ 1\end{vmatrix}$ e vettore direzione $\begin{vmatrix}2 \\ 1\end{vmatrix}$ e la retta $r'$ passante per $\begin{vmatrix}2 \\0\end{vmatrix}$ ed vettore direttore** $\begin{vmatrix}0 \\ 1\end{vmatrix}$
-
-**svolgimento**...
-
->[!note] Esercizi da vedere da carrara
-> 2.8, 2.2, 2.3, 2.4, 2.8, 2.9, 2.7, 2.11, 2.14
-
-[CARRARA 2.8]  **vettore ortogonale**
-il vettore ortogonale ad un piano in si ottiene prendendo i coefficienti $(a,b,c)$ del piano in forma $ax + by + cz = v$
-
-[CARRARA 2.2] **la retta passante per AB e'** $A + t(\overrightarrow{AB})$
-### Equazioni e matrici
-[ESEMPIO] **equazione di una sola incognita**
-$ax+b=0$ ha:
-* una soluzione se $a \neq 0$: ossia $x = -\frac{a}{b}$
-* nessuna soluzione se: $a=0, b \neq 0$
-* infinite se: $a=b=0$ 
-
-[ESEMPIO 3.2]  tre equazioni in tre incognite
-da provare a risolvere a mano.
 
 [DEFINIZIONE] **Sistema lineare**  
 Un sistema lineare di $m$ equazioni in $n$ incognite ha forma:

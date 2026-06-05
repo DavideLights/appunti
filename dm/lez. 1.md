@@ -1,3 +1,6 @@
+> [!note] regressione
+> Per regressione si intende predire un dominio continuo. 
+
 ## riconoscimento dei quadrati
 **features**:
 * bassa varianza tra le distanza dal centroide del quadrato
