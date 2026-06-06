@@ -2,25 +2,27 @@
 
 ## k-d tree
 **albero binario**.
-**nodo**: rappresenta punto a `d` dimensioni. Ogni nodo appartiene ad una delle `d` dimensioni.
+**nodo**: fa riferimento ad una dimensione di un particolare  punto su `d` dimensioni.
 **dimensione**: ad ogni livello dell'albero si alternano le dimensioni a cui i nodi fanno riferimento.
 
 **esempio**: con `d=2`, ci troviamo per esempio nel piano cartesiano.
-* **radice (ascisse)**: il nodo radice ha come dimensione quella delle ascisse.
+* **radice (ascisse)**: il nodo radice ha come dimensione quella delle ascisse e si riferisce al punto `a`
 	* **sottoalbero sinistro**: nodi con ascisse minore.
 	* **sottoalbero destro**: nodi con ascisse maggiore uguale.
-* **livello successivo (ordinate)**: uso le ordinate come dimensione di riferimento per ordinare i sottoalberi.
-* **ecc (ascisse, ordinate, ecc...)**
-* **foglie!**
+* **livello successivo (ordinate)**: uso le ordinate come dimensione di riferimento per ordinare i sottoalberi, sul figlio sinistro usero il punto `b`, sul destro il punto `c`.
+* **ecc...**
+* fino alle **foglie!**
 
-**mediano**: ogni nodo dovrebbe essere il mediano del sottoinsieme che rappresenta.
 
 **costruzione**: costosa.
-* **identificare il mediano**, per ogni punto.
+* **identificare il mediano**: ogni nodo dovrebbe essere il mediano del sottoinsieme che rappresenta, dunque devo ordinare i punti del sottoinsieme in $O(n \log n)$
 * **partizionare** i punti in due sottoinsiemi per ogni nodo
-* ordinamento in $O(n log n)$
 
-**ricerca dei vicini**: si cercano in $O(k log n)$
+**costo della costruzione**: l'altezza dell'albero e' bilanciata, ad ogni livello devo ordinare $n$ punti, dunque $O(n \log^2 n)$
+
+**ricerca dei vicini**: si cercano in media in $O(k log n)$
+* **parto**: dalla radice dell'albero vado al nodo di cui voglio cercare i vicini
+* **backtracking**: proseguo la ricerca, oppure torno indietro. In media ci metto $\log(n)$ a cercare i vicini.
 
 # Liste python e ndarray
 

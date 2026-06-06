@@ -2,12 +2,23 @@
 * **Matplotlib**: librerie per la creazione di grafici e disegno di forme.
 
 ## KNN
-* **definizione**: assegna tag in base agli oggetti piu vicini sul grafico
+**che cos'e'?** un'algoritmo che impara in modo supervisionato.
+* **classifica**: in base al tag piu frequente nei k oggetti piu vicini
 * **fitting**: `fit` implementa l'apprendimento, consiste nella *memorizzazione dei dati*.
 * **predict**: `predict` guarda i $k$ piu vicini, con *distanza euclidea* per assegnare il tag.
 * **efficienza**: selection sort (*ad ogni iterazione identifica il piu piccolo*), oppure albero binario per la ricerca dei $k$ piu vicini.
 * **moda**: l'elemento piu frequente in una lista.
 
+**vantaggio**: man mano che colleziono dati e li aggiungo, il classificatore si adatta subito ai nuovi dati di training.
+
+**svantaggio**: il costo computazionale cresce linearmente nel dataset a meno che
+* **feature**: sono poche
+* **implementazione**: inefficiente, a meno che non uso k-d tree.
+* **storage**: non posso scartare nessun elemento del dataset.
+
+**standardizzare**: bisogna standardizzare, in modo che ogni feature contribuisca allo stesso modo.
+
+**curse of dimensionality**: se lo spazio delle features e' molto sparso, allora la distanza tra i punti perde di significato. bisogna selezionare le features oppure ridurre le dimensioni.
 ## numpy e pandas
 * `np.array()`: definisce array e matrici per essere usati da numpy.
 * `np.arange`: genera un intervallo di numeri per numpy.

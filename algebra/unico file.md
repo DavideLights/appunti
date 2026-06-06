@@ -73,7 +73,7 @@ $$
 [METODO] **Descrivere una retta nel piano**  
 *Una retta si descrive scegliendo*:
 - un punto $P_0$ della retta;
-- un vettore direttore $\overrightarrow{OP}$, parallelo alla retta.
+- un vettore direttore $\overrightarrow{OQ}$, parallelo alla retta.
 * allora: $\overrightarrow{OP} = \overrightarrow{OP_0}+t\overrightarrow{OQ}$, con $t\in\mathbb{R}$.
 
 ![[Pasted image 20260605152628.png]]
@@ -98,7 +98,7 @@ $$(*): \overrightarrow{OP} = \overrightarrow{OP_{0}} + t\overrightarrow{OQ} \iff
 [DEFINIZIONE] **vettore direzione** $\overrightarrow{OQ}$
 $\overrightarrow{OQ}$ e' il vettore direzione dell'equazione parametrica $(*)$
 
-[DEFINIZIONE] Equazioni Parametriche per $(*)$
+[DEFINIZIONE] **Equazioni Parametriche per** $(*)$
 * $x = x_{0} + tl$
 * $y = y_{0} + tm$
 
@@ -153,13 +153,14 @@ $$
 
 **svolgimento**...
 
->[!note] Esercizi da vedere da carrara
+>[!note] Esercizi da vedere da carrara (tutoraggio a.a. 2023)
 > 2.8, 2.2, 2.3, 2.4, 2.8, 2.9, 2.7, 2.11, 2.14
 
 [CARRARA 2.8]  **vettore ortogonale**
 il vettore ortogonale ad un piano in si ottiene prendendo i coefficienti $(a,b,c)$ del piano in forma $ax + by + cz = v$
 
 [CARRARA 2.2] **la retta passante per AB e'** $A + t(\overrightarrow{AB})$
+
 ### Equazioni e matrici
 [ESEMPIO] **equazione di una sola incognita**
 $ax+b=0$ ha:
@@ -171,105 +172,92 @@ $ax+b=0$ ha:
 da provare a risolvere a mano.
 
 [DEFINIZIONE] **Sistema lineare**  
-Un sistema lineare di $m$ equazioni in $n$ incognite ha forma:
-
+Un sistema lineare di $m$ equazioni in $n$ incognite (ossia **ordine** $n$) ha forma:
 $$
 \begin{cases}  
-a_{11}x_1+\dots+a_{1n}x_n=b_1\  
-\vdots\  
+a_{11}x_1+\dots+a_{1n}x_n=b_1 \\  
+\quad\quad\quad\quad \vdots \\  
 a_{m1}x_1+\dots+a_{mn}x_n=b_m  
 \end{cases}  
 $$
-
-Si scrive in forma matriciale:
-
+**Si scrive in forma matriciale**:
 $$ Ax=b $$
 
 dove:
-
 - $A$ è la matrice dei coefficienti;
 - $x$ è il vettore delle incognite;
 - $b$ è il vettore dei termini noti.
+[ATTENZIONE] $a_{ij}$ dove $i := \text{riga}$ e $j := \text{colonna}$
 
 [DEFINIZIONE] **Sistema compatibile**  
 Un sistema $Ax=b$ è compatibile se esiste almeno una soluzione $x\in\mathbb{R}^n$.
 
 [DEFINIZIONE] **Matrice triangolare superiore**  
-Una matrice è triangolare superiore se tutti gli elementi sotto la diagonale sono nulli.
+Una matrice è triangolare superiore se tutti gli elementi **sotto la diagonale** sono nulli.
+$$
+\left(\begin{matrix}
+\textcolor{red}1 \ 7 \ 3 \\
+0 \ \textcolor{red}2 \ 0  \\
+0 \ 0\ \textcolor{red}1
+\end{matrix}\right)
+$$
+* e se $n=m$
+[TEOREMA] **Soluzione** **Sistema triangolare superiore quadrato**  
+Un sistema triangolare superiore quadrato e' compatibile  se e solo se tutti gli elementi della diagonale sono non nulli, ossia ho **soluzione unica**
 
-[TEOREMA] **Sistema triangolare superiore quadrato**  
-Un sistema triangolare superiore quadrato ha soluzione unica se e solo se tutti gli elementi della diagonale sono non nulli.
-
+**Dimostrazione** $\rightarrow$: sostituendo a ritroso, a partire dall'equazione $n$-esima, si vede facilmente che la soluzione e' unica.
+**Dimostrazione** $\leftarrow$: e' piu complicata.
 ## 3. Teoremi / risultati importanti
-
 [TEOREMA] **Vettori come gruppo commutativo**  
-Idea: la somma di vettori si comporta come una somma “ben fatta”.  
-Ipotesi: vettori applicati nello stesso spazio.  
-Tesi: valgono associatività, elemento neutro, opposto e commutatività.  
-A cosa serve: giustifica il calcolo algebrico con i vettori.  
-Dimostrazione: presente in forma geometrica; da sapere almeno l’idea.
+* Idea: la somma di vettori si comporta come una somma “ben fatta”.  
+* Ipotesi: vettori applicati nello stesso spazio.  
+* Tesi: valgono associatività, elemento neutro, opposto e commutatività. 
+* A cosa serve: giustifica il calcolo algebrico con i vettori.  
+* Dimostrazione: presente in forma geometrica; da sapere almeno l’idea.
 
 [TEOREMA] **Coordinate uniche nel piano**  
-Idea: se scelgo due direzioni non parallele, ogni vettore del piano si decompone lungo quelle due direzioni.  
-Ipotesi: $\vec i,\vec j$ non paralleli.  
-Tesi: ogni $\overrightarrow{OP}$ si scrive in modo unico come $x_1\vec i+x_2\vec j$.  
-A cosa serve: permette di passare dai vettori alle coordinate.  
-Dimostrazione: geometrica; da sapere l’idea.
+* Idea: se scelgo due direzioni non parallele, ogni vettore del piano si decompone lungo quelle due direzioni.  
+* Ipotesi: $\vec i,\vec j$ non paralleli.  
+* Tesi: ogni $\overrightarrow{OP}$ si scrive in modo unico come $x_1\vec i+x_2\vec j$.  
+* A cosa serve: permette di passare dai vettori alle coordinate.  
+* Dimostrazione: geometrica; da sapere l’idea.
 
 [TEOREMA] **Sistemi triangolari superiori**  
-Idea: in un sistema triangolare superiore si risolve dal basso verso l’alto.  
-Ipotesi: sistema quadrato triangolare superiore.  
-Tesi: soluzione unica se e solo se gli elementi diagonali sono tutti diversi da zero.  
-A cosa serve: è la base del metodo di eliminazione di Gauss.  
-Dimostrazione: presente; da sapere almeno il ragionamento operativo.
-
+* Idea: in un sistema triangolare superiore si risolve dal basso verso l’alto.  
+* Ipotesi: sistema quadrato triangolare superiore.  
+* Tesi: soluzione unica se e solo se gli elementi diagonali sono tutti diversi da zero.  
+* A cosa serve: è la base del metodo di eliminazione di Gauss.  
+* Dimostrazione: presente; da sapere almeno il ragionamento operativo.
 ## 4. Metodi operativi per esercizi
-
 ### Scrivere la retta passante per un punto e parallela a un vettore
-
 1. Prendi il punto $P_0=(x_0,y_0)$.
 2. Prendi il vettore direttore $\vec q=(\ell,m)$.
 3. Scrivi:
-
-$$ \begin{pmatrix}x\y\end{pmatrix} \begin{pmatrix}x_0\y_0\end{pmatrix} + t \begin{pmatrix}\ell\m\end{pmatrix} $$
-
+$$ \begin{pmatrix}x\\ y\end{pmatrix} =  \begin{pmatrix}x_0\\y_0\end{pmatrix} + t \begin{pmatrix}\ell \\ m\end{pmatrix} $$
 4. Passa alle equazioni parametriche:
-
-$$ x=x_0+t\ell $$
-
-$$ y=y_0+tm $$
-
+* $x=x_0+t\ell$
+* $y=y_0+tm$
 ---
-
 ### Scrivere la retta passante per due punti
 
 1. Hai $P_1=(x_1,y_1)$ e $P_2=(x_2,y_2)$.
 2. Calcola il vettore direttore:
-
 $$
 \vec q=P_2-P_1=  
 \begin{pmatrix}  
-x_2-x_1\  
+x_2-x_1\\  
 y_2-y_1  
 \end{pmatrix}  
 $$
-
 3. Scrivi:
-
 $$
-\begin{pmatrix}x\y\end{pmatrix} \begin{pmatrix}x_1\y_1\end{pmatrix} + t \begin{pmatrix} x_2-x_1\ y_2-y_1 \end{pmatrix}  
+\begin{pmatrix}x\\y\end{pmatrix} =\begin{pmatrix}x_1\\y_1\end{pmatrix} + t \begin{pmatrix} x_2-x_1\\ y_2-y_1 \end{pmatrix}  
 $$
-
 ---
-
 ### Trovare l’intersezione di due rette nel piano
-
 1. Scrivi le due rette in forma parametrica:
-
 $$ P=P_0+t\vec q $$
-
 $$ P=P'_0+s\vec q' $$
-
 2. Uguaglia le coordinate.
 3. Ottieni un sistema in $(t,s)$.
 4. Risolvi il sistema.
@@ -277,59 +265,39 @@ $$ P=P'_0+s\vec q' $$
 6. Il punto ottenuto è il punto di intersezione.
 
 ---
-
 ### Scrivere il piano passante per un punto e parallelo a due vettori
 
 1. Prendi un punto $P_0$.
 2. Prendi due vettori non paralleli $\vec i,\vec j$.
 3. Scrivi:
-
-$$ \overrightarrow{OP} \overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
-
+$$ \overrightarrow{OP}= \overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
 4. Se richiesto, passa alle coordinate.
 
 ---
 
 ### Risolvere un sistema triangolare superiore
-
 1. Parti dall’ultima equazione.
-2. Ricava l’ultima incognita.
+2. **Ricava l’ultima incognita**.
 3. Sostituiscila nell’equazione precedente.
-4. Procedi dal basso verso l’alto.
+4. **Procedi dal basso verso l’alto**.
 5. Se trovi un coefficiente diagonale nullo, controlla compatibilità e unicità.
-
 ## 5. Formule da ricordare
-
-$$ \overrightarrow{OA}+\overrightarrow{OB}=\overrightarrow{OC} $$
-
-Somma di vettori con regola del parallelogramma.
-
-$$ t\overrightarrow{OA} $$
-
-Prodotto di un vettore per uno scalare.
-
+Coordinate di un vettore rispetto a due direzioni non parallele:
 $$ \overrightarrow{OP}=x_1\vec i+x_2\vec j $$
 
-Coordinate di un vettore rispetto a due direzioni non parallele.
+Equazione vettoriale di una retta:
+$$ \overrightarrow{OP} = \overrightarrow{OP_0}+t\vec q $$
 
-$$ \overrightarrow{OP} \overrightarrow{OP_0}+t\vec q $$
-
-Equazione vettoriale di una retta.
-
+Equazioni parametriche di una retta nel piano:
 $$ x=x_0+t\ell,\qquad y=y_0+tm $$
 
-Equazioni parametriche di una retta nel piano.
+Equazione vettoriale di un piano nello spazio:
+$$ \overrightarrow{OP} =\overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
 
-$$ \overrightarrow{OP} \overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
-
-Equazione vettoriale di un piano nello spazio.
-
+Forma matriciale di un sistema lineare:
 $$ Ax=b $$
 
-Forma matriciale di un sistema lineare.
-
 ## 6. Note del professore
-
 [NOTA PROF]  
 Il vettore direttore di una retta **non è unico**: qualunque multiplo non nullo dello stesso vettore descrive la stessa direzione.
 
@@ -339,13 +307,8 @@ Per costruire coordinate nel piano servono due vettori **non paralleli**. Se son
 [NOTA PROF]  
 L’intersezione tra rette viene trasformata in un problema algebrico: si uguagliano le due forme parametriche e si risolve un sistema.
 
-[NON DA FARE]  
-Non risultano indicate parti esplicitamente escluse in questo PDF.
-
 ## 7. Mini-checklist del PDF
-
 Dopo questo PDF devo saper:
-
 - definire vettore, somma di vettori e prodotto per scalare;
 - usare la regola del parallelogramma;
 - scrivere coordinate rispetto a due vettori non paralleli;
@@ -358,22 +321,15 @@ Dopo questo PDF devo saper:
 - risolvere un sistema triangolare superiore.
 ---
 # PDF 2 — Eliminazione di Gauss, spazi vettoriali, sottospazi, span, basi
-
-## 1. Cosa tratta
-
-Questo PDF continua lo studio dei sistemi lineari introducendo l’eliminazione di Gauss, cioè il metodo per trasformare un sistema in uno equivalente triangolare superiore. Poi apre la parte sugli spazi vettoriali: definisce $\mathbb{R}^n$, spazi vettoriali astratti, sottospazi, combinazioni lineari, span, indipendenza lineare, basi e coordinate rispetto a una base.
-
 ## 2. Concetti da sapere
-
 [DEFINIZIONE] **Sistemi equivalenti**  
 Due sistemi lineari sono equivalenti se hanno le stesse soluzioni.
 
 [DEFINIZIONE] **Combinazione lineare di equazioni**  
 Date due equazioni, posso sostituire una di esse con una combinazione lineare delle due:
-
-$$ h(\text{prima equazione})+k(\text{seconda equazione}) $$
-
-con $h,k\in\mathbb{R}$, facendo attenzione alle condizioni indicate nel metodo.
+$$ h\cdot(a)+k\cdot(b) $$
+* con $h,k\in\mathbb{R}$, facendo attenzione alle condizioni indicate nel metodo.
+* $a = a_{1}x_{1} + \dots a_{n}x_{n}$ ed $b = b_{1}x_{1} + \dots b_{n}x_{n}$
 
 [METODO] **Eliminazione di Gauss**  
 Serve a trasformare un sistema lineare in un sistema triangolare superiore equivalente.
@@ -399,10 +355,19 @@ Un insieme $V$, con somma e prodotto per scalare, è uno spazio vettoriale se so
 Un sottoinsieme $W\subseteq V$ è un sottospazio se:
 1. per ogni $w_1,w_2\in W$, $w_1+w_2\in W$;
 2. per ogni $\lambda\in\mathbb{R}$ e $w\in W$, $\lambda w\in W$.
-Da queste proprietà segue anche che $0\in W$.
+3. 
+Da queste proprietà segue che:
+* $0\in W$.
+* $\forall w \in W \to -w \in W$
+
+**Esempi**:
+* sia $V = \mathbb R^2$, allora $W = \text{punti della retta passante per origine}$
+* $W = \{ 0 \}$ e' sottospazio di ogni spazio vettoriale.
 
 [TEOREMA] **Soluzioni di un sistema omogeneo**  
 L’insieme delle soluzioni di un sistema lineare con termini noti tutti nulli è un sottospazio vettoriale.
+
+> **infatti**: la somma di due soluzioni e' anch'essa una soluzione, ossia $a_{m_{1}}(v_{1}+w_{1}) + \dots + a_{mn})(v_{n}+ w_{n}) = 0$
 
 [DEFINIZIONE] **Combinazione lineare di vettori**  
 Dati $v_1,\dots,v_k\in V$, una combinazione lineare è un vettore del tipo:
@@ -413,7 +378,6 @@ con $\alpha_1,\dots,\alpha_k\in\mathbb{R}$.
 
 [DEFINIZIONE] **Span**  
 Lo span di $v_1,\dots,v_k$ è l’insieme di tutte le loro combinazioni lineari:
-
 $$ \operatorname{Span}(v_1,\dots,v_k) = \{ \alpha_1v_1+\dots+\alpha_kv_k: \alpha_i\in\mathbb{R} \} $$
 
 [TEOREMA] **Lo span è un sottospazio**  
@@ -423,12 +387,13 @@ $\operatorname{Span}(v_1,\dots,v_k)$ è un sottospazio vettoriale di $V$.
 Il sistema $Ax=b$ è compatibile se e solo se $b$ appartiene allo span delle colonne di $A$.
 
 [DEFINIZIONE] **Dipendenza lineare**  
-I vettori $v_1,\dots,v_k$ sono linearmente dipendenti se esistono coefficienti $\alpha_1,\dots,\alpha_k$, non tutti nulli, tali che:
-
+I vettori $v_1,\dots,v_k$ sono linearmente dipendenti se esistono coefficienti $\alpha_1,\dots,\alpha_k$, **non tutti nulli**, tali che:
 $$ \alpha_1v_1+\dots+\alpha_kv_k=0 $$
-
+* **OSS 4.6**: se $v_{1},\dots,v_{k}$ linearmente dipendenti $\exists a_{j}\neq 0$. dunque $v_{j} = \text{combinazione lineare degli altri vettori}$
+* **conseguenza di OSS 4.6**: $\operatorname{Span}(v_{1},\dots,v_{n}) = \operatorname{Span}(v_{1},\dots,v_{j-1},v_{j+1},\dots, v_{n})$
 [DEFINIZIONE] **Indipendenza lineare**  
-I vettori sono linearmente indipendenti se l’unica combinazione lineare che dà il vettore nullo è quella con tutti i coefficienti nulli.
+I vettori sono linearmente indipendenti se l’unica combinazione lineare che dà il vettore nullo è quella **con tutti i coefficienti nulli**.
+* **Prop 4.4**: $A\cdot x =0$ ha soluzione unica, $x=0$ se e solo se $A^1, \dots, A^n$ sono linearmente indipendenti.
 
 [DEFINIZIONE] **Base**  
 Un insieme $\{v_1,\dots,v_k\}\subseteq V$ è una base di $V$ se:
@@ -436,17 +401,20 @@ Un insieme $\{v_1,\dots,v_k\}\subseteq V$ è una base di $V$ se:
 $$ V=\operatorname{Span}(v_1,\dots,v_k) $$
 2. è linearmente indipendente.
 
+**esempio 4.14**: Quindi se $\{ v_{1},..,v_{k} \} \subseteq V$ sono lineramente indipendenti, allora $\text{Span}(v_{1},..,v_{k})$ e' sottospazio di $V$.
+
 [TEOREMA] **Rappresentazione unica rispetto a una base**  
 Se $\{v_1,\dots,v_k\}$ è una base di $V$, ogni vettore $v\in V$ si scrive in modo unico come:
 
 $$ v=\alpha_1v_1+\dots+\alpha_kv_k $$
+dunque: $av =bv \iff a= b$.
 
 [DEFINIZIONE] **Coordinate rispetto a una base**  
 Se $\mathcal{B}=\{v_1,\dots,v_k\}$ è una base di $V$, i coefficienti $\alpha_1,\dots,\alpha_k$ tali che:
 
 $$ v=\alpha_1v_1+\dots+\alpha_kv_k $$
 
-sono le coordinate di $v$ rispetto alla base $\mathcal{B}$.
+**allora $a_{1},\dots,a_{k}$ sono le coordinate di $v$ rispetto alla base $\mathcal{B}$.**
 
 [DEFINIZIONE] **Sottoinsieme massimale linearmente indipendente**  
 Dato $A\subseteq V$, un insieme $B\subseteq A$ è massimale linearmente indipendente se:
@@ -649,21 +617,7 @@ Dopo questo PDF devo saper:
 - definire base;
 - trovare coordinate rispetto a una base;
 - capire che le coordinate dipendono dalla base scelta.
-
----
-
-Perfetto, ricevuti anche questi due nuovi PDF:
-1. **accorpato_3_compressed.pdf** — 10 pagine, continua con basi, dimensione, somma/intersezione di sottospazi, applicazioni lineari, nucleo/immagine, rango, sistemi a scala. Testo non estraibile automaticamente, ma immagini leggibili.
-2. **accorpato_4_compressed.pdf** — 10 pagine, continua con rango, prodotto di matrici, invertibilità, determinanti, sviluppi di Laplace, Binet e Cramer. Anche qui testo non estraibile automaticamente, ma immagini leggibili.
-
-Proseguo quindi con **PDF 3** e **PDF 4**, mantenendo lo stesso formato compatto.
-
 # PDF 3 — Basi, dimensione, sottospazi, applicazioni lineari, rango e sistemi a scala
-
-## 1. Cosa tratta
-
-Questo PDF conclude la parte sulle basi e sulla dimensione degli spazi vettoriali, introducendo il teorema del completamento, la formula di Grassmann e i criteri pratici per calcolare basi e dimensioni. Poi introduce le applicazioni lineari, il legame tra matrici e applicazioni lineari, nucleo, immagine, rango e il teorema rango-nullità. Nella parte finale collega questi concetti ai sistemi lineari e alla riduzione a scala.
-
 ## 2. Concetti da sapere
 
 [TEOREMA] **Da generatori a base**  
