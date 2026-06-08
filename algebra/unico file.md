@@ -334,6 +334,8 @@ $$ h\cdot(a)+k\cdot(b) $$
 [METODO] **Eliminazione di Gauss**  
 Serve a trasformare un sistema lineare in un sistema triangolare superiore equivalente.
 
+![[Pasted image 20260607163648.png]]
+
 [DEFINIZIONE] **Pivot**  
 Il pivot è l’elemento non nullo usato per eliminare gli elementi sotto di lui nella stessa colonna.
 
@@ -366,6 +368,11 @@ Da queste proprietà segue che:
 
 [TEOREMA] **Soluzioni di un sistema omogeneo**  
 L’insieme delle soluzioni di un sistema lineare con termini noti tutti nulli è un sottospazio vettoriale.
+
+[Definizione] **Sistema omogeneo**
+E' una combinazione lineare dove i **termini noti (ossia dopo l'uguale) sono tutti nulli**, ossia della forma:
+$$
+\begin{cases} a_{11}x_1 + a_{12}x_2 + \dots + a_{1n}x_n = 0 \\ a_{21}x_1 + a_{22}x_2 + \dots + a_{2n}x_n = 0 \\ \vdots \\ a_{m1}x_1 + a_{m2}x_2 + \dots + a_{mn}x_n = 0 \end{cases}$$
 
 > **infatti**: la somma di due soluzioni e' anch'essa una soluzione, ossia $a_{m_{1}}(v_{1}+w_{1}) + \dots + a_{mn})(v_{n}+ w_{n}) = 0$
 
@@ -624,6 +631,10 @@ Dopo questo PDF devo saper:
 Se $B=\{v_1,\dots,v_r\}\subseteq V$ e $\operatorname{Span}(B)$ contiene un sistema di generatori di $V$, allora:
 
 $$ V=\operatorname{Span}(B) $$
+[DEFINIZIONE] **Insieme massimale**
+Sia $A \subseteq V$, allora $B \subseteq A$ massimale in $A$ se:
+1. $B$ insieme di vettori **linearmente indipendenti**
+2. se aggiungo a $B$ un qualsiasi altro vettore di $A$ ho insieme di **vettori linearmente dipendenti**
 
 [TEOREMA] **Base da insieme massimale indipendente**  
 Se $A=\{v_1,\dots,v_k\}$ è un sistema di generatori di $V$ e $B\subseteq A$ è massimale tra i sottoinsiemi linearmente indipendenti, allora $B$ è una base di $V$.
@@ -635,6 +646,18 @@ Dato $V=\operatorname{Span}(v_1,\dots,v_k)$:
 2. elimina i vettori dipendenti;
 3. conserva un sottoinsieme massimale indipendente;
 4. quel sottoinsieme è una base di $V$.
+
+[ESEMPIO 4.19] Lo span di $v_{i} \in R^4$ e' sottoinsieme di $R^4$
+$$
+V = \text{Span}(v_{1}=\begin{vmatrix}
+1\\2\\0\\2
+\end{vmatrix}, v_{2}= \begin{vmatrix}
+2\\1\\1\\0
+\end{vmatrix}, v_{3} = \begin{vmatrix}
+5\\4\\2\\2
+\end{vmatrix}) \subseteq R^4
+$$
+
 
 [TEOREMA] **Teorema del completamento**  
 Se $B=\{v_1,\dots,v_n\}$ è una base di $V$ e $w_1,\dots,w_p$ sono linearmente indipendenti, con $p\le n$, allora si possono aggiungere $n-p$ vettori della base $B$ a $w_1,\dots,w_p$ per ottenere una base di $V$.
@@ -708,11 +731,20 @@ per ogni $x,y\in V$, $\lambda\in\mathbb{R}$.
 Data $A\in M_{m,n}(\mathbb{R})$, si definisce:
 
 $$ L_A:\mathbb{R}^n\to\mathbb{R}^m $$
-
 $$ L_A(x)=Ax $$
 
 Questa è un’applicazione lineare.
 
+Valgono le seguenti proprietà:
+$$
+T(0) = T(x-x) =T(x) + T(-x) = T(x)-T(x)=0
+$$
+Piu in generale:
+* $T(x+y) = T(x)+T(y)$
+* $T(\lambda x) = \lambda T(x)$
+* $T(-x)= -T(x)$
+
+**Esempio**: $T(x,y)=x^2+y$ non e' lineare! $T(2,0)=4$ ma $2T(1,0)=2$
 [TEOREMA] **Una lineare è determinata dai valori su una base**  
 Se $\{v_1,\dots,v_n\}$ è una base di $V$ e $w_1,\dots,w_n\in W$, allora esiste un’unica applicazione lineare $T:V\to W$ tale che:
 
