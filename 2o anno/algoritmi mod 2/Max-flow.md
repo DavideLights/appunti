@@ -81,7 +81,7 @@ Si dimostra che le seguenti proposizioni sono equivalenti:
 ## Scegliere i cammini aumentanti
 Il numero di augmenting path può essere esponenziale.
 * $val(f^*) \leq n C$
-[[Apx]]### Parametro $\Delta$
+[[2o anno/algoritmi mod 2/Apx]]### Parametro $\Delta$
 Usare un parametro di scaling $\Delta$, per cui vado a considerare il grafo $G_f(\Delta)$ fatto di archi che hanno capacita $\geq \Delta$.
 Cosi ci sono: $O(m \, log C)$ augmentation e l'algoritmo esegue in $O(m^{2}\, logC)$
 ### BFS
@@ -109,7 +109,7 @@ Due path sono edge disjoint se **non condividono archi**.
 
 **Dimostrazione** dati k path edge disjoint allora $f(e)=1$ se e solo se $e$ partecipa ad uno dei path edge disjoint. Dato che i path sono e.d. allora il valore del flusso e' k.
 
-Al contrario dato ar[[Programmazione Dinamica]]co con $f(e)=1$ allora per conservazione del flusso esiste un'altro $f(e')=1$ fino ad arrivare a $t$.
+Al contrario dato ar[[2o anno/algoritmi mod 2/Programmazione Dinamica]]co con $f(e)=1$ allora per conservazione del flusso esiste un'altro $f(e')=1$ fino ad arrivare a $t$.
 ## Image Segmentation
 * $a_{i} \geq 0, b_{j} \geq 0$
 * $p_{ij} \geq 0$

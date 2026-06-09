@@ -1028,11 +1028,6 @@ Dopo questo PDF devo saper:
 - applicare Rouché-Capelli;
 - risolvere sistemi tramite riduzione a scala.
 # PDF 4 — Rango, prodotto di matrici, invertibilità e determinanti
-
-## 1. Cosa tratta
-
-Questo PDF chiude la parte su rango e sistemi lineari, poi introduce il prodotto di matrici e il legame tra composizione di applicazioni lineari e prodotto matriciale. La parte centrale riguarda le matrici invertibili e le condizioni equivalenti all’invertibilità. Infine introduce i determinanti: definizione tramite proprietà, calcolo con triangolari e sviluppi di Laplace, teorema di Binet e regola di Cramer.
-
 ## 2. Concetti da sapere
 
 [TEOREMA] **Riduzione a scala e rango**  
@@ -1043,23 +1038,17 @@ $$ \operatorname{rg}A=\operatorname{rg}S $$
 Inoltre, le colonne pivot corrispondenti danno una base dell’immagine di $A$.
 
 [METODO] **Tecniche di calcolo per basi e dimensioni**  
-Per trovare base e dimensione di:
 
-$$ \operatorname{Span}(v_1,\dots,v_k) $$
+**Per trovare base e dimensione di**:$$ \operatorname{Span}(v_1,\dots,v_k) $$si mettono i vettori in matrice e si riduce a scala.
 
-si mettono i vettori in matrice e si riduce a scala.
+**Per trovare base e dimensione di $U+W$,** si mettono insieme generatori di $U$ e $W$ e si calcola il rango.
 
-Per trovare base e dimensione di $U+W$, si mettono insieme generatori di $U$ e $W$ e si calcola il rango.
-
-Per trovare $\dim(U\cap W)$, si può usare Grassmann:
-
+**Per trovare $\dim(U\cap W)$, si può usare Grassmann**:
 $$ \dim(U\cap W)=\dim U+\dim W-\dim(U+W) $$
 
 [DEFINIZIONE] **Prodotto di matrici**  
 Se:
-
 $$ A\in M_{m,n}(\mathbb{R}), \qquad B\in M_{n,p}(\mathbb{R}) $$
-
 allora:
 
 $$ AB\in M_{m,p}(\mathbb{R}) $$
@@ -1071,36 +1060,24 @@ $$ (AB)_{ij}=A_i\cdot B^j $$
 cioè prodotto tra la riga $i$-esima di $A$ e la colonna $j$-esima di $B$.
 
 [TEOREMA] **Composizione e prodotto matriciale**
-
 $$ L_A\circ L_B=L_{AB} $$
-
 Il prodotto di matrici rappresenta la composizione di applicazioni lineari.
 
 [FORMULA] **Proprietà del prodotto di matrici**
-
 $$ A(B+C)=AB+AC $$
-
 $$ (A+B)C=AC+BC $$
-
 $$ (\lambda A)B=\lambda(AB) $$
-
 $$ (AB)C=A(BC) $$
-
 $$ AI=IA=A $$
-
 $$ A0=0A=0 $$
-
 $$ (AB)^T=B^TA^T $$
 
 [DEFINIZIONE] **Matrice invertibile**  
 Una matrice quadrata $A\in M_{n,n}(\mathbb{R})$ è invertibile se esiste $B\in M_{n,n}(\mathbb{R})$ tale che:
-
 $$ AB=BA=I_n $$
-
-La matrice $B$ è unica e si indica con:
+La matrice $B$ è **unica** e si indica con:
 
 $$ A^{-1} $$
-
 [FORMULA] **Inverse notevoli**
 
 $$ (A^{-1})^{-1}=A $$
@@ -1111,7 +1088,6 @@ $$ (AB)^{-1}=B^{-1}A^{-1} $$
 
 [TEOREMA] **Condizioni equivalenti all’invertibilità**  
 Per $A\in M_{n,n}(\mathbb{R})$, sono equivalenti:
-
 1. $A$ è invertibile;
 2. $L_A$ è invertibile;
 3. $L_A$ è iniettiva;
@@ -1123,21 +1099,22 @@ Per $A\in M_{n,n}(\mathbb{R})$, sono equivalenti:
 9. per ogni $b\in\mathbb{R}^n$, $Ax=b$ ha unica soluzione;
 10. tutti i pivot di $A$ sono non nulli.
 
+>[!error] esempi da fare
+> 6.5, 6.6
+
 [METODO] **Calcolare l’inversa con Gauss**  
 Per trovare $A^{-1}$:
-
 1. costruisci la matrice aumentata:
-
 $$ (A\mid I_n) $$
 
 2. applica Gauss fino a trasformare $A$ in $I_n$;
 3. ottieni:
-
 $$ (I_n\mid B) $$
-
 4. allora:
-
 $$ B=A^{-1} $$
+
+> [!error] fare esercizi
+>  problema, 7.21
 
 [DEFINIZIONE] **Determinante ($2\times 2$)**  
 Per:
@@ -1163,6 +1140,8 @@ Il determinante è una funzione che soddisfa:
 Se $A$ è triangolare superiore, allora:
 
 $$ \det A=a_{11}a_{22}\cdots a_{nn} $$
+> [!error] esempi
+> guarda esempi su calcolo determinante
 
 [DEFINIZIONE] **Minore ($A_{ij}$)**  
 Il minore $A_{ij}$ è la matrice ottenuta cancellando la riga $i$ e la colonna $j$ da $A$.

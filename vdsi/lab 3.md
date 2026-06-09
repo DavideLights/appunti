@@ -56,3 +56,20 @@ se guardo lo spettro:
 
 
 ![[Pasted image 20260603152021.png]]
+
+# esperimenti
+**Devo fare**: analizzare spettro, costellazione, fase raw, bit ricevuti, ricerca preambolo sugli esperimenti, decodifica testo
+
+
+## esp 1
+![[Pasted image 20260608162341.png]]
+![[Pasted image 20260608162400.png]]
+![[Pasted image 20260608164131.png]]
+
+* esp 2 
+![[Pasted image 20260608164402.png]]
+![[Pasted image 20260608164516.png]]
+![[Pasted image 20260608164654.png]]
+* esp 3
+![[Pasted image 20260608165545.png]]
+![[Pasted image 20260608165626.png]]
