@@ -754,11 +754,18 @@ per ogni $i$.
 
 [DEFINIZIONE] **Nucleo**
 
+
 $$ \ker T=\{v\in V:T(v)=0\} $$
 
+* $dim(\ker(T)) = n - \text{rg}(A)$
 [DEFINIZIONE] **Immagine**
 
 $$ \operatorname{Im}T=\{T(v):v\in V\} $$
+ossia e' lo spazio generato dalle immagini della base $\mathcal B = \{ v_{1},v_{2},\dots,v_{n} \}$ di $V$
+* $\mathrm{Im} T$ e' lo spazio generato dalle colonne di $A$
+* La base di $\mathrm{Im} T$ sono le colonne linearmente indipendenti di $A$
+* $\dim(\mathrm{Im}(T)) = \text{rg} A$
+
 
 [TEOREMA] **Nucleo e immagine sono sottospazi**  
 Se $T:V\to W$ è lineare, allora:
@@ -798,6 +805,7 @@ Una matrice è a scala se i pivot si spostano progressivamente verso destra scen
 Se una matrice a scala $S$ ha $r$ pivot, allora:
 
 $$ \operatorname{rg}S=r $$
+[TEOREMA] 
 
 ## 3. Teoremi / risultati importanti
 
@@ -857,12 +865,16 @@ Dimostrazione: presente in forma collegata a span/rango; da sapere.
 
 ## 4. Metodi operativi per esercizi
 
+### Base di $\ker f = \{ 0 \}$
+> [!error] ATTENZIONE!
+Per $f$, la base di $\ker f = \{ 0 \}$, e' l'insieme vuoto $\emptyset$.
+
 ### Trovare una base di uno span
 
 1. Metti i vettori come colonne di una matrice.
 2. Riduci la matrice a scala.
 3. Individua le colonne pivot.
-4. I vettori originali corrispondenti alle colonne pivot formano una base dello span.
+4. **I vettori originali corrispondenti alle colonne pivot formano una base dello span.**
 5. Il numero di pivot è la dimensione dello span.
 
 ---
@@ -871,7 +883,7 @@ Dimostrazione: presente in forma collegata a span/rango; da sapere.
 
 1. Conta quanti vettori hai.
 2. Conosci o calcola $\dim V$.
-3. Se hai esattamente $\dim V$ vettori, basta verificare l’indipendenza lineare.
+3. **Se hai esattamente $\dim V$ vettori, basta verificare l’indipendenza lineare.**
 4. Se sono indipendenti, sono una base.
 5. Se sono dipendenti, non sono una base.
 
@@ -927,7 +939,20 @@ $$ \operatorname{Im}A=\operatorname{Span}(A^1,\dots,A^n) $$
 5. Il numero di pivot è il rango.
 
 ---
+### Trovare Base del nucleo
+#### 1. Scrivere il sistema omogeneo
 
+Se hai una matrice $A$, devi risolvere l'equazione:
+$$A\mathbf{x} = \mathbf{0}$$
+Questo corrisponde a un sistema in cui ogni equazione è posta uguale a zero.
+#### 2. Riduzione a scala (RREF)
+Usa l'eliminazione di Gauss per trasformare la matrice $A$ nella sua **forma a scala ridotta** (Reduced Row Echelon Form).
+- Identifica i **pivot** (i primi elementi non nulli di ogni riga).
+- Le colonne che **non** contengono pivot corrispondono alle **variabili libere**.
+#### 3. Esprimere le variabili pivot in funzione di quelle libere
+Riscrivi il sistema partendo dalla matrice ridotta. Se, ad esempio, $x_2$ e $x_4$ sono variabili libere, dovrai isolare le altre variabili ($x_1, x_3, \dots$) in funzione di esse.
+
+---
 ### Usare rango-nullità
 
 Per $T:V\to W$:
@@ -951,9 +976,15 @@ $$ \dim V=\dim\ker T+\operatorname{rg}T $$
 5. Se i ranghi sono diversi, il sistema è incompatibile.
 6. Se i ranghi sono uguali, il sistema è compatibile.
 7. Se inoltre $\operatorname{rg}A=n$, con $n$ numero di incognite, la soluzione è unica.
-8. Se $\operatorname{rg}A<n$, ci sono infinite soluzioni con parametri liberi.
+8. Se $\operatorname{rg}A<n$, **ci sono infinite soluzioni** con parametri liberi.
 
 ## 5. Formule da ricordare
+
+> [!error] definizione di applicazione lineare
+> * $T: R^2 \to R^3$ tale che $T(x,y) = (x+y, 2x, x-y)$
+> * $T: R^2 \to R^3$ tale che $T(e_{1}) = (1,2,1); T(e_{2})=(1,0,-1)$
+> * $T: R^2 \to R^3$ tale che $A=\begin{vmatrix}1 \ 1 \\ 2 \ 0 \\ 1  \ {-1}\end{vmatrix}$
+
 
 $$ \dim V=n $$
 Numero di vettori di una base di $V$.
@@ -984,6 +1015,12 @@ Rouché-Capelli.
 
 $$ \operatorname{rg}S=\text{numero di pivot di }S $$
 Rango di una matrice a scala.
+
+>[!error] Differenza tra Ker e Immagine
+>⚠️ Un errore da NON fare (Differenza tra Ker e Immagine)
+Mentre riduci con Gauss, le relazioni tra le colonne cambiano. Questo significa che:
+> - **Per il $\ker$:** Puoi usare direttamente la matrice ridotta $U$ per fare i calcoli. Le soluzioni di $U\mathbf{x} = \mathbf{0}$ sono _identiche_ a quelle di $A\mathbf{x} = \mathbf{0}$. 
+ > - **Per l'Immagine ($\text{Im}(T)$):** Se devi estrarre una base dell'immagine, i pivot ti dicono _quali_ colonne prendere, ma devi andare a recuperare le colonne **della matrice originaria $A$**, non quelle di $U$!
 
 ## 6. Note del professore
 
@@ -1224,6 +1261,12 @@ A cosa serve: risolvere sistemi quadrati piccoli o dimostrare risultati teorici.
 Dimostrazione: presente; da sapere almeno formula e ipotesi.
 
 ## 4. Metodi operativi per esercizi
+
+## Suriettivita, Iniettivita, Biettiva
+sia $T: V \to W$:
+* **iniettiva** se $dim(\ker T) = 0 \iff \ker T = \{ 0 \}$
+* **suriettiva** se $dim(\mathrm{Im}(T))=dim(W)$
+* **biettiva**: se iniettiva e suriettiva.
 
 ### Calcolare il prodotto di due matrici
 
