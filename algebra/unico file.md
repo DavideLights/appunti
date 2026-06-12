@@ -35,7 +35,11 @@ Dato $t \in \mathbb{R}$ e un vettore $\overrightarrow{OA}$, il vettore $t\overri
 - ha **stesso verso** se $t>0$;
 - ha **verso opposto** se $t<0$;
 - è il vettore nullo se $t=0$.
-
+### Verificare se $T$ è triangolabile
+1. Cerca una base di $V$ rispetto alla quale la matrice di $T$ sia triangolare superiore.
+2. Se esiste, $T$ è triangolabile.
+3. In questo PDF è data la definizione, ma non un criterio completo di calcolo.  
+[DUBBIO] Il metodo operativo completo potrebbe comparire nei PDF successivi.
 [FORMULA] Proprietà del prodotto per scalare:
 * $\lambda(\overrightarrow{OA}+\overrightarrow{OB})= \lambda \overrightarrow{OA}+\lambda \overrightarrow{OB}$
 * $(\lambda+\mu)\overrightarrow{OA} =\lambda\overrightarrow{OA}+\mu\overrightarrow{OA}$
@@ -956,7 +960,6 @@ Riscrivi il sistema partendo dalla matrice ridotta. Se, ad esempio, $x_2$ e $x_4
 ### Usare rango-nullità
 
 Per $T:V\to W$:
-
 1. Calcola $\dim V$.
 2. Calcola $\dim\ker T$ oppure $\operatorname{rg}T$.
 3. Usa:
@@ -1185,12 +1188,14 @@ Il minore $A_{ij}$ è la matrice ottenuta cancellando la riga $i$ e la colonna $
 
 [TEOREMA] **Sviluppo di Laplace**
 
-$$ \det A a_{i1}\det(A_{i1}) a_{i2}\det(A_{i2}) +\dots+ (-1)^{i+n}a_{in}\det(A_{in}) $$
+$$\det (A) = \sum_{j=1}^n(-1)^{i+j} a_{ij} \det(M_{ij})$$
+$$
+\det(A) = (-1)^i a_{i 1} \det(M_{i {1}}) + (-1)^i a_{i 2} \det(M_{i {2}}) + \dots 
+$$
 
 Lo sviluppo si può fare lungo qualunque riga o colonna.
 
 [TEOREMA] **Trasposta e determinante**
-
 $$ \det(A^T)=\det(A) $$
 
 [TEOREMA] **Binet**
@@ -1266,7 +1271,6 @@ Dimostrazione: presente; da sapere almeno formula e ipotesi.
 sia $T: V \to W$:
 * **iniettiva** se $dim(\ker T) = 0 \iff \ker T = \{ 0 \}$
 * **suriettiva** se $dim(\mathrm{Im}(T))=dim(W)$
-* **biettiva**: se iniettiva e suriettiva.
 
 ### Calcolare il prodotto di due matrici
 
@@ -1373,7 +1377,7 @@ $$ (AB)^{-1}=B^{-1}A^{-1} $$
 
 Formule sulle inverse.
 
-$$ \det \begin{pmatrix} x & y\\ z & w \end{pmatrix} xw-yz $$
+$$ \det \begin{pmatrix}= x & y\\ z & w \end{pmatrix} xw-yz $$
 
 Determinante $2\times2$.
 
@@ -1441,10 +1445,6 @@ Dopo questo PDF devo saper:
 - applicare Cramer quando $\det A\neq 0$.
 # PDF 5 — Teorema degli orlati, autovalori, autovettori, diagonalizzabilità
 
-## 1. Cosa tratta
-
-Questo PDF chiude la parte sul rango con il **teorema degli orlati**, utile per calcolare il rango tramite sottomatrici quadrate non singolari. Poi introduce la parte sugli **autovalori e autovettori** di un’applicazione lineare $T:V\to V$. Vengono definiti spettro, autospazi, diagonalizzabilità e triangolabilità, con esempi pratici sul calcolo degli autovalori tramite determinante.
-
 ## 2. Concetti da sapere
 
 [DEFINIZIONE] **Sottomatrice quadrata di ordine $p$**  
@@ -1468,7 +1468,7 @@ Il numero $\lambda$ è un autovalore di $T$ se esiste almeno un vettore $x\neq 0
 $$ T(x)=\lambda x $$
 
 [DEFINIZIONE] **Spettro**
-$$ \operatorname{sp}(T) $$
+$$ \operatorname{sp}(T) $$è l’insieme degli autovalori di ￼￼.
 è l’insieme degli autovalori di $T$.
 
 [DEFINIZIONE] **Autospazio associato a $\lambda$**
@@ -1486,7 +1486,7 @@ Se $T=L_A$, allora $\lambda$ è autovalore se e solo se:
 $$ \ker(A-\lambda I)\neq \{0\} $$
 cioè se:
 $$ A-\lambda I $$
-è singolare.
+è **singolare**.
 In termini di determinante:
 $$ \det(A-\lambda I)=0 $$
 
@@ -1527,9 +1527,7 @@ Ipotesi: $T:V\to V$ lineare.
 Tesi: esiste una base di autovettori; in quella base la matrice di $T$ è diagonale.  
 A cosa serve: semplifica la matrice dell’applicazione lineare.  
 Dimostrazione: non sviluppata qui; da sapere la definizione e il significato operativo.
-
 ## 4. Metodi operativi per esercizi
-
 ### Calcolare il rango con il teorema degli orlati
 1. Cerca una sottomatrice quadrata $A'$ di ordine $r$ con determinante non nullo.
 2. Questo garantisce:
