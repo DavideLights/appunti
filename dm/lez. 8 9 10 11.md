@@ -54,5 +54,32 @@ per stimare eps si utilizza il metodo del **gomito**:
 **obiettivo**: trovare una sequenza di test ottimi per la classificazione. ossia si vuole costruire un'albero di decisione ogni nodo vuol massimizzare il guadagno informativo
 
 $$
-I_{G}(D_p) = I_{G}
+IG(D_p) = I_G(D_{p}) - (\frac{n_{L}}{n} I_G(D_{L}) + \frac{n_{R}}{n}I_G(D_{R}))
 $$
+$$
+I_{G}(D) = 1-\sum_{c}\left( \frac{n_{c}}{n} \right)^2= \sum_{c} \frac{1}{n}\left( 1-\frac{1}{n} \right)
+$$
+* **massimo con due classi** $(c=2)$: $1-\sum_{i=1}^c 0.5^2 = 0.5$, ossia quando le due classi sono **perfettamente mischiate**.
+$$
+I_{H} = -\sum_{c}\frac{n_{c}}{n}\log_{2} \frac{n_{c}}{n}
+$$
+**misure di impurità**: $I_{G}$ ed $I_{H}$
+
+**addestramento**: per ogni nodi si calcola la feature e la dimensione migliore da usare, ossia quella che massimizza $IG(D_{i})$. La foglia e' il nodo che determina la classe da assegnare all'esempio.
+
+**iperparametri**: impurità,  depth massima albero, dimensione minima del dataset.
+* **depth**: determina il rischio di overfitting
+
+## Implementazione
+Un *nodo interno* è un dizionario con i seguenti campi:
+- `'index'`: l'indice della colonna di `X` corrispondente alla caratteristica usata per il test;
+- `'value'`: il valore con cui confrontare la caratteristica
+- `'groups'`: una coppia che contiene $D_L$ e $D_R$
+- `'left`, `'right'`: i riferimenti ai due figli
+
+Un *nodo foglia* è semplicemente un valore, il nome della classe.
+
+
+## complessita temporale
+* `_get_best_split`: $O((nd)^2)$. Trova feature e valore che massimizzano il guadagno informativo.
+* `_split_dataset`: $O(nd)$. Fai lo split in base a feature e valore.

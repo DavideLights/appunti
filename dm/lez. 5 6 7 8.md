@@ -71,6 +71,10 @@ $$
 \sum_{i=1}^n \left(( y^{(i)} - w\cdot x^{(i)} )(-w_{j})\right) = -\sum_{i=1}^n w_{j} \left( y^{(i)} - w\cdot x^{(i)} \right)
 $$
 
+> [!note] attenzione bro!
+> * la derivata ha segno meno, dunque $w_{j} \gets w_{j} - \dots$ diventa $w_{j} \gets w_{j} + \dots$
+> * dato che uso somma degli errori quadrati, l'aggiornamento di ogni peso e' influenzato dall'errore di tutti i pesi.
+
 **vettore degli errori**:
 $$
 \texttt{errors} = \left(
