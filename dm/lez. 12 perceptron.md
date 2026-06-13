@@ -11,19 +11,24 @@
 
 **prodotto scalare**:
 $$
-w  \cdot x = x_{0}w_{0} + x_{1}w_{1} + \dots + x_{d}w_{d}
+w  \cdot x^T = x_{0}w_{0} + x_{1}w_{1} + \dots + x_{d}w_{d}
 $$
 **notazione per il neurone**: 
 $$
-\phi(w\cdot x) = 1 \text{ se } w\cdot x \geq 0 \text{, altrimenti }-1 
+\phi(w\cdot x^T) = 1 \text{ se } w\cdot x^T \geq 0 \text{, altrimenti }-1 
 $$
 * **input di rete**: $w \cdot x$
 * **addestramento**: serve a trovare $w$.
+
+> [!note] $x^T$
+> Il vettore $x^T$ in riga, va trasposto e portato in colonna per effettuare la moltiplicazione con $w$.
 
 **iperpiano**: con $x \in R^d$, allora $w \cdot x = 0$ e' iperpiano.
 * **addestrare**: voglio trovare l'iperpiano che separa meglio gli esempi.
 
 > Se gli $n$ esempi sono linearmente separabili, allora l'algoritmo trova l'iperpiano che li separa
+
+![[Pasted image 20260612122659.png]]
 
 **Algoritmo**:
 1. **Inizializza** $w$
@@ -131,19 +136,16 @@ U \geq \max_i \| x^{(i)} \|
 
 $$
 ---
-
 ## analisi algoritmo
 **algoritmo**:
 * sia $w^{(0)} = (0,\dots,0)$
 * $w^{(k)} = w^{(k-1)} + \eta y^{(i)}x^{(i)}$
 * assumiamo che al passo $k$ aggiorno l'iperpiano, allora...
-
 $$
 
 y^{(i)} w^{(k-1)}\cdot x^{(i)} \leq 0 < \gamma \leq y^{(i)}\frac{w^* \cdot x^{(i)}}{\| w^* \| }
 
 $$
-
 Dalla proprietà del prodotto scalare:
 
 $$

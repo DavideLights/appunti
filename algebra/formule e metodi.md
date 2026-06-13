@@ -130,6 +130,7 @@ $$\text{rg }A = n = \text{ numero colonne} \iff \det A \neq 0$$
 * sia $A$ matrice $n \times n$ con determinante $\det(A) = 0$
 * allora se esiste una sottomatrice $m\times m$ con $m=n-1$ con $\det = 0$, allora $A$ ha rango $n-1$
 * e cosi via...
+
 **METODO**: **calcolare determinante con laplace**:
 $$\det (A) = \sum_{j=1}^n(-1)^{i+j} a_{ij} \det(M_{ij})$$
 $$
