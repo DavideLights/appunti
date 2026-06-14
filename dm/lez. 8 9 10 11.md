@@ -60,6 +60,12 @@ $$
 I_{G}(D) = 1-\sum_{c}\left( \frac{n_{c}}{n} \right)^2= \sum_{c} \frac{1}{n}\left( 1-\frac{1}{n} \right)
 $$
 * **massimo con due classi** $(c=2)$: $1-\sum_{i=1}^c 0.5^2 = 0.5$, ossia quando le due classi sono **perfettamente mischiate**.
+* $D_p$: insieme di esempi relativi al nodo $p$.
+* $n = |D_p|$
+* $n_c = \text{numero di esempi in } D_p \text{ appartenenti alla classe } c$.
+* $n_c/n$: probabilita di assegnare un esempio alla classe $c$
+* $n_c \to 0$: allora $I_G \to 0$
+* se $I_G(D_p) =0$: se ho solo due classi ,vuol dire che una delle due prevale sull'altra
 $$
 I_{H} = -\sum_{c}\frac{n_{c}}{n}\log_{2} \frac{n_{c}}{n}
 $$
@@ -78,8 +84,6 @@ Un *nodo interno* è un dizionario con i seguenti campi:
 - `'left`, `'right'`: i riferimenti ai due figli
 
 Un *nodo foglia* è semplicemente un valore, il nome della classe.
-
-
 ## complessita temporale
 * `_get_best_split`: $O((nd)^2)$. Trova feature e valore che massimizzano il guadagno informativo.
 * `_split_dataset`: $O(nd)$. Fai lo split in base a feature e valore.
