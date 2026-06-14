@@ -104,7 +104,7 @@ Mentre riduci con Gauss, le relazioni tra le colonne cambiano. Questo significa 
  > - **Per l'Immagine ($\text{Im}(T)$):** Se devi estrarre una base dell'immagine, i pivot ti dicono _quali_ colonne prendere, ma devi andare a recuperare le colonne **della matrice originaria $A$**, non quelle di $U$!
  > \
 
-## determinante
+## determinante e inversa
 **Determinante**: 
 $$
 A = \begin{vmatrix}
@@ -130,6 +130,7 @@ $$\text{rg }A = n = \text{ numero colonne} \iff \det A \neq 0$$
 * sia $A$ matrice $n \times n$ con determinante $\det(A) = 0$
 * allora se esiste una sottomatrice $m\times m$ con $m=n-1$ con $\det = 0$, allora $A$ ha rango $n-1$
 * e cosi via...
+
 **METODO**: **calcolare determinante con laplace**:
 $$\det (A) = \sum_{j=1}^n(-1)^{i+j} a_{ij} \det(M_{ij})$$
 $$
@@ -143,47 +144,47 @@ $$
 * sia $I$ la base canonica della stessa grandezza di $A$
 * trasforma $A|I$ in $I|B$ attraverso **gauss**
 * $B$ e' l'inversa di $A$
+
+## matrici invertibili
+posso verificare se $A$ e' invertibile usando uno di questi metodi:
+* $rg(A)=\text{e' massimo}$, ossia su $A \in R^{n\times m}$ il rango e $n$
+* $\det(A) \neq 0$
+* $\ker A = \{ v_{0} \}$, equivalente alla prima,infatti implica che $\dim \ker A = 0 \iff rg(A) = n$
+* ci sono $n$ pivot sulla matrice ridotta a scala
 ## autovalori e autovettori
-**autovettore**: e' $x$ tale che, $\exists \lambda$
+**autovettore**: e' $x$ tale che, esiste $\lambda$:
 $$
 T(x) = \lambda x
 $$
 **autovalore**:  e' $\lambda$ tale che $\exists x \neq 0$ per cui
-$$
-T(x) = \lambda x
-$$**Autospazio associato a $\lambda$**
+$$T(x) = \lambda x$$
+
+**Autospazio associato a $\lambda$**
 $$ V_\lambda=\{v\in V:T(v)=\lambda v\} $$
 
 **METODO: trovare gli autovalori**
-* **Teoria**:  $\lambda$ e' autovalore se e esolo se $\ker(A-\lambda I)\neq \{0\}$
-* **Conseguenza**: vogliamo vedere se $A-\lambda I$ e' singolare, ossia $\det(A - \lambda I) = 0$
+* costruisci $p_{A}(\lambda) = \det(A-\lambda I)$
+* otterrai $p_{A}(\lambda)=\text{polinomio in } \lambda$
+* trova tutti gli zeri di $p_{A}(\lambda)$, ossia risolvi l'equazione
+* hai ottenuto gli autovalori
 
-1. Costruisci il sistema $A-\lambda I = 0$ e mettilo a matrice
-2. I valori di $\lambda \text{ t.c.} \det(A - \lambda I) = 0$ sono gli autovalori
+**METODO**: **verificare $\lambda$ sia autovalore**
+* puoi verificare $\ker(A-\lambda I) \neq \{ 0 \}$
+* oppure verifichi $p_{A}(\lambda)=0$
 
 **METODO: trovare gli autovettori a partire** da $\lambda$
 * Costruisci matrice $A - \lambda I=0$
-* Il vettore delle soluzioni genera gli autovalori per $\lambda$
+* Il vettore delle soluzioni genera gli autovettori di $\lambda$
 
-**METODO: diagonalizzare matrice
-1. Trova tutti gli autovalori.
-2. Per ogni autovalore $\lambda$, calcola l’autospazio:
-$$ V_\lambda=\ker(A-\lambda I) $$
-3. Trova basi degli autospazi.
-4. Metti insieme gli autovettori trovati.
-5. Se riesci a ottenere una base di tutto $V$, allora $T$ è diagonalizzabile.
-6. Se non riesci a ottenere abbastanza autovettori indipendenti, $T$ non è diagonalizzabile.
+**METODO: capire se matrice diagonalizzabile**
+* per ogni $\lambda_{i}: p_{A}(\lambda_{i})$ calcolane la molteplicita, ossia la dimensione dell'autospazio
+* **calcola molteplicita algebrica $ma_{i}$** per ogni autovalore, *ossia le soluzioni dei polinomi*
+* **calcola la molteplicita geometrica $mg_{i}$** per ogni autovalore: *ossia il numero di vettori che generano gli autovettori* 
+* e' diagonalizzabile se $\forall i=1,.. \text{ allora } ma_{i}=mg_{i}$
+* **teorema rango**: $m_{g}(\lambda) = \text{molteplicita geometrica} = n - rango(A-\lambda I)$
 
-**METODO: costruire la matrice $T$ rispetto ad una base di autovettori**:
-1. Scegli una base:
-$$ \mathcal{B}=\{v_1,\dots,v_n\} $$
-composta da autovettori.
-2. Per ogni $v_i$, calcola:
-$$ T(v_i)=\lambda_i v_i $$
-3. La matrice di $T$ rispetto a $\mathcal{B}$ è diagonale:
-$$ \begin{pmatrix} \lambda_1 & 0 & \cdots & 0\\ 0 & \lambda_2 & \cdots & 0\\ \vdots & \vdots & \ddots & \vdots\\ 0 & 0 & \cdots & \lambda_n \end{pmatrix} $$
-
-**METODO: Verificare se $T$ e' triangolabile**
-7. Cerca una base di $V$ rispetto alla quale la matrice di $T$ sia triangolare superiore.
-8. Se esiste, $T$ è triangolabile.
-9. In questo PDF è data la definizione, ma non un criterio completo di calcolo.  
+**METODO**: **diagonalizzare la matrice**
+* $D$: e' la matrice con gli autovalori messi sulla diagonale. se $\lambda_{i}$ ha molteplicita $k$ deve comparire $k$ volte in $D$
+* $P$: e' la matrice diagonalizzante. in colonna $i$ trovo l'autovettore corrispondente all'autovalore in colonna $i$ di $D$.
+* $P^{-1}$: banalmente si calcola invertendo $P$
+* **a che serve**? ottengo: $D = P^{-1}AP$

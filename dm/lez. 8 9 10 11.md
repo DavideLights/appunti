@@ -83,3 +83,17 @@ Un *nodo foglia* è semplicemente un valore, il nome della classe.
 ## complessita temporale
 * `_get_best_split`: $O((nd)^2)$. Trova feature e valore che massimizzano il guadagno informativo.
 * `_split_dataset`: $O(nd)$. Fai lo split in base a feature e valore.
+
+# foresta
+* $k$ alberi decisionali, variegati.
+* **classificazione**: avviene prendendo l'etichetta piu frequente
+* **iperparametri**: dimensione della foresta, dimensione insiemi di addestramento per ogni albero e numero di features usate
+
+## varieta negli alberi
+**bootstrap**: faccio una serie di estrazioni con reinserimento dal dataset per popolare gli insiemi di addestramento di ogni singolo albero.
+* **features**: ogni albero viene addestrato su $d'=\sqrt{ d }$ features
+* **campioni**: in totale addestro su $n' \equiv n$ campioni
+
+**proprieta bootstrap**: in media
+* un'albero viene addestrato sul $63\%$ dei nodi
+* due alberi condividono il $37\%$ dei nodi

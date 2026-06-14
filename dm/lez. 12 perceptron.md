@@ -39,7 +39,6 @@ w = w + \eta y^{(i)} x^{(i)}
 $$
 * **$\eta$ eta**: tasso di apprendimento
 
-
 **preliminari**:
 * **prodotto scalare**: $a,b$ due vettori, allora: $a \cdot b = a_{1}b_{1}+\dots + a_{d} b_{d}$
 * **modulo o lunghezza**: $||a|| = \sqrt{ a_{1}^2 + \dots + a_{d}^2 }$
