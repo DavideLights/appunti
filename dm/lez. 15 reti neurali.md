@@ -137,32 +137,37 @@ $$
 \frac{\partial z_k^{\text{H}}}{\partial w_{f,k}} = x_f
 
 $$
-## semplificare
-Riprendendo la catena:
+## aggiornare i pesi e costo $O(nh(t+d))$
 $$
-\frac{\partial \mathcal{J}}{\partial w^{\text{H}}_{f,k}} = -\sum_{e=1}^t \frac{\partial \mathcal{J}}{\partial a_e^{\text{OUT}}} \cdot \frac{\partial a_e^{\text{OUT}}}{\partial z_e^{\text{OUT}}} \cdot \frac{\partial z_e^{\text{OUT}}}{\partial a_k^{\text{H}}} \cdot \frac{\partial a_k^{\text{H}}}{\partial z_k^{\text{H}}} \cdot \frac{\partial z_k^{\text{H}}}{\partial w_{f,k}}
-
-$$
-* **errore sullo strato di output**:  si ottiene guardando solo i primi due termini 
-$$
-\frac{\partial \mathcal{J}}{\partial a_e^{\text{OUT}}} \cdot \frac{\partial a_e^{\text{OUT}}}{\partial z_e^{\text{OUT}}} = (a_e^{\text{OUT}} - y_e) \overset{\mathrm{def}}{=} \delta_e^{\text{OUT}}
-$$$$
-\frac{\partial \mathcal{J}}{\partial w^{\text{H}}_{f,k}} = \sum_{e=1}^t \delta_e^{\text{OUT}} \cdot w_{k,e}^{\text{OUT}} \cdot a_k^{\text{H}} (1 - a_k^{\text{H}}) \cdot x_f
-
-$$
-## Notazione compatta
-Definiamo l'*errore sullo strato nascosto*:
+\delta^{OUT}_{k,c} = \text{errore indotto dal peso nascosto } k \text{ sul layer di output per il campione } c
 $$
 
-\delta_k^{\text{H}} = a_k^{\text{H}} (1 - a_k^{\text{H}}) \sum_{e=1}^t w_{k,e}^{\text{OUT}} \delta_e^{\text{OUT}.} \quad\quad\quad (1)
-
 $$
-da cui:
+ =w^H_{k,f} -\eta\sum_{c=1}^n \left(\underbrace {a^{H}_{{c,k}}(1-a^{H}_{{k}})\sum_{e=1}^t w^{OUT}_{e,k}\underbrace{(a^{OUT}_{e} - y^{(c)}_{e})}_{\delta^{OUT}}} X_{c,f} \right)
 $$
 
-\frac{\partial \mathcal{J}(W^{\text{H}},W^{\text{OUT}}; \mathbf{x}, \mathbf{y} )}{\partial w^{H}_{f,k}} = \delta_k^{\text{H}} \cdot x_f \quad\quad\quad (2)
-
 $$
+\delta^H = \underbrace{A^H \odot (1-A^H)}_{R^{n\times h}} \odot \underbrace{ \delta^{OUT}}_{R^{n \times t}} \cdot \underbrace{(W^{OUT})^T}_{{t \times h}} \in R^{n\times h}
+$$
+* $\underbrace{ \delta^{OUT}}_{R^{n \times t}} \cdot \underbrace{(W^{OUT})^T}_{{R^{t \times h}}} \in R^{n \times h}$, costa $O(nth)$
+
+L'**ultimo passaggio e' moltiplicare per le features**:
+$$
+X^T  \times \delta^H \in R^{d \times h}
+$$
+* moltiplicazione tra matrice $d \times n$ e $n \times h$, ossia $d \times h$
+* costa $O(nhd)$, ossia moltiplicazione tra matrice
+
+Le altre operazioni sono trascurabili: 
+* il costo totale e' $O(nh(t+d))$
+* per ogni epoca: $O(\text{epochs} \cdot nh(t+d))$
+
+***addestramento con mini-batch*** ovvero si usano piccoli gruppi di dati (anziché tutto il dataset), rendendo l'apprendimento più veloce ed efficiente.
+
+`batch_idx` è l'insieme degli indici dei campioni che fanno parte del mini-batch corrente.
+
+---
+
 ## Notazione Vettoriale
 Sia:
 * $X \in \mathbb R^{n\times d}$ la matrice degli $n$ campioni
@@ -190,9 +195,7 @@ $$
 * ogni riga $c$ in $\delta ^\text{OUT}$, rappresenta l'errore sul campione $c$
 
 
-***addestramento con mini-batch*** ovvero si usano piccoli gruppi di dati (anziché tutto il dataset), rendendo l'apprendimento più veloce ed efficiente.
 
-`batch_idx` è l'insieme degli indici dei campioni che fanno parte del mini-batch corrente.
 
 | formula                                                           | codice python                                |
 | ----------------------------------------------------------------- | -------------------------------------------- |

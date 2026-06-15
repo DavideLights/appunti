@@ -1,17 +1,30 @@
 **retta ortogonale** alle rette $r_{1},r_{2}$ che passa per un punto **P**: *e' la retta che ha come vettore direttore i coefficienti di $ax+by+cz+\dots$ equazione del piano parallelo ad $r_{1},r_{2}$.* il punto di riferimento rispetto all'origine sara $P$, dunque $\overrightarrow{OP}$
 
-**Scrivere la retta passante per un punto e parallela a un vettore**: 
+**ES: Scrivere la retta passante per un punto e parallela a un vettore**: 
 * $P_{0} = (x_{0},y_{0})$
 * $\vec{q} = (l,m)$
 $$ \begin{pmatrix}x\\ y\end{pmatrix} =  \begin{pmatrix}x_0\\y_0\end{pmatrix} + t \begin{pmatrix}\ell \\ m\end{pmatrix} $$
 
-**Retta passante per due punti**:
+**ES: Retta passante per due punti**:
 $$
 \begin{pmatrix}x\\y\end{pmatrix} =\begin{pmatrix}x_1\\y_1\end{pmatrix} + t \begin{pmatrix} x_2-x_1\\ y_2-y_1 \end{pmatrix}
 $$
-**Piano passante per un punto e parallelo a due vettori**:
+**ES: Piano passante per un punto e parallelo a due vettori**:
 $$ \overrightarrow{OP}= \overrightarrow{OP_0} + t_1\vec i + t_2\vec j $$
 
+**ES: Piano contenente $r$ e parallelo ad $s$
+* $P \in r, v_{1}=\text{direttore di } r, v_{2} = \text{direttore di } s$
+* allora il piano e' $\pi: OP + sv_{1} + tv_{2}$
+
+**ES: piano passante per 0 e contenente $r$**
+* contenente $r$ vuol dire che passa per due punti $A\neq B$ 
+* quindi $v_{1}=OA$, $v_{2}=OB$
+* $\pi: s v_{1} + sv_{2}$
+
+**ES**: rette complanari, devono essere
+* parallele
+* o incidenti
+* coincidenti
 **determinare piano passante per** $A,B,C$: $\pi: \overrightarrow{OA} + t\overrightarrow{AB} + s\overrightarrow{AC}$
 # da applicazioni a vettori
 
@@ -49,17 +62,25 @@ Riprendendo la matrice di prima:
 - La **prima riga** $(2​ \\\ 3​)$ si occupa esclusivamente della **prima coordinata del risultato** (2x+3y). Ti dice che la prima componente dell'output è fortemente influenzata da y (peso 3) e un po' meno da x (peso 2).
 - La **seconda riga** $(1​ \ −1​)$si occupa della **seconda coordinata del risultato** $(1x−1y)$.
 
+
 # sistemi, matrici e vettori (4 carrara)
+> [!error] composizione
+> $h =f \cdot g \to L_{h}= L_f \times L_{h}$
+
+
 **sistema omogeneo**: $Ax=b$ con $b=(0 ,\dots, 0)$
-* **spazio vettoriale**: se $Ax = b$ e' omogeneo, *allora le soluzioni formano uno spazio vettoriale*.
+ 
+**ES: spazio vettoriale**: se $Ax = b$ e' omogeneo, *allora le soluzioni formano uno spazio vettoriale*.
 
 **sistema compatibile**: $Ax=b$ e' compatibile se esistono una o piu soluzioni per $x$.
 
-**un sistema quadrato ha soluzione unica**: se e solo se, dopo aver  applicato Gauss, i pivot sono tutti non nulli.
+**ES: un sistema quadrato ha soluzione unica**: se e solo se, dopo aver  applicato Gauss, i pivot sono tutti non nulli.
 
-**verificare indipendenza lineare**: i vettori sono linearmente indipendenti, se e solo se l'unica soluzione per il sistema $a_{1} v_{1}+ \dots + a_{k}v_{k} = 0$ e' $(a_{1},\dots,a_{k}) = (0,\dots,0)$
+**ES: verificare indipendenza lineare**: i vettori sono linearmente indipendenti, se e solo se:
+* **l'unica soluzione per il sistema** $a_{1} v_{1}+ \dots + a_{k}v_{k} = 0$ e' $(a_{1},\dots,a_{k}) = (0,\dots,0)$
+* **oppure se**:  $\text{rg} A = \dim V$
 
-**sostituire un vettore in $\mathcal B$ con** $v \notin \mathcal B$ : posso farlo se $v$ posso esprimerlo come combinazione lineare di  $\mathcal D \subseteq \mathcal B$. Se si posso 
+**ES sostituire un vettore in $\mathcal B$ con** $v \notin \mathcal B$ : posso farlo se $v$ posso esprimerlo come combinazione lineare di  $\mathcal D \subseteq \mathcal B$. Se si posso 
 
 **rango**: numero di pivot identificati in $A$ **ridotta a scala**.
 * $\text{rg }A$
@@ -67,8 +88,9 @@ Riprendendo la matrice di prima:
 
 **dimensione**:
 * $\dim V$ e' il numero di vettori di una base di $V$
-* $\dim V = \dim \ker V + \dim \text{ Im } = \textcolor{red}{ \dim \ker V + \text{rg } A}$
-* $\dim V = n$
+* **ES:** $\dim V = \dim \ker V + \dim \text{ Im } = \textcolor{red}{ \dim \ker V + \text{rg } A}$
+* **ES**: equivalentemente $\dim(\ker T) = n - \dim \text{Im }T$
+ * $\dim V = n$
 
 **Iniettivita** e **suriettivita**:
 * $T \text{ iniettiva} \iff \ker T=\{0\}$
@@ -82,8 +104,8 @@ $$
 
 **METODO: trovare base del kernel**.
 * prendi $Ax=0$, riduci a scala,  risolvi
-* **colonne con un pivot**: indicano che la variabile corrispondente e' fissata
-* **colonne senza un pivot**: indicano che la variabile corrispondente e' legata al variare di $t,s, \dots \in R$ 
+* **colonne con un pivot**: indicano che la variabile corrispondente **e' fissata**
+* **colonne senza un pivot**: indicano che la variabile corrispondente **e' legata** al variare di $t,s, \dots \in R$ 
 * i coefficienti per $t,s, \dots$ sono le basi del kernel.
 * **ATTENZIONE**: se l'unica soluzione del sistema e' $x=(0, \dots, 0)$ allora $\mathcal B = \{  \}=\emptyset$
 
@@ -93,7 +115,7 @@ $$
 
 **METODO: capire se un sistema $Ax = b$ e' compatibile**
 * prendi $A|b$ e riducilo a scala
-* se $rg(A)=rg(A|b)$ allora il sistema e' compatibile
+* **ROUCHE CAPELLI**: **se $rg(A)=rg(A|b)$ allora il sistema e' compatibile**
 	* se $rg(A)=n$ allora la soluzione e' unica
 	* se $rg(A) < n$ allora ci sono infinite soluzioni
 
@@ -116,7 +138,7 @@ x \ y \\ z \ w
 
 **Binet**:
 $$ \det(AB)=\det(A)\det(B) $$
-**Cramer**:
+**ES: cramer**:
 Per un sistema quadrato $Ax=b$ con $\det A\neq 0$, l’unica soluzione è:
 
 $$ x_i=\frac{\det B_i}{\det A} $$
@@ -136,8 +158,7 @@ $$\det (A) = \sum_{j=1}^n(-1)^{i+j} a_{ij} \det(M_{ij})$$
 $$
 \det(A) = (-1)^{i+j} a_{i 1} \det(M_{i {1}}) + (-1)^{i+j} a_{i 2} \det(M_{i {2}}) + \dots 
 $$
-* **a priori**: scelgo una riga/colonna che contenga il maggior numero di 0 possibili
-* **a posteriori**: applico la formula, ossia la somma per ogni $a_{i,j}$ sulla riga/colonna scelta, moltiplicata per il determinante della matrice ottenuta eliminando da $A$ la riga $i$ ed la colonna $j$
+* **ATTENZIONE**: *se la matrice e' triangolare superiore, basta moltiplicare i pivot tra loro.* 
 
 **METODO**: **trovare inversa di $A$.**
 * **inversa esiste se e solo se: ** $\det(A) \neq 0$

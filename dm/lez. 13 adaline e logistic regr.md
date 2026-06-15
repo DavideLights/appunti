@@ -74,11 +74,7 @@ $$w_j \leftarrow w_j + \eta \sum_{i=1}^{n} (y^{(i)} - \phi(z)) x_j^{(i)}$$
 Nota: invece di calcolare `mu` e `std` sull'intero dataset, li ho caclcolati solo sul `train set`. Questo perche' devo standardizzare rispetto a deviazione e media della fase di addestramento, altrimenti starei applicando sui dati la media del test set, ed e' concettualemente sbagliato.
 
 ## Domanda esame: Perche' la versione stocastica converge prima?
-
-perche' anche se fatto su piccoli batch, la versione stocastica fa piu aggiornamenti in un'iterazione
-
-  
-
+Perche' anche se fatto su piccoli batch, la versione stocastica fa piu aggiornamenti in un'iterazione.
 Praticamente faccio $N / \text{batch\_size}$ aggiornamenti:
 
 * i batch sono scelti in modo casuale, dunque c'e' molto rumore
