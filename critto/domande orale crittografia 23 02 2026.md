@@ -44,5 +44,4 @@
 	* **D**: provare a definire $B$.
 	* **R**: ad ogni bit acceso corrisponde una potenza di $x$ nel polinomio. (???)
 *  **D**: algoritmo di shanks.
-* ...
-
+* altre cose non segnate

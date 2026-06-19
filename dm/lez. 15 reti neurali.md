@@ -150,6 +150,14 @@ $$
 \delta^H = \underbrace{A^H \odot (1-A^H)}_{R^{n\times h}} \odot \underbrace{ \delta^{OUT}}_{R^{n \times t}} \cdot \underbrace{(W^{OUT})^T}_{{t \times h}} \in R^{n\times h}
 $$
 * $\underbrace{ \delta^{OUT}}_{R^{n \times t}} \cdot \underbrace{(W^{OUT})^T}_{{R^{t \times h}}} \in R^{n \times h}$, costa $O(nth)$
+**Note**:
+* $X \in \mathbb R^{n\times d}$ la matrice degli $n$ campioni
+* $Y \in \{ 0,1 \}^{n \times t}$ la matrice che raccoglie tutte le echitette in formate one hot.
+* $W^\text{OUT} \in \mathbb{R}^{h\times t}$.
+* $\delta^\text{OUT} \cdot(W^\text{OUT})^T \in \mathbb{R}^{n\times h}$
+* $X^T \delta^\text{H} \in \mathbb{R}^{d\times h}$
+* ogni riga $c$ in $\delta ^\text{OUT}$, rappresenta l'errore sul campione $c$
+* $A^H$ e' la matrice che ha per righe i vettori $a_{c}^H$ per $c=1,\dots,n$
 
 L'**ultimo passaggio e' moltiplicare per le features**:
 $$
@@ -158,132 +166,36 @@ $$
 * moltiplicazione tra matrice $d \times n$ e $n \times h$, ossia $d \times h$
 * costa $O(nhd)$, ossia moltiplicazione tra matrice
 
-Le altre operazioni sono trascurabili: 
-* il costo totale e' $O(nh(t+d))$
-* per ogni epoca: $O(\text{epochs} \cdot nh(t+d))$
+**Costo totale**: 
+$$O(nh(t+d)) \to O(\text{epochs} \cdot nh(t+d)) $$
 
-***addestramento con mini-batch*** ovvero si usano piccoli gruppi di dati (anziché tutto il dataset), rendendo l'apprendimento più veloce ed efficiente.
-
-`batch_idx` è l'insieme degli indici dei campioni che fanno parte del mini-batch corrente.
-
----
-
-## Notazione Vettoriale
-Sia:
-* $X \in \mathbb R^{n\times d}$ la matrice degli $n$ campioni
-* $Y \in \{ 0,1 \}^{n \times t}$ la matrice che raccoglie tutte le echitette in formate one hot.
-
-Per aggiornare $w_{f,k}^H$ faccio cosi:
-* assegno un valore casuale **vicino a 0**
+**Per aggiornare $w_{f,k}^H$ faccio cosi:**
+* **inizializzazione pesi**: assegno un valore casuale **vicino a 0**
 * per ogni campione $x$, ossia ogni riga $c$, di $X$:
 $$
 
 w_{f,k}^{\text{H}} \leftarrow w_{f,k}^{\text{H}} - \eta \cdot \delta^{\text{H}}_{c,k} \cdot X_{c,f}
 
 $$
-ovvero: invece che fare un aggiornamento iterativo, ne faccio un cumulativo per ogni campione.
-$$
-w_{f,k}^{\text{H}} =w_{f,k}^{\text{H}} - \eta \sum_{c = 1}^{n} \delta^{\text{H}}_{c,k} \cdot X_{c,f} \quad\quad\quad (3)
-$$
-* $\delta_{c,k}^H$ e' la componente $k$ dell'errore de layer nascosto, ottenuto a partire dal campione $c$.
-* sia $A^H$ la matrice che ha per righe i vettori $a_{c}^H$ per $c=1,\dots,n$
-* definiamo allora $A^\text{OUT}$
-* di conseguenza:
-$$
-\delta^\text{OUT} = A^\text{OUT} - Y \in \mathbb R^{n \times t}
-$$
-* ogni riga $c$ in $\delta ^\text{OUT}$, rappresenta l'errore sul campione $c$
+**ovvero**: invece che fare un aggiornamento iterativo, ne faccio un cumulativo per ogni campione.
 
+***addestramento con mini-batch*** si usano piccoli gruppi di dati (anziché tutto il dataset), rendendo l'apprendimento più veloce ed efficiente.
 
-
+`batch_idx` è l'insieme degli indici dei campioni che fanno parte del mini-batch corrente.
+## Notazione Vettoriale
 
 | formula                                                           | codice python                                |
 | ----------------------------------------------------------------- | -------------------------------------------- |
 | $\delta^\text{OUT} = A^\text{OUT} - Y \in \mathbb{R}^{n\times t}$ | `delta_out = a_out - y_train_enc[batch_idx]` |
-
-Ricordiamo che $W^\text{OUT} \in \mathbb{R}^{h\times t}$. Consideriamo il seguente prodotto
-$$
-
-\delta^\text{OUT} \cdot(W^\text{OUT})^T \in \mathbb{R}^{n\times h}
-
-$$
-La matrice risultante sulla riga $c$ e colonna $k$ contiene:
-$$
-
-\sum_{e=1}^t \delta_{c,e}^\text{OUT}w_{k,e}^\text{OUT}
-
-$$
-Se quest'ultima quantita viene moltiplicata per $A_{c,k}^\text{OUT}(1-A_{c,k}^\text{OUT})$ (ovvero per la componente $k$ del vettore $\mathbf{a}^\text{H}_c$) otteniamo
-$$
-
-\mathbf{a}^\text{H}_{c,k} (1-\mathbf{a}^\text{H}_{c,k})\sum_{e=1}^t \delta_{c,e}^\text{OUT}w_{k,e}^\text{OUT} = \delta^\text{H}_{c,k}
-
-$$
-Indicando con $\odot$ il prodotto componente per componente
-$$
-
-\delta^\text{H} = A^\text{H} \odot (1-A^\text{H}) \odot \delta^\text{OUT} \cdot(W^\text{OUT})^T \in \mathbb{R}^{n\times h}
-
-$$
 
 | formula                                                                                                                                         | codice python                                                      |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | $\delta^\text{H} = A^\text{H} \odot (1 - A^\text{H}) \odot \left( \delta^\text{OUT} \cdot (W^\text{OUT})^T \right) \in \mathbb{R}^{n \times h}$ | `sigmoid_derivative_h = a_h * (1. - a_h)`                          |
 |                                                                                                                                                 | `delta_h = np.dot(delta_out, self.w_out.T) * sigmoid_derivative_h` |
 
-Infine consideriamo $X^T \delta^\text{H} \in \mathbb{R}^{d\times h}$. In posizione $f,k$ troviamo il prodotto scalare della colonna $f$ di $X$ per la colonna $k$ di $\delta^\text{H}$ ovvero
-$$
-
-\sum_{c=1}^{n} \delta_{c,k}^\text{H} X_{c,f}
-
-$$
-Per la (2) e la (3),
-
 | formula                                                                  | codice python                                      | costo |
 | ------------------------------------------------------------------------ | -------------------------------------------------- | ----- |
 | $\frac{\partial \mathcal{J}}{\partial W^\text{H}} = X^T \delta^\text{H}$ | `grad_w_h = np.dot(X_train[batch_idx].T, delta_h)` |       |
-
-quindi aggiorniamo $W^{H}$ nel seguente modo
-$$
-
-W^{H} \leftarrow W^{H} - \eta \frac{\partial \mathcal{J}}{\partial W^{H}}
-
-$$
-* **tasso apprendimento**: $\eta$
-
-### Derivata $\frac{\partial \mathcal{J}}{\partial w^\text{OUT}_{k,e}}$
-**Per la regola della catena**:
-$$
-
-\frac{\partial \mathcal{J}}{\partial w_{k,e}^\text{OUT}} = \frac{\partial \mathcal{J}}{\partial a_e^\text{OUT}} \frac{\partial a_e^\text{OUT}}{\partial z_e^\text{OUT}} \frac{\partial z_e^\text{OUT}}{\partial w_{k,e}^\text{OUT}}
-
-$$
-- $\frac{\partial \mathcal{J}}{\partial a_e^\text{OUT}} = \frac{a_e^{\text{OUT}} - y_e}{a_e^{\text{OUT}} (1 - a_e^{\text{OUT}})}$
-
-- $\frac{\partial a_e^\text{OUT}}{\partial z_e^\text{OUT}} = a_e^{\text{OUT}} (1 - a_e^{\text{OUT}})$
-
-- $\frac{\partial z_e^\text{OUT}}{\partial w_{k,e}^\text{OUT}} = \frac{\partial}{\partial w_{k,e}^\text{OUT}} \sum_{j=1}^{h} w_{j,e}^\text{OUT} a_j^\text{H} + w_{0,e}^\text{OUT} = a_k^\text{H}$
-
-**quindi**:
-$$
-
-\frac{\partial \mathcal{J}}{\partial w^\text{OUT}_{k,e}} = (a_e^{\text{OUT}} - y_e) a^\text{H}_k = \delta_e^{\text{OUT}} \cdot a^\text{H}_k
-
-$$
-#### Notazione vettoriale
-**La matrice**:
-$$
-
-\left(A^\text{H}\right)^T \cdot \delta^\text{OUT} \in \mathbb{R}^{h\times t}
-
-$$
-che in posizione $k, e$ contiene:
-$$
-
-\sum_{c = 1}^n \delta_{c,e}^{\text{OUT}} \cdot a^\text{H}_{c,k}
-
-$$
-ovvero, come detto anche sopra, la somma dei contributi all'aggiornamento del gradiente di ogni campione. Riassumendo
 
 | formula                                                                                                  | codice python                           | costo     |
 | -------------------------------------------------------------------------------------------------------- | --------------------------------------- | --------- |
