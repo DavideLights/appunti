@@ -73,4 +73,35 @@ cosa vuol dire `NOPASSWD:ALL`? che tutti i comandi (`ALL`) possono essere esegui
 
 **7z**: se ha permessi speciali, posso usarlo per fare il backup per conto del mio utente di file sensibili
 
+# seminari
+**Quale livello di precisione offre il tracciamento della posizione 5g?** precisione sulla scala dei centimetri
 
+**In quali contesti risulta utile il 5g?** Le aree dove il gps e' disturbato o non arriva, ossia in molte zone, anche stadi ed eventi affollati.
+
+**Che cosa offre il 5g in termini di prestazioni rispetto a gps?**
+
+**SDR**: si intende una radio dove la conversione del segnale in digitale viene effettuata immediatamente dopo il processamento nel front-end RF (che puo' essere pilotato via software).
+* permette di definire il comportamento della radio via software e di manipolare il segnale di conseguenza.
+
+**Quali sono le principali funzione del core network?**  autenticazione e connessione alla rete
+
+**cellulari definiti come blackbox**: l'hardware dei comuni cellulari permette di accedere al 5g attraverso un'interfaccia standardizzata che non permette di manipolare direttamente il segnale radio, non permette nemmeno l'ispezione della ret.
+
+**obiettivo del 5gMap**: strumento per sviluppatori e ricercatori per studiare vulnerabilita ed efficienza del 5g.
+
+**cifratura nel canale radio**: serve a rendere il messaggio illeggibile, dato che il 5g e' un canale condiviso
+
+**protezione dell'integrita**: si vuole garantire che i dati arrivino integri a destinazione contro un potenziale attaccante usando MAC
+
+**come scopro quali algoritmi sono supportati dalla rete?** una volta che trovo l'antenna, usando 5gmap posso richiedere di instaurare una connessione al Network Core utilizzando un particolare protocollo. Mi basta chiedere se il protocollo x e' supportato iniziare il meccanismo di connessione.
+
+**tmsi**: temporary mobile subscriber identity che cose? e' un codice identificativo assegnato in maniera temporanea e dunque cambio quando mi sposto da una base station ad un'altra. impedisce il tracciamento della mia identita nello spostamento
+
+**imsi catcher**: un'attaccante si finge una base station autorevole ed annuncia la sua presenza utilizzando un segnale molto piu potente di quello della stazione autorevole. dunque l'utente si collega all'attaccante e gli manda l'imsi
+* sono rumoroso e sgamabile e causo problemi di servizio alla vittima che si accorge che qualcosa non va
+
+**attacco man in the middle**: mi fingo una base station che inoltra i pacchetti all'implementazione di un finto UE che inoltra i dati alla vera base station
+
+**vulnerabilita AES per bit flipping**: se conosco una porzione del testo in chiaro e del cifrato (per esempio nel campo di una connessione DNS so qual'e' il server di default contattato), allora posso recuperare la chiave AES usata
+
+**cosa succede alla fine dell'attacco imsi catcher**?

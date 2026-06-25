@@ -42,7 +42,7 @@ connettendomi a `192.168.14.105` scopro che la porta 9999  e' configurata per ma
 
 con `tcpdump` guardo cosa passa nell'interfaccia di rete e filtro per ip sorgente:
 ```bash
-sudo tcpdump -v -i VDSI_0341922 src 192.168.14.105 -A
+**sudo tcpdump -v -i VDSI_0341922 src 192.168.14.105 -A**
 ```
 oppure, mi metto in ascolto con `nc` su quella porta:
 ```bash

@@ -8,7 +8,7 @@
 ## Domanda 2.2
 
 ![[Pasted image 20260617213440.png]]
-**primo grafico, rectangular pulse filter**: i numeri generati casualmente viene convertito in un segnale rettangolare perfetto. La porzione del segnale pari ad 1 in ampiezza indica la trasmissione di un bit accesso, e viceversa per ampiezza pari a -1.
+**primo grafico, rectangular pulse filter**: i numeri generati casualmente vengono convertito in un segnale rettangolare. La porzione del segnale pari ad 1 in ampiezza indica la trasmissione di un bit accesso, e viceversa per ampiezza pari a -1.
 
 **secondo grafico, awgn channel**: viene introdotto del rumore, sul segnale originale.
 
@@ -30,11 +30,11 @@ Il parametro $\text{Eb/No}$ misura **il rapporto segnale-rumore normalizzato per
 * Di conseguenza: **il diagramma ad occhio si fa sempre piu stretto**, poiche' e' difficile distinguere un tipo di simbolo dall'altro.
 
 ## Domanda 2.4
-Come ci si aspetterebbe secondo quanto detto in **2.3**, l'error rate all'aumentare di $\text{Eb/No}$. Inoltre l'error rate e' molto basso ($0.07835$) per $\text{Eb/No} = 0$ 
+Come ci si aspetterebbe secondo quanto detto in **2.3**, l'error rate diminuisce all'aumentare di $\text{Eb/No}$. Inoltre l'error rate e' molto basso ($0.07835$) per $\text{Eb/No} = 0$ 
 
 ## Esperimenti guidati
 ![[Pasted image 20260617151028.png]]
-**DSSS BPSK**: con questo sistema di trasmissione, ogni singolo bit, codificato con bpsk viene moltiplicato per una sequenza detta chips di lunghezza arbitraria. Dunque, quando voglio trasmettere un bit 1 trasmetto l'intera sequenza di chips, se trasmetto -1 trasmetto la sequenza chips invertita.
+**DSSS BPSK**: con questo sistema di trasmissione, ogni singolo bit, codificato con bpsk viene moltiplicato per una sequenza detta **chips** di lunghezza arbitraria. Dunque, quando voglio trasmettere un bit 1 trasmetto l'intera sequenza di chips, se trasmetto -1 trasmetto la sequenza chips invertita.
 
 1. **D1**) In ogni bit originale che volevo trasmettere, ci entrano 20 simboli della sequenza di chipping. Pero noto che la sequenza di chipping contiene solo 16 simboli ![[Pasted image 20260617230110.png]]
 2. **D3**) Nonostante il rumore, si riesce a riconoscere il segnale originale
@@ -44,7 +44,7 @@ Come ci si aspetterebbe secondo quanto detto in **2.3**, l'error rate all'aument
 ![[Pasted image 20260617151053.png]]
 * **D1) Check the Standard BPSK Dots**: 
 * ![[Pasted image 20260617235002.png]]
-* **D2) Check the DSSS Dots Before and After**: la prima immagine mostra la costellazione per `var=.05`, la seconda per 
+* **D2) Check the DSSS Dots Before and After**: la prima immagine mostra la costellazione per `var=.05`, la seconda per `var=1`
 ![[Pasted image 20260617230958.png]]
 ![[Pasted image 20260617231128.png]]
 ![[Pasted image 20260617235445.png]]
@@ -57,50 +57,3 @@ Come ci si aspetterebbe secondo quanto detto in **2.3**, l'error rate all'aument
 **lato ricevente**: 
 * **D3)** il segnale giallo viene trasformato in quello blu
 * **D4)** un picco di un jammer riceve lo stesso trattamento del segnale legittimo, ossia viene spalmato su tutta la larghezza di banda.
-
-# appunti sul laboratorio e risorse varie
-* Constellation Diagram:
-	* Displays the signaling points in the complex I/Q plane. As noise increases, the ideal points spread out into "clouds". If these clouds cross the decision boundary, bit errors occur.
-• Eye Diagram:
-	• Represents the time-domain overlap of received symbols.
-		• Vertical eye opening: Indicates noise immunity (the "wider" the eye, the lower the probability of error).
-		• Eye closure: Caused by noise and Intersymbol Interference ISI
-• Bit Error Rate vs SNR
-	• Measures the ratio of corrupted bits to the total transmitted bits as the noise power varies.
-	▪ Analysis Task: Take screenshots of the constellation and eye diagrams at different noise levels to
-	document how the analog signal degrades before turning into digital errors.
-
-**matlab**:
-* **bernoulli**: generatore di numeri
-* **BPSK**: trasforma i simboli in -1/+1
-* Trasformazione: in forma d'onda rettangolare.
-* **integrate and dump**: fa l'integrale del segnale nel tempo
-* **error rate**: prende l'ingresso in trasmissione ed in ricezione e calcola
-	* total number of bernoulli symbols
-	* number of errors: errori in assoluto
-	* error rate: errori sul totale
-
-![[Pasted image 20260518165505.png]]
-* **gialla: in fase**
-* **blu: in quadratura**
-* nel secondo grafico c'e' molto rumore
-* nel terzo grafico campiono a pezzi e cerco di ricostruire l'originale
-* calcolando l'integrale del segnale decido quanto e' potente e se e' 0 oppure 1.
-
-basso quando SNR o: (es 10)
-![[Pasted image 20260518170858.png]]
-
-**quando aumento l'SNR** (es: pari a 40)
-![[Pasted image 20260518170753.png]]
-
-**diagramma ad occhio**:
-![[Pasted image 20260518171258.png]]
-* se l'occhio e' ben aperto, e le transizioni tra i simboli si sovrappongono vuol dire che riesco a 
-
-![[Pasted image 20260518171534.png]]
-* **occhio chiuso**: vuol dire BER alto, inoltre le transizioni non sono tutte allineate
-
-
-![[Pasted image 20260520150923.png]]
-![[Pasted image 20260520151319.png]]
-![[Pasted image 20260520151424.png]]![[Pasted image 20260520153129.png]]

