@@ -21,9 +21,36 @@
 * **variable length array**: evito l'overhead dei puntatori nelle linked list, ed usano uno spazio contiguo di memoria, dunque una porzione dei dati che esamino entra in cache, permettendo una lettura velocissima.
 * **ibrido**: linked list di variable length array.
 
-**Mettere le postings lists sul disco**: sono blocchi continui di dati, senza puntatori (poiche voglio minimizzare lo spazio usato su disco). Voglio minimizzare il numero di `seek` che deve fare il disco e i blocchi da leggere.
+**Mettere le postings lists sul disco**: sono blocchi continui di dati, senza puntatori (poiche voglio minimizzare lo spazio usato su disco). 
+* `seeks`: Voglio minimizzare il numero di `seek` che deve fare il disco e i blocchi da leggere.
 ## West Law
 **boolean search**: *West Law usava boolean search per esprimere le query usando espressioni booleane. Il sistema doveva ritornare tutte le sentenze che contenevano esattamente il contenuto informativo richiesto senza perdere dati.*
+* macOS Spotlight, email, catolighi di una libreria.
+
+> [!error] esercizio 
+> adatta il merge per le seguenti query:
+> 1. `Brutus AND NOT Caesar`
+> 2. `Brutus OR NOT Caesar`
+
+**Merge algorithm** $\text{AND\_NOT}(p_{1},p_{2})$:
+1. $\text{answer} \gets \emptyset$
+2. **while** $p_{1} \neq \text{NIL}$ and $p_{2} \neq \text{NIL}$:
+3. **do if**: $\text{docID}(p_{1}) < \text{docID(p2)}$
+	1. **then**: $\text{Add}(\text{answer}, \text{docID}(p_{1})); p_{1} \gets \text{next}(p_{1})$
+	2. **else if**: $\text{docID}(p_{1}) > \text{docID(p2)}$ 
+		1. **then**: $\text{Add}(\text{answer}, \text{docID}(p_{2})); p_{2} \gets \text{next}(p_{2})$ 
+		2. **else**: $p_{1} \gets \text{next}(p_{1}); p_{2} \gets \text{next}(p_{2})$
+
+**Merge Algorithm** $\text{OR}(p_{1},p_{2})$:
+1. $\text{answer} \gets \emptyset$
+2. **while** $p_{1} \neq \text{NIL}$ and $p_{2} \neq \text{NIL}$:
+3. **do if** $\text{docID}(p_{1}) = \text{docID}(p_{2})$
+	1. **then**: $\text{Add}(\text{answer}, \text{docID}(p_{1})); p_{1} \gets \text{next}(p_{1}); p_{2} \gets \text{next}(p_{2})$
+	2. **else if** $\text{docID}(p_{1}) < \text{docID(p2)}$
+		1. **then** $\text{Add}(\text{answer}, \text{docID}(p_{1})); p_{1} \gets \text{next}(p_{1})$
+		2. **else** $\text{Add}(\text{answer}, \text{docID}(p_{2})); p_{2} \gets \text{next}(p_{2})$
+
+**Merge Algorithm** $\text{OR\_NOT}(p_{1},p_{2})$: DA FARE!!!
 ## processare le query
 **boolean retrieval model**: dato che mi trovo in un modello booleano, voglio comporre le query usando `AND, OR` e `NOT` per fare le query.
 
@@ -35,12 +62,14 @@
 ![[Pasted image 20260312000053.png]]
 
 **Per ottimizzare le query**: devo conoscere la frequenza delle 
-parole per ogni documento, in modo da ottimizzare le query.
+parole per ogni documento.
 
 > [!error] Per Esame
 > Fai gli esercizi sull'ottimizzazione delle query
 
-Ottimizzare: $(\text{madding OR crowd}) \text{ AND } (\text{ignore OR strife}) \text{ AND } (\text{killed OR slain})$
+![[Pasted image 20260627173541.png]]
+
+**Ottimizzare query con OR e AND**: $(\text{madding OR crowd}) \text{ AND } (\text{ignore OR strife}) \text{ AND } (\text{killed OR slain})$
 * **stimare grandezza**: faccio la somma delle clausole.
 * **processo** in ordine di grandezza stimata.
 
@@ -48,7 +77,6 @@ Ottimizzare: $(\text{madding OR crowd}) \text{ AND } (\text{ignore OR strife}) \
 * tengo in memoria uno stato
 * identifico l'ordine con cui fare le operazioni
 * vai!
-
 ## tokenizzazione (approfondimento)
 **tokenizzazione**: prendo una sequenza di caratteri e la taglio in vari punti, ottenendo i tokens.
 
@@ -69,6 +97,7 @@ Ottimizzare: $(\text{madding OR crowd}) \text{ AND } (\text{ignore OR strife}) \
 
 ## normalizzazione (approfondimento)
 **token normalizzazione**: voglio canonizzare i token in modo che differenze superficiali tra 2 token producano lo stesso termine.
+
 **cosa vuol dire canonizzare**: voglio che `anti-discriminatory` sia mappato a `antidiscriminatory`, `car` mappato a `automobile`, ecc...
 
 **come**? creo liste di sinonimi oppure quando costruisco il dizionario faccio la normalizzazione del termine.
@@ -85,19 +114,25 @@ Ottimizzare: $(\text{madding OR crowd}) \text{ AND } (\text{ignore OR strife}) \
 
 **Biword Index**: indicizza le coppie di parole adiacenti
 * **complessita**: il numero di coppie e' più di $n$ ma non e' in $O(n^2)$
-* **query lunghe**: *posso fare l'AND di piu biword*
-* **and di piu biword**: ***Introduce falsi positivi** $\equiv$ **penalizzo la precision**
+* **query lunghe**: le gestisco *tramite l'AND di piu biword*
+	* **implica**: l'introduzione di falsi positivi
+	* **aumentare falsi positivi implica**: penalizzare la precision
 
 **phrase index**: indicizza un numero arbitrario di parole adiacenti.
 * **nota**: *un phrase index di 3 termini introduce meno falsi positivi di un biword*!
 
-**Sol. al biword index**: memorizza la **posizione** per ogni termine, in ogni documento, una posting lists delle posizioni in cui compare.
+**Alternativa al biword index**: il **Positional index** memorizza la **posizione** per ogni termine, in ogni documento. Per ogni termine ho la postings delle posizioni in cui compare.
 
-**positional index**: dunque non si usa il biword index.
-* **posting**: ha la forma $\text{docID: } <\text{pos1,pos2,...}>$.
+**positional index**: 
+* **forma della postings**: $\text{docID: } <\text{pos1,pos2,...}>$.
+* se ogni documento ha $N$ parole, allora con $\log_{2} N$ bit rappresento la posizione di una parola nel documento.
 * una query richiede $\Theta(T)$ con $T = \# \text{ di termini nella collezione}$
 
-**Problema di spazio**: memorizzare la posizione di ogni termine, per ogni documento, vuol dire praticamente copiare il dataset originale.
+**Problema di spazio**: memorizzare la posizione di ogni termine, per ogni documento, vuol dire praticamente copiare in un'altro formato i documenti originali.
+* **(D) Pagine web vs Libri**: *una pagina web ha meno di 1000 termini in media. Dunque una positional index occupa molto meno spazio su una pagina web rispetto ad un libro. In un libro ho molti piu termini che occorrono piu volte (posizioni).*
+* posso pero' comprimere!
+
+**Tutta via**: il positional index viene utilizzato per phrase e proximity queries.
 
 **Entita nominali**: conviene in fase di processazione del testo riconoscere come **biword** entita come `Michael Jackson`, tuttavia tengo in memoria anche `Michael` e `Jackson`.
 * **query piu richieste**: sfrutto il fatto che certe combinazioni sono piu richieste, **per queste creo un biword index**.

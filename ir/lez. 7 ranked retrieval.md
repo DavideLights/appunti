@@ -12,7 +12,6 @@
 **Vector Space Model**: rappresentare **documenti** e **query** come vettori in uno spazio ad alta dimensionalità.
 
 **cos'e' una dimensione**? ad ogni dimensione corrisponde un termine del vocabolario, ogni termine ha un certo peso, che dipende dalla sua importanza nel documento e nella collezione.
-
 ## modelli
 **incidence matrix**: ogni documento e' rappresentato da un vettore binario. ma non tiene conto della frequenza.
 
