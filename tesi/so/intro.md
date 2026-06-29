@@ -1,4 +1,44 @@
 **a che serve un so?** rappresentano una soluzione rispetto all'utilizzabilità di un sistema di calcolo.
+* **allocatore di risorse**: memoria, cpu, IO, ecc...
+* **control program**: programma che gestisce l'esecuzione di programmi utente, ne previene gli errori e migliora l'usabilita
+
+
+**che cose'?** 
+* Microsoft ti vende Windows e ti danno la loro definizione di Sistema Operativo
+* Non esiste una definizione universalmente valida
+* in genere, **il sistema operativo e' il kernel**: quel programma che e' sempre in esecuzione.
+* **programmi di sistema**: non fanno parte del kernel ma in genere sono in  grado di comunicare solo con questo.
+* **middleware**: insieme di framework software che forniscono servizi aggiuntivi per gli sviluppatori
+
+## interrupt
+**interrupt**: 
+1. analisi del tipo di interrupt
+2. invocazione del corretto interrupt handler
+3. deve essere fatto velocemente.
+
+**interrupt vector**: e' indicizzato utilizzando il numero identificativo dell'interrupt, che e' unico.
+
+**cpu ed interrupt**:
+* la cpu ha una interrupt-request line dedicata
+* quando questa linea e' asserita, viene letto l'interrupt number per indicizzare l'interrupt vector
+* deve salvare il suo stato prima di eseguire l'interrupt
+
+**problemi negli interrupt**:
+* **rimandare l'esecuzione** se mi trovo in regioni critiche.
+* **dispatch dell'interrupt** verso il corretto handler in base al tipo
+* **interrupt multi livello**: per distinguere il tipo di urgenza
+
+**due tipi di interrupt**:
+* **nonmaskable interrupt**: errori di memoria non recuperabili
+* **maskable**: puo' essere spento dalla cpu
+
+**interrupt chaining**: il vettore degli interrupt punta ad una lista di interrupt handler, vengono eseguiti tutti finche non si trova quello giusto
+
+![[Pasted image 20260625174404.png]]
+
+## storage
+**bootstrap program**: contiene il programma eseguito dal computer all'accensione.
+* **firmwar** ed **EEPROM**: per dati che 
 
 **virtualizzazione risorse**: 
 * **condivise**
