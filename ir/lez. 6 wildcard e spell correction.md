@@ -2,7 +2,7 @@
 # wildcard queries
 **spell correction**: *molti utenti sbagliano a scrivere / non sanno la parola precisa*
 
-**wildcard**: `*`. permette cercare parole se ne si conosce solo una parte.
+**wildcard**: `*`. permette cercare parole se ne si conosce solo una porzione.
 
 **albero binario**: se i termini sono ordinati in un albero binario, allora posso facilmente recuperare le parole corrispondenti alla query `mon*` per cui fare le query, ossia tutte le foglie di un certo sotto-albero.
 ![[Pasted image 20260421114206.png]]
@@ -66,7 +66,8 @@
 **scegliere il candidato**: 
 * **context-sensitive**: quali dei candidati hanno senso nella query?
 * **i candidati hanno edit-distance bassa**, dove gli edits possibili sono: *insertion, deletion, substitution e transposition of two adjacent letters.*
-* **probabilita**: 80% degli errori con edit distance pari a 1.
+* **probabilita**: 80% degli errori con edit distance pari a 1
+	* **edit distance pari a 1**, ossia basta fare una di queste azioni a partire dall'errore: inserimento, eliminazione, trasposizione, sostituzione.
 * **spazi e trattini**: `thisidea` $\to$ `this idea`. `inlaw` $\to$ `in-law`.
 * **merge**: `data base` $\to$ `database`.
 
@@ -74,17 +75,21 @@
 **obiettivo**: correggere le `non-words`.
 
 **noisy channel model**: $\hat w = \text{argmax}_{w\in V}P(w|x) = \text{argmax}_{w\in V}\frac{P(x|w)P(w)}{P(x)} = \text{argmax}_{w \in V}P(x|w)P(w)$
+* **oss**: se voglio trovare il massimo, allora il denominatore e' trascurabile dato che e' costante $\forall w \in V$
 * **parola corretta**: $w$, un termine.
 * **errore**: $x$, un termine.
 * **frazione costante**: dunque si toglie quando applico bayes.
 
 **modelli**, mi servono per calcolare $P(x|w)$ ed $P(w)$, sono i miei stimatori:
 * **CHANNEL MODEL PROBABILITY**: $P(x|w)$ e' la probabilità che scrivo $x$ volendo scrivere $w$. si basa sulla confusion matrix e sulla edit distance.
+
+
+
 *  **UNIGRAM PRIOR PROBABILITY**: $P(w) := \text{quanto e' comune la parola } w = \frac{C(w)}{T}$
 	* $C(w) = \text{numero occorrenze}$
 	* $T$ numero totale di termini nel corpus.
 
-**computing error probability confusion matrix**: dice quanto e' probabile ogni tipo di errore
+**computing error probability confusion matrix**: dice quante volte avviene ogni tipo di errore.
 ![[Pasted image 20260421142227.png]]
 
 **channel model**: il modello per $P(x|w)$ funziona cosi
