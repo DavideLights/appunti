@@ -1,6 +1,7 @@
 ## introduzione
 **approccio probabilistico**: otterremo un sistema che performa bene tanto quanto l'approccio vettoriale utilizzando le probabilità.
 * permette di ragionare su eventi incerti esprimendoli come probabilita.
+* **eventi incerti** riguardano il sistema e la rilevanza di un documento per **l'utente**
 
 **cosa studiamo e quali sono i problemi**? quanto e' rilevante $d$ rispetto alla query $q$ fatta da un utente $u$? ma ci sono tante approssimazioni da fare poiché:
 * **utenti differenti** giudicano differentemente la rilevanza di $d$ rispetto a $q$
@@ -16,7 +17,7 @@
 $$
 P(\text{relevant} | d,q) = \text{probabilita che il documento e' buono dati } d,q
 $$
-**oss. su vector space model (VSM)**: in questo modello, il documento piu simile potrebbe essere totalmente irrilevante per l'utente. 
+**irrilevanza per vector space model (VSM)**: in questo modello, il documento piu simile potrebbe essere totalmente irrilevante per l'utente. 
 
 **perche puo' sbagliare VSM**?
 * **somiglianza**: si basa esclusivamente sulla somiglianza sintattica (cosine similarity)
@@ -34,7 +35,6 @@ $$
 * **priori**: $P(A) = \text{priorita a priori}$
 * **posteriori**: $P(A|B) = \text{probabilita a posteriori}$
 * **ossia**: posso trovare la probabilità a posteriori di $A$ usando quella a priori.
-
 
 **odds**: usiamo $O(A)$ per ordinare i documenti, questo sono le proprieta di **odds**
 * **ordinamento**: permette di ordinare i risultati, *possiamo usarlo come indicatore della rilevanza di un documento*.
@@ -77,7 +77,8 @@ $$
 
 **assunzioni**: calcolare queste probabilità e' difficile, dunque facciamo varie assunzioni.
 * **indipendenza**: assumiamo $d$ e $q$  indipendenti $\forall d,q$
-* **uniformita documenti**: $\forall d,d': p(d) = p(d')$ (ma questa assunzione non vale per altri contesti, es: pagerank)
+* **uniformita documenti**: $\forall d,d': p(d) = p(d')$ 
+	* *questa assunzione non vale per page rank pero'!!!!*
 * **ignorare**: $p(R|q)$ puo essere ignorato. e' un valore costante per tutti i documenti.
 
 **dunque la formula diventa**: si semplifica $p(d|q)$ in $p(d)$
@@ -85,7 +86,7 @@ $$
 p(R|d,q) = \frac{p(d|R,q)p(R|q)}{p(d|q)} = \frac{p(d|R,q)p(R|q)}{p(d)}
 $$
 * $p(d|R,q) = \text{p. che } d \text{ venga scelto u.a.r dai documenti rilevanti per } q$.
-* $p(R|q) = \text{p. che un documento scelto dalla collezione sia rilevante per } q$
+* $p(R|q) = \text{p. che un documento scelto dalla collezione sia rilevante per } q$, ed e' **costante per tutti i documenti che vengono confrontati con la query** $q$.
 * $p(d|q) = p(d) = \text{la probabilita che } d \text{ sia pescato dalla collezione}$, si assumono $d,q$  indipendenti $\forall d,q$.
 
 ## PRP
@@ -93,6 +94,9 @@ $$
 > [!note] PRP (Probability Ranking Principle)
 >  *If the retrieved documents (w.r.t a query) are ranked decreasingly on their probability of relevance, then the effectiveness of the system will be the best that is obtainable.*
 * **come dicevano ad oxford**: *se i documenti sono ordinati in ordine decrscente in base alla probabilita di rilevanza, allora abbiamo ottenuto il miglior sistema di ir possibile*. **e grazie al cazzo**.
+* **a che serve?** ottimizzare i risultati per l'utente finale che legge.
+* **funzione di costo errore**: sono $C, C'$, le assumiamo binarie. Allora PRP e' ottimo.
+* **assunzione indipendenza**: la rilevanza di un documento e' indipendente dalla rilevanza degli altri.
 
 >[!note] gemini
 >Il PRP dice che se non hai altre informazioni, ==l'ordine basato sulla probabilità di rilevanza decrescente è quello che ti garantisce, statisticamente, il minor numero di documenti irrilevanti nelle prime posizioni==. È l'ottimo teorico ==sotto l'ipotesi che la rilevanza di un documento sia indipendente da quella degli altri.==
@@ -101,7 +105,7 @@ $$
 **obiettivo**: per ottenere il miglior sistema ir possibile, bisogna calcolare l'errore che questo commette.
 **perche?**: il miglior sistema ir e' quello che minimizza l'errore.
 
-**definiamo il rischio**:  il sistema ir sbaglia in 2 casi.
+**definiamo il rischio**:  il sistema ir sbaglia in **2 casi**.
 * quando il documento $d$  e' rilevante rispetto a $q$, ma non e' stato recuperato.
 * quando il documento $d$ non e' rilevante rispetto a $q$, ma e' stato recuperato.
 
@@ -117,14 +121,19 @@ $$
 **allora il rischio**:
 $$R(D(q)) = \sum_{d\in D} C'(d,q)p(\bar{R}|d,q) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$
 $$R(D(q)) = \sum_{d \in D} C'(d,q)(1-p(R|d,q)) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$
+* **lol**: abbiamo introdotto $C', C$ ma sono superflui all'interno delle sommatorie.
 $$
-R(D(q)) = \sum_{d \in D(q)}(1-p(R|d,q)) + \sum_{d \notin D(q) }p(R|d,q)$$ $$ = |D(q)| + \sum_{d \notin D(q)} p(R|d,q) - \sum_{d \in D(q)} p(R|d,q)
-$$**misura inversa**: il rischio e' misura inversa rispetto alla qualita di un risultato.
+R(D(q)) = \sum_{d \in D(q)}(1-p(R|d,q)) + \sum_{d \notin D(q) }p(R|d,q)$$
+* maneggiamo le sommatorie: sposto l'uno fuori e metto la parte negativa a destra.
+$$ = |D(q)| + \sum_{d \notin D(q)} p(R|d,q) - \sum_{d \in D(q)} p(R|d,q)
+$$**misura inversa**: il rischio e' una misura inversa **rispetto alla qualita** di un risultato.
 
 **minimizzare** $R(D(q))$: vuol dire che $D(q)$ e' tale che da **massimizzare**.Dopo tante formule l'obiettivo era questo.
 $$
 \star:\sum_{d \in D(q)} p(R|d,q) - \sum_{d \notin D(q)} p(R|d,q)
 $$
+
+* $|D(q)|$ **omesso**: assumendo sia un parametro costante, allora minimizzare la formula sopra e' equivalente a minimizzare $\star$.
 
 **Teorema**: assumendo 0/1 loss, allora **PRP** e' ottimo e minimizza gli errori, ossia il costo per gli errori.
 * gemini vuol dire che con $C,C'$ variabili binarie allora prp e' ottimo?
@@ -196,7 +205,7 @@ $$
 $$
 O(R|v_{d},v_{q}) =_{rank} \prod_{t_{i}:x_{i}=y_{i}} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})}
 $$
-**posso finalmente definire il retrieval status value**:
+**posso finalmente definire il Retrieval Status Value (RSV$_{d}$)**:
 * prendo $O(R|v_{d}, v_{q})$ e ne faccio il logaritmo.
 
 $$
