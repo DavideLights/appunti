@@ -168,7 +168,7 @@ $$
 *a questa roba qua:*
 $$p(R|v_{d},v_{q}) = \frac{p(v_{d}|R,v_{q})p(R|v_{q})}{p(v_{d}|v_{q})} =_{rank} p(v_{d}|R,v_{q})$$
  * **similmente**: $p(\bar{R}|v_{d},v_{q}) = p(v_{d}| \bar{R}, v_{q})$
-* **nota**: $p(v_{d}|R,v_{q})$ e' la probabilita che se un documento rilevante e' stato selezionato, allora $v_{d}$ e' la sua rappresentazione
+* **nota**: $p(v_{d}|R,v_{q})$ e' la probabilità che se un documento rilevante per $q$ e' stato selezionato, allora $v_{d}$ e' la sua rappresentazione
 
 
 **applichiamo odds**:  
@@ -201,7 +201,12 @@ $$
 $$
 O(R|v_{d},v_{q})=_{\text{rank}} \prod_{t_{i}: x_{i}=y_{i}=1} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} \cdot \prod_{t_{i}: y_{i}=1} \frac{1-p_{i}}{1-u_{i}}
 $$
-*la parte destra e' costante per tutti i documenti rispetto alla query* $q$, ai fini del ranking si puo' ignorare.
+* **che succ?** togliere $x_{i}=0$ nella seconda produttoria, vuol dire che conto tutte le $x_{i}$ che hanno $y_{i}=1$.
+* **se tolgo $x_{i=0}$ devo dividere la produttoria per la parte in piu, in modo da annullarla**
+* ossia devo dividere la formula per $\frac{1-p_{i}}{1-u_{i}}$ per tutti le $t_{i}: x_{i}=1, y_{i}=1$
+* **equivale a moltiplicare per $\frac{1-u_{i}}{1-p_{i}}$ e lo posso accorpare nella prima produttoria.** che ha come iteratore  $t_{i}: x_{i}=1, y_{i}=1$
+
+*la parte destra e' costante per tutti i documenti rispetto alla query* $q$ (poiché ha come iteratore $t_{i}: y_{i} =1$), ed ai fini del ranking si puo' ignorare.
 $$
 O(R|v_{d},v_{q}) =_{rank} \prod_{t_{i}:x_{i}=y_{i}} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})}
 $$
@@ -216,11 +221,25 @@ $$
 $$
 c_{i} = \log \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} = \log \frac{p_{i}}{1-p_{i}} - \log \frac{u_{i}}{1-u_{i}}
 $$
+- $( c_i > 0 ):$ il termine è più tipico dei documenti rilevanti;
+- $( c_i = 0 ):$ il termine non distingue rilevanti e non rilevanti;
+- $( c_i < 0 )$: il termine è più tipico dei documenti non rilevanti. 
+- Quindi $c_{i}$ misura quanto un termine aiuta a distinguere documenti rilevanti da documenti non rilevanti. 
+
+**$p_{i}$ e $u_{i}$ rispettivamente con feedback di rilevanza o senza valgono**:
+$$p_i=\frac{r_i}{R}$$ $$u_i=\frac{df_i-r_i}{N-R}$$ con
+
+- ($N$): numero totale di documenti nella collezione;
+- ($R$): numero di documenti rilevanti;
+- ($r_i$): numero di documenti rilevanti che contengono il termine ($t_i$);
+- ($df_i$): numero totale di documenti che contengono ($t_i$). 
+- **senza conoscere $r_i$ e $R$ allora approssimiamo** questi calcoli assumendo che i documenti rilevanti siano decisamente inferiori della collezione totale quindi:
+$$u_i \approx \frac{df_i}{N}; p_i=0.5$$
+
+con queste assunzioni $RSV_{d}$
+$$
+RSV_{d} = \sum_{t_{i}: x_{i} = y_{i}=1} \log \frac{N}{\text{df}_{t_{i}}}
+$$
 
 **osservazione**: BIM e VSM sono simili ma usano pesi diversi. possiamo usare le stesse strutture dati per implementare entrambi. ma quali informazioni usiamo?
 
-## calcolare ste probabilita
-**problema**: a meno che non ho fatto analisi
-$$
-\sim \sum_{t_{i}:x_{i}=y_{i}=1} \log \frac{N}{df_{t_{i}}}
-$$

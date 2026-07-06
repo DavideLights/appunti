@@ -15,28 +15,30 @@
 ## modelli
 **incidence matrix**: ogni documento e' rappresentato da un vettore binario. ma non tiene conto della frequenza.
 
-**count matrix**: indica quante volte compare il termine in ogni documento.
+**count matrix**: indica quante volte compare il termine in ogni documento, e' piu informativo
 
 **idea**: piu il termine compare nel documento e piu' il documento e' rilevante per quella parola.
 
-**gemini spiega**: NON VENGONO USATE DAVVERO POI NEL CONCRETO SI USANO LE INCIDENCE MATRIX PER AVERE FREQUENZA O ALTRO
-
-**bag of words**: ignoro l'ordine delle parole. considero quali compaiono e quante volte.
+**MODELLO bag of words**: ignoro l'ordine delle parole. considero quali compaiono e quante volte.
 
 **perdita di contesto**: con bag of words perdiamo l'ordine delle parole ma semplifico il problema.
 
 ## term frequency
-**term frequency**: $\text{tf}_{t,d} = \text{quante volte } t \text{ occorre in } d$.
+**term frequency**: $$\text{tf}_{t,d} = \text{quante volte } t \text{ occorre in } d$$.
 **problema**: se un termine compare 10 volte in un documento, allora non e' necessariamente piu rilevante di un documento in cui compare una sola volta.
 
-**soluzione**: introduco il **peso**, non voglio che la crescita dell'importanza del documento si lineare in $\text{tf}_{t,d}$ $$w_{t,d} = \begin{cases} 1 + \log_{10}(tf_{t,d}) & \text{se } tf_{t,d} > 0 \\ 0 & \text{altrimenti} \end{cases}$$
+**soluzione**: introduco il **peso**, non voglio che la crescita dell'importanza del documento si lineare in $\text{tf}_{t,d}$, ma piuttosto e' piu adatto il **LOGARITMO**$$w_{t,d} = \begin{cases} 1 + \log_{10}(tf_{t,d}) & \text{se } tf_{t,d} > 0 \\ 0 & \text{altrimenti} \end{cases}$$
+**score per la coppia query documento**:
+$$\text{tf-matching-score}(q,d)=\sum_{t\in q\cap d}(1 + \log \text{tf}_{t,d})$$
+![[Pasted image 20260704155017.png]]
 
-$\text{tg-matching-score}(q,d)=\sum_{t\in q\cap d}(1 + \log \text{tf}_{t,d})$
+**problema di** $\text{tf}_{t,d}$: parole come `the`, `is`, `and` compaiono spesso, ma sono poco informative.
 
-**problema di** $\text{tf}$:: parole come `the`, `is`, `and` compaiono spesso, ma sono poco informative.
-
-**gemini**: dimmi le conseguenze di sta roba e perche' introduco `idf`.
-
+**obiettivi**
+* **quantità informazione**: documenti rari dovrebbero essere piu informativi di quelli troppo frequenti.
+* **termini rari**: capire quando un termine come `Phenethylamine` e' considerato **raro**
+* **pesi alti**: in corrispondenza di termini rari.
+* **pesi bassi**: in corrispondenza di parole frequenti come `good, increase, and line`
 ## idf
 **frequenza nella collezione**: considero quanto un termine e' frequente nell'intero set di documenti prima di decidere quanto e' importante un termine.
 
@@ -44,15 +46,20 @@ $\text{tg-matching-score}(q,d)=\sum_{t\in q\cap d}(1 + \log \text{tf}_{t,d})$
 
 **pesi dei termini frequenti**: hanno comunque pesi positivi ma più leggeri dei termini rari.
 
-**misura della quantità di informazione di un termine**: $\text{idf}_{t} = \log_{10} \frac{N}{\text{df}_{t}}$
+**misura della quantità di informazione (OSSIA DELLA RARITA) di un termine**: $\text{idf}_{t} = \log_{10} \frac{N}{\text{df}_{t}}$
 * $\text{df}_{t}$: e' il numero di documenti in cui $t$ occorre.
 * **ammorbidire** l'effetto di idf: $\frac {\log N}{\text{df}_{t}}$ invece di $\frac{N}{\text{df}_{t}}$
 
-**relazione tra $\text{df}_{t}$ e $\text{idf}_{t}$**: $\text{df}_{t}$ **piccolo** implica un $\text{idf}_{t}$ **alto** e viceversa.
+**relazione tra $\text{df}_{t}$ e $\text{idf}_{t}$**: 
+* $\text{df}_{t}$ **basso**  $\to \text{idf}_{t}$ **alto**
+* $\text{df}_{t}$ **alto**  $\to \text{idf}_{t}$ **basso**
+
+![[Pasted image 20260704161026.png]]
 ## tf-idf
 **peso** $\text{tf-idf}$: e' il **prodotto** dei pesi $\text{tf}$ e $idf$.
 * $w_{t,d} = (1 + \log \text{tf}_{t,d}) \log \frac{N}{\text{df}_{t}}$
 * all'aumentare di $w_{t,d}$ aumenta il numero di occorrenze nel documento e la rarità nella collezione.
+* **quando $\text{tf-idf}$ e' alto?** se compare spesso nel documento ma poco nella collezione, **ossia se il termine e' rappresentativo del documento**
 
 **documento come vettore**: rappresento un documento come un vettore di pesi $\text{tf-idf}$ in $\mathbb R^{|V|}$. 
 * **dimensioni**: $|V|$ che e' grande.
@@ -70,18 +77,18 @@ $\text{tg-matching-score}(q,d)=\sum_{t\in q\cap d}(1 + \log \text{tf}_{t,d})$
 
 **distanza euclidea**: ha diversi problemi.
 * **sensibile alla lunghezza**: un documento lungo ha un vettore di lunghezza maggiore, anche se semanticamente e' identico ad uno piu' corto.
-* **ES**: sia $D_{1}$ un documento e $D_{2}=D_{1}D_{1}$ ($D_{1}$ concatenato a se stesso). Allora $D_{2}$ ha lo stesso significato semantico di $D_{1}$, ma la distanza tra i due vettori e' grande, dunque dovrebbero avere bassa similarità.
-* **documenti lunghi hanno piu significato**: anche se magari, non sono rilevanti di testi con meno parole.
+* **ES concatenazione!**: sia $D_{1}$ un documento e $D_{2}=D_{1}D_{1}$ ($D_{1}$ concatenato a se stesso). Allora $D_{2}$ ha lo stesso significato semantico di $D_{1}$, ma la distanza tra i due vettori e' grande, dunque dovrebbero avere bassa similarità. (*tuttavia l'angolo tra i due e' 0!*)
+* **documenti lunghi hanno piu significato**: anche se magari, non sono piu rilevanti di testi con meno parole. 
+	* **ES**: ho un documento che ripete 1000 volte la parola cane.
 
 **similarità tra angoli**: meglio della distanza euclidea. ordino i documenti in base all'angolo tra il vettore documento e vettore query.
 * **2 documenti sono vettori se**: l'angolo e' di 0 gradi, ossia puntano nella stessa direzione.
 * **2 documenti sono ortogonali se**: l'angolo e' di 90 gradi, ossia puntano in direzioni completamente diverse.
 
 **funzione coseno**: e' monotonamente decrescente in $[0,180\degree]$.
-*   $\cos(0°) = 1$ (massima similarità)
-*   $\cos(90°) = 0$ (nessuna similarità)
+*   **coincidenza**: $\cos(0°) = 1$ (massima similarità)
+*   **ortogonalita** $\cos(90°) = 0$ (nessuna similarità)
 *   $\cos(180°) = -1$ (massima dissimilarità, ma non si usa in IR con pesi positivi).
-* **gemini**: non ho capito pk!!!
 
 **ranking**:  $\text{angolo decrescente}\equiv \text{coseno crescente }$
 * $\text{ coseno grande } \to \text{ angolo piccolo}$
@@ -97,15 +104,14 @@ $\text{tg-matching-score}(q,d)=\sum_{t\in q\cap d}(1 + \log \text{tf}_{t,d})$
 **calcolare cos**: $$
 \cos(\vec{q}, \vec{d}) = \text{sim}(\vec{q}, \vec{d}) = \frac{\vec{q}}{|\vec{q}|}\frac{\vec{d}}{|\vec{d}|} = \frac{\sum_{i=1}^{|V|} q_{i} d_{i}}{\sqrt{ \sum_{i=1}^{|V|}q_{i}^2 } \sqrt{ \sum_{i=1}^{|V|}d_{i}^2 }}
 $$
-* **normalizzazione**: $\frac{\vec{q}}{|\vec{q}|}$ divido il vettore per la sua lunghezza
-* $L_{2}$: $||x||_{2} = \sqrt{ \sum_{i}x_{i}^2 } = 1$, dunque i vettori vengono proiettati su una sphera di raggio 1. **gemini spiega meglio.**
-
-
-![[Pasted image 20260407123204.png|400]]
+* **normalizzazione**: $\frac{\vec{q}}{|\vec{q}|}$ divido il vettore per la sua lunghezza dove $|\vec{q}|$ e' $||\vec{q}||_{2}$
+* $L_{2}$: $||x||_{2} = \sqrt{ \sum_{i}x_{i}^2 }$, dunque i vettori vengono proiettati su una sfera di raggio 1.
 
 **Coda priorita**: la uso per estrarre i primi $k$ documenti.
+![[Pasted image 20260704162743.png]]
 
 **Approccio TAAT**: Term-at-atime. L'algoritmo elabora un termine della query alla volta. Scorrendo la posting list e aggiornando i punteggi dei documenti.
+* **DAAT**: posso gestire un documento per ovlta!
 
 **Ottimizzazioni**:
 * **memorizzazione dei pesi**: $w_{t,d}$ e' di solito un numero con la virgola, e richiede più memoria rispetto ad un intero, *dunque non si puo' fare*.
