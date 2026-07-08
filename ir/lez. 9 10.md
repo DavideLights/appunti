@@ -242,4 +242,6 @@ RSV_{d} = \sum_{t_{i}: x_{i} = y_{i}=1} \log \frac{N}{\text{df}_{t_{i}}}
 $$
 
 **osservazione**: BIM e VSM sono simili ma usano pesi diversi. possiamo usare le stesse strutture dati per implementare entrambi. ma quali informazioni usiamo?
+* BIM e' usato per titoli ed abstract, non usa term frequency o inverse document frequency ed usa rilevanza binaria
+* non e' dunque adatto per documenti troppo enormi.
 

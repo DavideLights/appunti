@@ -1,16 +1,4 @@
-**definzione di RSV**:
-$$
-RSV_{d} = \log \prod_{t_{i}: x_{i} = y_{i}} \frac{p(x_{i}=1|R,v_{q})p(x_{i} =0| \bar{R},v_{q})}{p(x_{i}=1|\bar{R},v_{q})p(x_{i} =0| R,v_{q})}
-$$
-**come detto in [[lez. 9 approccio probabilistico old]] approssimiamo**:
-* $p(x_{i} =1| \bar{R},v_{q})$ con $p(x_{i}=1)$
-* $p(x_{i} =0| \bar{R},v_{q})$ con $p(x_{i}=0)$
-
-**dunque**:
-$$
-RSV_{d} = \sum_{t_{i}: x_{i}=y_{i}} \log \frac{p(x_{i}=1|R,v_{q})p(x_{i}=0)}{p(x_{i}=1)p(x_{i}=0|R,v_{q})}
-$$
-
+ 
 **frequenza dei termini**: nella formula di $RSV_{d}$, voglio abbandonare il modello BIM per passare allo studio della variabile $d_{t_{i}} = \# \text{ occ. di } t_{i} \text{ in } d$.
 * in BIM: $x_{i} \in \{ 0,1 \}$
 * **dunque non analizzo piu** $x_{i}\in \{ 0,1 \}$ ma $d_{t_{i}} \in \{ 0,1,2,3,\dots \}$
@@ -19,14 +7,14 @@ $$
 * $d_{t_{i}} = n_{i}$
 * $d_{t_{i}}=0$
 
-**devo studiarli in 2 contesti**:
-* contesto dei documenti rilevanti
-* baseline distribution, approximated by the whole collection
+~~**devo studiarli in 2 contesti**:~~
+* ~~contesto dei documenti rilevanti~~
+* ~~baseline distribution, approximated by the whole collection~~
 
-**riformulo** $RSV_{d}$:
-$$
-RSV_{d} = \sum_{t_{i}: y_{i} =1} \log \frac{p(d_{t_{i}}=n_{i}|R,v_{q})p(d_{t_{i}}=0)}{p(d_{t_{i}}=n_{i})p(d_{t_{i}}=0|R,v_{q})}
-$$
+~~**riformulo** $RSV_{d}$:~~
+~~$$~~
+~~RSV_{d} = \sum_{t_{i}: y_{i} =1} \log \frac{p(d_{t_{i}}=n_{i}|R,v_{q})p(d_{t_{i}}=0)}{p(d_{t_{i}}=n_{i})p(d_{t_{i}}=0|R,v_{q})}~~
+~~$$~~
 
 **random var**: $d_{t_{j}} = \text{numero di occorrenze di } t_{j} \text{ nel documento } d$ **a cosa serve**?
 * modello probabilistico per il numero di occorrenze dei termini
@@ -36,8 +24,7 @@ $$
 
 **distribuzione binomiale**: $p(d_{t_{j}}=k)  = \binom{l}{k}\tilde p^{k}{(1- \tilde p)}^{l-k}$
 * $\tilde{p}$: probabilità con cui un termine $t_{j}$ potrebbe occorrere.
-* gemini: perche'?
-* **praticita**: non e' pratico, meglio poisson
+* **praticita**: non e' pratico, calcolare il binomiale e' complesso, ci sta il fattoriale.
 
 **poisson**:
 * **sequenza**: il documento $d$ e' una sequenza di $l$ posizioni
@@ -62,18 +49,22 @@ $$
 * $cf_{t}$ e' la frequenza di $t$ nella collezione.
 * $N$ e' il numero totale di documenti
 * **andamento**: la distribuzione ha un picco vicino a $\lambda$
-
+* **IMPORTANTE**: ma questo lambda scelto non ci permette di misurare l'$RSV_{d}$ come un rapporto di probabilita come ODDS, violando dunque il PRP.
+* **soluzione**: volgiamo sdoppiare $\lambda$ analizzando come si comportano i termini che compaiono nei documenti $\rho_{j}$ ed i termini che compaiono in generale nella collezione $\gamma_{j}$.
+ 
 **come usiamo poisson**? vogliamo comparare le curve che creano i differenti termini in base al loro parametro $\lambda_{t_{j}}$
 
 dobbiamo studiare due valori, che modellano qualche evento:
 * **comportamento dei termini in documenti rilevanti** e' modellato da: $\rho_{j} = \text{ numero che mi aspetto di occorrenze di } t_{j} \text{ in documenti rilevanti per } q$. 
+	* **ossia**: occorrenze medie per $t_{i}$ nei documenti rilevanti
 * **comportamento in media nella collezione intera**: $\gamma_{j} = \text{ numero che mi aspetto di  occorrenze di } t_j \text{ nella collezione intera }$
+	* **ossia**: numero di occrenze medie nella collezione generale.
 
 **dunque**:
-* $p(d_{t_{j}} = n_{j} | R,v_{q}) = \frac{e^{-p_{j}} \rho_{j}^{n_{j}}}{n_{j}!}$ ossia poisson di parametro solo $p_{j}$
-* $p(d_{t_{j}} = 0 | R,v_{q}) = e^{-p_{j}}$
-* $p(d_{t_{j}} = n_{j}) = \frac{e^{-\lambda_{j}} \lambda_{j}^{n_{j}}}{n_{j}!}$
-* $p(d_{t} = 0) = e^{-\lambda_{j}}$
+* $p(d_{t_{j}} = n_{j} | R,v_{q}) = \frac{e^{-p_{j}} \rho_{j}^{n_{j}}}{n_{j}!}$ ossia poisson di parametro solo $p_{j}$ (RHO)
+* $p(d_{t_{j}} = 0 | R,v_{q}) = e^{-p_{j}}$ (RHO)
+* $p(d_{t_{j}} = n_{j}) = \frac{e^{-\gamma{j}} \gamma{j}^{n_{j}}}{n_{j}!}$
+* $p(d_{t} = 0) = e^{-\gamma_{j}}$
 
 **Ora sviluppiamo** $RSV$:
 ![[Pasted image 20260428161325.png]]
@@ -86,11 +77,15 @@ $$RSV_d = \sum_{t_i:y_i=1} \log \left( \frac{\rho_i}{\gamma_i} \right)^{n_i} = \
 
 **problema**: calcolare $\rho_{j}$. (mentre $\gamma_{j}$ puo' essere stimato).
 * **con collezione di documenti giudicati**: allora posso stimare $\rho_{j}$
-* **a priori come faccio**?
+* **a priori come faccio**? 
+* IL MODELLO STUDIATO FINO AD ORA NON PUO' ESSERE UTILIZZATO, Non posso stimare $\rho_{j}$
 ![[Pasted image 20260428161515.png]]
 
 **poisson**:
 ![[Pasted image 20260428161650.png]]
+*Come hai giustamente osservato, per la stragrande maggioranza dei termini in una collezione, la distribuzione delle occorrenze (k) è fortemente asimmetrica*:
+- k **alto è raro**: Il numero di documenti che contengono molte occorrenze dello stesso termine (un valore k elevato) è incredibilmente basso.
+- k **piccolo è frequente**: La stragrande maggioranza dei documenti contiene zero occorrenze (k=0), mentre una frazione minore contiene una o due occorrenze (k=1 o k=2).
 
 **eliteness**: e' una hidden binary variable (ossia e' elite oppure non e' elite).
 * $d$ e' elite per un termine se: il concetto denotato da quel termine e' argomento centrale del documento
@@ -112,27 +107,28 @@ dove:
 * $\bar \mu$ media delle occorrenze nei **documenti non-Elite** (bassa)
 
 ![[Pasted image 20260428162309.png]]
+* **blu**: descrive come si comporta il termine non elite
 ![[Pasted image 20260428162547.png]]
 **vogliamo che il contributo sia non binario rispetto a BIM**: 
 
 ## Calcolo del RSV
-**obiettivo**: riscriviamo le probabilità necessarie per calcolare l’RSV usando la mistura elite/non-elite ossia lo **score finale assegnato a un documento rispetto a una query**.
+**obiettivo**: ri*scriviamo le probabilità necessarie per calcolare l’RSV usando la mistura elite/non-elite ossia lo **score finale assegnato a un documento rispetto a una query**.*
 
-Per ogni termine $t_i$, definiamo:  
-- $C(n_i)=Poisson(n_i|\mu_i)$: probabilità di osservare $n_i$ occorrenze se il documento è elite;  
-- $\bar C(n_i)=Poisson(n_i|\bar\mu_i)$: probabilità di osservare $n_i$ occorrenze se il documento non è elite;  
-- $p_i$: probabilità che un documento rilevante sia elite per $t_i$;  
-- $\bar p$: probabilità che un documento qualsiasi della collezione sia elite per $t_i$.  
+~~Per ogni termine $t_i$, definiamo:~~  
+- ~~$C(n_i)=Poisson(n_i|\mu_i)$: probabilità di osservare $n_i$ occorrenze se il documento è elite;~~  
+- ~~$\bar C(n_i)=Poisson(n_i|\bar\mu_i)$: probabilità di osservare $n_i$ occorrenze se il documento non è elite;~~  
+- ~~$p_i$: probabilità che un documento rilevante sia elite per $t_i$;~~  
+- ~~$\bar p$: probabilità che un documento qualsiasi della collezione sia elite per $t_i$.~~  
 
-**Nei documenti rilevanti**:  
-$$  
-p(d_{t_i}=n_i|R,v_q)=C(n_i)p_i+\bar C(n_i)(1-p_i)  
-$$
-**Nella collezione generale**:  
-$$  
-p(d_{t_i}=n_i)=C(n_i)\bar p+\bar C(n_i)(1-\bar p)  
-$$
-**Lo stesso vale per il caso $n_i=0$ quindi con**:
+~~**Nei documenti rilevanti**:~~  
+~~$$~~  
+~~p(d_{t_i}=n_i|R,v_q)=C(n_i)p_i+\bar C(n_i)(1-p_i)~~  
+~~$$~~
+~~**Nella collezione generale**:~~  
+~~$$~~  
+~~p(d_{t_i}=n_i)=C(n_i)\bar p+\bar C(n_i)(1-\bar p)~~  
+~~$$~~
+~~**Lo stesso vale per il caso $n_i=0$ quindi con**:~~
 $$p(d_{t_i} = 0 | R, v_q) = C(0)p_i + \bar{C}(0)(1 - p_i)$$
 $$p(d_{t_i} = 0) = C(0)\bar{p} + \bar{C}(0)(1 - \bar{p})$$
 
@@ -141,7 +137,7 @@ $$p(d_{t_i} = 0) = C(0)\bar{p} + \bar{C}(0)(1 - \bar{p})$$
 **costruiamo** $RSV_{d}$: Sostituendo queste scomposizioni nella formula generale dell'RSV, otteniamo l'espressione completa per il punteggio di un documento:
 $$RSV_d = \sum_{t_i:y_i=1} \log \frac{(C(n_i)p_i + \bar{C}(n_i)(1 - p_i))(C(0)\bar{p} + \bar{C}(0)(1 - \bar{p}))}{(C(0)p_i + \bar{C}(0)(1 - p_i))(C(n_i)\bar{p} + \bar{C}(n_i)(1 - \bar{p}))}$$
 
-Questa formula, sebbene teoricamente corretta, è **inutilizzabile nella pratica** perché per ogni singolo termine $t_i$ dovremmo stimare ben 4 parametri ignoti (che a priori non conosciamo):
+**IMPORTANTE**: Quest*a formula, sebbene teoricamente corretta, è **inutilizzabile nella pratica** perché per ogni singolo termine $t_i$ dovremmo stimare ben 4 parametri ignoti* (che a priori non conosciamo):
 1.  **$\mu_i$**: media delle occorrenze nei documenti elite.
 2.  **$\bar{\mu}_i$**: media delle occorrenze nei documenti non-elite.
 3.  **$p_i$**: probabilità di eliteness nei documenti rilevanti.
@@ -150,6 +146,7 @@ Questa formula, sebbene teoricamente corretta, è **inutilizzabile nella pratica
 Si cerca una **funzione parametrica semplice** che approssimi il comportamento della curva 2-Poisson.
 
 **caratteristiche della funzione da cercare**:
+* **OBIETTIVO**: si comporta come **poisson**!
 * Essere pari a $0$ se $n_i=0$.
 * Crescere in modo monotono all'aumentare di $n_i$.
 	$$\log \frac{p_i(1 - \bar{p})}{(1 - p_i)\bar{p}}$$
