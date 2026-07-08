@@ -188,7 +188,7 @@ $$RSV_d = \sum_{t \in q} \frac{(k_1 + 1)tf_{td}}{k_1 + tf_{td}} \log \frac{N}{df
 * **Fattore $(k_1 + 1)$**: serve a normalizzare il punteggio in modo che, quando $tf_{td} = 1$, il contributo della componente TF sia pari a 1 (rendendo il punteggio finale pari all'IDF puro).
 * **Bounded scores**: a differenza del modello vettoriale (dove la TF può crescere quasi linearmente), qui il punteggio è **limitato superiormente** da un asintoto.
 - quanto k fa variare la valenza della TF per un certo termine
-> [!note ] aggiungi immagine!!!
+![[Pasted image 20260708184733.png]]
 ###### Ulteriore correzione
 **lunghezza dei documenti**: sono un bias importante. documenti lunghi tendono ad avere tf elevato rispetto a documenti corti.
 

@@ -134,6 +134,8 @@ $$
 $$
 
 * $|D(q)|$ **omesso**: assumendo sia un parametro costante, allora minimizzare la formula sopra e' equivalente a minimizzare $\star$.
+* **A CHE SERVE?** ho trovato una metrica ottima per ordinare i miei documenti, tutta via per essere utilizza richiede di sapere calcolare valori che non conosciamo a priori, o che comunque sono difficili da calcolare computazionalmente ed  eventualmente da stimare.
+* 
 
 **Teorema**: assumendo 0/1 loss, allora **PRP** e' ottimo e minimizza gli errori, ossia il costo per gli errori.
 * gemini vuol dire che con $C,C'$ variabili binarie allora prp e' ottimo?

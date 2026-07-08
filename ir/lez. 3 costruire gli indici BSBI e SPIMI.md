@@ -96,7 +96,7 @@ cat file.txt | tr " " "\n" | sort | uniq | wc
 * L'algoritmo `SPIMI` fa il merge del prodotto delle chiamate a `SPIMI-Invert`, **come visto prima**
 * **duplicati**: l'uso del dizionario implica che coppie identiche $(\text{term}, \text{docID})$ vengano mappate allo stesso posto nel dizionario. In **BSBI** avrei allocato spazio inutilmente!
 * **compressione**: se so comprimere i dati, posso leggere e scrivere velocmenete.
-* **complessita temporale**: $O(T)$
+* **complessita temporale**: $O(T) \in O(M \log M)$ assumendo $M \ll T$, $M=\text{numero di termi unici}$ ed $T=\text{numero di token totali}$
 
 **lettura e scrittura su disco**: in questi contesti faccio tantissime scritture e letture. Devo cercare di ridurre
 

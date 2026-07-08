@@ -29,7 +29,7 @@
 
 **soluzione**: introduco il **peso**, non voglio che la crescita dell'importanza del documento si lineare in $\text{tf}_{t,d}$, ma piuttosto e' piu adatto il **LOGARITMO**$$w_{t,d} = \begin{cases} 1 + \log_{10}(tf_{t,d}) & \text{se } tf_{t,d} > 0 \\ 0 & \text{altrimenti} \end{cases}$$
 **score per la coppia query documento**:
-$$\text{tf-matching-score}(q,d)=\sum_{t\in q\cap d}(1 + \log \text{tf}_{t,d})$$
+$$\text{tf-matching-score}(q,d)=\sum_{t\in q\cap d}w_{t,d}$$
 ![[Pasted image 20260704155017.png]]
 
 **problema di** $\text{tf}_{t,d}$: parole come `the`, `is`, `and` compaiono spesso, ma sono poco informative.

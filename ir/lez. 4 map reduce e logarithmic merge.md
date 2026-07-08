@@ -53,8 +53,6 @@
 * **merge**: faccio l'append scrivendo nel file della posting list corrispondente
 * **assunzione**: docID crescenti.
 * **problema**: troppi file, inefficiente in un sistema operativo.
-
-
 ## logarithmic merge
 **assunzione**: lavoriamo assumendo che l'indice e' un file unico.
 

@@ -61,8 +61,6 @@ $$
 * **sia la seconda** `of`: $\text{cf}_{2}=\frac{\text{cf}_{1}}{2}$. allora `of` occupa in proporzione circa il $3.5\%$ 
 * **allora** $\text{cf}_{3} = \frac{\text{cf}_{1}}{3}$ e cosi via...
 
-**gemini**: e quindi a che serve sto zip?
-
 ## Compressione del dizionario
 **perche' comprimere il dizionario?** perche' e' grande, sta in memoria, e voglio leggerlo velocemente. 
 * **dispositivi embedded**: poca memoria!

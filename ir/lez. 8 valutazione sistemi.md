@@ -111,8 +111,7 @@ $$
 \text{MAP}= \frac{1}{|Q|} \sum _{q \in Q} \text{AP}(q)
 $$
 ![[Pasted image 20260705221804.png]]
-*  **sistemi che massimizzano recall**: map e' ideale in contesti dove voglio alta recall. MAP penalizza sistemi che mettono i documenti rilevanti in fondo alla classifica.
-
+* **sistemi che massimizzano recall**: map e' ideale in contesti dove voglio alta recall. MAP penalizza sistemi che mettono i documenti rilevanti in fondo alla classifica.
 ## Discounted Cumulative Gain
 **assunzioni**: 
 * **distinzione** tra documenti **altamente rilevanti**, e documenti rilevanti in modo **marginale**.
