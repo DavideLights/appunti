@@ -24,7 +24,7 @@
 * **in generale da una storia**: $p(w_{i}| w_{1},\dots,w_{i-1})$
 * **assunzione**: $p(w_{i}| w_{1},\dots,w_{i-1},M_{d}) = p(w_{i}|M_{d})$, ossia la probabilità di generare una parola dipende soltanto da quello che mi dice il modello, non mi interessa guardare l'intera frase.
 
-**Modello come distribuzione sui termini**: $$M_{d} = \{ p(t|M_{d}): t\in V \}$$
+**Modello come distribuzione di probabilita sui termini**: $$M_{d} = \{ p(t|M_{d}): t\in V \}$$
 **automi probabilistici**: sono gli automi che generano le query. una certa transizione viene presa con una certa probabilita.
 ![[Pasted image 20260507120455.png]]
 

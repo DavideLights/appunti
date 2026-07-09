@@ -15,7 +15,6 @@
 ~~$$~~
 ~~RSV_{d} = \sum_{t_{i}: y_{i} =1} \log \frac{p(d_{t_{i}}=n_{i}|R,v_{q})p(d_{t_{i}}=0)}{p(d_{t_{i}}=n_{i})p(d_{t_{i}}=0|R,v_{q})}~~
 ~~$$~~
-
 **random var**: $d_{t_{j}} = \text{numero di occorrenze di } t_{j} \text{ nel documento } d$ **a cosa serve**?
 * modello probabilistico per il numero di occorrenze dei termini
 * **termini rari** $\iff$ $d_{t_{j}}$ e' piccolo
@@ -185,7 +184,7 @@ $$RSV_d = \sum_{t \in q} \frac{(k_1 + 1)tf_{td}}{k_1 + tf_{td}} \log \frac{N}{df
 	- solitamente impostato tra **1.2** e **2.0**.
 	- Un valore di $k_1$ **basso** porta a una saturazione rapida (già con poche occorrenze il termine raggiunge quasi il suo peso massimo).
     * Un valore di $k_1$ **alto** rende la crescita del punteggio più lenta e "più vicina" a una crescita lineare (tipica del tf-idf classico).
-* **Fattore $(k_1 + 1)$**: serve a normalizzare il punteggio in modo che, quando $tf_{td} = 1$, il contributo della componente TF sia pari a 1 (rendendo il punteggio finale pari all'IDF puro).
+* **Fattore $(k_1 + 1)$**: *serve a normalizzare il punteggio in modo che, quando $tf_{td} = 1$, il contributo della componente e' 1, dunquq si conta solo IDF*
 * **Bounded scores**: a differenza del modello vettoriale (dove la TF può crescere quasi linearmente), qui il punteggio è **limitato superiormente** da un asintoto.
 - quanto k fa variare la valenza della TF per un certo termine
 ![[Pasted image 20260708184733.png]]

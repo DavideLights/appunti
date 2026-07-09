@@ -287,7 +287,7 @@ $$= p_i \frac{e^{-\mu_i} \mu_{i}^{n_i}}{n_i!} + (1 - p_i) \frac{e^{-\bar{\mu}_i}
 * $\bar \mu$ media delle occorrenze nei **documenti non-Elite** (**bassa**)
 * **DIFFICILE DA CALCOLARE**!
 
-**cercare una funzione simile a poisson in funzione di $p_{i}$ e $p$:
+**cercare una funzione simile a poisson in funzione di $p_{i}$ e $p$:**
 $$\frac{(k+1)n_i}{k+n_i} \cdot \log(\frac {p_{i}(1-\bar{p})} {(1-p_{i})\bar{p}})$$
 -  $p_i$: probabilità che un documento rilevante sia elite per $t_i$
 * $\bar{ p}$: probabilità che un documento qualsiasi della collezione sia elite per $t_i$
@@ -300,7 +300,26 @@ $$\log \frac{p_i(1 - \bar{p})}{(1 - p_i)\bar{p}} \approx \log \frac{N}{df_{t_{i}
 **Retrieval Status Value**:
 $$RSV_d = \sum_{t_i:y_i=1} \frac{(k+1)n_i}{k+n_i} \log \frac{N}{df_{t_i}}$$
 
+**BM25 Semplificato:**
+$$RSV_d = \sum_{t \in q} \log \frac{N}{df_t}$$
+
 **BM25**:
 $$RSV_d = \sum_{t \in q} \frac{(k_1 + 1)tf_{td}}{k_1 + tf_{td}} \log \frac{N}{df_t}$$
+* $k_{1} \in [1.2, 2.0]$, tuning.
+	* **basso**: saturazione rapida
+	* **alto**: crescita piu bassa
+* $\frac{N}{df_{t}}$ **fattore IDF**
+	* **basso**: il termine e' comune
+	* alto: il termine e' raro.
+* **apporx. 2poisson**: tende a $(k_{1}+1)$
 
-...
+
+**Okapi BM25**:
+$$RSV_d = \sum_{t \in q} \log \left( \frac{N}{df_t} \right) \cdot \frac{(k_1 + 1)tf_{td}}{k_1 \left( (1 - b) + b \frac{L_d}{L_{ave}} \right) + tf_{td}}$$
+1.  **$tf_{td}$**: frequenza del termine della query nel documento.
+2.  **$L_d$ e $L_{ave}$**: lunghezza di $d$ e lunghezza media nella collezione
+	1. $\frac{L_{d}}{L_{avg}}$ e' la lunghezza di $d$ **normalizzata**
+3.  **$k_1$ (TF Saturation)**: controlla la saturazione della frequenza. 
+    *   Se $k_1 = 0$, il modello diventa binario (BIM).
+    *   Valori tipici: **1.2 - 2.0**.
+4.  **$b \approx 0.75$ (Length Normalization)**: controlla quanto penalizzare i documenti lunghi. 
