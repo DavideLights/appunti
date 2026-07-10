@@ -72,23 +72,6 @@ $$
 * $A$ e $B$ potrebbero avere stessa precision e recall sugli stessi dati.
 
 
-**Precision@K** (P@K): 
-* $K$: guarda solo i primi $K$ risultati
-* **percentuale di documenti rilevanti nelle prima K posizioni**: $\text{Precision@}K = \frac{\text{relevant nei primi } K}{K}$ 
-* **misura al variare di $K$**
-
-**PRC** (Precision Recall Curve): al variare di $K$ misuro precision e recall
-![[Pasted image 20260704181205.png]]
-* basta guardare i numeretti per capire come funziona la PRC
-
-**Interpolation**: 
-$$
-P(R) = max \{ P': R' \geq R \land (R',P')\in S\}
-$$![[Pasted image 20260704181408.png]]
-* **step function**: ottengo una funzione a gradino che puo' solo che scendere.
-
-**NOTA**: i punti del grafico sono ottenuti misurando Precision e recall per diversi k.
-
 **Problema**: precision e recall sono metriche globali, non guardano come il sistema effettua il ranking. Dobbiamo definire delle nuove metriche
 
 $\text{Precision@}K$: la precision sui primi $K$ documenti ritornati
@@ -151,7 +134,6 @@ $$
 **valutazioni pairwise**: per ridurre il bias, faccio paragonare all'utente due documenti
 **confronto interleaving e click**: intervallo nel risultato mostrato due ranking diversi e vedo chi ottiene piu click dei due.
 **A/B testing**: due gruppi di utenti con due sistemi differenti per il ranking. Misuro e vedo chi e' meglio.
-
 
 ## lexical semantics
 

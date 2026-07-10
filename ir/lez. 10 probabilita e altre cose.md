@@ -104,7 +104,8 @@ $$
 dove:
 * $\mu_{i}$ media delle occorrenze nei **documenti Elite (alta**)
 * $\bar \mu$ media delle occorrenze nei **documenti non-Elite** (bassa)
-
+* $p_i$ è la probabilita che il documento sia elite per il termine $t_j$
+ 
 ![[Pasted image 20260428162309.png]]
 * **blu**: descrive come si comporta il termine non elite
 ![[Pasted image 20260428162547.png]]
@@ -139,8 +140,8 @@ $$RSV_d = \sum_{t_i:y_i=1} \log \frac{(C(n_i)p_i + \bar{C}(n_i)(1 - p_i))(C(0)\b
 **IMPORTANTE**: Quest*a formula, sebbene teoricamente corretta, è **inutilizzabile nella pratica** perché per ogni singolo termine $t_i$ dovremmo stimare ben 4 parametri ignoti* (che a priori non conosciamo):
 1.  **$\mu_i$**: media delle occorrenze nei documenti elite.
 2.  **$\bar{\mu}_i$**: media delle occorrenze nei documenti non-elite.
-3.  **$p_i$**: probabilità di eliteness nei documenti rilevanti.
-4.  **$\bar{p}$**: probabilità di eliteness nella collezione.
+3.  **$p_i=p(E_i|R,v_q)$**: probabilità di eliteness **nei documenti rilevanti**.
+4.  **$\bar{p} = p(E_i)$**: probabilita di eliteness assumendo **nei documenti non rilevanti**
 
 Si cerca una **funzione parametrica semplice** che approssimi il comportamento della curva 2-Poisson.
 
