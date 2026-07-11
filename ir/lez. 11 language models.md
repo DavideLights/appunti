@@ -52,11 +52,12 @@ $$
 $$
 p(q|M_{d}) = p(<w_{1},\dots,w_{|q|}>|M_{d}) = \prod_{i=1}^{|q|} p(w_{i}|M_{d})
 $$
-* **query**: la vediamo come una bad di termini indipendenti gli uni dagli altri.
+* **query**: la vediamo come una bag di termini indipendenti gli uni dagli altri.
 * **count**: devo tenere il conto di quante volte compare ogni termine! $tf_{t_{i}, q} = k_{i}$
 * **in questo modello:** $p(t_{i}|M_{d}) = p_{i}$
 
 **modello multinomiale**:
+* mi chiedo qual'e' la probabilita di osservare $k$ occorrenze del termine $t$ nella query $q$.
 $$
 p(q|M_{d}) = \frac{|q|!}{\prod_{t\in V} tf_{t,q}!} \prod_{t\in V} p(t|M_{d})^{tf_{t,q}} =_{\text{rank}} \prod_{t \in V} p(t|M_{d})^{t_,q}
 $$
@@ -99,8 +100,12 @@ $$
 
 **Jelinek-Mercer smoothing** sui termini:
 $$
-p_{JM}(t|d) = \frac{\lambda tf_{t,d}}{|d|} + (1-\lambda)\frac{c f_{t}}{T}
+p_{JM}(t|d) = \lambda\frac{ tf_{t,d}}{|d|} + (1-\lambda)\frac{c f_{t}}{T}
 $$
+$$
+p_{JM}(q|d) = \prod_{k=1}^{|q|} p_{JM}(w_{k}|d)
+$$
+
 
 * $\lambda$ e' un iperparametro, da stimare dunque tramite benchmark. serve a definire il peso rispetto alla collezione.
 * $\lambda$ **alto** $\to$ ricerca di tipo congiuntivo, tende a ritornare i documenti contenenti le parole nella query
@@ -110,6 +115,7 @@ $$
 
 > [!warning] esercizio esame
 
+## dirichelet
 **problema di jelinek**: non tiene conto della lunghezza del documento. 
 * **goal** combinazione delle evidenze del documento e della collezione, ma deve dipendere dalla lunghezza!!@#!$
 
@@ -126,8 +132,9 @@ $$
 tf_{t,d} + \mu p(t|M_{c})
 $$
 
+**normalizzo con il totale**!
 $$
-p_{Dir}(t_{i}|d) = \frac{td_{i,d} + \mu p(t_{i}|M_{c})}{\sum_{t_{k} \in V}(\textcolor{red}{tf_{t_{k},d}} + \textcolor{blue}{\mu p(t_{k}|M_{c})})}
+p_{Dir}(t_{i}|d) = \frac{tf_{t_{i},d} + \mu p(t_{i}|M_{c})}{\sum_{t_{k} \in V}(\textcolor{red}{tf_{t_{k},d}} + \textcolor{blue}{\mu p(t_{k}|M_{c})})}
 $$
 **nota** in $M_{c}$ la somma delle sue probabilita e' 1:
 $$
@@ -139,7 +146,7 @@ $$
  = |d|$$
 **dunque**:
 $$
-p_{Dir}(t_{i}|d) = \frac{tf_{t,d} + \mu p(t|M_{c})}{\textcolor{red}{|d|}+\textcolor{blue}{q}}
+p_{Dir}(t_{i}|d) = \frac{tf_{t,d} + \mu p(t|M_{c})}{\textcolor{red}{|d|}+\textcolor{blue}{\mu}}
 $$
 
 #### interpolazione
@@ -183,6 +190,12 @@ $$
 * **dirichlet**: fa interpolazione sulla lunghezza del documento, funziona meglio per query con parole chiave.
 
 
+# pro e contro
 **debolezza della baracca**: problemi con le frequenze dei termini, non ne tengo conto!
 
 **che c'ha di figo**: e' semplice ma non competitivo.
+
+con i language model lo score più alto potrebbe essere negativo dovuto al fatto che utilizziamo il logaritmo e tra 0 e 1 il logaritmo vale valori negativi cerchiamo un valore vicino allo 0 comunque invece con BM25 otteniamo sempre valori positivi
+
+- i language model hanno idf non esplicita ma tramite la collection frequency otteniamo un risultato simile, invece BM25 la ha in modo esplicito
+- con BM25 riusciamo ad avere più controllo dei fenomeni grazie ai parametri di saturazione e di normalizzazione $k_1$ e $B$

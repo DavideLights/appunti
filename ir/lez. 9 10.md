@@ -17,11 +17,14 @@
 $$
 P(\text{relevant} | d,q) = \text{probabilita che il documento e' buono dati } d,q
 $$
-**irrilevanza per vector space model (VSM)**: in questo modello, il documento piu simile potrebbe essere totalmente irrilevante per l'utente. 
+**irrilevanza per vector space model (VSM)**: in questo modello, il documento piu simile potrebbe essere totalmente irrilevante per l'utente.
+* VSM non cattura quali termini sono veramente rilevanti
+* Usa modello: **BAG OF WORDS**
 
 **perche puo' sbagliare VSM**?
 * **somiglianza**: si basa esclusivamente sulla somiglianza sintattica (cosine similarity)
 * **contesto**: non guarda il contesto delle parole, ossia come vengono intese e che significato assumono.
+* **normalizzazione**: un documento lunghissimo che parla di mille argomenti diversi (e che contiene, quasi per caso, i termini della query in un singolo paragrafo) potrebbe essere penalizzato rispetto a un documento cortissimo che contiene solo quelle parole, anche se il documento lungo era l'unico a spiegare davvero il concetto rilevante.
 
 ## Probabilita
 **formule varie**:
@@ -96,7 +99,7 @@ $$
 * **come dicevano ad oxford**: *se i documenti sono ordinati in ordine decrscente in base alla probabilita di rilevanza, allora abbiamo ottenuto il miglior sistema di ir possibile*. **e grazie al cazzo**.
 * **a che serve?** ottimizzare i risultati per l'utente finale che legge.
 * **funzione di costo errore**: sono $C, C'$, le assumiamo binarie. Allora PRP e' ottimo.
-* **assunzione indipendenza**: la rilevanza di un documento e' indipendente dalla rilevanza degli altri.
+* **assunzione indipendenza tra documenti**: la rilevanza di un documento e' indipendente dalla rilevanza degli altri.
 
 >[!note] gemini
 >Il PRP dice che se non hai altre informazioni, ==l'ordine basato sulla probabilità di rilevanza decrescente è quello che ti garantisce, statisticamente, il minor numero di documenti irrilevanti nelle prime posizioni==. È l'ottimo teorico ==sotto l'ipotesi che la rilevanza di un documento sia indipendente da quella degli altri.==
@@ -118,15 +121,15 @@ $$
 * $D(q) = k$ e' n valore costante.
 * $C,C'$ sono variabili binarie.
 
-**allora il rischio**:
-$$R(D(q)) = \sum_{d\in D} C'(d,q)p(\bar{R}|d,q) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$
-$$R(D(q)) = \sum_{d \in D} C'(d,q)(1-p(R|d,q)) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$
-* **lol**: abbiamo introdotto $C', C$ ma sono superflui all'interno delle sommatorie.
-$$
-R(D(q)) = \sum_{d \in D(q)}(1-p(R|d,q)) + \sum_{d \notin D(q) }p(R|d,q)$$
-* maneggiamo le sommatorie: sposto l'uno fuori e metto la parte negativa a destra.
-$$ = |D(q)| + \sum_{d \notin D(q)} p(R|d,q) - \sum_{d \in D(q)} p(R|d,q)
-$$**misura inversa**: il rischio e' una misura inversa **rispetto alla qualita** di un risultato.
+~~**allora il rischio**:~~
+~~$$R(D(q)) = \sum_{d\in D} C'(d,q)p(\bar{R}|d,q) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$~~
+~~$$R(D(q)) = \sum_{d \in D} C'(d,q)(1-p(R|d,q)) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$~~
+* ~~**lol**: abbiamo introdotto $C', C$ ma sono superflui all'interno delle sommatorie.~~
+~~$$~~
+~~R(D(q)) = \sum_{d \in D(q)}(1-p(R|d,q)) + \sum_{d \notin D(q) }p(R|d,q)$$~~
+* ~~maneggiamo le sommatorie: sposto l'uno fuori e metto la parte negativa a destra.~~
+~~$$ = |D(q)| + \sum_{d \notin D(q)} p(R|d,q) - \sum_{d \in D(q)} p(R|d,q)~~
+~~$$**misura inversa**: il rischio e' una misura inversa **rispetto alla qualita** di un risultato.~~
 
 **minimizzare** $R(D(q))$: vuol dire che $D(q)$ e' tale che da **massimizzare**.Dopo tante formule l'obiettivo era questo.
 $$
@@ -135,14 +138,13 @@ $$
 
 * $|D(q)|$ **omesso**: assumendo sia un parametro costante, allora minimizzare la formula sopra e' equivalente a minimizzare $\star$.
 * **A CHE SERVE?** ho trovato una metrica ottima per ordinare i miei documenti, tutta via per essere utilizza richiede di sapere calcolare valori che non conosciamo a priori, o che comunque sono difficili da calcolare computazionalmente ed  eventualmente da stimare.
-* 
 
 **Teorema**: assumendo 0/1 loss, allora **PRP** e' ottimo e minimizza gli errori, ossia il costo per gli errori.
 * gemini vuol dire che con $C,C'$ variabili binarie allora prp e' ottimo?
 
 ## BIM e features
 **Binary Independence Model**: e' il modello piu' semplice. faccio le seguenti assunzioni
-* **indipendenza**: le rilevanze dei documenti sono indipendenti l'une dalle altre.
+* **indipendenza**: un documento e' rilevante per un termine in modo indipendente dagli altri
 * **rilevanza binaria**: il documento e' rilevante oppure no. 
 **features**: il documento e' un **set di features** che costituiscono la **rappresentazione**.
 * $d$ e' il vettore $(f_{1},\dots,f_{n})$ di features. allora consideriamo la probabilità che le feature $f_{1},\dots,f_{n}$ siano rilevanti rispetto a $q$.

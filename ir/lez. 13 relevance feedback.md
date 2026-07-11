@@ -15,7 +15,7 @@ $$
 
 **due approcci**:
 * **locale**: analisi on-demand per una query utente.
-* **global**: fai un analisi globale per la query expansion.
+* **global**: fai un analisi globale per la query expansion, trova i sinonimi e utilizzali per la query expansion
 
 **relevance feedback**:
 1. utente mette la query

@@ -87,7 +87,7 @@ $$RSV_d = \sum_{t_i:y_i=1} \log \left( \frac{\rho_i}{\gamma_i} \right)^{n_i} = \
 - k **piccolo è frequente**: La stragrande maggioranza dei documenti contiene zero occorrenze (k=0), mentre una frazione minore contiene una o due occorrenze (k=1 o k=2).
 
 **eliteness**: e' una hidden binary variable (ossia e' elite oppure non e' elite).
-* $d$ e' elite per un termine se: il concetto denotato da quel termine e' argomento centrale del documento
+* **IMPORTANTE**: $d$ e' elite per un termine se: *il concetto denotato da quel termine e' argomento centrale del documento*
 * **proprieta**: il numero di occorrenze dipende dall'eliteness
 * **rilevanza**: l'eliteness e' fortemente correlata alla rilevanza, ma non sono la stessa cosa.
 
@@ -226,3 +226,8 @@ $$RSV_d = \sum_{t \in q} \log \left( \frac{N}{df_t} \right) \cdot \frac{(k_1 + 1
 - **BM25 nella pratica reale:**
     - **Elasticsearch:** utilizza BM25 come modello di default per la similarità.
     - **Apache Solr:** utilizza BM25 come default dalla versione 8.x in poi.
+
+## esercizi
+![[Pasted image 20260710223018.png]]
+![[Pasted image 20260710223048.png]]
+![[Pasted image 20260710223059.png]]
