@@ -47,8 +47,7 @@
 	* **correggi** `hte` in `the`
 	* **suggerisci** correzione o una **lista** di correzioni.
 
-**probabilita**: l'errore di spelling varia in base all'applicativo. Su telefonino ho un'errore del $7\%$. (TODO: sta robba e' vera???)
-
+**probabilita**: l'errore di spelling varia in base all'applicativo. Su telefonino ho un'errore del $7\%$. 
 
 | tipo errore     | non o real? | context sensitive? | descrizione                                                                                  |
 | --------------- | ----------- | ------------------ | -------------------------------------------------------------------------------------------- |

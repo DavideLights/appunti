@@ -215,12 +215,6 @@ $$
 
 **[PROCEDIMENTI ALGEBRICI STRANI DA NON SAPERE NECESSARIAMENTE]  varie manipolazioni...**
 $$
-O(R|v_{d},v_{q})=_{\text{rank}} \prod_{t_{i}: x_{i}=y_{i}=1} \frac{p_{i}}{u_{i}} \cdot \prod_{t_{i}: x_{i}=0, y_{i}=1} \frac{1-p_{i}}{1-u_{i}}
-$$
-$$
-O(R|v_{d},v_{q})=_{\text{rank}} \prod_{t_{i}: x_{i}=y_{i}=1} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})} \cdot \prod_{t_{i}: y_{i}=1} \frac{1-p_{i}}{1-u_{i}}
-$$
-$$
 O(R|v_{d},v_{q}) =_{rank} \prod_{t_{i}:x_{i}=y_{i}} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})}
 $$
 **Retrieval Status Value**:
@@ -259,7 +253,7 @@ $$
 $$d_{t_{j}} = \text{Binom} \approx \text{Poisson}$$
 * **cosa vuol dire**? Poisson/Binomaile mi dice qual'e' la probabilita di osservare $x$ occorrenze nel documento. 
 
-Retrieval Status Value:
+**Retrieval Status Value**:
 $$
 (\star) RSV_{d} = \sum_{t_{j}: y_{j}=1}\frac{ p(d_{t_{j}}=n_{j}|R,v_{q})p(d_{t_{j}}=0)}{p(d_{t_{j}} = n_{j})p(d_{t_{j}}=0|R,v_{q})} 
 $$
@@ -323,3 +317,11 @@ $$RSV_d = \sum_{t \in q} \log \left( \frac{N}{df_t} \right) \cdot \frac{(k_1 + 1
     *   Se $k_1 = 0$, il modello diventa binario (BIM).
     *   Valori tipici: **1.2 - 2.0**.
 4.  **$b \approx 0.75$ (Length Normalization)**: controlla quanto penalizzare i documenti lunghi. 
+
+# modelli linguistici
+
+**modello unigram**:
+$$
+\hat p_{i} = \hat{p}(t_{i}|M_{d}) = \frac{tf_{t,d}}{|d|}
+$$
+

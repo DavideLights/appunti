@@ -191,10 +191,6 @@ $$
 
 
 # pro e contro
-**debolezza della baracca**: problemi con le frequenze dei termini, non ne tengo conto!
-
-**che c'ha di figo**: e' semplice ma non competitivo.
-
 con i language model lo score più alto potrebbe essere negativo dovuto al fatto che utilizziamo il logaritmo e tra 0 e 1 il logaritmo vale valori negativi cerchiamo un valore vicino allo 0 comunque invece con BM25 otteniamo sempre valori positivi
 
 - i language model hanno idf non esplicita ma tramite la collection frequency otteniamo un risultato simile, invece BM25 la ha in modo esplicito

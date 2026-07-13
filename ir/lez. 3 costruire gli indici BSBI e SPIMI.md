@@ -53,7 +53,7 @@ cat file.txt | tr " " "\n" | sort | uniq | wc
 3. **do** $n \gets n+1$
 	1. **ottieni il blocco**: $\text{block} \gets \text{ParseNextBlock()}$
 	2. **crea l'indice per quel blocco**: $\text{BSBI-Invert}(\text{block})$
-	3. **scrivi su disco**: $\text{WriteBlockToDisk}(\text{block}, f_{n})$
+	3. **scrivi su disco**: $\text{WriteBlockToDisk}(\text{block}, f_{n})$**avg. # bytes per token 4.5**
 4. $\text{MergeBlocks}(f_{1},\dots,f_{n}; f_{\text{merged}})$
 
 

@@ -5,7 +5,6 @@
 **safe ranking**: quando un sistema se ritorna i $K$ documenti migliori sono assolutamente i $K$ documenti con score più alto.
 
 **non-safe ranking**? puo' avere senso, specialmente se ci mette meno tempo per eseguire.
-
 ## recap: cosine similarity
 **cosine similarity**:
 1. rappresenta query come vettori
@@ -46,7 +45,7 @@
 * **problema**: potrebbe essere che $r<K$.
 * **come lo uso?** quando arriva la query calcolo la cosine similarity dei documenti nella champion list.
 * **problema**: potrebbe essere che alcuni documenti non vengono recuperati! (parallelismo figo col darkweb, un documento che non viene recuperato e' come una pagina del darkweb)
-* tiene ocnto del fatto che i documenti non sono tutti uguali.
+* tiene conto del fatto che i documenti non sono tutti uguali.
 
 > [!note] Esercizio
 > D: come si potrebbe implementare la champion list come inverted index?
