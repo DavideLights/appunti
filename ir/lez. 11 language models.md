@@ -5,7 +5,7 @@
 
 **document language model**: $M_{d}$ e' il modello  probabilistico del documento $d$.
 * $M_{d}$ cambia da documento a documento
-* **attenzione**: non intendiamo che $M_{d}$  (dunque il documento) generi letteralmente la query. e' un'assunzione per il modellamento del problema.
+* **attenzione**: non intendiamo che $M_{d}$  (dunque il documento) generi letteralmente la query. e' un'assunzione per modellare il problema.
 
 **modello generativo**: ogni documento e' una base per un modello generativo che genera la query.
 * che modello vogliamo usare? con che parametri?

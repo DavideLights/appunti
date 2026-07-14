@@ -1,4 +1,4 @@
-
+k
 # Lez. 1
 1. Che cos'e IR? che assunzioni si fanno inizialmente? cosa si cerca nell'information retrieval
 2. Differenza tra Information Need e query.
@@ -159,4 +159,30 @@
 
 ![[Pasted image 20260705221804.png]]
 ![[Pasted image 20260705230820.png]]
-## lez. 9
+## lez. 9 e 10
+1. **quali sono gli eventi incerti che ci portano all'approccio probabilistico**? (utenti, contesto, rappresentazione, approssimazione)
+2. $P(\text{relevant|d,q})$ che cosa descrive?
+3. perche' vector space model non va bene rispetto all'approccio probabilistico? (somiglianza, contesto, normalizzazione)
+4. che cosa descrive $O(R|d,q)$? quand'e' che un documento e' piu probabile che sia rilevante?
+5. calcolare $p(R|d,q)$ con bayes e' difficile, che assunzioni vengono fatte?
+6. che cosa dice il PRP? come deve essere la funzione di costo dell'errore? che assunzione viene fatta?
+7. che cosa descrive la formula? cosa sono $C, C'$?~~$$R(D(q)) = \sum_{d\in D} C'(d,q)p(\bar{R}|d,q) + \sum_{d \not \in D} C(d,q) p(R|d,q)$$
+8. che assunzione fa il Binary Independence Model? chi partecipa all'indipendenza nel BIM? cosa vuol dire indipendenza delle feature?
+9. in BIM perche' $O(R|v_{d}, v_{q})=\prod_{i=1}^M \frac{p(x_{i}|R,v_{q})}{p(x_{i}|\bar{R},v_{q})}$ che assunzione viene fatta per semplificare il calcolo riguardo ai termini che non compaiono nella query?
+10. cosa vuol dire la formula? che cazzo sono $p_{i}$ ed $u_{i}$?
+ $$O(R|v_{d},v_{q}) =_{rank} \prod_{t_{i}:x_{i}=y_{i}} \frac{p_{i}(1-u_{i})}{u_{i}(1-p_{i})}
+$$
+11. come approssimiamo $p_{i}$ ed $u_{i}$, di conseguenza come definiamo  $RSV_{d}$?
+12. che problema ha **BIM**? perche' studiamo la poisson?
+13. a differenza di BIM, che variabili studiamo?
+14. perche nella formula non compare $\bar R$? a che assunzione faccio riferimento? $$RSV_{d} = \sum_{t_{i}: y_{i} =1} \log \frac{p(d_{t_{i}}=n_{i}|R,v_{q})p(d_{t_{i}}=0)}{p(d_{t_{i}}=n_{i})p(d_{t_{i}}=0|R,v_{q})}$$
+15. che cosa descrive il parmametro $\lambda$ della poisson? come approssiamo $\lambda_{j} \approx \frac{cf_{t_{j}}}{N}$ 
+16. dove avviene il picco in una poisson di parametro $\lambda$? e come si comporta al variare del parametro k?
+17. perche' dobbiamo sdoppiare lambda  usando due poisson differenti di parametro $\rho_{j}$ e $\gamma_{j}$. che decrivono?
+18. come si ottiene la formula? cosa descrive il rapporto? $$RSV_d = \sum_{t_i:y_i=1} \log \left( \frac{\rho_i}{\gamma_i} \right)^{n_i} = \sum_{t_i:y_i=1} n_i \log \frac{\rho_i}{\gamma_i}$$
+19. cosa descrive $= p_i \frac{e^{-\mu_i} \mu_{i}^{n_i}}{n_i!} + (1 - p_i) \frac{e^{-\bar{\mu}_i} \bar{\mu}_{i}^{n_i}}{n_i!}$? cosa sono $\mu_{i}$, $\bar{\mu}$ ed $p_{i}$?
+20. con quale funzione approssimiamo il comportamento della 2poisson?
+21. $RSV_d = \sum_{t_i:y_i=1} \frac{(k+1)n_i}{k+n_i} \log \frac{N}{df_{t_i}}$ come si ottiene?
+22. descrivi okapiBM25. c
+
+## lez. 11

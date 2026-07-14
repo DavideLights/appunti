@@ -22,3 +22,11 @@
 	- Se l'utente clicca il documento in posizione 1, salta il 2 e il 3, e poi clicca il 4:
 	    - Non sappiamo se 1>4 o 4>1.
 	    - Possiamo però dedurre con assoluta certezza che 4>2 e 4>3, perché l'utente ha esaminato la lista, ha volutamente ignorato (saltato) le posizioni 2 e 3, e ha deciso di cliccare la posizione 4 che era più in basso .
+13. $P(d|R,q)$ e' la probabilita che d sia il documento estratto tra quelli rilevanti per q, $P(R|d,q)$ e' la probabilita che il documento d sia rilevante per q
+14. introduciamo l'approssimazione della 2poisson perche' stimare tutti i parametri e' complicato 
+15. **Attenzione, correzione fondamentale per l'esame**: Questa formula **non** modella direttamente la rilevanza del documento, ma la sua **eliteness** (la variabile latente Ei​ che indica se il documento tratta approfonditamente l'argomento descritto dal termine).
+16. **poisson**: per k che tende ad infinto, poisson tende a 0
+17. $C,C'$: sono funzioni di costo che impostiamo a 0/1
+18. L'indipendenza nel BIM si riferisce a due assunzioni matematiche ben precise:
+	1. **Indipendenza della rilevanza**: La rilevanza di un documento non influenza quella degli altri (dal PRP).
+	2. **Indipendenza condizionale dei termini**: La presenza di una parola non influenza la presenza di un'altra all'interno dello stesso documento, una volta nota la rilevanza (assunzione Naive Bayes).

@@ -99,7 +99,7 @@ $$
 * **come dicevano ad oxford**: *se i documenti sono ordinati in ordine decrscente in base alla probabilita di rilevanza, allora abbiamo ottenuto il miglior sistema di ir possibile*. **e grazie al cazzo**.
 * **a che serve?** ottimizzare i risultati per l'utente finale che legge.
 * **funzione di costo errore**: sono $C, C'$, le assumiamo binarie. Allora PRP e' ottimo.
-* **assunzione indipendenza tra documenti**: la rilevanza di un documento e' indipendente dalla rilevanza degli altri.
+* **assunzione indipendenza tra RILEVANZA dei documenti**: la rilevanza di un documento e' indipendente dalla rilevanza degli altri.
 
 >[!note] gemini
 >Il PRP dice che se non hai altre informazioni, ==l'ordine basato sulla probabilità di rilevanza decrescente è quello che ti garantisce, statisticamente, il minor numero di documenti irrilevanti nelle prime posizioni==. È l'ottimo teorico ==sotto l'ipotesi che la rilevanza di un documento sia indipendente da quella degli altri.==
