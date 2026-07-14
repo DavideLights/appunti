@@ -102,4 +102,61 @@
 3. che problema ha il permuterm? descrivi il $\text{k-gram}$ index e perche' e' una soluzione migliore, e quale problema introduce.
 4. descrivi i 3 tipi di errore (`non-word`, `tipografico` e `cognitivo`)
 5. come si rimedia ad `non-word` error? perche' correggo con parole che minimizzano l'edit distance?
-6. 
+6. che cos'e' il candidate set? che parole contiene?
+7. che opzioni posso navigare per scegliere il candidato migliore?
+8. che  cosa vuol dire $\hat{w} = \text{argmax}_{w \in V}P(w|x)$?
+9. che modello viene usato per calcolare $P(x|w)$
+10. che modello e' $P(w) = \frac{C(w)}{T}$
+11. come genero l'insieme dei candidati?
+12. a cosa serve lo smoothing di la place? scrivi la formula
+13. Nel noisy channel model, per context-sensitive spell correction, cosa vogliamo fare? cosa sono $X$ e $W$?
+14. che modello uso per calcolare $P(X|W)$ per context sensitive? qual'e' la formula?
+15. che modello uso per calcolare $P(W)$? qual'e' la formula?
+16. cosa descrive l'hidden markov  model? cosa sono transizioni ed emissioni?
+17. perche' non si usa l'algoritmo di viterbi per risolvere hidden markov model?
+18. come si risolve in caso la mia parola e' corretta ma e' molto rara?
+
+
+## lez. 7
+1. che cosa e' feast or famine? come si risolve?
+2. differenza tra incidence matrix e count metrix.
+3. che cos'e' il modello bag of words? e cosa comporta? perche' e' utile?
+4. che cos'e' la term frequency? in che modo viene usata per calcolare il peso di un termine per un documento
+5. perche $\text{tf-matching-score}$ non va bene come metrica? perche $\text{tf}_{t,d}$ non puo' essere usato cosi?
+6. Che cosa e' $\text{idf}_{t}$ e perche' non scriviamo $\text{idf}_{t,d}$?  che relazione ha con $\text{df}_{t}$? Come si comporta $\frac{N}{df_{t}}$ rispetto a $\log \frac{N}{df_{t}}$?
+7. Che cosa e' $\text{tf}_{d,f} \cdot \text{idf}_{t}$?
+8. In che modo rappresentiamo un documento come vettore?
+9. Perche non possiamo usare distanza euclidea per misurare la similarita tra vettori? che cosa succede con documenti lunghi?
+10. che proporzione c'e' tra la funzione coseno e la similarita?
+11. come si calcola il coseno di due vettori? come si calcola la norma $L_{2}$ di un vettore?
+12. Nello pseudocodice cosa facciamo per pesare lo score in modo corretto per tutti i documenti?]
+13. Che differenza c'e' tra TAAT e DAAT?
+14. Perche non posso memorizzare $w_{t,d}$? in cosa e' sconveniente?
+
+![[Pasted image 20260704161026.png]]
+![[Pasted image 20260704162743.png]]
+
+## lez. 8
+1. cosa e' un benchmark e a che ci serve banalmente?
+2. cosa e' un proxy?
+3. cosa e' il gold standard? che cosa e' il ground truth?
+4. descrivi precision e recall e a che serve la media armonica
+5. perche l'accuracy e' una metrica inutile e di merda?
+6. in che senso precision e recall sono metriche globali?
+7. cosa sono $\text{Precision}@K$ ed $\text{Recall}@K$? come si comporta il grafico
+8. cosa e' MAP? che cosa massimizzo quando miglioro questa metrica?
+9. cosa e' il DCG? su quale assunzione lavora?
+10. cosa e' il reciprocal rank? e cosa e' l'MRR?
+11. come abbiamo definito il bais umano? che conseguenze ha sulla rilevanza dei click? (valutazioni pairwise, confronto interleaving e click, ed A/B testing)
+12. che cosa dice l'ipotesi distribuzionale? come posso di conseguenza rappresentare il termine $x$?
+13. che tipi di relazioni ci sono tra termini? (topiche, sintagmatiche e paradigmatiche)
+14. come faccio a catturare il topic di una parola? come catturo le co-occorrenze? come catture le co-occrenze guardando la sintassi?
+15. che cosa e' verb net?
+16. che cosa misura PMI? scrivimi la formula scemo
+17. la matrice di cooccorrenza dei termini e' sparsa, cosa faccio?
+
+![[Pasted image 20260705215046.png]]
+
+![[Pasted image 20260705221804.png]]
+![[Pasted image 20260705230820.png]]
+## lez. 9

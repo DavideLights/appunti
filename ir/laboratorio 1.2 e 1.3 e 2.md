@@ -24,12 +24,7 @@
 **sorted delle posting lists**: nel codice e' inutile, le posting sono gia ordinate.
 
 # laboratorio 1.3
-**query non valide**:
-- `NOT graphic`
-- `imag OR NOT graphic`
-- `NOT "file format"`
-- perche' non escludono documenti.
-- **NOT**: voglio che si comporti come un'operatore di sottrazione, piuttosto che: "dammi tutto cio che non e' `X`".
+
 
 # laboratorio 2
 **vettore**: per ogni documento costruisco vettore con tf-idf

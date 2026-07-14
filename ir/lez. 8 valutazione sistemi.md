@@ -171,7 +171,7 @@ $$
 * **colonne**: le $C$ piu frequenti word-context sono selezionate
 * per ogni parola target, con la matrice di incidenza calcolo una lista che descrive quante volte i termini in colonna compaiono vicino alla target.
 
-**PMI**: 
+**PMI**: Pointwise Mutual Information
 $$
 \text{PMI}(x,y) = \log \frac{P(x,y)}{P(x)P(y)}
 $$
@@ -180,6 +180,9 @@ $$
 - P ( x , y ) → probabilità che compaiano insieme
     - parole molto frequenti → penalizzate
     - parole rare ma significative → valorizzate
+- se $PMI > 0$ allora  le due parole tendono a comparire insieme, piuttosto che da sole
+- se $PMI = 0$ allora le due parole compaiono insieme per caso.
+- se $PMI < 0$ allora le due parole tendono a non comparire mai insieme 
 
 ![[Pasted image 20260706002005.png]]
 

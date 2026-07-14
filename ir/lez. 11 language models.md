@@ -189,7 +189,99 @@ $$
 * **jelinek-mercer**: si usa per query verbose
 * **dirichlet**: fa interpolazione sulla lunghezza del documento, funziona meglio per query con parole chiave.
 
+**[ESERCITAZIONE] Perche' dirichlet pesa correttamente parole frequenti come** `the`?
 
+Nel caso di Dirichlet smoothing:
+
+$$
+
+p_{\mathrm{Dir}}(t \mid d)
+
+=
+
+\frac{tf_{t,d}+\mu p(t \mid C)}
+
+{|d|+\mu}
+
+$$
+dove:
+- $tf_{t,d}$ è il numero di occorrenze di $t$ nel documento $d$;
+- $p(t\mid C)$ è la probabilità del termine nella collezione;
+- $\mu$ controlla la forza dello smoothing.
+
+Riscriviamo la formula mettendo in evidenza il contributo del background:
+$$
+
+p_{\mathrm{Dir}}(t \mid d)
+
+=
+
+\frac{\mu p(t\mid C)}{|d|+\mu}
+
+\left(
+
+1+
+
+\frac{tf_{t,d}}{\mu p(t\mid C)}
+
+\right)
+
+$$
+Passando ai logaritmi:
+$$
+
+\log p_{\mathrm{Dir}}(t \mid d)
+
+=
+
+\log
+
+\frac{\mu p(t\mid C)}{|d|+\mu}
+
++
+
+\log
+
+\left(
+
+1+
+
+\frac{tf_{t,d}}{\mu p(t\mid C)}
+
+\right)
+
+$$
+
+Il secondo termine:
+
+$$
+
+\log
+
+\left(
+
+1+
+
+\frac{tf_{t,d}}{\mu p(t\mid C)}
+
+\right)
+
+$$
+
+
+* **RISPOSTA**: il fattore $\mu p(t|C)$ pesa il contributo di $\text{tf}_{t,d}$ dividendolo
+
+Quindi il ranking non dipende solo dai termini presenti nel documento.
+Dipende da due effetti:
+1. un termine raro dà un guadagno maggiore quando compare nel documento;
+2. il denominatore |d|+μ introduce una normalizzazione legata alla lunghezza del documento.
+
+In sintesi:
+- i termini comuni hanno probabilità alta nel background, quindi aggiungono poca evidenza specifica;
+- i termini rari hanno probabilità bassa nel background, quindi quando compaiono nel documento sono più informativi;
+- Dirichlet smoothing introduce anche una normalizzazione rispetto alla lunghezza del documento.
+
+Per questo motivo, nei Language Model non serve necessariamente un IDF esplicito: parte del comportamento dell'IDF emerge dal confronto tra documento e collezione.
 # pro e contro
 con i language model lo score più alto potrebbe essere negativo dovuto al fatto che utilizziamo il logaritmo e tra 0 e 1 il logaritmo vale valori negativi cerchiamo un valore vicino allo 0 comunque invece con BM25 otteniamo sempre valori positivi
 

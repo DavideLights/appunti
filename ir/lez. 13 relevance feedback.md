@@ -27,7 +27,7 @@ $$
 ![[Pasted image 20260519150931.png]]
 * combino questi valori con le frequenze della query e ripeto la ricerca con la nuova query.
 
-**concetto chiave per il feedback**: centroide
+**concetto chiave per il feedback**: centroide, da applicare a vector space model
 $$
 \vec{\mu}(D) = \frac{1}{|D|} \sum_{d\in D}\vec{v}(d)
 $$
@@ -39,8 +39,9 @@ $$
 $$
 S(\vec{q}, C_{r}, C_{nr}) = s(\vec{q}, \vec{\mu}(C_{r})) - s(\vec{q}, \vec{\mu}(C_{nr}))
 $$
-* con $s$ la misura di similarità
-* $\vec{q}_{opt}$ e' la query che separa meglio documenti rilevanti e non rilevanti.
+* con $s$ la **misura di similarità**
+* $\vec{\mu}(C)$ il centroide di $C$ 
+* $\vec{q}_{opt}$ e' la query che separa meglio documenti rilevanti e non rilevanti, ossia che massimizza la differenza sopra.
 
 il $\vec{q}_{opt}$ e' tale da massimizzare:
 $$
