@@ -9,7 +9,6 @@
 * ipotesi 1: un link da $A$ a $B$ conferisce autorita da $B$
 * ipotesi 2: il testo del link da $A$ a $B$ descrive $B$
 
-
 **indicizzare anchor text**:
 * sto indicizzando $D$
 * prendi tutti gli anchor text, verso $D$ e indicizzali

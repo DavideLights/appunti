@@ -17,7 +17,7 @@ $$
 * **locale**: analisi on-demand per una query utente.
 * **global**: fai un analisi globale per la query expansion, trova i sinonimi e utilizzali per la query expansion
 
-**relevance feedback**:
+**relevance feedback**: e' un sistema locale
 1. utente mette la query
 2. search engine ritorna i documenti
 3. l'utente seleziona quali sono rilevanti e quali non
@@ -95,14 +95,13 @@ con $\alpha, \beta, \gamma$ parametri
 * assumi che il mio sistema di retrieval non fa schifo, dunque i primi $k$ sono marcati come rilevanti.
 * **in media**: funziona bene.
 
-**query-expansion**: sistema in cui aggiungo risorse che non dipendono dalla query alla query di ricerca. per esempio aggiungo i sinonimi
+**query-expansion**: sistema globale in cui aggiungo risorse che non dipendono dalla query di ricerca. per esempio aggiungo i sinonimi
+* **thesaurus**: collezione di sinonimi, e sinonimi "vicini"
+* **cosa fa**?: aggiungi alla query i sononimi per le parole
+* **problema**: cala la precision se i termini sono ambigui
 
-
-
-query drift: se i primi recuperati assumendo che saranno rilevanti potrei sbagliare contesto. `jaguar`: recupero le macchine invece che prendere l'animale!
+**query drift**: se assumo che i primi documeniti siano rilevanti, potrei sbagliare contesto dei termini rispetto all'utente e formulare una query completamente sbagliata. `jaguar`: recupero le macchine invece che prendere l'animale!
 * se lo applico piu volte diventa pericolososososososl!
 
-fino ad ora ho usato metodi locali
-
-globalmente: posso guardare i sinonimi nel dizionario che sto usando.
+**globalmente**: posso guardare i sinonimi nel dizionario che sto usando.
 

@@ -142,14 +142,14 @@ $$DCG_{p} = r_{1} + \sum_{i=2}^p \frac{r_{i}}{\log i}$$
 * $r_{i} \in [0,3]$
 * **perche'?** penalizza documenti con $r_{i}$ alto ma in posizioni troppo basse.
 
+**Reciprocal Rank**:
+* $RR = \frac{1}{K}$
+* $MRR$ e' media degli $RR$
 ## lexical semantics
 **PMI**: 
 $$
 \text{PMI}(x,y) = \log \frac{P(x,y)}{P(x)P(y)}
 $$
-
-
-???
 
 
 ## probabilita a manetta
@@ -316,12 +316,127 @@ $$RSV_d = \sum_{t \in q} \log \left( \frac{N}{df_t} \right) \cdot \frac{(k_1 + 1
 3.  **$k_1$ (TF Saturation)**: controlla la saturazione della frequenza. 
     *   Se $k_1 = 0$, il modello diventa binario (BIM).
     *   Valori tipici: **1.2 - 2.0**.
+    * $k_{1}$ **alto**: allora satura dopo
+    * $k_{1}$ **basso**: allora satura prima
 4.  **$b \approx 0.75$ (Length Normalization)**: controlla quanto penalizzare i documenti lunghi. 
 
 # modelli linguistici
 
-**modello unigram**:
+**modello unigram independence** assumption:
+$$
+p(q|M_{d}) = p(<w_{1},\dots,w_{|q|}>|M_{d}) = \prod_{i=1}^{|q|} p(w_{i}|M_{d})
+$$**modello multinomiale**: 
+$$
+p(q|M_{d}) = \prod_{t: tf_{t,q}>0} p(t|M_{d})^{tf_{t,q}}
+$$**probabilita del termine nel documento**: 
 $$
 \hat p_{i} = \hat{p}(t_{i}|M_{d}) = \frac{tf_{t,d}}{|d|}
 $$
 
+**smoothing**:
+$$
+p_{lap}(t|d) = \frac{tf_{t,d}+1}{|d|+|V|}
+$$**modello della collezione**: posso allo stesso modo stimare le probabilita guardando la collezione intera.
+$$
+\hat p(t|M_{c}) = \frac{cf_{t}}{T}
+$$**Jelinek-Mercer smoothing** sui termini:
+$$
+p_{JM}(t|d) = \lambda\frac{ tf_{t,d}}{|d|} + (1-\lambda)\frac{c f_{t}}{T}
+$$
+* $\lambda$ **alto** $\to$ ricerca di tipo congiuntivo, tende a ritornare i documenti contenenti le parole nella query
+* $\lambda$ **basso** $\to$ ricerca di tipo disgiuntivo, performa bene su query lunghe.
+
+**dirichelet**:
+$$
+p_{Dir}(t_{i}|d) = \frac{tf_{t,d} + \mu p(t|M_{c})}{\textcolor{red}{|d|}+\textcolor{blue}{\mu}}
+$$
+* $d$ **lungo** $\to \lambda_{d}$ **e' grande**: ci fidiamo di piu del modello del documento.
+* $d$ **corto** $\to$ $\lambda_{d}$ **e' piccolo**: ci fidiamo di piu della collezione
+* $\mu$ **aumenta** $\to$ **c'e' piu smoothing verso la collezione**.
+* $\mu$: viene fatto il tuning sulla collezione.
+*  **IMPORTANTE** se un termine $t$ compare due volte nella query, allora contribuisce due volte al punteggio!
+
+**dirichelet** pesa $tf_{t,d}$ in modo simile a BM25
+$$
+\log
+\left(
+1+
+\frac{tf_{t,d}}{\mu p(t\mid C)}
+\right)
+$$
+# sviluppo efficiente ir
+**heap**: $O(K \log J)$ e costruzione in $O(2J \log J)$
+**high-idf**: considera i documenti con idf alto per i termini nella query
+**SOFT AND**: considera documenti che contengono solo 3 su 4 dei termini nella query
+**precalcolo la champion list**: ossia calcolo per ogni termine $t$ gli $r$ documenti con peso piu alto nella posting di $t$.
+**net score**: usiamo una funzione arbitraria, tipo questa per combinare cosine similarity e $g(d)$
+$$
+\text{net-score}(q,d) = g(d) + \text{cosine}(q,d)
+$$
+**cluster pruning**: niente da aggiungere
+**tiered indexes**
+**magic wand**: booo
+
+## relevance feedback
+**centroide**: 
+$$
+\vec{\mu}(D) = \frac{1}{|D|} \sum_{d\in D}\vec{v}(d)
+$$
+
+**dunque, l'ottimo e' il vettore differenza tra i due centroidi**:
+$$
+\vec{q}_{opt} = \vec{\mu}(C_{r}) - \vec{\mu}(C_{nr})
+$$
+
+**rocchio**: 
+$$
+= \alpha  \vec{q}_{0} + \beta    \frac{1}{D_{r}} \sum_{\vec{d}_{j} \in D_{r}} \vec{d}_{j}  - \gamma     \frac{1}{|D_{nr}|} \sum_{\vec{d}_{j} \in D_{nr}} \vec{d}_{j}
+$$
+
+**assunzioni**:
+* **A1**: *l'utente conosce i termini nella collezione abbastanza per impostare bene una query.* 
+* **A2**: i documenti rilevanti sono simili
+
+**query expansion**
+**query drift**
+
+
+## SVD
+
+**SVD**: $A = U \Sigma V^T$
+*  $U: m \times m$, autovettori di $AA^T$
+*  $\Sigma: m \times n$, per la diagonale ho $\sigma_{i} = \sqrt{ \lambda_{i} }$
+* $V: n \times n$, autovettori di $A^TA$
+
+**quantità di informazione catturata dalle prime $k$ dimensioni latenti**
+$$
+
+\frac{\sum_{i=1}^{k}\sigma_i^2}{\sum_i \sigma_i^2}
+
+$$
+
+**low rank approx**:
+$$
+A_{k} = U_{k} \Sigma_{k} V_{k}^T
+$$
+* **k piccolo**: perdita di dettagli, ma catturiamo la struttura semantica principale
+* **k grande**: la matrice $A_{k} \approx A$, e scende l'errore di ricostruzione
+
+
+**norma frobenius**: $|A-X|_{F}$ 
+
+
+**convertire verso spazio latente**:
+* $T_{k} = U_{k} \Sigma_{k}^{1/2}$
+* $D_{k} = \Sigma_{k}^{1/2}V_{k}^T$
+* $q_{k} = q^T \Sigma_{k}U_{k}^{-1}$
+
+**rappresentazione simmetrica**:
+$$
+A_{k} = (U_{k} \Sigma_{k}^{1/2})(\Sigma_{k}^{1/2}V_{k}^T)
+$$
+
+**matrice positiva semidefinita**: $\lambda \geq 0$
+* $AA^T$ ed $A^TA$ sono positive semidefinite
+
+## WEB

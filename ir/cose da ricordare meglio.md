@@ -30,3 +30,10 @@
 18. L'indipendenza nel BIM si riferisce a due assunzioni matematiche ben precise:
 	1. **Indipendenza della rilevanza**: La rilevanza di un documento non influenza quella degli altri (dal PRP).
 	2. **Indipendenza condizionale dei termini**: La presenza di una parola non influenza la presenza di un'altra all'interno dello stesso documento, una volta nota la rilevanza (assunzione Naive Bayes).
+19. _Nota bene: lo smoothing di Dirichlet non è presente nei file caricati nel notebook (che trattano solo Laplace e Jelinek-Mercer__). Valutando però le formule da te indicate, hai commesso un errore di logica nella_ **Domanda 14**_:_
+	- **La tua affermazione**: _"In Dirichlet_ ∣d∣ _grande penalizza la term frequency"_.
+	- **La correzione**: È l'esatto contrario! Se la lunghezza del documento ∣d∣ aumenta, il parametro dinamico λd​=∣d∣+μ∣d∣​ **si avvicina a 1**.
+	- Questo significa che, se il documento è molto lungo, il sistema **si fida di più della term frequency reale (**tft,d​**)** e riduce l'effetto dello smoothing della collezione. Quindi, un ∣d∣ **grande valorizza la term frequency**, mentre un μ **grande penalizza la term frequency** per dare più peso alle statistiche globali della collezione.
+20. **Domanda 10 (Jelinek-Mercer) -** **Interrotta**: La tua risposta si interrompe a metà. Per completarla: con un λ **elevato (vicino a 1)** si dà quasi tutto il peso allo specifico documento, ottenendo una **ricerca di tipo congiuntivo (AND-like)**. Con un λ **basso (vicino a 0)** si dà più peso alla collezione (OR-like).
+21. **Domanda 6 (Assunzioni)**: Hai spiegato in modo eccellente la _violazione_ di A2 (l'esempio dei prototipi disgiunti come i sussidi al tabacco vs campagne anti-fumo). Ricorda solo di enunciare l'assunzione base in modo diretto: **"I documenti rilevanti contengono termini simili / sono simili tra loro"**.
+22. In un motore di ricerca reale il non safe ranking ha senso perche' impiega poco tempo per eseguire

@@ -183,6 +183,22 @@ $$
 19. cosa descrive $= p_i \frac{e^{-\mu_i} \mu_{i}^{n_i}}{n_i!} + (1 - p_i) \frac{e^{-\bar{\mu}_i} \bar{\mu}_{i}^{n_i}}{n_i!}$? cosa sono $\mu_{i}$, $\bar{\mu}$ ed $p_{i}$?
 20. con quale funzione approssimiamo il comportamento della 2poisson?
 21. $RSV_d = \sum_{t_i:y_i=1} \frac{(k+1)n_i}{k+n_i} \log \frac{N}{df_{t_i}}$ come si ottiene?
-22. descrivi okapiBM25. c
+22. descrivi okapiBM25.
 
 ## lez. 11
+1. cosa descrive un language model, ossia $p(q|M_{d})$?
+2. cosa e' un modello generativo?
+3. descrivi gli automi probablistici che descrivono i modelli generativi
+4. in che modo applichiamo il modello bag of words nei modelli generativi? di conseguenza come calcoliamo $p(q|M_{d})$
+5. come si sviluppa $p(d|q)$ ai fini del ranking?
+6. descrivi il modello unigram independence.
+7. descrivi il modello multinomiale
+8. come calcoliamo $\hat{p}_{i} = \hat{p}(t_{i}|M_{d})$? serve fare lo smoothing? perche?
+9. descrivi il modello della collezione.
+10. Che cosa fa Jelinek-Mercer? che tipo di smoothing fa? per quale $\lambda$ ho una ricerca congiuntiva
+11. qual'e' l'idea dello pseudotoken in dirichelet?
+12. che relazione c'e' tra Jelinek-Mercer e Dirichelet
+13. perche' dirichelet pesa correttamente parole frequenti come `the`? cosa succede nella formula al $\text{tf}_{t,d}$, per cosa viene pesato?
+14. se $\mu$ aumenta cosa succede a Dirichelet? cosa succede se $|d|$ aumenta?
+
+## lez 12.

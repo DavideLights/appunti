@@ -227,6 +227,25 @@ $$RSV_d = \sum_{t \in q} \log \left( \frac{N}{df_t} \right) \cdot \frac{(k_1 + 1
     - **Elasticsearch:** utilizza BM25 come modello di default per la similarità.
     - **Apache Solr:** utilizza BM25 come default dalla versione 8.x in poi.
 
+# BM25 esercitazione
+* **BM25 ed tf-idf**: entrambi pesano il termine in base a quanto e' frequente, l'intuizione e' che un passaggio da 
+* **esempio**: passare da 1 a 2 occorrenze pesa molto, rispetto che passare da 100 a 101 occorrenze
+
+**cf e df**:
+* alto $cf$ e alto $df$: allora il documento e' ben distribuito sulla collezione e compare spesso
+* alto $cf$ e basso $df$: allora il termine ha tante occorrenze in pochi documenti
+* basso $cf$ e basso $df$: il termine e' fottutamente raro
+
+
+**BM25**:
+$$RSV_d = \sum_{t \in q} \log \left( \frac{N}{df_t} \right) \cdot \frac{(k_1 + 1)tf_{td}}{k_1 \left( (1 - b) + b \frac{L_d}{L_{ave}} \right) + tf_{td}}$$
+* $k_{1} \in [1.2, 2.0]$:
+	* **alto**: saturazione rapida, dopo poche occorrenze, queste pesano poco.
+	* **basso**: saturazione  lenta, le occorrenze pesano molto piu a lungo.
+	* $k_{1}=0$: allora diventa **BIM**
+* $B = (1-b)+b \frac{L_{d}}{L_{ave}}$ con $b \approx 0.75$:
+	* **alto**: allora i documenti lunghi vengono penalizzati
+	* **basso**: allora i documenti corti vengono premiati
 ## esercizi
 ![[Pasted image 20260710223018.png]]
 ![[Pasted image 20260710223048.png]]

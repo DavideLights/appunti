@@ -46,6 +46,7 @@
 * **come lo uso?** quando arriva la query calcolo la cosine similarity dei documenti nella champion list.
 * **problema**: potrebbe essere che alcuni documenti non vengono recuperati! (parallelismo figo col darkweb, un documento che non viene recuperato e' come una pagina del darkweb)
 * tiene conto del fatto che i documenti non sono tutti uguali.
+* **query time**: scorro le champion list dei termini finche non raccolgo K documenti
 
 > [!note] Esercizio
 > D: come si potrebbe implementare la champion list come inverted index?

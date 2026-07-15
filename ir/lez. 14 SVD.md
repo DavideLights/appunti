@@ -12,13 +12,6 @@
 **matrice positiva semidefinita**: $\lambda \geq 0$
 * $AA^T$ ed $A^TA$ sono positive semidefinite
 
-**decomporre** $S$ **quadrata con abbastanza autovettori indipendenti**:
-$$
-S = U \Lambda U^{-1}
-$$
-* $U$: autovettori come colonne
-* $\Lambda$: autovalori sulla diagonale, ogni componente di $U$ viene mescolata separatamente, senza mescolarsi con le altre componenti.
-
 **decomporre** $S$ **simmetrica**:
 $$
 S = Q \Lambda Q^T
@@ -31,12 +24,17 @@ $$
 $$
 
 ## LSI
-**Decomposizione in autovalori**: $S = U \Lambda U^{-1}$
+**LSI**: latent semantic indexing.
+
+**obiettivo**: costruire una matrice $A$ dove le righe sono i termine e le colonne documenti.
+
+**Decomposizione in autovalori** con SVD: $S = U \Lambda U^{-1}$
 * $S \in \mathbb R^{m\times m}$
 * $m$ autovettori linearmente indipendenti
 * $U$: matrice degli autovettori di $S$
 * $\Lambda$: matrice degli autovalori in diagonale di $S$
 * $U^{-1}$ e' tale che: $UU^{-1}=1$
+
 **Dividi e moltiplica per $\sqrt{ 2 }$:**
 * dividi $U$ per $\sqrt{ 2 }$
 * moltiplica $U^{-1}$ per $\sqrt{ 2 }$
@@ -45,7 +43,6 @@ $$
 **Come si calcola $U^{-1}$?** Inverti $U$ e dividi tutto per due
 
 **Decomposizione $S$ simmetrica**: $S = Q \Lambda Q^T$
-
 
 **SVD**: **Singular Value Decomposition** $A = U \Sigma V^T$
 * $U: m \times m$, autovettori di $AA^T$
@@ -63,12 +60,17 @@ $$
 $$
 
 
-**Low-Rank Approximation**: $A_{k}$ e' $X$ di rango $k$ che minimizza $|A-X|_{F}$ (norma di frobenius). Voglio trovare la SV
+**Low-Rank Approximation**: $A_{k}$ e' $X$ di rango $k$ che minimizza $|A-X|_{F}$ (norma di frobenius). LSI utilizza il low-rank-approximation guardando le prime $k$ componenti. 
 * $A_{k} = U diag(\sigma_{1},\dots ,\sigma_{k}, 0, \dots, 0)V^T$
 * $100 < k < 300$
 * **cosa fa**? Comprimo la matrice originale in modo da mantenere solo i $k$ valori singolari piu grandi e che contengono piu informazione.
+* **cosa fa la norma di frobenius**? misura l'errore di ricostruzione delle matrice approssimata.
 * **k piccolo**: perdita di dettagli, ma catturiamo la struttura semantica principale
 * **k grande**: la matrice $A_{k} \approx A$, e scende l'errore di ricostruzione
+
+$$
+A_{k} = U_{k} \Sigma_{k} V_{k}^T
+$$
 
 **Esempio**: $A_{2}$ rispetto ad $A$, al posto degli 0 ha dei valori leggermente positivi o negativi. LSI ha ricostruito relazioni indirette
 
@@ -84,13 +86,26 @@ $$
 * $q^T U_{k}$: esprimo $q$ in base alle direzioni latenti, nello spazio dei termini
 * ora posso fare cosine similarity tra query e documento nello spazio latente.
 
-**Rappresentazione simmetrica**: la abbiamo quando facciamo il quadrato, ossia $\Sigma_{k}^{1/2}$.
+**Rappresentazione simmetrica**: la abbiamo quando facciamo il quadrato, ossia $\Sigma_{k}^{1/2}$
+$$
+A_{k} = (U_{k} \Sigma_{k}^{1/2})(\Sigma_{k}^{1/2}V_{k}^T)
+$$
+* **in cosa differisce da** $U_{k} \Sigma_{k} V_{k}^T$? e' piu' comoda per visualizzare termini e documenti sullo spazio latente. 
 $$
 A_{k}(t,d) \approx <T_{k}(t), D_{k}(d)>
 $$
 
 **Dimensioni latenti**: posso rappresentare termini e documenti all'interno dello spazio latente come se fossero fossero la stessa cosa.
 
+**Applicare LSI su un dizionario piccolo e pochi documenti**: con l'approssimazione potrei perdere parole interessanti
+
+**Effetti di $k$ sullo spazio latente**:
+* $k$ troppo piccolo: perdo informazione
+* $k$ troppo grande: mantengo il rumore e mi avvicino allo spazio originale
+* $k$ intermedio: comprimo bene la semantica dei documenti e dei termini.
+
+**Comportamento dello spazio latente**: due termini se sono vicini nello spazio latente e' perche si comportano in modo simile, rispetto al pattern osservato nella collezione.
+* nella matrice originale due termini sono "vicini" se compaiono negli stessi documenti.
 
 **Polisemia**: parole che hanno molti significati
 **Sinonimi**: parole che hanno lo stesso significato

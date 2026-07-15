@@ -122,7 +122,7 @@ $$
 **pseudotoken**: immagino di concatenare un'altro documento che e' l'unione di tutte le parole del dizionario, dunque i termini hanno sicuramente la distribuzione di $M_{c}$.
 * **smoothing di dirichlet**: uso un peso $\mu$ arbitrario.
 * **token virtuale**: con $\mu$ aggiungo token virtuali al conteggio.
-* **a che serve dirichlet**: aggiungo al documento da sortare uno pseudo-documento di lungheza $\mu$ i cui termini sono distribuiti secondo il modello del documento.
+* **a che serve dirichlet**: aggiungo al documento da sortare uno pseudo-documento di lungheza $\mu$ i cui termini sono distribuiti secondo il modello del documento, **simula IDF**
 
 $$
 \mu p(t|M_{c}) = \frac{\mu cf_{t}}{T}
@@ -189,27 +189,17 @@ $$
 * **jelinek-mercer**: si usa per query verbose
 * **dirichlet**: fa interpolazione sulla lunghezza del documento, funziona meglio per query con parole chiave.
 
+# esercitazione
+
+$\mu$:
+* **grande**: allora il modello si comporta di piu in modo da assomigliare a $M_{c}$
+* **piccolo**: allora il modello si comporta di piu in modo da assomigliare ad $M_{d}$.
+
+**differenza sostanziale con BM25**: se un termine $t$ compare due volte nella query, allora contribuisce due volte al punteggio!
+
 **[ESERCITAZIONE] Perche' dirichlet pesa correttamente parole frequenti come** `the`?
 
-Nel caso di Dirichlet smoothing:
-
-$$
-
-p_{\mathrm{Dir}}(t \mid d)
-
-=
-
-\frac{tf_{t,d}+\mu p(t \mid C)}
-
-{|d|+\mu}
-
-$$
-dove:
-- $tf_{t,d}$ è il numero di occorrenze di $t$ nel documento $d$;
-- $p(t\mid C)$ è la probabilità del termine nella collezione;
-- $\mu$ controlla la forza dello smoothing.
-
-Riscriviamo la formula mettendo in evidenza il contributo del background:
+**Riscriviamo dirichelet**:
 $$
 
 p_{\mathrm{Dir}}(t \mid d)
@@ -227,7 +217,7 @@ p_{\mathrm{Dir}}(t \mid d)
 \right)
 
 $$
-Passando ai logaritmi:
+**Passando ai logaritmi**:
 $$
 
 \log p_{\mathrm{Dir}}(t \mid d)
@@ -252,7 +242,7 @@ $$
 
 $$
 
-Il secondo termine:
+Il **secondo termine**:
 
 $$
 
