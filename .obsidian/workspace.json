@@ -4,39 +4,52 @@
     "type": "split",
     "children": [
       {
-        "id": "7406327b837dd8e9",
+        "id": "3b6454eb4e808ee5",
         "type": "tabs",
         "children": [
           {
-            "id": "a0a8570b15d809e6",
+            "id": "480de69e09f329b4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "3o anno/critto/10. firme digitali.md",
+                "file": "IA/lez. 7. 8. 9..md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "10. firme digitali"
+              "title": "lez. 7. 8. 9."
             }
           },
           {
-            "id": "b344fdd8f1ace3fd",
+            "id": "dd1ce989b3ebf640",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IA/lez. 2.md",
+                "file": "IA/lez. 3 e 4.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 2"
+              "title": "lez. 3 e 4"
+            }
+          },
+          {
+            "id": "1c9216c35705b016",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IA/lez. 3 e 4.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "lez. 3 e 4"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,8 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -200,12 +212,36 @@
       "bases:Crea nuova Base": false
     }
   },
-  "active": "b344fdd8f1ace3fd",
+  "active": "480de69e09f329b4",
   "lastOpenFiles": [
-    "IA/compito edoardo.md",
+    "IA/domande.md",
+    "IA/lez. 3 e 4.md",
+    "IA/lez. 5 e 6.md",
+    "Pasted image 20260719152808.png",
     "IA/lez. 2.md",
-    "IA/lez. 1.md",
+    "IA/lez. 7. 8. 9..md",
+    "IA/formulazione problemi.md",
+    "IA/riassunto.md",
+    "IA/snake.md",
+    "Pasted image 20260719013230.png",
+    "Senza nome 1.md",
+    "Senza nome 3.md",
+    "Senza nome 2.md",
+    "IA/compito edoardo.md",
+    "Senza nome.md",
+    "Senza nome 6.md",
+    "Pasted image 20260718024719.png",
+    "Pasted image 20260718024345.png",
+    "Pasted image 20260718023045.png",
+    "Pasted image 20260718022531.png",
+    "Pasted image 20260718022407.png",
+    "Pasted image 20260718020043.png",
+    "Pasted image 20260718020036.png",
+    "Pasted image 20260718014727.png",
+    "Senza nome 5.md",
+    "Senza nome 4.md",
     "3o anno/critto/10. firme digitali.md",
+    "algebra/formule e metodi.md",
     "3o anno/critto/7. logaritmo discreto.md",
     "3o anno/critto/6. curve ellittiche e schoof.md",
     "3o anno/critto/5. hash function.md",
@@ -213,38 +249,13 @@
     "3o anno/critto/1. cifrari e sicurezza perfetta.md",
     "3o anno/critto/9. rsa e primalita.md",
     "3o anno/critto/8. modalita AES e MAC e HMAC.md",
-    "3o anno/critto/3. des e linear attacck.md",
-    "3o anno/critto/2. block cipher.md",
-    "Pasted image 20260716145925.png",
-    "Pasted image 20260716143601.png",
-    "Pasted image 20260716142953.png",
-    "ir/cose da ricordare meglio.md",
     "IA",
-    "3o anno/vdsi/tutorial esame.md",
-    "3o anno/vdsi/prova esame maggio.md",
-    "3o anno/vdsi/prova esame giugno.md",
-    "3o anno/vdsi/lab 3.md",
-    "3o anno/vdsi/lab 2.md",
-    "3o anno/vdsi/lab 1.md",
-    "3o anno/vdsi/domande gemini.md",
-    "3o anno/vdsi/comandi e risorse.md",
-    "3o anno/vdsi/bandit.md",
-    "3o anno/vdsi/Senza nome.md",
-    "3o anno/vdsi/NET.md",
-    "3o anno/vdsi/ESAME.md",
     "3o anno/vdsi",
     "3o anno/ir",
     "3o anno/dm",
     "3o anno/critto",
     "3o anno",
-    "Pasted image 20260714015821.png",
-    "Pasted image 20260713020054.png",
-    "Pasted image 20260713015932.png",
-    "Pasted image 20260713015842.png",
-    "Pasted image 20260713015511.png",
     "Senza nome",
-    "dm",
-    "Pasted image 20260320130437.png",
-    "Pasted image 20260320130039.png"
+    "dm"
   ]
 }

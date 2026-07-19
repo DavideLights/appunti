@@ -1,165 +1,210 @@
-**agenti risolutori di problemi**
-* **architettura**: goal
-* **come si raggiunge il goal**? algoritmo di ricerca
-	* **alg. informato**: greedy search ed A* misurano quanto sono vicino al goal
-	* **alg. non informato**: l'agente non conosce la distanza dal goal e deve esplorare tutte le soluzioni possibili con BFS, DFS, Uniform Cost.
-* **rappresentazione stato**: atomica
-	* **agente pianificatore**: usa stati strutturati
-* **cosa fa nel codice**? pianifica e poi esegue, modello **open-loop** (anello aperto)
+**IA forte**: ha come obiettivo riprodurre il pensiero umano ed i suoi processi cognitivi.
+**IA debole**: vuole risolvere problemi specifici in modo intelligente.
 
-**in che tipo di problemi operano**?
-- Episodici
-- A singolo agente
-- **Completamente osservabili**
-- **Deterministici**
-- **Statici** (non cambiano mentre l’agente pensa)
-- **Discreti** (stati e azioni finite)
-- **Noti** (modello di transizione conosciuto)
+**Cosa e' una IA**?
+* puo' essere **umana** o **razionale**
+* puo' **pensare** o **agire**.
 
-**agente risolutore in ambiente noto e deterministico**: devo pianificare e poi eseguo
-* **se noto de deterministico** $\to$ so per ogni azione come sara' il mondo successivamente.
-* **percezioni**: non mi servono mentre eseguo, devo solo conoscere la configurazione iniziale del mondo.
-* **modello closed-loop** (anello chiuso): l'agente monitora le percezioni e si riadatta di continuo.
+**IA che agisce umanamente**: per essere tale deve passare il test di turing
+1. un'uomo parla con una macchina ed un umano
+2. l'uomo fa le domande e riceve  delle risposte
+3. se l'uomo non riesce a decidere chi e' la macchina allora questa ha passato il test.
 
-**quattro frasi per la risoluzione**:
-* **formulare obiettivo**: cosa devo raggiungere?
-* **formulazione problema**: modello stati, azioni, transizioni e costi.
-* **ricerca**: calcola la sequenza di azioni
-* **esecuzione**: esegui
+**cosa serve per passare il test di turing**?
+* computer vision e robotica
+* language processing, automated reasoning, machine learning.
 
-## definizione formale
-$$
-\text{problema di ricerca } = <S,S_{0}, A, \text{Result}, \text{Goal, C}>
-$$
-* $S_{0}$: stato iniziale.
-* $\text{Result}$: f. transizione $\text{Stato} \times \text{Azione} \to \text{Stato}$
-* $\text{Goal}: \text{Stato} \to \{ \text{T,F} \}$:
-* $\text{C}(s,a,s')$: costo per passare da s ad $s'$ usando l'azione $a$.
+**IA che pensa umanamente**:
+* bisogna capire come l'uomo pensa
+* capire il processo decisionale, di risoluzione dei problemi e di apprendimento
 
-| #       | Componente                     | Descrizione                                                                                                                                                                                                                  |
-| ------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1️⃣** | **Stato iniziale**             |                                                                                                                                                                                                                              |
-| **2️⃣** | **Azioni possibili**           | La funzione **Azioni(s)** restituisce l’insieme finito di azioni eseguibili nello stato `s`.                                                                                                                                 |
-| **3️⃣** | **Modello di transizione**     | Descrive come le azioni modificano lo stato del mondo.  <br>Formalmente: `Risultato(s, a) = s′` indica lo stato successivo ottenuto eseguendo l’azione `a` nello stato `s`.  <br>Es: `Risultato(Arad, VersoZerind) = Zerind` |
-| **4️⃣** | **Insieme di stati obiettivo** | Contiene uno o più stati che soddisfano il goal dell’agente (le condizioni di successo).                                                                                                                                     |
-| **5️⃣** | **Funzione di costo**          | La funzione `CostoAzione(s, a, s′)` (o `c(s, a, s′)`) assegna un valore numerico positivo al costo di eseguire `a` in `s` per raggiungere `s′`.  <br>Serve per confrontare soluzioni e trovare quella più economica.         |
-* **sequenza azioni**: e' il cammino (path) che attraversa gli stati
-* **soluzione**: e' un cammino che fa dallo stato iniziale ad uno stato obiettivo
-* **soluzione ottima**: minimizza il costo totale delle transizioni
-* **spazio degli stati**: e' un grafo
-* **astrazione**: e' il modo in cui rappresentiamo la realtà nel nostro modello
+**IA che pensa razionalmente**:
+* bisogna capire cosa e' un ragionamento logico
+* si basa sulla rappresentazione di fatti in modo formale
+* **fare la cosa giusta**: la cosa giusta da fare potrebbe non esistere.
 
-| Tipo di astrazione    | Definizione                                                                                   | Utilità                                                         |
-| --------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| **Astrazione Valida** | la soluzione nel nostro modello puo' essere **espansa** in quello reale                       | l'astrazione e' **corretta** ed applicabile nella **realta      |
-| **Astrazione Utile**  | la soluzione nel nostro modello e' **piu' semplice computazionalmente rispetto alla realta** **semplificare la ricerca** e ridurre il costo computazionale. le. |
+## agenti
+**agente**: entità che interagisce con l'ambiente usando **attuatori** e **sensori**
+* **percezioni**: permettono di ricevere **input** dall'ambiente, attraverso i **sensori**
+* **azioni**: l'azione dipende dalla **sequenza delle percezioni** e si manifesta con gli **attuatori**
+* **funzione agente**: associa ad ogni sequenza di percezioni, un'azione
+	* $f: P^* \to A$
+* **programma agente**: implementa la funzione, esegue sull'architettura dell'agente.
+* e' fatto da **architettura** + **programma agente**
 
-**problemi esemplificativi**:
-* illustrare/mettere alla prova diversi metodi e algoritmi di risoluzione.
-* astratti, semplificati e standardizzati
-* giocattoli matematici, di utilità teorica
-**problemi** **reali**:
-* formulazione specifica e non standard.
-* utilità pratica
+**storia dell'agente**: e' la sequenza di percezioni
+**conoscere le percezioni a priori**: cosa faccio se non mi aspetto che succeda qualcosa nell'ambiente?
 
-## esempi
+**agente razionale**: fa la cosa giusta. 
+* **tabella funzione agente**: e' corretta.
+* **efficacia**: agisce in modo efficace
+* **preferenze**: deve decidere cosa fare quando non esiste una scelta "migliore"
+* **razionale e onniscenza**: razionalità non vuol dire onniscenza quando bisogna scegliere la cosa giusta.
+* **obiettivo**: massimizzare la misura di prestazione
 
-|Elemento|Descrizione|
-|---|---|
-|**Stati**|Ogni stato indica la posizione dell’agente e la presenza o assenza di sporco in ogni cella.  <br>In un mondo con `n` celle, ci sono `n × 2ⁿ` stati possibili.|
-|**Stato iniziale**|Può essere qualunque configurazione iniziale di agente e sporco.|
-|**Azioni**|`Sinistra`, `Destra`, `Aspira` (nel mondo a due celle).|
-|**Modello di transizione**|`Aspira` rimuove lo sporco dalla cella; `Sinistra` e `Destra` spostano l’agente (se non ci sono muri).|
-|**Stati obiettivo**|Stati in cui **tutte le celle sono pulite**.|
-|**Costo di azione**|Tutte le azioni hanno **costo uniforme = 1**.|
+**misura di prestazione**: devo valutare la **sequenza di stati assunti** dall'agente.
+* **oggettivita**: e' una misura oggettiva e paragonabile
 
-|Elemento|Descrizione|
-|---|---|
-|**Stati**|Tutte le possibili configurazioni della scacchiera 3×3 con i numeri da 1 a 8 e una casella vuota.|
-|**Stato iniziale**|Una configurazione specifica del puzzle.|
-|**Obiettivo**|Configurazione ordinata (numeri da 1 a 8, casella vuota in basso a destra).|
-|**Azioni**|Spostare la casella vuota **su, giù, destra, sinistra**.|
-|**Goal test**|Verificare se la configurazione corrente corrisponde allo stato obiettivo.|
-|**Costo del cammino**|Costo uniforme (ogni mossa = 1).|
-|**Spazio degli stati**|Molto ampio, può contenere cicli; adatto a testare efficienza degli algoritmi.|
+**scegliere misura di prestazione**: teniamo conto di due cose
+* **natura della misura esterna**: la misura guarda gli effetti delle azioni sull'ambiente
+* **scopo della misura**: e' uno strumento
 
-|Formulazione|Descrizione|Spazio di ricerca|
-|---|---|---|
-|**Incrementale 1 (base)**|Si aggiungono regine una per volta su qualunque casella.|~1.8 × 10¹⁴ sequenze (molto grande).|
-|**Incrementale 2 (migliorata)**|Si aggiunge una regina per colonna, assicurandosi che non minacci le precedenti.|Solo 2057 stati (molto più efficiente).|
-|**A stato completo**|La scacchiera contiene 8 regine (una per colonna) e si spostano finché non sono tutte non minacciate.|Usata in algoritmi di ricerca locale (es. _Hill Climbing_).|
+## PEAS
+**PEAS**:
+* **performance**: devo scegliere la misura di performance
+* **environment**: devo definire cosa mi interessa dell'ambiente che mi circonda.
+* actuators
+* sensors
 
-| Elemento                   | Descrizione                                                                                                         |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **Stati**                  | Includono posizione (aeroporto), ora corrente e altre informazioni storiche (es. tratte, tariffe, voli precedenti). |
-| **Stato iniziale**         | L’aeroporto di partenza dell’utente.                                                                                |
-| **Azioni**                 | Prendere un volo disponibile dopo l’ora corrente, rispettando i tempi di trasferimento.                             |
-| **Modello di transizione** | Lo stato successivo aggiorna la posizione e l’orario di arrivo del volo.                                            |
-| **Stato obiettivo**        | Aeroporto di destinazione desiderato.                                                                               |
-| **Costo dell’azione**      | Combinazione di fattori: costo del biglietto, tempo, durata, coincidenze, dogane, qualità del posto, ecc.           |
+**Razonalita**: dipende da 4 fattori
+* **misura di prestazione**: agiamo per massimizzare la misura scelta
+* **conoscenza a priori dell'ambiente**: cosa so dell'ambiente? come si comporta in base a cosa faccio?
+	* **imparare**: nel caso in cui l'agente non ha conoscenza a priori dell'ambiente.
+	* **non autonomo**: se l'agente razionale dipende da conoscenza a priori, allora non e' autonoma.
+* azioni che posso fare
+* **sequenza delle percezioni**: le percezioni cambiano la visione che l'agente ha del mondo.
 
-## algoritmi di ricerca
+**onniscenza**: e' la configurazione per cui, per ogni azione, so cosa succede nell'ambiente.
+* **quando si applica**? in contesti reali quasi mai, bisogna sempre dunque effettuare azioni per esplorare l'ambiente.
 
-**albero di ricerca**: e' l'insieme degli stati esplorati dall'algoritmo
-* **frontiera**: separa i nodi generati (interi) da quelli non ancora espansi (esterni)
-* **coda**: implementa l'estrazione dei nodi dalla frontiera, FIFO, LIFO, PRIOR.
-* **strategia di scelta**:
-	* **FIFO** $\to$ **BFS**
-	* **LIFO** $\to$ **DFS**
-	* **Coda Priorita** $\to$ Uniform Cost, Greedy, $A^*$.
+**agente autonomo**: non dipende da conoscenza a priori
+* "*si comporta in misura dell'esperienza che ha*"
 
-**Algoritmi informati**:
-* **funzione euristica** : $h(c)$.
-* **esempi**: greedy search ed $A^*$.
-
-**Analizzare un'algoritmo di ricerca**:
-* **completezza**: trova sempre una soluzione se esiste?
-* **ottimalita**: trova sempre la soluzione migliore?
+## ambiente
+**osservabilita**:
+* **completamente**: con le percezioni posso conoscere per intero lo stato dell'ambiente.
+* **parzialmente**: alcuni aspetti posso non conoscerli e devono essere dedotti se possibile
+* **non osservabile**: non ho sensori, lo stato e' totalmente incerto.
 
 
-**fattori**:
-* $b =\text{ branch factor}$
-* $d = \text{max depth della soluzione}$
-* $m = \text{ lunghezza max della soluzione }$
+**multi-agente**: piu' agenti interagiscono con lo stesso ambiente.
+* collaborazione/competizione
+* comunicazione
 
-**BFS**: guarda e tiene in memoria tutti i nodi
-* $O(b^d)$
-* **completezza**: e' sempre completo
-* **ottimo**: se e solo se i nodi hanno costo unitario
-* **tempo e spazio**: $O(b^d)$.
-	* **tempo**: $T(b,d) = b + b^2 + \dots + b^d = O(b^d)$
-	* **spazio**: per visitare i nodi li devo tenere in memoria, $O(b^d)$
+**prevedibilita**:
+* **deterministico**: dopo che agisco il prossimo stato del mondo e' univocamente determinato.
+* **stocastico**: ho una distribuzione di probabilità sugli stati.
+* **non deterministico**: non c'e' una distribuzione di probabilità sugli stati.
 
-**UC**: e' BFS generalizzato quando i costi non sono unitari.
-* **coda priorita**: scegli di espandere il nodo che minimizza $g(n)$
-* **tempo e spazio**: $O(b^{1+ \lfloor   C^*/\epsilon\rfloor})$
-	* $C^*$ e' il costo della soluzione ottima
-	* $\epsilon$ e' il costo minimo di un'azione.
+**ciclo di iterazione**:
+* **episodico**: *Non c'e' bisogno di pianificare*, l'esperienza agente e' divisa in episodi indipendenti tra loro. Le azioni di un'episodio non influenzano l'episodio successivo. 
+* **non episodico**: bisogna pianificare, le azioni di un'episodio influenzano quello dopo.
 
-**azioni con costo 0**: in UC potrebbero generare loop!!!!
+**statico/dinamico**:
+* **statico**: il mondo non cambia mentre decido
+* **dinamico**: il mondo cambia
+* **semi-dinamico**: l'agente cambia percezione del mondo mentre elabora, per esempio varia la misura di prestazione col passare del tempo.
 
-**DFS**: espando prima il nodo piu profondo della frontiera
-* **tempo**: $O(b^{m+1})$
-* **spazio**: $O(bm)$
-* **depth limited**: limito a $l$ la depth.
-* **non ottimo**: se per esempio $C$ e' soluzione ottima ma contiene $C'$ all'interno del suo sottoalbero. Allora DFS vista prima $C'$
+**discreto/continuo**: riguardo alle variabili dell'ambiente...
+* **discreto**: enumerabile
+* **continuo**: non enumerabile
 
-**Backtracking search**: e' DFS ma ogni nodo si ricorda quale deve generare successivamente, richiede solo $O(m)$ memoria.
+**noto/ignoto**: riferito all'agente
+* **noto**: l'agente conosce le regole che governano il mondo
+* **ignoto**: devo imparare cosa fanno le mie azioni, esplorare e ragionare.
+	* **azioni esplorative**: devo capire!!!
 
-**diametro**: nomero di azioni massime per adare da uno stato all'altro.
+> [!error] noto/deterministico
+> * **noto**: l'agente conosce le leggi del mondo dunque sa che effetto hanno sul mondo
+> *  **deterministico**: il modo in cui l'ambiente risponde ad una percezione e' univocamente determinato
+> * **ambiente ignoto e deterministico**: vuol dire che l'ambiente risponde in modo deterministico alle azioni, ma l'agente non sa ancora quali siano le conseguenze poiche' non conosce le regole del mondo.
 
-**Ricerca Bidirezionale**:
-* esplora simultaneamente a partire dallo stato iniziale e a partire dalla fine
-* **tempo**: $O(b^{d/2} + b^{d/2})$
-* **spazio**: ho due frontiere, e due insiemi di stati raggiunt
-* **quando si usa?** posso ragionare all'indietro e generare predecessori.
-	*  obiettivo ben definito
+**environment generator**: devo generare ambiente che interagiscono con gli agenti per valutare le performance in piu casi.
+* **l'ambiente non e' reale**: simulato via software, per testare il programma agente.
+* **software ambiente**: deve emulare il ciclo PERCEZIONE-AZIONE-VALUTAZIONE
 
-**IDS**: Iterative Depth Search
-* genera e guarda $db + (d-1)b^2 + (d-2)b^3 + \dots + b^d$ nodi
+## agenti
 
-**Problema dei cicli**:
-1. non tornare nello stato da cui si provivene
-2. non andare verso un nodo che e' antenato
-3. non generare nodi con stati gia visitati. si fa in costo lineare al numero di nodi visitati.
+**table driven agent**:
+1. `percepts.append(percept)`
+2. `return lookup(percept, Table)`
+3. **autonomia**: non e' autonomo, dipende da conoscenza pregressa.
+4. **estensibilità**: non e' facile da implementare ed estendere.
+
+**skeleton-agent**:
+1. **static**: `memory`
+2. `mem = UpdateMem(mem, percept)`
+3. `act = ChooseBestAct(mem)`
+4. `mem = UpdateMem(mem, act)`
+5. `return act`
+6. **mem**: e' la memoria interna dello stato del mondo
+7. e' la base degli agenti!
+
+### agenti reattivi
+**simple reflex agent**: seleziona azione in base alla **percezione corrente** tramite **regole condizione**.
+1. `state = interpret-input(percept)`
+2. `rule = rule-match(state, regole)`
+3. `azione = regola.azione()`
+4. **randomizzare**: il processo va randomizzato, evitiamo che si incastri il modello in un loop.
+
+![[Pasted image 20260716142953.png]]
+* **sensore**: mi dice com'e' il mondo
+* **attuatori**.
+
+**model based reflex agents**: introduciamo lo **stato interno**. E' utile per ambienti non completamente osservabili.
+![[Pasted image 20260716143601.png]]
+* "*com'e' ora il mondo?*": modella lo stato interno per rappresentare l'evoluzione del mondo. L'**agente si chiede come le proprie azioni modificano l'ambiente**.
+	* "*what the world is like now*"
+* **a che serve il modello del mondo**? e' il modello con le regole del mondo, mi permette di capire che sta succedendo e di non reagire in base alle percezioni
+* **regole**: mi dicono come agire in base allo stato interno
+1. `stato = AggiornaStato(percept, modello)`
+2. `regole = RuleMatch(stato)`
+3. `action = regola.action()`
+
+
+> [!error] differenza tra model based e reattivo semplice
+> Il model based mantiene uno stato interno che tiene traccia degli aspetti non visibili dell'ambiente.
+
+## agenti con obiettivo
+**goal based agent**: introduciamo oltre a stati e percezioni, un goal da raggiungere.
+* **pianificare**: l'agente deve necessariamente pianificare per raggiungere un goal generico.
+* **stato interno**: hanno uno stato interno come prima.
+* **interrogazione del modello**: un'agente model based e' interessato a capire, *"cosa succederebbe se eseguissi $A$"*?
+* **previsione**: controllo il risultato previsto con il goal, scegliendo l'azione che mi avvicina di piu all'obiettivo.
+* *Guidati da un obiettivo, Pianificano, richiedono necessariamente piu calcoli.*
+* **non necessariamente minimizza il costo della soluzione**
+
+> [!error] agenti razionali e agenti con obiettivo
+> Un'agente razionale non deve essere per forza un'agente con obiettivo. Tutti gli agenti visti fino ad ora sono razionali, in base al loro modello fanno il meglio che possono.
+
+## agenti con valutazione di utilita
+**valutazione di utilita**: oltre a massimizzare il goal, mi chiedo quanto e' buona/vantaggioso ciascun stato del mondo.
+* **utility function**: misura quanto e' utile uno stato per perseguire l'obiettivo
+
+**obiettivi alternativi**: un'agente puo' avere piu' obiettivi possibili, devo capire verso quale obiettivo muovermi.
+* **funzione di utilita**: qual'e' il migliore stato finale?
+
+**funzione di utilita**: assegna ad ogni stato un valore numerico, "quanto l'agente e' soddisfatto" in quello stato, indipendentemente dal goal scelto da perseguire.
+* **a che serve**? a confrontare obiettivi diversi.
+
+**obiettivi con probabilita diverse**: l'agente deve penalizzare ottimi obiettivi ma quasi impossibili da perseguire, o molto costosi.
+
+## learning agent
+**learning agent**:
+![[Pasted image 20260716145925.png]]
+* **ambienti sconosciuti**: deve scoprirli e migliorare nel tempo la sua prestazione.
+* **esperienza**: devo fare esperienza del mondo per capire come e' fatto.
+* **CRITIC**: fornisce **feedback** al modulo di apprendimento, analizza i risultati e interpreta il comportamento dell'agente.
+* **LEARNING ELEMENT**: produce modifiche al programma agente in base al feedback ricevuto dal CRITIC, ossia modifica il PERFORMANCE ELEMENT
+* **PERFORMANCE ELEMENT**: e' l'agente vero e proprio che opera. in base al mondo esterno, calcola la performance corrente e se necessario modifica il learning element in caso di previsioni errate.
+* **PROBLEM GENERATOR**: crea e suggerisce problemi o scenari ipotetici per migliorare l'apprendimento, genera dati ed esperienze.misura
+
+
+esempio taxi:
+* **PERFORMANCE ELEMENT**: guida il taxi
+* **CRITIC**: misura quanto si lamenta il cliente
+* **LEARNING ELEMENT**: modifica le regole per frenata e velocita nel PE in base al feedback
+* **PROBLEM GENERATOR**: suggerisci una strada secondaria da provare
+
+## tipi di rapresentazione
+**atomica**:
+* ogni stato e' un **blocco unico e indivisibile**, a cui non posso accedere alla sua **struttura interna**
+* ho dunque delle transizioni tra stati
+
+**fattorizzato**: ogni stato e' un'insieme di variabili
+* **vettore**: posso vedere uno stato come un vettore di variabili
+
+**strutturata**: ricco e complesso
+*  oggetti sono entita con relazioni tra loro
+* **descrivo**: relazioni, gerarchie, dipendenze.
 
