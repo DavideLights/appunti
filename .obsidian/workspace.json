@@ -4,52 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "3b6454eb4e808ee5",
+        "id": "7406327b837dd8e9",
         "type": "tabs",
         "children": [
           {
-            "id": "480de69e09f329b4",
+            "id": "a0a8570b15d809e6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IA/lez. 7. 8. 9..md",
+                "file": "3o anno/critto/10. firme digitali.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 7. 8. 9."
+              "title": "10. firme digitali"
             }
           },
           {
-            "id": "dd1ce989b3ebf640",
+            "id": "b344fdd8f1ace3fd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IA/lez. 3 e 4.md",
+                "file": "tesi/cyber range.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 3 e 4"
-            }
-          },
-          {
-            "id": "1c9216c35705b016",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "IA/lez. 3 e 4.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "lez. 3 e 4"
+              "title": "cyber range"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -212,24 +199,26 @@
       "bases:Crea nuova Base": false
     }
   },
-  "active": "480de69e09f329b4",
+  "active": "b344fdd8f1ace3fd",
   "lastOpenFiles": [
-    "IA/domande.md",
-    "IA/lez. 3 e 4.md",
+    "3o anno/dm/lez. 3.md",
+    "3o anno/dm/lez. 2.md",
+    "3o anno/dm/lez. 1.md",
+    "3o anno/dm/lez. 8 9 10 11.md",
+    "3o anno/dm/lez. 5 6 7 8.md",
+    "3o anno/dm/lez. 13 adaline e logistic regr.md",
+    "3o anno/dm/lez. 13 logistic regression gemini.md",
+    "3o anno/dm/lez. 15 reti neurali.md",
+    "3o anno/dm/lez. 20.md",
+    "tesi/cyber range.md",
+    "3o anno/critto/10. firme digitali.md",
     "IA/lez. 5 e 6.md",
-    "Pasted image 20260719152808.png",
+    "IA/lez. 3 e 4.md",
     "IA/lez. 2.md",
-    "IA/lez. 7. 8. 9..md",
-    "IA/formulazione problemi.md",
-    "IA/riassunto.md",
-    "IA/snake.md",
-    "Pasted image 20260719013230.png",
-    "Senza nome 1.md",
     "Senza nome 3.md",
     "Senza nome 2.md",
-    "IA/compito edoardo.md",
-    "Senza nome.md",
-    "Senza nome 6.md",
+    "Pasted image 20260719152808.png",
+    "Pasted image 20260719013230.png",
     "Pasted image 20260718024719.png",
     "Pasted image 20260718024345.png",
     "Pasted image 20260718023045.png",
@@ -238,17 +227,16 @@
     "Pasted image 20260718020043.png",
     "Pasted image 20260718020036.png",
     "Pasted image 20260718014727.png",
-    "Senza nome 5.md",
-    "Senza nome 4.md",
-    "3o anno/critto/10. firme digitali.md",
-    "algebra/formule e metodi.md",
+    "IA/lez. 7. 8. 9..md",
+    "IA/formulazione problemi.md",
+    "IA/domande.md",
+    "IA/compito edoardo.md",
+    "IA/lez. 1.md",
     "3o anno/critto/7. logaritmo discreto.md",
     "3o anno/critto/6. curve ellittiche e schoof.md",
     "3o anno/critto/5. hash function.md",
     "3o anno/critto/4. algebra.md",
     "3o anno/critto/1. cifrari e sicurezza perfetta.md",
-    "3o anno/critto/9. rsa e primalita.md",
-    "3o anno/critto/8. modalita AES e MAC e HMAC.md",
     "IA",
     "3o anno/vdsi",
     "3o anno/ir",
