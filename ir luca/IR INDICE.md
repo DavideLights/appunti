@@ -1,8 +1,0 @@
-[[ESERCIZI CROCS]]
-[[IR LEZ.1]]
-[[IR LEZ.2]]
-[[IR LEZ.3]]
-[[IR LEZ.4]]
-[[IR LEZ.5]]
-[[IR LEZ.6]]
-[[IR LEZ.7]]
