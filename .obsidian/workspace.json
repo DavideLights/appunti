@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "69184352d43f8866",
+        "id": "f8645b875642e03d",
         "type": "tabs",
         "children": [
           {
-            "id": "32c10ab28968e646",
+            "id": "60842ac56c8bda5a",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -22,20 +22,45 @@
             }
           },
           {
-            "id": "e5bc7e5b989d0bb5",
+            "id": "381214b0a4ef6d6f",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/cyber range 2026-07-28 17.55.13.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "cyber range 2026-07-28 17.55.13.excalidraw"
+            }
+          },
+          {
+            "id": "430dd1471293b84c",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.13.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "Note di rilascio 1.13.4"
+            }
+          },
+          {
+            "id": "b8cd39a36bdd85eb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tesi/cyber range old.md",
+                "file": "Senza nome.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "cyber range old"
+              "title": "Senza nome"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -189,20 +214,24 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Apri selezione rapida": false,
+      "switcher:Apri selettore rapido": false,
+      "daily-notes:Apri nota giornaliera": false,
       "graph:Apri vista grafo": false,
       "obsidian-excalidraw-plugin:New drawing": false,
       "canvas:Crea nuova lavagna": false,
-      "daily-notes:Apri nota del giorno": false,
       "templates:Inserisci modello": false,
       "command-palette:Apri riquadro comandi": false,
       "bases:Crea nuova Base": false
     }
   },
-  "active": "32c10ab28968e646",
+  "active": "c4e0eb93c16ecdca",
   "lastOpenFiles": [
-    "tesi/cyber range old.md",
+    "Excalidraw/cyber range 2026-07-28 17.55.13.excalidraw.md",
     "tesi/cyber range.md",
+    "tesi/javascript e html.md",
+    "tesi/API REST.md",
+    "tesi/tecnologie (flask jinja sql alchemy).md",
+    "tesi/cyber range old.md",
     "Senza nome.md",
     "1o anno",
     "3o anno/IA/lez. 3 e 4.md",
@@ -234,10 +263,6 @@
     "1o anno/algebra/formule e metodi.md",
     "3o anno/critto/7. logaritmo discreto.md",
     "3o anno/critto/6. curve ellittiche e schoof.md",
-    "3o anno/critto/5. hash function.md",
-    "3o anno/critto/4. algebra.md",
-    "3o anno/critto/1. cifrari e sicurezza perfetta.md",
-    "3o anno/critto/9. rsa e primalita.md",
     "3o anno/IA",
     "3o anno/vdsi",
     "3o anno/ir",
