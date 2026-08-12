@@ -39,14 +39,14 @@ def show_post(post_id):
 `make_response`: If you want to get hold of the resulting response object inside the view you can use the [`make_response()`](https://flask.palletsprojects.com/en/stable/api/#flask.make_response "flask.make_response") function.
 
 **logging**: `app.logger.[debug,warning,error]("text", format)`
-
-
 ##  blueprint
 **Blueprint**: serve ad organizzare un gruppo di Views e di codice
 * **es**: `Blueprint('auth', __name__, url_pfrefix="/auth")`
 	* blueprint di nome `auth`, definito in `__name__` e con prefisso `/auth`
 
 
+## Api Flask-RESTX
+**approccio usato**: usiamo la codifica del token nell'header Authorization, ossia tramite **Access Token**
 # SQL Alchemy
 **a che serve**? in modo dichiarativo, definisco le classi (tabelle) con i loro attributi (colonne).
 
@@ -54,15 +54,4 @@ def show_post(post_id):
 
 **aggiungere al database**: uso il paradigma del commit. devo aggiungerli alla `sessione` e poi faccio il `commit` dei cambiamenti.
 
-## Salvataggio JSON su disco vs attributo su DB
-
-| Criterio                        | Opzione A: JSON come Attributo DB (Raccomandata)                                                                    | Opzione B: File JSON caricato su Server                                                                               |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| **Portabilità & Export/Import** | 🟢 **Eccellente**: Il JSON fa parte del backup nativo di CTFd (zip export/import). Niente file persi in migrazione. | 🔴 **Complesso**: Richiede gestione dei file allegati e del mapping dei path durante backup/restore.                  |
-| **Atomicità & Transazioni**     | 🟢 **Garantita**: Salvataggio, update e rollback avvengono in un'unica transazione SQL.                             | 🟡 **Rischio Disallineamento**: Il record su DB potrebbe essere creato/modificato anche se il file fallisce l'upload. |
-| **Performance**                 | 🟢 **Ottima**: Accesso diretto in memoria via query ORM (senza I/O su file system).                                 | 🟡 **I/O Extra**: Lettura del file da disco/S3 ad ogni richiesta di check.                                            |
-| **Manutenibilità**              | 🟢 **Semplice**: Nessuna pulizia di file orfani necessaria alla cancellazione della challenge.                      | 🔴 **Manutenzione**: Bisogna gestire l'eliminazione dei file su disco ed i permessi di lettura/scrittura.             |
-
-### Decisione d'Architettura
-
-**Scelta adottata: Opzione A (Salvataggio diretto nel Database)**. Nel modello SQLAlchemy `PatchChallenge`, aggiungeremo un campo `patch_config = db.Column(db.Text)` (o `db.JSON`). Quando l'amministratore carica il file `.json` nel form di creazione/modifica, il contenuto viene letto, validato e memorizzato nel database.
+**salvare json direttamente nel database:** Nel modello SQLAlchemy `PatchChallenge`, aggiungeremo un campo `patch_config = db.Column(db.Text)` (o `db.JSON`). Quando l'amministratore carica il file `.json` nel form di creazione/modifica, il contenuto viene letto, validato e memorizzato nel database.

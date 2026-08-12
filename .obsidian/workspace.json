@@ -6,61 +6,59 @@
       {
         "id": "f8645b875642e03d",
         "type": "tabs",
+        "dimension": 47.20558882235529,
         "children": [
           {
-            "id": "60842ac56c8bda5a",
+            "id": "fc0d1ec3cdb3e861",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tesi/cyber range.md",
+                "file": "3o anno/ing/parte 1/3. requisiti.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "cyber range"
+              "title": "3. requisiti"
             }
           },
           {
-            "id": "381214b0a4ef6d6f",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/cyber range 2026-07-28 17.55.13.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "cyber range 2026-07-28 17.55.13.excalidraw"
-            }
-          },
-          {
-            "id": "430dd1471293b84c",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.13.4"
-              },
-              "icon": "lucide-book-up",
-              "title": "Note di rilascio 1.13.4"
-            }
-          },
-          {
-            "id": "b8cd39a36bdd85eb",
+            "id": "ca318f9d6039e916",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Senza nome.md",
+                "file": "3o anno/ing/parte 1/4. ingegneria requisiti.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Senza nome"
+              "title": "4. ingegneria requisiti"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
+      },
+      {
+        "id": "54cdde0fa802839b",
+        "type": "tabs",
+        "dimension": 52.794411177644704,
+        "children": [
+          {
+            "id": "cc3eb006ff311ae3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ISandrea/IS_andrea.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "IS_andrea"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -80,10 +78,12 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
-              "title": "Esplora risorse"
+              "title": "Esplora file"
             }
           },
           {
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "vdsi/bandit passwords.md",
+                "file": "ISandrea/IS_andrea.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -144,7 +144,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Riferimenti a bandit passwords"
+              "title": "Riferimenti"
             }
           },
           {
@@ -204,12 +204,24 @@
               "icon": "lucide-list",
               "title": "Struttura di bandit passwords"
             }
+          },
+          {
+            "id": "fdc2cb1a16110233",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "ISandrea/IS_andrea.md"
+              },
+              "icon": "lucide-info",
+              "title": "Proprietà file"
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
   "left-ribbon": {
@@ -224,51 +236,53 @@
       "bases:Crea nuova Base": false
     }
   },
-  "active": "c4e0eb93c16ecdca",
+  "active": "ca318f9d6039e916",
   "lastOpenFiles": [
-    "Excalidraw/cyber range 2026-07-28 17.55.13.excalidraw.md",
-    "tesi/cyber range.md",
-    "tesi/javascript e html.md",
-    "tesi/API REST.md",
-    "tesi/tecnologie (flask jinja sql alchemy).md",
-    "tesi/cyber range old.md",
-    "Senza nome.md",
-    "1o anno",
-    "3o anno/IA/lez. 3 e 4.md",
-    "3o anno/IA/lez. 7. 8. 9..md",
-    "3o anno/IA/domande.md",
-    "3o anno/IA/lez. 5 e 6.md",
-    "Pasted image 20260719152808.png",
-    "3o anno/IA/lez. 2.md",
-    "3o anno/IA/formulazione problemi.md",
-    "IA/riassunto.md",
-    "IA/snake.md",
-    "Pasted image 20260719013230.png",
+    "Pasted image 20260812203739.png",
+    "Pasted image 20260812203713.png",
+    "Pasted image 20260812203540.png",
+    "ISandrea/IS_andrea.md",
+    "3o anno/ing/parte 1/4. ingegneria requisiti.md",
+    "Pasted image 20260812202353.png",
+    "Pasted image 20260812201126.png",
+    "Pasted image 20260812200851.png",
+    "3o anno/ing/parte 1/3. requisiti.md",
+    "3o anno/ing/parte 1/4..md",
+    "3o anno/ing/parte 1/1. introduzione.md",
+    "Pasted image 20260811220942.png",
+    "3o anno/ing/parte 1/2.2 processo software.md",
+    "3o anno/ing/parte 1/2.1 processo software.md",
     "Senza nome 1.md",
-    "Senza nome 3.md",
-    "Senza nome 2.md",
-    "3o anno/IA/compito edoardo.md",
-    "Senza nome 6.md",
-    "Pasted image 20260718024719.png",
-    "Pasted image 20260718024345.png",
-    "Pasted image 20260718023045.png",
-    "Pasted image 20260718022531.png",
-    "Pasted image 20260718022407.png",
-    "Pasted image 20260718020043.png",
-    "Pasted image 20260718020036.png",
-    "Pasted image 20260718014727.png",
-    "Senza nome 5.md",
-    "Senza nome 4.md",
-    "3o anno/critto/10. firme digitali.md",
+    "Pasted image 20260811203411.png",
+    "Pasted image 20260811202048.png",
+    "Pasted image 20260811192328.png",
+    "Pasted image 20260811192027.png",
+    "2o anno/reti/esercizi/traceroute.md",
+    "2o anno/reti/esercizi/ping.md",
+    "2o anno/reti/esercizi/ip.md",
+    "2o anno/reti/esercizi/http.md",
+    "2o anno/reti/esercizi/dns.md",
+    "2o anno/reti/old/BP Layer Applicazione.md",
+    "2o anno/reti/wireless e reti mobili.md",
+    "2o anno/reti/struttura segmenti!.md",
+    "2o anno/reti/riassunto reti.md",
+    "2o anno/reti/reti.md",
+    "2o anno/reti/domande chat.md",
+    "2o anno/reti/Introduzione alle reti.md",
+    "1o anno/algebra/unico file.md",
     "1o anno/algebra/formule e metodi.md",
-    "3o anno/critto/7. logaritmo discreto.md",
-    "3o anno/critto/6. curve ellittiche e schoof.md",
+    "2o anno/sql/algebra relazionale e calcolo relazionale.md",
+    "2o anno/fondamenti/complessita problemi e codifiche e classe NP.md",
+    "2o anno/fondamenti/complessita.md",
+    "IS_andrea_obsidian_full/Senza nome",
+    "ISandrea/assets",
+    "ISandrea",
+    "3o anno/ing/parte 1",
+    "3o anno/Senza nome",
+    "1o anno",
     "3o anno/IA",
     "3o anno/vdsi",
     "3o anno/ir",
-    "3o anno/dm",
-    "3o anno/critto",
-    "3o anno",
-    "dm"
+    "3o anno/dm"
   ]
 }
