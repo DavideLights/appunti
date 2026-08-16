@@ -1042,41 +1042,45 @@ L'approccio BCE (Boundary-Control-Entity) è un modo di organizzare il design e 
 ## PIANIFICAZIONE
 
 ## GESTIONE DI PROGETTI SOFTWARE
-La gestione di progetti software è un'attività fondamentale nel processo di sviluppo di software. Lo sviluppo di un prodotto software è un'operazione complessa che coinvolge molte persone, processi e risorse. La gestione di un progetto software implica la pianificazione, il monitoraggio e il controllo di tutte queste componenti durante l'intero ciclo di vita del progetto, dall'inizio alla consegna del software finito. Il Software Project Management Plan (SPMP) è un documento chiave in questo contesto. Esso guida la gestione del progetto software, definendo obiettivi, vincoli, risorse disponibili, pianificazione delle attività e le responsabilità dei membri del team. Le quattro "P" nella gestione di progetti software: La gestione efficace di un progetto software si basa su quattro aspetti chiave, spesso chiamati "quattro P":
+La gestione di progetti software è un'attività fondamentale nel processo di sviluppo di software.  Lo sviluppo di un prodotto software è un'operazione complessa che coinvolge molte persone, processi e risorse. La gestione di un progetto software implica la pianificazione, il monitoraggio e il controllo di tutte queste componenti durante l'intero ciclo di vita del progetto, dall'inizio alla consegna del software finito. Il Software Project Management Plan (SPMP) è un documento chiave in questo contesto. Esso guida la gestione del progetto software, definendo obiettivi, vincoli, risorse disponibili, pianificazione delle attività e le responsabilità dei membri del team. Le quattro "P" nella gestione di progetti software: La gestione efficace di un progetto software si basa su quattro aspetti chiave, spesso chiamati "quattro P":
 
-- **Persone:** Le persone sono l'elemento più importante in un progetto software di successo. La gestione delle risorse umane è fondamentale per assegnare ruoli e responsabilità ai membri del team, garantendo che abbiano le competenze necessarie e motivandoli per ottenere risultati di alta qualità. La gestione delle persone è spesso basata su modelli come il "People Management - Capability Maturity Model".
+- **Persone:** Le persone sono l'elemento più importante in un progetto software di successo. La **gestione delle risorse umane** è fondamentale per assegnare ruoli e responsabilità ai membri del team, garantendo che abbiano le **competenze necessarie e motivandoli** per ottenere risultati di alta qualità. La gestione delle persone è spesso basata su modelli come il "People Management - Capability Maturity Model".
 - **Prodotto:** Questo riguarda l'identificazione delle caratteristiche del software da sviluppare. Questo include definire obiettivi, specifiche di dati, funzionalità, comportamenti principali, alternative e vincoli tecnici o di progetto.
-- **Processo:** Questo riguarda la definizione del quadro di riferimento all'interno del quale viene pianificato e sviluppato il prodotto software. In altre parole, si tratta di stabilire il metodo e le pratiche di sviluppo che saranno utilizzate per raggiungere gli obiettivi del progetto.
-- **Progetto:** Questo riguarda l'organizzazione e la pianificazione delle attività specifiche necessarie per sviluppare il software. Questo include l'allocazione delle risorse, la definizione dei compiti, la stima dei tempi e dei costi, e il monitoraggio costante del progresso. L'organizzazione dei team è un aspetto critico della gestione di progetti software. È importante assegnare il lavoro in modo efficiente, tenendo conto delle capacità e delle interazioni tra i membri del team. L'obiettivo è ottenere il miglior risultato possibile in termini di qualità e tempistiche, evitando ritardi dovuti a eccessive interazioni o alla mancanza di competenze specifiche. La legge di Brooks sottolinea che l'aggiunta di più risorse in un progetto non sempre accelererà lo sviluppo e potrebbe persino ritardarlo a causa delle complessità aggiuntive. Pianificazione di progetti software: La pianificazione dei progetti software è un processo chiave nell'ambito della gestione dei progetti software. Il suo obiettivo è fornire un quadro di riferimento che consenta di controllare, determinare l'avanzamento e monitorare lo sviluppo del progetto software. Questo processo è motivato dalla necessità di sviluppare prodotti software nei tempi e nei costi previsti, rispettando al contempo i requisiti di qualità desiderati. Le componenti fondamentali della pianificazione dei progetti software includono:
+- **Processo:** Questo riguarda la definizione del quadro di riferimento all'interno del quale viene pianificato e sviluppato il prodotto software. In altre parole, si tratta di *stabilire il metodo e le pratiche di sviluppo che saranno utilizzate per raggiungere gli obiettivi del progetto*.
+- **Progetto:** Questo riguarda l'*organizzazione e la pianificazione delle attività specifiche necessarie per sviluppare il software*. Questo include l'allocazione delle risorse, la definizione dei compiti, la stima dei tempi e dei costi, e il monitoraggio costante del progresso. L'organizzazione dei team è un aspetto critico della gestione di progetti software. È importante assegnare il lavoro in modo efficiente, tenendo conto delle capacità e delle interazioni tra i membri del team. L'obiettivo è ottenere il miglior risultato possibile in termini di qualità e tempistiche, evitando ritardi dovuti a eccessive interazioni o alla mancanza di competenze specifiche. **La legge di Brooks** sottolinea che l'aggiunta di più risorse in un progetto non sempre accelererà lo sviluppo e potrebbe persino ritardarlo a causa delle complessità aggiuntive. 
 
-- **Scoping (raggio d'azione):** Questo step consiste nell'acquisire una comprensione completa del problema da risolvere e del lavoro da svolgere. È fondamentale definire chiaramente l'ambito del progetto per evitare cambiamenti e allargamenti eccessivi durante lo sviluppo.
-- **Stime:** Durante questa fase, vengono previsti tempi, costi e sforzi necessari per completare il progetto. Queste stime servono come base per la pianificazione delle risorse e per valutare la fattibilità del progetto.
-- **Rischi:** È importante identificare i rischi potenziali associati al progetto software e definire strategie per gestirli. La gestione dei rischi aiuta a prevenire problemi imprevisti che potrebbero causare ritardi o costi aggiuntivi.
-- **Schedule:** Questa parte della pianificazione coinvolge l'allocazione delle risorse disponibili e la definizione dei punti di controllo temporali nel progetto. La creazione di una timeline chiara aiuta a monitorare l'andamento del progetto.
-- **Strategia di controllo:** Qui si stabilisce un quadro di riferimento per il controllo della qualità e il controllo dei cambiamenti nel corso del progetto. È importante garantire che il prodotto software mantenga gli standard di qualità desiderati e che i cambiamenti vengano gestiti in modo controllato per evitare impatti negativi sul progetto.
+**Pianificazione di progetti software**: La pianificazione dei progetti software è un processo chiave nell'ambito della gestione dei progetti software. Il suo obiettivo è fornire un quadro di riferimento che consenta di **controllare, determinare l'avanzamento e monitorare** lo sviluppo del progetto software. Questo processo è motivato dalla necessità di sviluppare prodotti software nei tempi e nei costi previsti, rispettando al contempo i requisiti di qualità desiderati. Le componenti fondamentali della pianificazione dei progetti software includono:
+
+- **Scoping (raggio d'azione):** Questo step consiste nell'acquisire una **comprensione completa del problema da risolvere e del lavoro da svolgere**. È fondamentale definire chiaramente l'ambito del progetto per evitare cambiamenti e allargamenti eccessivi durante lo sviluppo.
+- **Stime:** Durante questa fase, vengono **previsti tempi, costi e sforzi** necessari per completare il progetto. Queste stime servono come base per la pianificazione delle risorse e per valutare la fattibilità del progetto.
+- **Rischi:** È importante identificare i rischi potenziali associati al progetto software e definire strategie per gestirli. **La gestione dei rischi aiuta a prevenire problemi imprevisti** che potrebbero causare ritardi o costi aggiuntivi.
+- **Schedule:** Questa parte della pianificazione coinvolge l'**allocazione delle risorse disponibili e la definizione dei punti di controllo temporali nel progetto**. La **creazione di una timeline chiara** aiuta a **monitorare l'andamento** del progetto.
+- **Strategia di controllo:** Qui si stabilisce un **quadro di riferimento per il controllo della qualità** e il controllo dei cambiamenti nel corso del progetto. È importante garantire che il prodotto *software mantenga gli standard di qualità desiderati e che i cambiamenti vengano gestiti in modo controllato per evitare impatti negativi sul progetto.*
 
 ## STIME NEI PROGETTI SOFTWARE
 Le stime nei progetti software sono un aspetto fondamentale della pianificazione e della gestione dei progetti. L'obiettivo principale delle stime di tempi, costi ed effort è ridurre al minimo l'incertezza e limitare i rischi associati a una stima errata. Ci sono diverse tecniche utilizzate per migliorare l'affidabilità e l'accuratezza delle stime nei progetti software:
 
-- **Stime basate su progetti simili (Expert Judgment by Analogy):** Questa tecnica si basa sull'esperienza di esperti nel settore. Gli esperti confrontano il progetto attuale con progetti simili già completati in passato e utilizzano queste analogie per effettuare stime. Questo metodo è utile quando ci sono progetti precedenti con caratteristiche simili che possono servire da punto di riferimento.
+- **Stime basate su progetti simili (Expert Judgment by Analogy):** Questa tecnica si basa sull'**esperienza di esperti nel settore**. Gli esperti confrontano il progetto attuale con progetti simili già completati in passato e utilizzano queste analogie per effettuare stime. *Questo metodo è utile quando ci sono progetti precedenti con caratteristiche simili che possono servire da punto di riferimento*.
 
 <!-- Pagina PDF 42 -->
 
-- **Tecniche di scomposizione (Approccio bottom-up):** Queste tecniche coinvolgono la suddivisione del progetto in componenti più piccole, come task o funzioni, e la stima di allocazione dell'effort per ciascuna componente. Le stime possono basarsi su metriche come il numero di righe di codice (LOC) o i Function Point (FP) per valutare la complessità e l'effort richiesto per ciascuna parte del progetto. Questo approccio è particolarmente utile per progetti complessi e dettagliati.
-- **Modelli algoritmici empirici:** Queste tecniche di stima si basano su dati storici raccolti da progetti software precedenti. I modelli utilizzano relazioni matematiche tra variabili indipendenti (come LOC o FP stimati) e la variabile da stimare (come l'effort, il costo o la durata del progetto). Un esempio comune è il modello COCOMO (COnstructive COst MOdel) che utilizza LOC stimati per calcolare il costo e l'effort.
+- **Tecniche di scomposizione (Approccio bottom-up):** Queste tecniche coinvolgono la **suddivisione del progetto in componenti più piccole, come task o funzioni, e la stima di allocazione dell'effort per ciascuna componente**. Le stime possono basarsi su metriche come il ***numero di righe di codice** (LOC) o i **Function Point** (FP) per valutare la complessità e l'effort richiesto per ciascuna parte del progetto*. Questo approccio è particolarmente utile per progetti complessi e dettagliati.
+- **Modelli algoritmici empirici:** Queste tecniche di stima si basano su **dati storici raccolti da progetti software precedenti**. I modelli utilizzano **relazioni matematiche tra variabili indipendenti** (come LOC o FP stimati) e la **variabile da stimare** (come l'effort, il costo o la durata del progetto). Un esempio comune è il modello **COCOMO** (COnstructive COst MOdel) che utilizza LOC stimati per calcolare il costo e l'effort.
 
 ## FUNCTION POINT - FP
-I Function Point (FP) sono una misura ponderata della funzionalità del software proposta da Albrecht negli anni '70 e '80. I Function Point misurano la quantità di funzionalità in un sistema software basandosi sulla specifica del sistema (stima prima dell'implementazione effettiva del software). Il calcolo dei Function Point avviene in due fasi principali:
+I Function Point (FP) sono una misura ponderata della funzionalità del software proposta da Albrecht negli anni '70 e '80. **I Function Point misurano la quantità di funzionalità in un sistema software basandosi sulla specifica del sistema** (stima prima dell'implementazione effettiva del software). Il calcolo dei Function Point avviene in due fasi principali:
 
-- **Calcolo dell'Unadjusted Function Point Count (UFC):** Questa fase coinvolge il conteggio delle diverse categorie di dati e transazioni presenti nel sistema software.
-- **Moltiplicazione dell'UFC per un Technical Complexity Factor (TCF):** Una volta calcolato l'UFC, viene applicato un fattore di complessità tecnica per riflettere la complessità aggiuntiva del sistema. Questo fattore considera vari aspetti come la complessità dell'architettura, la performance, l'usabilità e altri fattori tecnici che influenzano la complessità complessiva del progetto. Il risultato finale, il Function Point (FP), è ottenuto moltiplicando l'UFC per il TCF: FP = UFC × TCF Categorie di conteggio dei dati (UFC):
+- **Calcolo dell'Unadjusted Function Point Count (UFC):** Questa fase coinvolge il *conteggio delle diverse categorie di dati e transazioni* presenti nel sistema software.
+- **Moltiplicazione dell'UFC per un Technical Complexity Factor (TCF):** Una volta calcolato l'UFC, viene applicato un fattore di complessità tecnica per **riflettere la complessità aggiuntiva del sistema**. Questo fattore considera vari aspetti come la *complessità dell'architettura, la performance, l'usabilità e altri fattori tecnici che influenzano la complessità complessiva del progetto*. Il risultato finale, il Function Point (FP), è ottenuto moltiplicando l'UFC per il TCF: **FP = UFC × TCF** 
 
-- **Internal Logical Files (ILF):** Questi rappresentano gruppi di dati o informazioni di controllo generate, utilizzate o mantenute dal sistema software stesso.
-- **External Interface Files (EIF):** Questi rappresentano gruppi di dati o informazioni di controllo condivise o scambiate tra applicazioni, inclusi gli input e gli output provenienti da altre applicazioni o sistemi. Categorie di conteggio delle transazioni (TCF):
-
-- **External Inputs (EI):** Questi rappresentano gli elementi forniti dall'utente che descrivono dati orientati all'applicazione, informazioni di controllo o output di altri sistemi che entrano in un'applicazione e cambiano lo stato dei suoi file logici interni.
+**Categorie di conteggio dei dati (UFC):**
+- **Internal Logical Files (ILF):** Questi rappresentano *gruppi di dati o informazioni di controllo generate, utilizzate o mantenute dal sistema software stesso*.
+- **External Interface Files (EIF):** Questi rappresentano *gruppi di dati o informazioni di controllo condivise o scambiate tra applicazioni, inclusi gli input e gli output provenienti da altre applicazioni o sistemi*. 
+**Categorie di conteggio delle transazioni** (TCF):
+- **External Inputs (EI):** Questi rappresentano gli *elementi forniti dall'utente che descrivono dati orientati all'applicazione, informazioni di controllo o output* di altri sistemi che entrano in un'applicazione e cambiano lo stato dei suoi file logici interni.
 - **External Outputs (EO):** Questi rappresentano tutti i dati o le informazioni di controllo unici prodotti dal sistema software, ad esempio rapporti e messaggi.
-- **External Inquiries (EQ):** Questi rappresentano tutte le combinazioni uniche di input/output, in cui un input genera un output immediato senza cambiare lo stato dei file logici interni. Il calcolo del Technical Complexity Factor (TCF) coinvolge l'assegnazione di un valore numerico a ciascuno dei 14 fattori di degree of influence, in base al grado di influenza che hanno sul progetto software. Questi valori numerici variano da 0 (nessuna influenza) a 5 (influenza essenziale). Una volta assegnati i valori, si può calcolare il TCF sommando questi valori.
+- **External Inquiries (EQ):** Questi rappresentano tutte le **combinazioni uniche di input/output, in cui un input genera un output immediato senza cambiare lo stato dei file logici interni**. 
+Il calcolo del Technical Complexity Factor (TCF) coinvolge l'**assegnazione di un valore numerico** a ciascuno dei 14 fattori di **degree of influence**, in base al grado di influenza che hanno sul progetto software. Questi valori numerici *variano da 0 (nessuna influenza) a 5 (influenza essenziale)*. Una volta assegnati i valori, si può calcolare il TCF sommando questi valori.
 
 1. Affidabile backup e ripristino
 2. Comunicazione dati
@@ -1092,64 +1096,76 @@ I Function Point (FP) sono una misura ponderata della funzionalità del software
 12. Facilità di installazione
 13. Siti multipli
 14. Agevolare il cambiamento
-Una volta assegnati i valori a ciascun fattore, si sommano per ottenere il TCF.
+**Una volta assegnati i valori a ciascun fattore, si sommano per ottenere il TCF.**
 
 ଵସ
 
 𝑇𝐶𝐹= 0.65 + 0.01 ෍𝐹௝
 
-௝ୀଵ
+௝ୀଵ 
 
 <!-- Pagina PDF 43 -->
 
-La formula indica che il TCF varia da 0.65 (se tutti i 𝐹௝ sono impostati a 0) a 1.35 (se tutti i 𝐹௝ sono impostati a 5). In altre parole, il TCF può essere regolato in base alla complessità tecnica attraverso i valori dei fattori 𝐹௝. La somma di 𝐹௝∗0.01 contribuisce all'aggiustamento complessivo della formula. Quindi, il risultato del TCF sarà nell'intervallo da 0.65 a 1.35, con una possibile variazione del ±35% a seconda dei valori specifici dei fattori 𝐹௝ utilizzati nel calcolo.
+*La formula indica che il TCF varia da 0.65 (se tutti i 𝐹௝ sono impostati a 0) a 1.35 (se tutti i 𝐹௝ sono impostati a 5)*. In altre parole, il TCF può essere regolato in base alla complessità tecnica attraverso i valori dei fattori 𝐹௝. La somma di 𝐹௝∗0.01 contribuisce all'aggiustamento complessivo della formula. Quindi, il risultato del TCF sarà nell'intervallo da 0.65 a 1.35, con una possibile variazione del ±35% a seconda dei valori specifici dei fattori 𝐹௝ utilizzati nel calcolo.
 
 ## FP vs LOC
 
-- **Function Points (FP):** Misurano la funzionalità e la complessità funzionale di un sistema software in base alle sue caratteristiche e ai suoi requisiti funzionali. Sono indipendenti dal linguaggio di programmazione e rappresentano una misura più astratta della dimensione del software.
-- **Lines of Code (LOC):** Misurano la dimensione del software contando il numero di linee di codice sorgente scritte. Questa metrica è fortemente dipendente dal linguaggio di programmazione utilizzato e non tiene conto della funzionalità o della complessità del software. Relazione tra FP e LOC: Molti studi hanno cercato di stabilire una relazione tra FP e LOC per aiutare a stimare il lavoro necessario per sviluppare il software. Tuttavia, questa relazione non è diretta o costante, poiché dipende da vari fattori, tra cui la complessità del software, le pratiche di programmazione, il linguaggio di programmazione e altro ancora. Classificazione dei linguaggi di programmazione: Per facilitare il confronto tra FP e LOC, i linguaggi di programmazione sono stati classificati in diverse categorie o livelli in base alla loro relazione media tra LOC e FP. Ad esempio, alcuni linguaggi possono richiedere più LOC per implementare una funzionalità equivalente a un certo numero di FP, mentre altri linguaggi possono richiederne meno. Questa classificazione può essere utile per stimare la dimensione del software in LOC sulla base dei FP calcolati e viceversa. Jones' Backfiring: Il termine "Jones' Backfiring" si riferisce a una situazione in cui l'uso esclusivo delle LOC come metrica per la dimensione del software può portare a risultati errati o a previsioni inaccurate in termini di sforzo di sviluppo. Questo fenomeno può verificarsi quando si ignorano i fattori di complessità e funzionalità che non sono catturati dalle LOC. In sintesi, sebbene ci siano sforzi per stabilire una relazione tra FP e LOC, queste due metriche rappresentano concetti diversi nella misurazione del software. FP è orientato alla funzionalità e alla complessità, mentre LOC è una misura della dimensione del codice sorgente. La scelta tra FP e LOC come metrica dipende dagli obiettivi specifici di misurazione e di gestione del progetto, nonché dalle caratteristiche del software in questione.
+- **Function Points (FP):** **Misurano la funzionalità e la complessità funzionale di un sistema software in base alle sue caratteristiche e ai suoi requisiti funzionali**. Sono indipendenti dal linguaggio di programmazione e rappresentano una misura più astratta della dimensione del software.
+- **Lines of Code (LOC):** **Misurano la dimensione del software contando il numero di linee di codice sorgente scritte**. Questa metrica è **fortemente dipendente dal linguaggio di programmazione** utilizzato e non tiene conto della funzionalità o della complessità del software.
+
+**Relazione tra FP e LOC**: Molti studi hanno cercato di stabilire una relazione tra FP e LOC per aiutare a **stimare il lavoro necessario per sviluppare il software**. Tuttavia, questa *relazione **non è diretta o costante**, poiché dipende da vari fattori, tra cui la complessità del software, le pratiche di programmazione, il linguaggio di programmazione e altro ancora*. 
+
+**Classificazione dei linguaggi di programmazione**: Per facilitare il confronto tra FP e LOC, i linguaggi di programmazione sono stati classificati in **diverse categorie o livelli in base alla loro relazione media tra LOC e FP**. Ad esempio, alcuni linguaggi possono richiedere più LOC per implementare una funzionalità equivalente a un certo numero di FP, mentre altri linguaggi possono richiederne meno. Questa classificazione può essere utile per stimare la dimensione del software in LOC sulla base dei FP calcolati e viceversa. 
+
+**Jones' Backfiring**: Il termine "Jones' Backfiring" si riferisce a una situazione in cui l'uso esclusivo delle LOC come metrica per la dimensione del software **può portare a risultati errati o a previsioni inaccurate in termini di sforzo di sviluppo**. Questo fenomeno può verificarsi **quando si ignorano i fattori di complessità e funzionalità che non sono catturati dalle LOC**. In sintesi, sebbene ci siano sforzi per stabilire una relazione tra FP e LOC, queste due metriche rappresentano concetti diversi nella misurazione del software. **FP è orientato alla funzionalità** e alla complessità, mentre **LOC è una misura della dimensione del codice sorgente**. *La scelta tra FP e LOC come metrica dipende dagli obiettivi specifici di misurazione e di gestione del progetto, nonché dalle caratteristiche del software in questione*.
 
 ## COCOMO
-Il COCOMO (COnstructive COst MOdel) è un modello introdotto da Boehm nel 1981 per determinare il valore dello sforzo (effort) necessario nello sviluppo software. Il valore ottenuto per lo sforzo viene successivamente utilizzato per determinare la durata e i costi di sviluppo del progetto. COCOMO si compone di tre modelli distinti:
-
+Il COCOMO (COnstructive COst MOdel) è un modello introdotto da Boehm nel 1981 per determinare il **valore dello sforzo** (effort) necessario nello sviluppo software. Il valore ottenuto per lo sforzo viene successivamente utilizzato per determinare la durata e i costi di sviluppo del progetto. COCOMO si compone di **tre modelli** distinti:
 - **Basic:** Utilizzato per stime iniziali del progetto.
 - **Intermediate:** Applicato dopo aver suddiviso il sistema in sottosistemi.
-- **Advanced:** Applicato dopo aver suddiviso in moduli ciascun sottosistema. La stima dello sforzo viene effettuata sulla base di due fattori principali:
+- **Advanced:** Applicato dopo aver suddiviso in moduli ciascun sottosistema. 
 
+La stima dello sforzo viene effettuata sulla base di due fattori principali:
 - **Stima delle dimensioni del progetto in KLOC:** KLOC sta per migliaia di linee di codice. Questa stima rappresenta la dimensione del progetto in termini di quantità di codice da sviluppare.
 - **Stima del modo di sviluppo del prodotto:** Misura il livello intrinseco di difficoltà nello sviluppo e può essere di tre tipi:
+	- **Organico** (per prodotti di piccole dimensioni)
+	- **Semidetached** (per prodotti di dimensioni intermedie)
+	- **Embedded** (per prodotti complessi) Nel 1995 è stata introdotta una versione più flessibile e sofisticata chiamata COCOMO II rispetto alla versione precedente, al fine di adattarsi meglio alle dinamiche e alla complessità dei progetti software moderni. 
 
-- Organico (per prodotti di piccole dimensioni)
-- Semidetached (per prodotti di dimensioni intermedie)
-- Embedded (per prodotti complessi) Nel 1995 è stata introdotta una versione più flessibile e sofisticata chiamata COCOMO II rispetto alla versione precedente, al fine di adattarsi meglio alle dinamiche e alla complessità dei progetti software moderni. Ecco un esempio semplificato di utilizzo del modello COCOMO.
-
-- Passo 1 - Determinare l'effort nominale Inizialmente, si stima l'effort nominale utilizzando la formula seguente: 𝐸𝑓𝑓𝑜𝑟𝑡 𝑁𝑜𝑚𝑖𝑛𝑎𝑙𝑒 = 3.2 × (𝐾𝐿𝑂𝐶)ଵ.଴ହ 𝑀𝑀 Dove KLOC rappresenta le migliaia di righe di codice e MM sta per "Man-Months" (mese-uomo), una misura dell'effort di sviluppo necessario.
+Ecco un esempio semplificato di utilizzo del modello COCOMO.
+- Passo 1 - **Determinare l'effort nominale Inizialmente**, si stima l'effort nominale utilizzando la formula seguente: 𝐸𝑓𝑓𝑜𝑟𝑡 𝑁𝑜𝑚𝑖𝑛𝑎𝑙𝑒 = 3.2 × (𝐾𝐿𝑂𝐶)ଵ.଴ହ 𝑀𝑀 Dove KLOC rappresenta le migliaia di righe di codice e MM sta per "Man-Months" (mese-uomo), una misura dell'effort di sviluppo necessario.
 
 <!-- Pagina PDF 44 -->
 
 Ad esempio, se si prevede di scrivere un software con 33.000 linee di codice (33 KLOC), l'effort nominale sarà calcolato come segue: 𝐸𝑓𝑓𝑜𝑟𝑡 𝑁𝑜𝑚𝑖𝑛𝑎𝑙𝑒 = 3.2 × (33)ଵ.଴ହ ≈ 126 𝑀𝑀
 
-- Passo 2 - Ottenere la stima dell'effort effettivo Successivamente, si applica un fattore moltiplicativo C basato su 15 cost drivers per ottenere la stima dell'effort effettivo. Questi cost drivers riflettono varie influenze e complessità associate al progetto. L'effort effettivo è calcolato come segue: 𝐸𝑓𝑓𝑜𝑟𝑡 𝐸𝑓𝑓𝑒𝑡𝑡𝑖𝑣𝑜 = 𝐸𝑓𝑓𝑜𝑟𝑡 𝑁𝑜𝑚𝑖𝑛𝑎𝑙𝑒 × 𝐶 Ad esempio, se si applica un moltiplicatore C di 1.15, l'effort effettivo sarà: 𝐸𝑓𝑓𝑜𝑟𝑡 𝐸𝑓𝑓𝑒𝑡𝑡𝑖𝑣𝑜 = 126 𝑀𝑀 × 1.15 ≈ 145 𝑀𝑀 Il valore del moltiplicatore C dipenderà dalla valutazione dei 15 cost drivers specifici del progetto. Questi cost drivers includono fattori come la complessità dell'architettura, la produttività del personale, la complessità del software, l'esperienza del team e altri. Il modello COCOMO include una stima del tempo necessario per la consegna del prodotto (product delivery) in base alla dimensione del progetto E. Ecco le formule per la stima del tempo T in mesi per i diversi modi di sviluppo:
+- Passo 2 - **Ottenere la stima dell'effort effettivo Successivamente**, si applica un fattore moltiplicativo C basato su 15 cost drivers per ottenere la stima dell'effort effettivo. Questi cost drivers riflettono varie influenze e complessità associate al progetto. L'effort effettivo è calcolato come segue: 𝐸𝑓𝑓𝑜𝑟𝑡 𝐸𝑓𝑓𝑒𝑡𝑡𝑖𝑣𝑜 = 𝐸𝑓𝑓𝑜𝑟𝑡 𝑁𝑜𝑚𝑖𝑛𝑎𝑙𝑒 × 𝐶 Ad esempio, se si applica un moltiplicatore C di 1.15, l'effort effettivo sarà: 𝐸𝑓𝑓𝑜𝑟𝑡 𝐸𝑓𝑓𝑒𝑡𝑡𝑖𝑣𝑜 = 126 𝑀𝑀 × 1.15 ≈ 145 𝑀𝑀 **Il valore del moltiplicatore C dipenderà dalla valutazione dei 15 cost drivers specifici del progetto**. Questi cost drivers includono fattori come la complessità dell'architettura, la produttività del personale, la complessità del software, l'esperienza del team e altri. 
+**Il modello COCOMO include una stima del tempo necessario per la consegna del prodotto (product delivery) in base alla dimensione del progetto** E. 
+
+Ecco le formule per la stima del tempo T in mesi per i diversi modi di sviluppo:
 
 - **Modo organico:** 𝑇 = 2.5 ∗𝐸଴.ଷ଼ mesi
 - **Modo semi-detached:** 𝑇 = 2.5 ∗𝐸଴.ଷହ mesi
 - **Modo embedded:** 𝑇 = 2.5 ∗𝐸଴.ଷଶ mesi Dove T è il tempo stimato per la consegna del prodotto in mesi ed E rappresenta la dimensione del progetto, spesso misurato in KLOC (migliaia di linee di codice). Queste formule consentono di stimare il tempo necessario per la consegna del prodotto in base alla complessità intrinseca del progetto, che può variare a seconda del modo di sviluppo utilizzato (organico, semi-detached o embedded).
 
 ## PIANIFICAZIONE TEMPORALE
-La pianificazione temporale è una fase cruciale in qualsiasi progetto e coinvolge la definizione di un piano dettagliato che indica quando e come saranno eseguite le attività pianificate. La pianificazione temporale consiste nel definire una "rete di task" in base ai seguenti principi fondamentali:
+La **pianificazione temporale è una fase cruciale** in qualsiasi progetto e coinvolge la definizione di un piano dettagliato che indica quando e come saranno eseguite le attività pianificate. **La pianificazione temporale consiste nel definire una "rete di task"** in base ai seguenti principi fondamentali:
 
-- **Ripartizione:** Questo principio implica la suddivisione del processo e del prodotto in parti più gestibili. In pratica, significa scomporre il progetto in attività più piccole e gestibili, spesso chiamate "task" o "attività".
-- **Interdipendenza:** Identificare le dipendenze tra le diverse attività. Alcuni task potrebbero dipendere da altri per essere completati, mentre altri possono essere eseguiti parallelamente. Comprendere le relazioni di dipendenza è essenziale per stabilire un ordine logico delle attività.
-- **Allocazione di risorse:** Determinare il numero di persone coinvolte nel progetto, la quantità di sforzo richiesto e le date di inizio e fine per ciascun task. Questo aiuta a stabilire una stima realistica delle risorse necessarie per portare a termine il progetto.
-- **Responsabilità definite:** Assegnare chiaramente le responsabilità a ciascun task. Ogni attività dovrebbe essere associata a una persona o a un gruppo responsabile del suo completamento.
+- **Ripartizione:** Questo principio implica la *suddivisione del processo e del prodotto in parti più gestibili*. 
+	- In pratica, significa *scomporre il progetto in attività più piccole e gestibili, spesso chiamate "**task**" o "**attività**"*.
+- **Interdipendenza:** Identificare le dipendenze tra le diverse attività. *Alcuni task potrebbero dipendere da altri per essere completati, mentre altri possono essere eseguiti parallelamente*. Comprendere le relazioni di dipendenza è essenziale per stabilire un **ordine logico delle attività**.
+- **Allocazione di risorse:** Determinare il *numero di persone coinvolte nel progetto, la quantità di sforzo richiesto e le date di inizio e fine per ciascun task*. Questo aiuta a stabilire una stima realistica delle risorse necessarie per portare a termine il progetto.
+- **Responsabilità definite:** Assegnare chiaramente le **responsabilità a ciascun task**. *Ogni attività dovrebbe essere associata a una persona o a un gruppo responsabile del suo completamento*.
 - **Risultati previsti:** Definire chiaramente i risultati attesi al termine di ciascuna attività. Questo contribuisce a mantenere il focus sulle consegne e sulla qualità del lavoro svolto.
-- **Punti di controllo (Milestone):** Identificare punti di controllo importanti durante il progetto, spesso associati a task specifici o gruppi di task. Le milestone sono utilizzate per valutare il progresso, controllare la qualità e apportare eventuali correzioni di rotta. Strumenti di pianificazione:
+- **Punti di controllo (Milestone):** *Identificare punti di controllo importanti durante il progetto*, spesso associati a task specifici o gruppi di task. Le milestone sono utilizzate per valutare il progresso, controllare la qualità e apportare eventuali correzioni di rotta. Strumenti di pianificazione:
 
-- **Diagramma PERT (Program Evaluation and Review Technique):** È un grafo che rappresenta il flusso delle attività in un progetto. Ogni nodo nel grafo rappresenta un task, mentre gli archi indicano le dipendenze tra i task.
+- **Diagramma PERT (Program Evaluation and Review Technique):** È un grafo che rappresenta il flusso delle attività in un progetto. Ogni nodo nel grafo rappresenta **un task**, mentre gli **archi indicano le dipendenze** tra i task.
 
 - **Utilizzo:** 
 
- Determina il cammino critico, che è la sequenza di task che determina la durata minima del progetto. Questi task hanno un impatto significativo sulla durata totale del progetto.  Fornisce una stima del tempo di completamento di ciascun task utilizzando modelli statistici.  Indica i limiti temporali di inizio e termine per ciascun task.
+ Determina il **cammino critico**, che è la **sequenza di task che determina la durata minima del progetto**. Questi task hanno un impatto significativo sulla durata totale del progetto. 
+ Fornisce una stima del tempo di completamento di ciascun task utilizzando modelli statistici.
+ Indica i limiti temporali di inizio e termine per ciascun task.
 - **Vantaggi:** 
 
  Visualizza chiaramente le dipendenze tra le attività.  Aiuta a identificare le attività critiche che influenzano la durata complessiva del progetto.
@@ -1165,9 +1181,9 @@ La pianificazione temporale è una fase cruciale in qualsiasi progetto e coinvol
  Facile da comprendere e comunicare, sia internamente al team che esternamente agli stakeholder.  Permette di individuare sovrapposizioni e ritardi. Entrambi gli strumenti sono spesso utilizzati in combinazione. Mentre il Diagramma PERT si concentra sulle relazioni di dipendenza tra le attività e sul cammino critico, la Carta di Gantt fornisce una visione più semplice e immediata delle scadenze e della durata delle attività nel tempo. Integrare i due approcci può offrire una visione più completa e dettagliata della pianificazione del progetto.
 
 ## SOFTWARE PROJECT MANAGEMENT PLAN (SPMP)
-Un piano di gestione del progetto software (SPMP) è un documento dettagliato che delinea come il progetto software sarà pianificato, eseguito, controllato e chiuso.
+Un **piano di gestione del progetto software** (SPMP) è un documento dettagliato che delinea come il progetto software sarà pianificato, eseguito, controllato e chiuso.
 
-- **Project Scope (Ambito del Progetto):** Questa sezione definisce i limiti e gli obiettivi del progetto. Indica cosa è incluso nel progetto e cosa è escluso.
+- **Project Scope (Ambito del Progetto):** Questa sezione definisce i **limiti e gli obiettivi del progetto**. Indica *cosa è incluso nel progetto e cosa è escluso*.
 
 - **Contenuti possibili:** 
 
