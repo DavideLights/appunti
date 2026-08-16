@@ -4,48 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "f8645b875642e03d",
+        "id": "81ca31b27888c870",
         "type": "tabs",
-        "dimension": 47.20558882235529,
         "children": [
           {
-            "id": "fc0d1ec3cdb3e861",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "3o anno/ing/parte 1/3. requisiti.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "3. requisiti"
-            }
-          },
-          {
-            "id": "ca318f9d6039e916",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "3o anno/ing/parte 1/4. ingegneria requisiti.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4. ingegneria requisiti"
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "54cdde0fa802839b",
-        "type": "tabs",
-        "dimension": 52.794411177644704,
-        "children": [
-          {
-            "id": "cc3eb006ff311ae3",
+            "id": "afc3f9fe35ccf241",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -56,6 +19,26 @@
               },
               "icon": "lucide-file",
               "title": "IS_andrea"
+            }
+          }
+        ]
+      },
+      {
+        "id": "f61cf54ddc89b166",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "adcfa55a0bc18653",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3o anno/ing/parte 1/5. OOA.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "5. OOA"
             }
           }
         ]
@@ -92,7 +75,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "andrea",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -236,27 +219,34 @@
       "bases:Crea nuova Base": false
     }
   },
-  "active": "ca318f9d6039e916",
+  "active": "adcfa55a0bc18653",
   "lastOpenFiles": [
+    "ISandrea/IS_andrea.md",
+    "3o anno/ing/parte 1/5. OOA.md",
+    "3o anno/ing/sunto 1.md",
+    "3o anno/ing/parte 1/4. ingegneria requisiti.md",
+    "tesi/bluectfd (architettura e rest api).md",
+    "tesi/blueagent.md",
+    "Excalidraw/bluectfd.excalidraw.md",
+    "tesi/blueagent architettura.md",
+    "tesi/incus.md",
+    "3o anno/ing/parte 1/1. introduzione.md",
+    "Pasted image 20260812234926.png",
+    "Pasted image 20260812233954.png",
+    "Pasted image 20260812232740.png",
+    "Pasted image 20260812232504.png",
+    "Pasted image 20260812231328.png",
+    "Pasted image 20260812230418.png",
+    "Pasted image 20260812220737.png",
+    "3o anno/ing/parte 1/5.a OOA.md",
+    "3o anno/ing/parte 1/3. requisiti.md",
     "Pasted image 20260812203739.png",
     "Pasted image 20260812203713.png",
     "Pasted image 20260812203540.png",
-    "ISandrea/IS_andrea.md",
-    "3o anno/ing/parte 1/4. ingegneria requisiti.md",
-    "Pasted image 20260812202353.png",
-    "Pasted image 20260812201126.png",
-    "Pasted image 20260812200851.png",
-    "3o anno/ing/parte 1/3. requisiti.md",
     "3o anno/ing/parte 1/4..md",
-    "3o anno/ing/parte 1/1. introduzione.md",
-    "Pasted image 20260811220942.png",
     "3o anno/ing/parte 1/2.2 processo software.md",
     "3o anno/ing/parte 1/2.1 processo software.md",
     "Senza nome 1.md",
-    "Pasted image 20260811203411.png",
-    "Pasted image 20260811202048.png",
-    "Pasted image 20260811192328.png",
-    "Pasted image 20260811192027.png",
     "2o anno/reti/esercizi/traceroute.md",
     "2o anno/reti/esercizi/ping.md",
     "2o anno/reti/esercizi/ip.md",
@@ -267,13 +257,6 @@
     "2o anno/reti/struttura segmenti!.md",
     "2o anno/reti/riassunto reti.md",
     "2o anno/reti/reti.md",
-    "2o anno/reti/domande chat.md",
-    "2o anno/reti/Introduzione alle reti.md",
-    "1o anno/algebra/unico file.md",
-    "1o anno/algebra/formule e metodi.md",
-    "2o anno/sql/algebra relazionale e calcolo relazionale.md",
-    "2o anno/fondamenti/complessita problemi e codifiche e classe NP.md",
-    "2o anno/fondamenti/complessita.md",
     "IS_andrea_obsidian_full/Senza nome",
     "ISandrea/assets",
     "ISandrea",

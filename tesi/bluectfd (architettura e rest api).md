@@ -36,7 +36,7 @@
 ## PatchChallengeTarget `/patch_challenges/id
 **cosa rappresenta**: l'interfaccia verso la macchina target della patch `id`.
 * **GET**: richiesta dello stato della macchina target. E' in esecuzione?
-* **POST**: per avviare la macchina
+* **POST**: creare la macchina, bisogna inviare il json
 * **PUT**: per avviare la macchina o fare il restore o il reset.
 * **~~PATCH~~**: estendi lifetime e altre cose???
 * **DELETE**: ferma la macchina
@@ -55,7 +55,7 @@
 ## Container `/containers/id`
 **cosa rappresenta**: l'interfaccia verso il container della patch `id`.
 * **GET**: ritorna lo stato del container (es: e' in esecuzione)
-* **POST**: per avviare il container
+* **POST**: per avviare il container, creando in base alla configurazione in memoria.
 * **PUT**: per avviare il container, fare il restore o il reset.
 * **DELETE**: ferma il container
 ## ContainerBatch `/containers/id/batch`

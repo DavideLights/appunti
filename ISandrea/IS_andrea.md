@@ -755,19 +755,27 @@ Approccio Noun Phrase: Questo approccio si basa sull'analisi delle frasi nominal
 
 <!-- Pagina PDF 28 -->
 
-*Una frase nominale è una "frase" o gruppo di parole che ruota attorno a un sostantivo o a un pronome, dando maggiori dettagli o contesto a quella parola chiave. Le frasi nominali sono spesso utilizzate per chiarire o espandere il significato di un sostantivo all'interno di una frase più ampia. Esempio. "Il grande elefante grigio" - In questa frase nominale, "il grande elefante grigio" è la frase che descrive il sostantivo "elefante". Gli aggettivi "grande" e "grigio" forniscono dettagli sul tipo di elefante.* Approccio Common Class Patterns: Questo approccio si basa sulla teoria della classificazione e si concentra sull'identificazione di classi predefinite o pattern comuni che si verificano spesso nei sistemi software. Invece di derivare classi dalle frasi nominali dei requisiti utente, come nell'approccio noun phrase, questo approccio cerca di identificare classi basate su categorie di concetti che sono comunemente presenti nei sistemi. Le candidate classes vengono identificate a partire da gruppi di classi predefinite, chiamate "common class patterns". Questi pattern rappresentano concetti generali che possono essere applicati a vari domini. Alcuni esempi di common class patterns potrebbero includere:
+*Una frase nominale è una "frase" o gruppo di parole che ruota attorno a un sostantivo o a un pronome, dando maggiori dettagli o contesto a quella parola chiave. Le frasi nominali sono spesso utilizzate per chiarire o espandere il significato di un sostantivo all'interno di una frase più ampia. Esempio. "Il grande elefante grigio" - In questa frase nominale, "il grande elefante grigio" è la frase che descrive il sostantivo "elefante". Gli aggettivi "grande" e "grigio" forniscono dettagli sul tipo di elefante.* 
+
+**Approccio Common Class Patterns**: Questo approccio si basa sulla teoria della classificazione e si concentra sull'identificazione di classi predefinite o pattern comuni che si verificano spesso nei sistemi software. Invece di derivare classi dalle frasi nominali dei requisiti utente, come nell'approccio noun phrase, questo approccio cerca di identificare classi basate su categorie di concetti che sono comunemente presenti nei sistemi. Le candidate classes vengono identificate a partire da gruppi di classi predefinite, chiamate "common class patterns". Questi pattern rappresentano concetti generali che possono essere applicati a vari domini. Alcuni esempi di common class patterns potrebbero includere:
 
 - **Concept:** rappresenta la prenotazione di risorse o servizi.
 - **Events:** rappresenta eventi o azioni che si verificano nel sistema.
 - **Organization:** rappresenta organizzazioni o aziende.
 - **People:** rappresenta persone coinvolte nel sistema.
-- **Places:** rappresenta luoghi o sedi. Questo approccio non è necessariamente sistematico e può essere utilizzato come guida per identificare classi comuni. Tuttavia, a differenza dell'approccio noun phrase, non si basa sul documento dei requisiti utente. Poiché i nomi delle classi possono essere interpretati in modi diversi, l'approccio common class patterns potrebbe causare problemi di interpretazione e richiedere un'adeguata comprensione del dominio applicativo per essere efficace. L'approccio common class patterns può essere un punto di partenza utile per l'identificazione delle classi, ma spesso viene integrato con altri approcci per ottenere una visione completa delle classi necessarie per il sistema. Approccio Use Case Driven: Questo approccio si basa sul presupposto che gli use case diagram, insieme alla descrizione testuale degli scenari di funzionamento dei casi d'uso, forniscono una base solida per identificare le classi del sistema. Gli use case diagram rappresentano come gli attori (utenti o sistemi esterni) interagiscono con il sistema, mentre le descrizioni testuali degli scenari forniscono dettagli su come il sistema deve rispondere a tali interazioni. L'approccio use case driven include i seguenti passaggi:
+- **Places:** rappresenta luoghi o sedi.
+Questo approccio non è necessariamente sistematico e può essere utilizzato come guida per identificare classi comuni. Tuttavia, a differenza dell'approccio noun phrase, non si basa sul documento dei requisiti utente. Poiché i nomi delle classi possono essere interpretati in modi diversi, l'approccio common class patterns potrebbe causare problemi di interpretazione e richiedere un'adeguata comprensione del dominio applicativo per essere efficace. L'approccio common class patterns può essere un punto di partenza utile per l'identificazione delle classi, ma spesso viene integrato con altri approcci per ottenere una visione completa delle classi necessarie per il sistema. 
+
+**Approccio Use Case Driven**: Questo approccio si basa sul presupposto che gli use case diagram, insieme alla descrizione testuale degli scenari di funzionamento dei casi d'uso, forniscono una base solida per identificare le classi del sistema. Gli use case diagram rappresentano come gli attori (utenti o sistemi esterni) interagiscono con il sistema, mentre le descrizioni testuali degli scenari forniscono dettagli su come il sistema deve rispondere a tali interazioni. L'approccio use case driven include i seguenti passaggi:
 
 - **Sviluppo degli Use Case Diagram:** Prima di tutto, vengono creati gli use case diagram per rappresentare le interazioni tra attori e il sistema. Gli use case diagram evidenziano i casi d'uso principali e le interazioni tra attori e il sistema stesso.
 - **Descrizione degli Scenari:** Per ciascun caso d'uso, viene fornita una descrizione dettagliata degli scenari di funzionamento. Queste descrizioni testuali rappresentano una sequenza di azioni che un attore svolge interagendo con il sistema e il modo in cui il sistema risponde a tali azioni.
 - **Identificazione delle Classi:** Durante l'analisi degli scenari di funzionamento, le classi coinvolte nell'esecuzione degli scenari emergono naturalmente. Le classi vengono identificate considerando gli oggetti che compaiono nei vari passaggi degli scenari e le loro interazioni.
 - **Associazioni e Attributi:** Oltre all'identificazione delle classi, vengono anche considerate le associazioni tra le classi e gli attributi che devono essere associati a ciascuna classe per supportare le funzionalità descritte negli scenari.
-- **Raffinamenti Successivi:** L'approccio use case driven è iterativo e prevede raffinamenti successivi. Man mano che gli scenari vengono esplorati e dettagliati, le classi e le loro relazioni possono essere riviste e aggiornate. Questo approccio è simile all'approccio noun phrase nel senso che entrambi si basano sui requisiti utente per identificare le classi. Tuttavia, l'approccio use case driven si concentra specificamente sugli use case e sugli scenari di funzionamento, garantendo che le classi siano direttamente rilevanti per le interazioni degli attori con il sistema. Approccio CRC (Class-Responsibility-Collaborators): Questo approccio coinvolge una serie di riunioni di gruppo in cui gli analisti, i progettisti e gli sviluppatori lavorano insieme per identificare le classi del sistema. L'approccio prende il nome dall'acronimo CRC, che sta per Class, Responsibility e Collaborators. Il processo segue questi passaggi:
+- **Raffinamenti Successivi:** L'approccio use case driven è iterativo e prevede raffinamenti successivi. Man mano che gli scenari vengono esplorati e dettagliati, le classi e le loro relazioni possono essere riviste e aggiornate.
+Questo approccio è simile all'approccio noun phrase nel senso che entrambi si basano sui requisiti utente per identificare le classi. Tuttavia, l'approccio use case driven si concentra specificamente sugli use case e sugli scenari di funzionamento, garantendo che le classi siano direttamente rilevanti per le interazioni degli attori con il sistema. 
+
+**Approccio CRC** (Class-Responsibility-Collaborators): Questo approccio coinvolge una serie di riunioni di gruppo in cui gli analisti, i progettisti e gli sviluppatori lavorano insieme per identificare le classi del sistema. L'approccio prende il nome dall'acronimo CRC, che sta per Class, Responsibility e Collaborators. Il processo segue questi passaggi:
 
 - **Riunioni di Gruppo:** Il processo inizia con riunioni in cui vengono coinvolti membri del team di sviluppo. Ogni riunione è focalizzata su un particolare aspetto del sistema.
 - **Creazione di Card CRC:** Durante le riunioni, vengono create card CRC per rappresentare le classi del sistema. Ogni card CRC include tre compartimenti:
@@ -780,7 +788,9 @@ Approccio Noun Phrase: Questo approccio si basa sull'analisi delle frasi nominal
 - **Collaboratori:** Il nome delle altre classi con cui la classe in oggetto collaborerà per svolgere le sue responsabilità.
 - **Discussione e Analisi:** Durante la creazione delle card CRC, il gruppo discute e analizza come le classi collaborano tra loro e quali sono le responsabilità di ciascuna classe.
 - **Identificazione di Attributi e Operazioni:** Durante le discussioni, vengono identificati anche gli attributi e le operazioni associati a ciascuna classe, sebbene questi dettagli possano essere ulteriormente rifiniti in fasi successive.
-- **Raffinamenti Successivi:** L'approccio CRC è iterativo, quindi le card possono essere riviste e aggiornate in fasi successive a mano a mano che il team sviluppa una comprensione più completa delle classi e delle loro interazioni. Approccio Misto (Mixed): Questo è un approccio che combina elementi da diversi approcci precedenti. Potrebbe iniziare con l'identificazione delle classi basata sull'esperienza dell'analista o sui modelli comuni di classi. Successivamente, potrebbero essere aggiunte classi utilizzando l'approccio Noun Phrase o Use Case Driven. Infine, l'approccio CRC può essere utilizzato per verificare e rifinire l'insieme delle classi identificate. L'approccio misto offre un approccio flessibile e adattabile all'identificazione delle classi, consentendo al team di sviluppo di sfruttare i punti di forza di diverse tecniche per ottenere una visione più completa e accurata del sistema in fase di analisi. L'obiettivo principale è raggiungere una rappresentazione delle classi che rifletta al meglio le esigenze del dominio e le interazioni all'interno del sistema.
+- **Raffinamenti Successivi:** L'approccio CRC è iterativo, quindi le card possono essere riviste e aggiornate in fasi successive a mano a mano che il team sviluppa una comprensione più completa delle classi e delle loro interazioni. 
+
+**Approccio Misto (Mixed)**: Questo è un approccio che combina elementi da diversi approcci precedenti. Potrebbe iniziare con l'identificazione delle classi basata sull'esperienza dell'analista o sui modelli comuni di classi. Successivamente, potrebbero essere aggiunte classi utilizzando l'approccio Noun Phrase o Use Case Driven. Infine, l'approccio CRC può essere utilizzato per verificare e rifinire l'insieme delle classi identificate. L'approccio misto offre un approccio flessibile e adattabile all'identificazione delle classi, consentendo al team di sviluppo di sfruttare i punti di forza di diverse tecniche per ottenere una visione più completa e accurata del sistema in fase di analisi. L'obiettivo principale è raggiungere una rappresentazione delle classi che rifletta al meglio le esigenze del dominio e le interazioni all'interno del sistema.
 
 ## LINEE GUIDA PER L’IDENTIFICAZIONE DELLE ENTITY CLASSES
 Le linee guida per l'identificazione delle entity classes sono fondamentali durante la fase di Object-Oriented Analysis (OOA). Le entity classes rappresentano le entità principali del dominio applicativo e costituiscono il cuore del modello dei dati.
@@ -790,108 +800,6 @@ Le linee guida per l'identificazione delle entity classes sono fondamentali dura
 - **Insieme di Attributi:** Ogni classe dovrebbe prevedere un insieme di attributi che rappresentano le proprietà o le caratteristiche degli oggetti della classe. Gli attributi descrivono lo stato dell'oggetto e sono utilizzati per memorizzare informazioni specifiche. È importante considerare un insieme significativo di attributi che siano pertinenti per il dominio.
 - **Differenza tra Classi e Attributi:** È importante distinguere tra le entità che dovrebbero essere modellate come classi e quelle che dovrebbero essere modellate come attributi. Le classi rappresentano concetti significativi e persistenti all'interno del dominio, mentre gli attributi rappresentano caratteristiche specifiche di un'istanza di classe.
 - **Insieme di Operazioni:** Sebbene inizialmente le operazioni possano essere trascurate nella fase iniziale dell'identificazione delle classi, è importante prevedere un insieme di operazioni che una classe può eseguire. Queste operazioni rappresentano i servizi che la classe offre per manipolare i dati o interagire con altre parti del sistema. Le operazioni possono essere derivate implicitamente dallo "statement of purpose" della classe. Seguendo queste linee guida, è possibile identificare in modo efficace e accurato le entity classes all'interno del modello dei dati, assicurandosi che riflettano il dominio applicativo e le sue esigenze.
-
-## CASI DI STUDIO
-I casi di studio forniscono scenari di esempio realistici in cui è possibile applicare i principi dell'analisi orientata agli oggetti, identificare le classi, le relazioni e i comportamenti rilevanti e costruire modelli adeguati per rappresentare il sistema. Ogni caso di studio presenta sfide specifiche che richiedono una comprensione approfondita delle esigenze del dominio e l'applicazione di tecniche di analisi appropriate. University Enrolment: Questo caso di studio riguarda un sistema per la gestione delle iscrizioni universitarie. Si tratta di un'applicazione che supporta il processo di iscrizione degli studenti a corsi universitari. Il sistema deve essere in grado di gestire programmi di studio personalizzati, verificare i prerequisiti dei corsi, gestire le iscrizioni e risolvere eventuali problemi come sovrapposizioni di orari.
-
-- **Scenari:** 
-
-- L'università offre corsi di laurea di primo e secondo livello (undergraduate e postgraduate) sia a studenti a tempo pieno che a studenti part-time.
-- La struttura dell'università prevede divisioni che contengono dipartimenti. Ogni corso di laurea è amministrato da una singola divisione, ma un corso di laurea può includere corsi provenienti da altre divisioni.
-
-<!-- Pagina PDF 30 -->
-
-- **Caratteristiche del Sistema:** 
-
-- Il sistema di iscrizione universitaria deve consentire la creazione di programmi di studio personalizzati per gli studenti.
-- I programmi di studio possono avere corsi prerequisiti, corsi obbligatori e restrizioni, come sovrapposizioni di orario o dimensioni massime delle classi.
-- **Obiettivi del Sistema:** 
-
-- Aiutare nelle attività pre-iscrizione, come l'invio di voti degli esami dell'ultimo semestre agli studenti e fornire istruzioni per l'iscrizione.
-- Gestire le procedure di iscrizione, tra cui l'accettazione dei programmi di studio proposti dagli studenti.
-- Effettuare la convalida per i prerequisiti dei corsi, sovrapposizioni di orario, dimensioni delle classi e approvazioni speciali.
-- **Considerazioni Aggiuntive:** 
-
-- Alcune problematiche possono richiedere la consultazione con consulenti accademici o docenti responsabili delle offerte dei corsi. Questo implica un coinvolgimento attivo di docenti esperti nel processo di iscrizione.
-- Il sistema deve gestire i dettagli del programma di studio di ciascuno studente in modo accurato e affidabile, considerando tutte le regole e i requisiti specifici.
-- La flessibilità nel sistema è cruciale per adattarsi alle esigenze dei diversi studenti e dei diversi corsi. Nell'analisi orientata agli oggetti, questo caso di studio richiederebbe l'identificazione delle classi (come "Student", "Course", "Program", "Division", ecc.) e delle loro proprietà, associazioni e comportamenti. I diagrammi UML, come i diagrammi dei casi d'uso, i diagrammi delle classi e i diagrammi di sequenza, possono essere utilizzati per rappresentare in modo chiaro ed esaustivo il sistema e le sue dinamiche. Video Store: In questo caso di studio, il sistema riguarda una videoteca che offre il noleggio di film in formato fisico (videocassette e dischi). Il sistema deve gestire l'inventario dei film, i dati dei clienti, le prenotazioni dei film, il noleggio e la restituzione dei film. È anche necessario gestire le richieste dei clienti e fornire informazioni sui film disponibili.
-
-- **Scenari:** 
-
-- Il negozio di noleggio offre noleggio di videocassette e dischi a clienti.
-- Ogni videocassetta e disco ha un codice a barre univoco.
-- Anche i membri del negozio hanno codici a barre univoci per identificare i loro account.
-- **Funzionalità del Sistema:** 
-
-- Il sistema deve consentire ai clienti di noleggiare videocassette e dischi.
-- I clienti possono effettuare prenotazioni su video specifici da ritirare in una data specifica.
-- Deve rispondere alle richieste dei clienti, inclusa la possibilità di rispondere a domande sui film che il negozio non ha in magazzino, ma potrebbe ordinare su richiesta.
-- **Caratteristiche del Sistema:** 
-
-- Il sistema deve essere in grado di tenere traccia delle videocassette e dei dischi disponibili, nonché delle copie noleggiate e delle prenotazioni.
-- Deve gestire gli account dei clienti e tenere traccia dei video noleggiati da ciascun cliente.
-- Deve gestire le prenotazioni dei video e assicurarsi che i clienti ricevano le copie prenotate in tempo.
-- **Considerazioni Aggiuntive:** 
-
-- Il sistema deve essere in grado di gestire la complessità delle prenotazioni, delle copie noleggiate e delle restituzioni, considerando anche le scadenze.
-- Il sistema deve avere una funzionalità di ricerca e ricerca avanzata per cercare film specifici o ottenere informazioni su film non disponibili.
-- La gestione degli account dei clienti e il processo di noleggio devono essere user-friendly e intuitivi.
-- La gestione accurata delle informazioni sulle copie disponibili, i clienti e i video è essenziale per fornire un servizio efficiente e di qualità. Nell'analisi orientata agli oggetti, questo caso di studio richiederebbe l'identificazione delle classi (come "Customer", "Video", "Reservation", ecc.) e delle loro proprietà, associazioni e comportamenti. I diagrammi UML, come i diagrammi dei casi d'uso, i diagrammi delle classi e i diagrammi di sequenza, possono essere utilizzati per rappresentare in modo chiaro ed esaustivo il sistema e le sue dinamiche.
-
-<!-- Pagina PDF 31 -->
-
-Contact Management: Questo caso di studio riguarda una società di ricerca di mercato che ha bisogno di un sistema per gestire i contatti con i clienti. Il sistema dovrebbe gestire i dati dei contatti dei clienti, tenere traccia delle comunicazioni passate e pianificare le attività future con i clienti. Si tratta di un'applicazione di gestione delle relazioni con i clienti (CRM).
-
-- **Scenari:** 
-
-- L'azienda di ricerca di mercato ha una base di clienti consolidata composta da organizzazioni che acquistano rapporti di analisi di mercato.
-- L'azienda è costantemente alla ricerca di nuovi clienti per espandere il proprio business.
-- **Funzionalità del Sistema:** 
-
-- **Il sistema deve consentire la gestione dei contatti in tre categorie:** prospect (clienti potenziali), actual (clienti attuali) e past (clienti passati).
-- Gli impiegati dell'azienda, in particolare del Dipartimento di Servizio Clienti, devono essere in grado di accedere al sistema.
-- Il sistema deve consentire la pianificazione flessibile e la ri-pianificazione delle attività legate ai contatti.
-- Deve permettere la collaborazione tra gli impiegati per acquisire nuovi clienti e mantenere le relazioni esistenti.
-- **Caratteristiche del Sistema:** 
-
-- Il sistema deve essere in grado di tenere traccia delle informazioni sui contatti e di archiviarle in base alla loro categoria.
-- Deve gestire i dati dei clienti, inclusi i dettagli di contatto, le informazioni aziendali e lo storico delle interazioni.
-- Dovrebbe consentire agli impiegati di pianificare e registrare attività come chiamate, riunioni e follow-up per ciascun contatto.
-- Deve garantire la sicurezza e la gestione delle autorizzazioni per gli utenti con diversi livelli di accesso.
-- **Considerazioni Aggiuntive:** 
-
-- Il sistema dovrebbe offrire funzionalità di ricerca e filtro per individuare rapidamente i contatti desiderati.
-- La capacità di tracciare le interazioni passate con i clienti può aiutare a fornire un servizio personalizzato.
-- Gli strumenti di collaborazione, come la condivisione di note e informazioni, potrebbero migliorare l'efficienza delle attività di vendita e di gestione dei clienti.
-- La flessibilità nella pianificazione delle attività e la possibilità di aggiornarle in tempo reale sono fondamentali per adattarsi alle mutevoli esigenze aziendali. Nell'ambito dell'analisi orientata agli oggetti, questo caso di studio richiederebbe l'identificazione delle classi (come "Contact", "Employee", "Activity", ecc.) e delle loro proprietà, associazioni e interazioni. I diagrammi UML, come i diagrammi dei casi d'uso, i diagrammi delle classi e i diagrammi di sequenza, potrebbero essere utilizzati per modellare il sistema in modo chiaro e completo. Telemarketing: In questo caso di studio, una società benefica sta cercando di raccogliere fondi attraverso la vendita di biglietti della lotteria. Il sistema deve supportare le attività di telemarketing, pianificando le chiamate in base alle priorità, registrando gli esiti delle conversazioni, gestendo le richieste di contributi e incentivando la partecipazione dei clienti attraverso campagne speciali.
-
-- **Scenari:** 
-
-- L'organizzazione benefica vende biglietti della lotteria per raccogliere fondi per cause importanti.
-- Le campagne vengono lanciate per sostenere cause benefiche attualmente rilevanti.
-- Vengono rivolte iniziative ai sostenitori passati per promuovere l'acquisto di biglietti o donazioni.
-- **Funzionalità del Sistema:** 
-
-- Il sistema deve consentire l'effettuazione di chiamate telefoniche per promuovere la vendita di biglietti della lotteria.
-- Dovrebbe supportare fino a cinquanta operatori di telemarketing che lavorano simultaneamente.
-- Le chiamate telefoniche devono essere pianificate in base a priorità predefinite e altre restrizioni conosciute.
-- Il sistema deve effettuare automaticamente le chiamate pianificate e gestire i risultati delle chiamate.
-- **Caratteristiche del Sistema:** 
-
-- Il sistema deve tracciare i dettagli delle chiamate effettuate, comprese le informazioni sugli operatori, i sostenitori chiamati e gli esiti delle chiamate.
-- Dovrebbe essere in grado di re-schedulare le chiamate non riuscite e pianificare ulteriori richiami telefonici per i sostenitori interessati.
-- Il sistema deve consentire agli operatori di registrare gli ordini dei biglietti e qualsiasi modifica ai dati dei sostenitori.
-- Dovrebbe supportare iniziative speciali di premi per l'acquisto in blocco di biglietti o per l'attrazione di nuovi sostenitori.
-- **Considerazioni Aggiuntive:** 
-
-- Il sistema dovrebbe rispettare le leggi e le regolamentazioni sulla privacy e sulle comunicazioni commerciali.
-
-<!-- Pagina PDF 32 -->
-
-- La capacità di visualizzare un elenco dei sostenitori passati e le loro preferenze potrebbe aiutare a indirizzare le offerte in modo mirato.
-- La possibilità di analizzare i dati delle chiamate e gli esiti potrebbe fornire informazioni utili per ottimizzare le strategie di telemarketing.
-- L'integrazione con un sistema di gestione delle donazioni potrebbe semplificare la registrazione dei contributi dei sostenitori. Nel contesto dell'analisi orientata agli oggetti, questo caso di studio richiederebbe l'identificazione delle classi (come "Supporter", "TicketOrder", "Telemarketer", ecc.) e delle loro proprietà, associazioni e interazioni. I diagrammi UML, come i diagrammi dei casi d'uso, i diagrammi delle classi e i diagrammi di sequenza, potrebbero essere utilizzati per modellare il sistema in modo chiaro e completo.
-
 ## LINEE GUIDA PER LA SPECIFICA DELLE CLASSI
 Nomi di classe:
 
@@ -907,8 +815,9 @@ Nomi di classe:
 
 - Gli attributi che rappresentano relazioni tra le classi devono essere identificati come associazioni. Ad esempio, se hai un attributo che rappresenta un oggetto di un'altra classe, dovrebbe essere modellato come un'associazione con quella classe.
 - Le associazioni ternarie (coinvolgenti tre classi) dovrebbero essere convertite in cicli di associazioni binarie, in modo da evitare complicazioni di interpretazione. Questo significa che dovresti rappresentare le connessioni tra le tre classi come una serie di associazioni binarie.
-- Nei cicli di associazioni, puoi valutare se alcune associazioni possono essere eliminate e gestite come associazioni derivate. Tuttavia, a volte per ragioni di efficienza, vengono introdotte associazioni ridondanti. Specifica delle associazioni:
+- Nei cicli di associazioni, puoi valutare se alcune associazioni possono essere eliminate e gestite come associazioni derivate. Tuttavia, a volte per ragioni di efficienza, vengono introdotte associazioni ridondanti. 
 
+Specifica delle associazioni:
 - Per assegnare nomi alle associazioni, utilizza la stessa convenzione adottata per gli attributi, cioè utilizza lettere minuscole e separa le parole con un carattere di underscore (snake_case).
 - Assegna nomi di ruolo (rolename) alle estremità dell'associazione. Questi nomi di ruolo diventeranno i nomi degli attributi nelle classi all'estremità opposta dell'associazione. Questo aiuta a chiarire il significato e il ruolo delle associazioni.
 - Determina la molteplicità delle associazioni. Questo indica quante istanze di una classe sono associate con un'altra classe attraverso un'associazione. Puoi utilizzare numeri o simboli come "*", "1", "0..1", "0..*", ecc., per rappresentare la molteplicità.
@@ -1089,39 +998,44 @@ L'identificazione delle operazioni all'interno di un sistema software può avven
 - **Delete (Eliminazione):** Consente di rimuovere un'istanza dell'oggetto dal sistema.
 
 ## MODELLO DINAMICO
-Il modello dinamico si concentra sul comportamento dinamico degli oggetti all'interno di una classe nel corso del tempo. In altre parole, rappresenta come gli oggetti di una classe interagiscono e cambiano stato in risposta agli eventi e alle azioni. Questo modello è utile per comprendere come il sistema si comporta nel suo flusso operativo e come gli oggetti reagiscono agli stimoli esterni o agli eventi interni.
+Il modello dinamico si concentra sul comportamento dinamico degli oggetti all'interno di una classe nel corso del tempo. In altre parole, rappresenta **come gli oggetti di una classe interagiscono e cambiano stato in risposta agli eventi e alle azioni**. Questo modello è utile per **comprendere come il sistema si comporta nel suo flusso operativo e come gli oggetti reagiscono agli stimoli** esterni o agli eventi interni.
 
 ![[p038-fig-017.png|600]]
 
-State Diagrams: I "State Diagrams" (Diagrammi di Stato) sono uno strumento comune utilizzato per rappresentare il modello dinamico. Un diagramma di stato è costituito da una serie di stati, eventi e transizioni. Gli stati rappresentano i diversi stati in cui un oggetto può trovarsi, mentre le transizioni collegano gli stati e vengono scatenate da eventi specifici. Un diagramma di stato include anche le azioni associate agli eventi e le condizioni che devono essere soddisfatte per attivare una transizione. Le condizioni possono determinare se una transizione è possibile in base allo stato attuale dell'oggetto. Applicazioni del Modello Dinamico: Il modello dinamico è particolarmente utile per le applicazioni scientifiche e real-time, in cui è importante comprendere come gli oggetti cambiano stato nel corso del tempo. In sintesi, il modello dinamico e i diagrammi di stato offrono una visione chiara e dettagliata di come gli oggetti all'interno di una classe interagiscono e cambiano nel tempo, consentendo agli sviluppatori di comprendere meglio il comportamento del sistema e di prendere decisioni informate nella progettazione e nell'implementazione.
+**State Diagrams**: gli "State Diagrams" (Diagrammi di Stato) sono uno strumento comune utilizzato per rappresentare il modello dinamico. Un diagramma di stato è costituito da una serie di stati, eventi e transizioni. Gl*i stati rappresentano i diversi stati in cui un oggetto può trovarsi, mentre le transizioni collegano gli stati e vengono scatenate da eventi specifici. Un diagramma di stato include anche le azioni associate agli eventi e le condizioni che devono essere soddisfatte per attivare una transizione. Le condizioni possono determinare se una transizione è possibile in base allo stato attuale dell'oggetto*. 
+
+**Applicazioni del Modello Dinamico**: Il modello dinamico è particolarmente utile per le **applicazioni scientifiche e real-time**, in cui è importante comprendere come gli oggetti cambiano stato nel corso del tempo. In sintesi, il modello dinamico e i diagrammi di stato offrono una visione chiara e dettagliata di come gli oggetti all'interno di una classe interagiscono e cambiano nel tempo, consentendo agli sviluppatori di comprendere meglio il comportamento del sistema e di prendere decisioni informate nella progettazione e nell'implementazione.
 
 ## GESTIONE DELLA COMPLESSITA’ NEI MODELLI DI OOA
-La gestione della complessità è un aspetto cruciale nello sviluppo di sistemi software di grandi dimensioni. I modelli di analisi orientata agli oggetti (OOA) spesso coinvolgono numerose classi con relazioni interconnesse, e questa complessità può rendere difficile la comprensione, la manutenzione e l'evoluzione del sistema. L'introduzione di gerarchie di classi e la stratificazione dei modelli sono tecniche che possono aiutare a affrontare questa complessità.
+La gestione della complessità è un aspetto cruciale nello sviluppo di sistemi software di grandi dimensioni. I modelli di analisi orientata agli oggetti (OOA) spesso coinvolgono **numerose classi con relazioni interconnesse, e questa complessità può rendere difficile la comprensione, la manutenzione e l'evoluzione del sistema.** L'introduzione di **gerarchie di classi e la stratificazione dei modelli sono tecniche che possono aiutare a affrontare questa complessità**.
 
 <!-- Pagina PDF 39 -->
 
-Gerarchie di Classi: Le gerarchie di classi consentono di organizzare le classi in modo più strutturato, raggruppandole secondo relazioni di ereditarietà. Introducendo classi di base (superclassi) e classi derivate (sottoclassi), è possibile catturare le caratteristiche comuni e differenziali tra le classi. Questo permette di evitare la duplicazione del codice e semplifica il modello, rendendolo più gestibile. Le gerarchie di classi possono anche favorire la modularità e la riusabilità del codice. Le classi di base possono implementare comportamenti di alto livello, mentre le classi derivate possono specializzarsi e aggiungere dettagli specifici. Inoltre, le operazioni definite nella classe di base possono essere ereditate e sovrascritte nelle classi derivate. Stratificazione dei Modelli: La stratificazione dei modelli implica la suddivisione del sistema in livelli o strati logici. Ogni strato ha uno scopo specifico e una responsabilità chiara. Questo approccio permette di isolare le funzionalità e ridurre le interdipendenze tra le diverse parti del sistema. La stratificazione aiuta a creare una struttura modulare e coesa, in cui ogni strato è indipendente dagli altri e può essere modificato senza influenzare gli altri. Inoltre, questa suddivisione semplifica la manutenzione, in quanto è più facile individuare e risolvere i problemi in un determinato strato senza dover toccare tutto il sistema.
+**Gerarchie di Classi**: Le gerarchie di classi consentono di organizzare le classi in modo più strutturato, raggruppandole secondo **relazioni di ereditarietà**. 
+Introducendo **classi di base (superclassi) e classi derivate (sottoclassi),** è possibile catturare le caratteristiche comuni e differenziali tra le classi. Questo permette di **evitare la duplicazione del codice e semplifica il modello**, rendendolo più gestibile. Le gerarchie di classi possono anche **favorire la modularità e la riusabilità del codice**. *Le classi di base possono implementare comportamenti di alto livello, mentre le classi derivate possono specializzarsi e aggiungere dettagli specifici.* Inoltre, le operazioni definite nella classe di base possono essere ereditate e **sovrascritte nelle classi derivate**. 
+
+**Stratificazione dei Modelli**: La stratificazione dei modelli implica la **suddivisione del sistema in livelli o strati logici**. Ogni strato ha uno scopo specifico e una responsabilità chiara. Questo approccio permette di **isolare le funzionalità** e **ridurre le interdipendenze** tra le diverse parti del sistema. La stratificazione aiuta a creare una **struttura modulare e coesa**, in cui ogni strato è indipendente dagli altri e può essere modificato senza influenzare gli altri. Inoltre, questa suddivisione semplifica la manutenzione, in quanto *è più facile individuare e risolvere i problemi in un determinato strato senza dover toccare tutto il sistema*.
 
 ## UML PACKAGE
-Un package è un meccanismo utilizzato nell'Unified Modeling Language (UML) per organizzare e raggruppare elementi come classi, casi d'uso, componenti e altri elementi correlati in un sistema software.
+Un package è un meccanismo utilizzato nell'Unified Modeling Language (UML) per *organizzare e raggruppare elementi come classi, casi d'uso, componenti e altri elementi correlati in un sistema software*.
 
-- **Annidamento dei Package:** I package possono essere annidati all'interno di altri package, creando una struttura gerarchica. Questo permette di organizzare ulteriormente gli elementi in sottogruppi e di creare una gerarchia di organizzazione.
-- **Visibilità e Comunicazione:** Le classi all'interno di un package possono comunicare tra loro usando relazioni di dipendenza, associazioni e altre interazioni. La visibilità dei membri delle classi (ad esempio attributi e operazioni) può essere controllata mediante i livelli di visibilità (public, protected, private) definiti nel linguaggio di programmazione o nel paradigma di sviluppo.
-- **Gestione della Complessità:** L'uso di package aiuta a gestire la complessità di grandi sistemi software, suddividendo il sistema in unità più gestibili e facilitando la navigazione all'interno del modello. Inoltre, i package possono riflettere la struttura organizzativa dell'applicazione o i domini di interesse specifici.
-- **Collaborazione tra Package:** I package possono comunicare tra loro attraverso dipendenze di package o attraverso l'uso di classi di altri package. Questo consente la separazione delle preoccupazioni e favorisce l'incapsulamento e la modularità. Package Diagram: I package possono essere creati all'interno di diversi tipi di diagrammi, come il class diagram o il use case diagram. I package possono contenere classi, interfacce, casi d'uso e altri elementi del modello. Si possono specificare due tipi principali di relazioni tra i package:
+- **Annidamento dei Package:** I package possono essere annidati all'interno di altri package, creando una **struttura gerarchica**. Questo permette di organizzare ulteriormente gli elementi in sottogruppi e di creare una gerarchia di organizzazione.
+- **Visibilità e Comunicazione:** Le classi all'interno di un package possono comunicare tra loro usando relazioni di dipendenza, associazioni e altre interazioni. *La visibilità dei membri delle classi (ad esempio attributi e operazioni) può essere controllata* mediante i livelli di visibilità (public, protected, private) definiti nel linguaggio di programmazione o nel paradigma di sviluppo.
+- **Gestione della Complessità:** L'uso di package aiuta a gestire la complessità di grandi sistemi software, *suddividendo il sistema in unità più gestibili e facilitando la navigazione all'interno del modello.* Inoltre, i package **possono riflettere la struttura organizzativa** dell'applicazione o i domini di interesse specifici.
+- **Collaborazione tra Package:** I package possono comunicare tra loro attraverso *dipendenze di package o attraverso l'uso di classi di altri package*. Questo consente la separazione delle preoccupazioni e favorisce l'incapsulamento e la modularità. Package Diagram: I package possono essere creati all'interno di diversi tipi di diagrammi, come il class diagram o il use case diagram. I package possono contenere classi, interfacce, casi d'uso e altri elementi del modello. Si possono specificare due tipi principali di relazioni tra i package:
 
-- **Generalization (Gerarchia):** Questa relazione indica che un package è una specializzazione di un altro package. Implica una relazione di ereditarietà tra i contenuti dei package. Quando un package eredita elementi da un altro package, la gerarchia tra i package è spesso accompagnata da una dipendenza tra i contenuti dei package.
-- **Dependency (Dipendenza):** Questa relazione indica che un package dipende da un altro per qualche motivo. Le dipendenze possono includere l'utilizzo di elementi del package di destinazione o l'accesso ai suoi membri. Le relazioni di dipendenza tra package possono includere usage dependency, access dependency e visibility dependency.
+- **Generalization (Gerarchia):** Questa relazione indica che un **package è una specializzazione di un altro package**. Implica una relazione di *ereditarietà tra i contenuti dei package*. Quando un package eredita elementi da un altro package, la gerarchia tra i package è spesso accompagnata da una dipendenza tra i contenuti dei package.
+- **Dependency (Dipendenza):** Questa relazione indica che *un package dipende da un altro per qualche motivo*. Le dipendenze possono includere l'utilizzo di elementi del package di destinazione o l'accesso ai suoi membri. Le relazioni di dipendenza tra package possono includere usage dependency, access dependency e visibility dependency.
 
 ## APPROCCIO BCE
-L'approccio BCE (Boundary-Control-Entity) è un modo di organizzare il design e la struttura di un sistema software in base a tre categorie principali di classi che collaborano per fornire funzionalità complessive. Questo approccio mira a suddividere le responsabilità all'interno del sistema in modo da ottenere un design ben strutturato e modulare. Le tre categorie di classi nell'approccio BCE sono:
+L'approccio BCE (Boundary-Control-Entity) è un modo di organizzare il design e la struttura di un sistema software in base a **tre categorie principali di classi che collaborano per fornire funzionalità complessive**. Questo approccio mira a suddividere le responsabilità all'interno del sistema in modo da ottenere un design ben strutturato e modulare. Le tre categorie di classi nell'approccio BCE sono:
 
-- **Boundary Package:** Questa componente rappresenta l'interfaccia utente dell'applicazione. Include tutti gli elementi che interagiscono direttamente con l'utente, come le schermate, i form, i widget e i controlli grafici. Il Boundary si occupa di ricevere le interazioni dell'utente, visualizzare i dati e fornire feedback visivo. Non contiene logica di business o elaborazione dei dati. Lo scopo principale del Boundary è quello di trasmettere le richieste dell'utente al Controller e visualizzare i dati ottenuti dall'Entity.
-- **Control Package:** Le classi del package Control rappresentano il "cervello" del sistema. Questa componente gestisce la logica di controllo dell'applicazione. Riceve i comandi e le azioni provenienti dalla Boundary e inoltra le richieste appropriate all'Entity per elaborazione. Il Controller contiene la logica di business, le regole di validazione e le azioni da intraprendere in risposta alle richieste dell'utente. Il Controller è responsabile di gestire l'interazione tra la Boundary e l'Entity. Le classi Control possono essere considerate come le azioni e le attività che gestiscono i casi d'uso.
+- **Boundary Package:** Questa componente rappresenta l'**interfaccia utente dell'applicazione**. Include tutti gli elementi che interagiscono direttamente con l'utente, come le schermate, i form, i widget e i controlli grafici. Il *Boundary si occupa di ricevere le interazioni dell'utente, visualizzare i dati e fornire feedback visivo.* **Non contiene logica di business o elaborazione dei dati**. Lo scopo principale del Boundary è quello di trasmettere le richieste dell'utente al Controller e visualizzare i dati ottenuti dall'Entity.
+- **Control Package:** Le classi del package Control **rappresentano il "cervello" del sistema**. Questa componente gestisce la logica di controllo dell'applicazione. Riceve i comandi e le azioni provenienti dalla Boundary e inoltra le richieste appropriate all'Entity per elaborazione. **Il Controller contiene la logica di business, le regole di validazione e le azioni da intraprendere in risposta alle richieste dell'utente**. Il Controller è responsabile di gestire l'interazione tra la Boundary e l'Entity. Le classi Control possono essere considerate come le azioni e le attività che gestiscono i casi d'uso.
 
 <!-- Pagina PDF 40 -->
 
-- **Entity Package:** Le classi del package Entity contengono le strutture dati, le regole di business e l'accesso ai dati. L'Entity elabora le richieste provenienti dal Controller, interagisce con il database o altre fonti di dati, e restituisce i risultati al Controller. L'Entity è separata dalla Boundary per garantire che la logica di business e l'accesso ai dati siano isolati dall'interfaccia utente.
+- **Entity Package:** Le classi del package **Entity contengono le strutture dati, le regole di business e l'accesso ai dati**. L*'Entity elabora le richieste provenienti dal Controller, interagisce con il database o altre fonti di dati, e restituisce i risultati al Controller*. L'Entity è separata dalla Boundary per garantire che la logica di business e l'accesso ai dati siano isolati dall'interfaccia utente.
 
 <!-- Pagina PDF 41 -->
 
