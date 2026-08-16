@@ -1318,13 +1318,13 @@ Descrizione testuale:
 ## PROGETTO
 
 ## FASE DI PROGETTO
-La fase di progetto è una tappa chiave nel ciclo di vita dello sviluppo del software. Questa fase si concentra sul passaggio dalla definizione di "cosa" deve essere realizzato, come specificato nell'analisi dei requisiti, a "come" la realizzazione dovrebbe avvenire. La fase di progetto prende in input il documento di specifica (analisi dei requisiti) e produce un documento di progetto che guida la successiva fase di codifica. La fase di progetto può essere suddivisa in due sotto-fasi principali:
+La fase di progetto è una tappa chiave nel ciclo di vita dello sviluppo del software. Questa fase si concentra sul passaggio dalla definizione di **"cosa" deve essere realizzato, come specificato nell'analisi dei requisiti, a "come" la realizzazione dovrebbe avvenire**. La fase di progetto prende in input il documento di specifica (analisi dei requisiti) e produce un **documento di progetto che guida la successiva fase di codifica**. La fase di progetto può essere suddivisa in due sotto-fasi principali:
 
 - **Progetto Architetturale (o Preliminare):** Durante questa fase, il sistema software complessivo viene suddiviso in sottosistemi più gestibili. Questa suddivisione è spesso nota come decomposizione modulare. L'obiettivo è definire un'architettura generale del sistema.
 - **Progetto Dettagliato:** In questa fase, ogni sottosistema identificato nella fase di progetto architetturale viene progettato in dettaglio. Si fa una scelta più specifica di algoritmi, strutture dati e altro necessario per implementare ciascun modulo.
 
 ## PRINCIPI DI PROGETTAZIONE
-Stepwise refinement: Si tratta di una strategia di progettazione nell'ambito della programmazione strutturata proposta da Wirth nel 1971. Questa strategia è utilizzata per sviluppare un programma in modo graduale e organizzato, partendo da una visione generale e affinando i dettagli progressivamente.
+**Stepwise refinement**: Si tratta di una strategia di progettazione nell'ambito della programmazione strutturata proposta da Wirth nel 1971. Questa strategia è utilizzata per sviluppare un programma in modo graduale e organizzato, partendo da una visione generale e affinando i dettagli progressivamente.
 
 - **Definizione della Strategia:** Il procedere per raffinamenti successivi è una strategia top-down, il che significa che inizia con una visione generale e si sposta gradualmente verso i dettagli più specifici.
 - **Specifiche iniziali:** Si inizia con la specifica di una funzione o di dati senza descrivere il funzionamento interno della funzione o la struttura interna dei dati. In questa fase, si ha una visione ad alto livello.
@@ -1332,7 +1332,7 @@ Stepwise refinement: Si tratta di una strategia di progettazione nell'ambito del
 - **Legge di Miller:** Afferma che in un dato momento una persona può concentrarsi su al massimo 7 ± 2 "chunk" di informazioni. Questo sottolinea l'importanza di suddividere il problema in parti più gestibili e concentrarsi su dettagli limitati in ogni fase del processo.
 - **Complementarità con l'Astrazione:** Mentre l'astrazione coinvolge l'isolamento dei dettagli non rilevanti e la focalizzazione sugli aspetti cruciali, il raffinamento si occupa di aggiungere progressivamente dettagli per completare l'implementazione. Astrazione: Significa isolare e concentrarsi sugli aspetti essenziali di un'entità, ignorando i dettagli non rilevanti. In altre parole, si tratta di estrarre la sostanza fondamentale o l'essenza di un concetto o di un'entità.
 
-- **Livelli di Astrazione:** Il concetto di livello di astrazione è stato introdotto da Dijkstra nel 1968, specialmente nell'ambito dei sistemi operativi, per descriverne l'architettura a strati. Ogni livello rappresenta un punto di vista o una visione specifica del sistema, con un grado crescente di dettagli.
+- **Livelli di Astrazione:** Il concetto di livello di astraziodocumento di progetto che guida la successiva fase di codificane è stato introdotto da Dijkstra nel 1968, specialmente nell'ambito dei sistemi operativi, per descriverne l'architettura a strati. Ogni livello rappresenta un punto di vista o una visione specifica del sistema, con un grado crescente di dettagli.
 - **Processo Software e Raffinamento:** Nel contesto del processo software, ogni passo rappresenta un raffinamento del livello di astrazione della soluzione. Prima di decidere come implementare qualcosa, ci si concentra su cosa è e cosa fa un'entità del sistema software.
 - **Tipi Principali di Astrazione:** 
 
@@ -1348,50 +1348,60 @@ Stepwise refinement: Si tratta di una strategia di progettazione nell'ambito del
 <!-- Pagina PDF 54 -->
 
 - **Facilità di Comprensione:** La suddivisione del codice in moduli rende più semplice la comprensione del sistema nel suo complesso, in quanto è possibile concentrarsi su un modulo alla volta.
-- **Riusabilità:** I moduli ben progettati possono essere riutilizzati in diversi contesti, promuovendo la riusabilità del codice. Decomposizione modulare: È una pratica di progettazione del software che mira a suddividere un sistema complesso in moduli più gestibili. Questi moduli costituiscono unità di codice indipendenti che possono essere compilati e utilizzati separatamente.
+- **Riusabilità:** I moduli ben progettati possono essere riutilizzati in diversi contesti, promuovendo la riusabilità del codice.
+ 
+**Decomposizione modulare**: È una pratica di progettazione del software che mira a suddividere un sistema complesso in moduli più gestibili. Questi moduli costituiscono unità di codice indipendenti che possono essere compilati e utilizzati separatamente.
 
-- **Caratteristiche di un Modulo:** 
+**Caratteristiche di un Modulo:** 
 
 - Contiene istruzioni, logica di elaborazione e strutture dati.
 - Può essere compilato separatamente e memorizzato in una libreria software.
 - Può essere incluso in un programma, utilizzando segmenti di modulo identificati da un nome e da una lista di parametri.
 - Può utilizzare altri moduli.
-- **Obiettivi:** 
+**Obiettivi:** 
 
 - **Massima coesione interna ai moduli:** Un modulo dovrebbe concentrarsi su una specifica funzionalità e avere una forte coesione interna.
 - **Minimo grado di accoppiamento tra i moduli:** L'interazione tra moduli dovrebbe essere ridotta al minimo indispensabile.
-- Questi obiettivi aumentano la comprensibilità, la manutenibilità, l'estensibilità e la riusabilità del software. Coesione e Accoppiamento rispetto a Modularità:
+- Questi obiettivi aumentano la comprensibilità, la manutenibilità, l'estensibilità e la riusabilità del software. 
 
-- La coesione (cohesion) si riferisce al grado in cui gli elementi all'interno di un modulo sono strettamente correlati tra loro. Un modulo con alta coesione esegue un insieme ben definito di attività correlate, mentre un modulo con bassa coesione potrebbe svolgere attività diverse e poco correlate. L'obiettivo è massimizzare la coesione all'interno di ciascun modulo.
-- L'accoppiamento (coupling) si riferisce al grado di dipendenza tra moduli. Un basso accoppiamento implica una minima dipendenza tra i moduli, il che significa che le modifiche in un modulo hanno un impatto limitato sugli altri. L'obiettivo è minimizzare l'accoppiamento tra i moduli. Coesione: Misura il grado di interazione interna al modulo tra le azioni di una funzione. Esistono 7 livelli di coesione, che variano da quello più debole a quello più forte:
+Coesione e Accoppiamento rispetto a Modularità:
 
+- La **coesione** (cohesion) si riferisce al grado **in cui gli elementi all'interno di un modulo sono strettamente correlati tra loro**. Un modulo con alta coesione esegue un insieme ben definito di attività correlate, mentre un *modulo con bassa coesione potrebbe svolgere attività diverse e poco correlate*. L'obiettivo è **massimizzare la coesione** all'interno di ciascun modulo.
+- L'accoppiamento (coupling) si riferisce al grado di dipendenza tra moduli. *Un basso accoppiamento implica una minima dipendenza tra i moduli, il che significa che le modifiche in un modulo hanno un impatto limitato sugli altri*. L'obiettivo è **minimizzare l'accoppiamento** tra i moduli. Coesione: Misura il grado di interazione interna al modulo tra le azioni di una funzione. 
+Esistono 7 livelli di coesione, che variano da quello più debole a quello più forte:
 - **Coincidental (Livello 1):** Non esiste una relazione significativa tra gli elementi del modulo. Le attività sono raggruppate insieme casualmente e non c'è una logica o un collegamento intrinseco tra di esse.
-- **Logica (Livello 2):** Gli elementi del modulo sono correlati solo in modo logico. Uno di essi viene selezionato e utilizzato dal modulo chiamante, ma non c'è una stretta connessione tra le attività del modulo.
-- **Temporale (Livello 3):** Gli elementi del modulo sono correlati in base a un ordine temporale o sequenza di esecuzione. Le attività avvengono in un certo ordine, ma potrebbero non essere strettamente connesse concettualmente.
-- **Procedurale (Livello 4):** Gli elementi del modulo sono correlati in base a una sequenza predefinita di passi da eseguire. Questo implica una connessione più forte rispetto alla coesione temporale, poiché le attività seguono un ordine ben definito.
-- **Communicational (Livello 5):** Gli elementi del modulo sono correlati in base a una sequenza di passi che vengono eseguiti sulla stessa struttura dati. Le attività all'interno del modulo comunicano attraverso la condivisione di dati.
-- **Informational (Livello 6):** Ogni elemento del modulo ha una porzione di codice indipendente con un proprio punto di ingresso e uscita. Tutti gli elementi agiscono sulla stessa struttura dati, ma eseguono attività indipendenti.
-- **Funzionale (Livello 7):** Tutti gli elementi del modulo sono strettamente correlati perché svolgono una singola funzione o responsabilità. Questo rappresenta il livello più elevato di coesione e riflette una progettazione ottimale del modulo. In generale, l'obiettivo è massimizzare la coesione di un modulo, poiché una coesione più elevata generalmente porta a moduli più facili da capire, mantenere e riusare. Un modulo altamente coeso è spesso un modulo più autonomo e indipendente, il che contribuisce a migliorare la qualità complessiva del software. Coupling: Misura il grado di dipendenza o interconnessione tra i moduli di un sistema software. Un basso accoppiamento è generalmente auspicabile, poiché implica una minore dipendenza tra i moduli, rendendo il sistema più flessibile, manutenibile e riutilizzabile. Al contrario, un alto accoppiamento può portare a un sistema più difficile da modificare e gestire. Esistono 5 livelli di accoppiamento:
+- **Logica (Livello 2):** Gli elementi del modulo sono correlati solo in modo logico. Uno di essi viene selezionato e utilizzato dal modulo chiamante, ma **non c'è una stretta connessione tra le attività del modulo**.
+- **Temporale (Livello 3):** Gli elementi del modulo sono correlati in base a un ordine temporale o sequenza di esecuzione. **Le attività avvengono in un certo ordine, ma potrebbero non essere strettamente connesse concettualmente.**
+- **Procedurale (Livello 4):** Gli elementi del modulo sono correlati in base a una **sequenza predefinita di passi da eseguire**. Questo implica una connessione più forte rispetto alla coesione temporale, **poiché le attività seguono un ordine ben definito**.
+- **Communicational (Livello 5):** Gli elementi del modulo sono correlati in base a una sequenza di passi che vengono eseguiti sulla **stessa struttura dati. Le attività all'interno del modulo comunicano attraverso la condivisione di dati.**
+- **Informational (Livello 6):** *Ogni elemento del modulo ha una porzione di codice indipendente con un proprio punto di ingresso e uscita. Tutti gli elementi agiscono sulla stessa struttura dati, ma eseguono attività indipendenti*.
+- **Funzionale (Livello 7):** **Tutti gli elementi del modulo sono strettamente correlati perché svolgono una singola funzione o responsabilità.** Questo rappresenta il livello più elevato di coesione e riflette una progettazione ottimale del modulo. 
+In generale, l'obiettivo è massimizzare la coesione di un modulo, poiché una **coesione più elevata generalmente porta a moduli più facili da capire, mantenere e riusare**. Un modulo altamente coeso è spesso un modulo più autonomo e indipendente, il che contribuisce a migliorare la qualità complessiva del software.
 
-- **Content (Livello 1):** Un modulo fa riferimento direttamente al contenuto interno di un altro modulo. Questo è il livello più alto di accoppiamento e generalmente è da evitare.
-- **Common (Livello 2):** Due moduli accedono alla stessa struttura dati. Ciò implica una dipendenza diretta sulla rappresentazione interna dei dati condivisi.
+**Coupling**: Misura il grado di dipendenza o interconnessione tra i moduli di un sistema software. *Un basso accoppiamento è generalmente auspicabile, poiché implica una minore dipendenza tra i moduli, rendendo il sistema più flessibile, manutenibile e riutilizzabile*. Al contrario, un alto accoppiamento può portare a un sistema più difficile da modificare e gestire. Esistono 5 livelli di accoppiamento:
+
+- **Content (Livello 1):** *Un modulo fa riferimento direttamente al contenuto interno di un altro modulo*. Questo è il livello più alto di accoppiamento e generalmente è da **evitare**.
+- **Common (Livello 2):** *Due moduli accedono alla stessa struttura dati*. Ciò implica una **dipendenza diretta** sulla rappresentazione interna dei dati condivisi.
 
 <!-- Pagina PDF 55 -->
 
-- **Control (Livello 3):** Un modulo controlla esplicitamente l'esecuzione di un altro modulo. Questo accoppiamento si verifica quando un modulo determina l'ordine di esecuzione di un altro modulo.
-- **Stamp (Livello 4):** Due moduli si scambiano una struttura dati come argomento, ma utilizzano solo alcuni dei suoi elementi. Ciò implica una dipendenza parziale sulla struttura dati condivisa.
-- **Data (Livello 5):** Due moduli si scambiano argomenti omogenei, come argomenti semplici o strutture dati di cui utilizzano tutti gli elementi. Questo rappresenta il livello più basso di accoppiamento. Information Hiding: Questo concetto è stato introdotto da Parnas nel 1971 e costituisce la base per i concetti di astrazione procedurale e astrazione dei dati. Questa tecnica di progettazione si concentra sulla definizione dei moduli in modo che i dettagli implementativi, sia procedurale che relativi ai dati, non siano accessibili da altri moduli che non ne hanno necessità.
+- **Control (Livello 3):** *Un modulo controlla esplicitamente l'esecuzione di un altro modulo*. Questo accoppiamento si verifica quando un modulo determina l'**ordine di esecuzione** di un altro modulo.
+- **Stamp (Livello 4):** *Due moduli si scambiano una struttura dati come argomento, ma utilizzano solo alcuni dei suoi elementi*. Ciò implica una **dipendenza parziale sulla struttura dati condivisa**.
+- **Data (Livello 5):** *Due moduli si scambiano argomenti omogenei*, come argomenti semplici o strutture dati di cui utilizzano **tutti gli elementi**. Questo rappresenta il livello più basso di accoppiamento. 
 
-- **Obiettivo:** Nascondere i dettagli implementativi per evitare che altri moduli dipendano da tali dettagli. Ciò consente di isolare le implementazioni specifiche e di ridurre l'accoppiamento tra i moduli.
+
+**Information Hiding**: Questo concetto è stato introdotto da Parnas nel 1971 e costituisce la base per i concetti di astrazione procedurale e astrazione dei dati. Questa tecnica di progettazione si concentra sulla definizione dei moduli in modo che **i dettagli implementativi, sia procedurale che relativi ai dati, non siano accessibili da altri moduli che non ne hanno necessità.**
+
+- **Obiettivo:** *Nascondere i dettagli implementativi per evitare che altri moduli dipendano da tali dettagli*. Ciò consente di **isolare** le implementazioni specifiche e di **ridurre l'accoppiamento** tra i moduli.
 - **Vantaggi:** 
+	- Migliora la modularità e la manutenibilità del sistema.
+	- Facilita i cambiamenti senza influenzare altri moduli.
+	- Favorisce la separazione delle responsabilità.
 
-- Migliora la modularità e la manutenibilità del sistema.
-- Facilita i cambiamenti senza influenzare altri moduli.
-- Favorisce la separazione delle responsabilità.
-- **Applicazione in Fasi di Testing e Manutenzione:** I vantaggi della tecnica di information hiding diventano evidenti durante le fasi di testing e manutenzione, quando è possibile apportare modifiche a una parte del sistema senza dover considerare gli effetti su altri moduli. Riusabilità: Si riferisce all'utilizzo di componenti sviluppati per un prodotto all'interno di un prodotto differente. Può riguardare non solo moduli o frammenti di codice, ma anche progetti, parti di documentazione, insiemi di dati di test o stime di costi e durata.
+- **Applicazione in Fasi di Testing e Manutenzione:** I vantaggi della tecnica di information hiding diventano evidenti durante le fasi di testing e manutenzione, *quando è possibile apportare modifiche a una parte del sistema senza dover considerare gli effetti su altri moduli*.  
 
+**Riusabilità**: Si riferisce all'utilizzo di componenti sviluppati per un prodotto all'interno di un prodotto differente. Può riguardare non solo moduli o frammenti di codice, ma anche progetti, parti di documentazione, insiemi di dati di test o stime di costi e durata.
 - **Vantaggi:** 
-
 - Riduzione dei costi e dei tempi di produzione del software.
 - Aumento dell'affidabilità grazie all'uso di componenti già convalidati.
 - **Applicazione nella Fase di Progetto:** La riusabilità può applicarsi a diversi livelli.
