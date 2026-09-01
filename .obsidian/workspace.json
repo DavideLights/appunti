@@ -4,41 +4,56 @@
     "type": "split",
     "children": [
       {
-        "id": "f61cf54ddc89b166",
+        "id": "f0ea818c39aa9079",
         "type": "tabs",
+        "dimension": 44.16890080428955,
         "children": [
           {
-            "id": "48c4a654bd9b39c0",
+            "id": "8352accc84941eae",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ISandrea/IS_andrea.md",
+                "file": "3o anno/ing/parte 2/10. design patterns.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "IS_andrea"
+              "title": "10. design patterns"
+            }
+          },
+          {
+            "id": "9c70e4e05bc96c46",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3o anno/ing/parte 2/13. qualita-software-appunti.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "13. qualita-software-appunti"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
-        "id": "7a845f7859d58429",
+        "id": "251a9fd63440ce6f",
         "type": "tabs",
+        "dimension": 55.83109919571045,
         "children": [
           {
-            "id": "84e3e9874088adf8",
+            "id": "0068299040d630b5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "3o anno/ing/parte 2/8. progetto.md",
-                "mode": "source",
-                "source": false
+                "file": "Excalidraw/10. design patterns 2026-08-27 01.38.36.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "8. progetto"
+              "icon": "excalidraw-icon",
+              "title": "10. design patterns 2026-08-27 01.38.36.excalidraw"
             }
           }
         ]
@@ -75,7 +90,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "andrea",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -100,8 +115,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -136,12 +150,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "vdsi/bandit passwords.md",
+                "file": "3o anno/ing/note.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Collegamenti in uscita da bandit passwords"
+              "title": "Collegamenti in uscita"
             }
           },
           {
@@ -199,8 +213,19 @@
               "icon": "lucide-info",
               "title": "Proprietà file"
             }
+          },
+          {
+            "id": "57ce1d57ac4f4a90",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw Sidepanel"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -216,46 +241,51 @@
       "canvas:Crea nuova lavagna": false,
       "templates:Inserisci modello": false,
       "command-palette:Apri riquadro comandi": false,
-      "bases:Crea nuova Base": false
+      "bases:Crea nuova Base": false,
+      "consolidate-to-pdf:Consolidate vault to PDF": false
     }
   },
-  "active": "84e3e9874088adf8",
+  "active": "9c70e4e05bc96c46",
   "lastOpenFiles": [
-    "ISandrea/IS_andrea.md",
-    "3o anno/ing/parte 2/8. progetto.md",
-    "Pasted image 20260817013947.png",
-    "3o anno/ing/prompt.md",
-    "3o anno/ing/parte 1/riassuntino.md",
-    "3o anno/ing/parte 1/5.c Richiami OOP.md",
-    "3o anno/ing/parte 1/5.b OOA esercizio.md",
-    "3o anno/ing/parte 1/7 pianificazione.md",
-    "Pasted image 20260816225839.png",
-    "Pasted image 20260816225648.png",
-    "Pasted image 20260816225129.png",
-    "3o anno/ing/parte 1/4. ingegneria requisiti.md",
-    "3o anno/ing/parte 1/5.a OOA.md",
-    "tesi/bluectfd (architettura e rest api).md",
-    "tesi/blueagent.md",
-    "Excalidraw/bluectfd.excalidraw.md",
-    "tesi/blueagent architettura.md",
-    "tesi/incus.md",
-    "3o anno/ing/parte 1/1. introduzione.md",
-    "Pasted image 20260812234926.png",
-    "Pasted image 20260812233954.png",
-    "Pasted image 20260812232740.png",
-    "Pasted image 20260812232504.png",
-    "Pasted image 20260812231328.png",
-    "Pasted image 20260812230418.png",
     "3o anno/ing/parte 1/3. requisiti.md",
-    "3o anno/ing/parte 1/4..md",
+    "3o anno/ing/parte 1/5.b OOA esercizio.md",
+    "3o anno/ing/parte 1/5.a OOA.md",
+    "3o anno/ing/parte 1/4. ingegneria requisiti.md",
     "3o anno/ing/parte 1/2.2 processo software.md",
-    "3o anno/ing/parte 1/2.1 processo software.md",
-    "Senza nome 1.md",
-    "2o anno/reti/esercizi/traceroute.md",
-    "2o anno/reti/esercizi/ping.md",
-    "2o anno/reti/esercizi/ip.md",
-    "2o anno/reti/esercizi/http.md",
-    "2o anno/reti/esercizi/dns.md",
+    "3o anno/ing/parte 2/09. architetture distribuite.md",
+    "3o anno/ing/parte 2/RIASSUNTAZZO.md",
+    "Excalidraw/10. design patterns 2026-08-27 01.38.36.excalidraw.md",
+    "3o anno/ing/parte 2/10. design patterns.md",
+    "Excalidraw/09. architetture distribuite 2026-08-26 16.13.00.excalidraw.md",
+    "3o anno/ing/parte 2/12. metriche.md",
+    "Excalidraw/14. testing 2026-08-31 18.18.43.excalidraw.md",
+    "3o anno/ing/parte 2/14. testing.md",
+    "Excalidraw/12. metriche 2026-08-27 15.16.50.excalidraw.md",
+    "3o anno/ing/parte 2/riassuntino.md",
+    "Excalidraw/15. bpm 2026-09-01 00.09.09.excalidraw.md",
+    "3o anno/ing/parte 2/15. bpm.md",
+    "Pasted Image 20260901003858_665.png",
+    "Pasted Image 20260831192103_768.png",
+    "Pasted Image 20260831191658_895.png",
+    "3o anno/ing/parte 2/13. qualita-software-appunti.md",
+    "Pasted Image 20260831183654_327.png",
+    "Pasted Image 20260831183421_190.png",
+    "Pasted Image 20260831182606_281.png",
+    "3o anno/ing/parte 1/7 pianificazione.md",
+    "Excalidraw/13. qualita-software-appunti 2026-08-31 01.50.19.excalidraw.md",
+    "Pasted image 20260831163119.png",
+    "Pasted image 20260831162340.png",
+    "Pasted Image 20260831155133_255.png",
+    "Excalidraw/7 pianificazione 2026-08-26 11.08.43.excalidraw.md",
+    "3o anno/ing/parte 1/RIASSUNTAZZO.md",
+    "Excalidraw/5.a OOA 2026-08-25 22.37.58.excalidraw.md",
+    "Excalidraw/4. ingegneria requisiti 2026-08-25 01.21.05.excalidraw.md",
+    "3o anno/ing/parte 2/8. progetto.md",
+    "3o anno/ing/parte 2/12. riassunto.md",
+    "Pasted image 20260827180819.png",
+    "Senza nome.canvas",
+    "Senza nome 1.base",
+    "Senza nome.base",
     "IS_andrea_obsidian_full/Senza nome",
     "ISandrea/assets",
     "ISandrea",
@@ -263,8 +293,6 @@
     "3o anno/Senza nome",
     "1o anno",
     "3o anno/IA",
-    "3o anno/vdsi",
-    "3o anno/ir",
-    "3o anno/dm"
+    "3o anno/vdsi"
   ]
 }

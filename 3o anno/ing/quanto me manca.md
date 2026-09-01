@@ -1,0 +1,10 @@
+- [x] 10 design patterns: 60 pagine 
+	- [ ] 30 pagine di esempi
+- [ ] 11 design patterns, esempi: 74
+- [x] 12 metriche di struttura: 49 pagine
+- [x] 13 qualita del software: 29 pagine
+- [x] 14 testing: 84 pagine
+- [x] 15 BPM: 45 pagine
+- [ ] 16 BPMN: 50 pagine
+- [ ] 17 M&S Intro: 99 pagine
+- [ ] 18 BP: 89 pagine

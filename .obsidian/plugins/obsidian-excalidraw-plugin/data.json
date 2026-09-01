@@ -116,6 +116,52 @@
     "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.22.0",
     "libraryItems": [
       {
+        "id": "5Hv1Lcvy9A1IoSqadkDnd",
+        "status": "unpublished",
+        "elements": [
+          {
+            "id": "dDXiXp5p",
+            "type": "text",
+            "x": 2817.9182594003164,
+            "y": 751.3150532860232,
+            "width": 212.41978454589844,
+            "height": 175,
+            "angle": 0,
+            "strokeColor": "#1e1e1e",
+            "backgroundColor": "transparent",
+            "fillStyle": "solid",
+            "strokeWidth": 2,
+            "strokeStyle": "solid",
+            "roughness": 1,
+            "opacity": 100,
+            "groupIds": [],
+            "frameId": null,
+            "index": "at",
+            "roundness": null,
+            "seed": 1130424808,
+            "version": 191,
+            "versionNonce": 1387315688,
+            "isDeleted": false,
+            "boundElements": [],
+            "updated": 1787268936907,
+            "locked": false,
+            "text": "IEEE:\n* prefazione\n* introduzione\n* glossario\n* system architecture\n* system models\n* system evolution",
+            "rawText": "IEEE:\n* prefazione\n* introduzione\n* glossario\n* system architecture\n* system models\n* system evolution",
+            "fontSize": 20,
+            "fontFamily": 5,
+            "textAlign": "left",
+            "verticalAlign": "top",
+            "containerId": null,
+            "originalText": "IEEE:\n* prefazione\n* introduzione\n* glossario\n* system architecture\n* system models\n* system evolution",
+            "autoResize": true,
+            "lineHeight": 1.25,
+            "hasTextLink": false,
+            "link": null
+          }
+        ],
+        "created": 1787268937095
+      },
+      {
         "status": "published",
         "elements": [
           {
