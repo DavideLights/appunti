@@ -1,4 +1,5 @@
 # Appunti di Studio: Pianificazione dei Progetti Software (Software Project 
+![[7 pianificazione 2026-08-26 11.08.43.excalidraw]]
 ## 1. I Fondamenti della Gestione: Le quattro "P"
 La gestione efficace di un progetto software si fonda su quattro pilastri interdipendenti:
 1.  **Persone (People):** L'elemento più importante per il successo di un progetto. Il *People Management - Capability Maturity Model (PM-CMM)* gestisce le **risorse umane**. Ci vuole **motivazione e competenze**
@@ -70,8 +71,7 @@ La stima iniziale mira a ridurre l'incertezza e limitare i rischi finanziari e t
 ## 5. Esempio Pratico di Stima Basata su LOC
 Il calcolo di effort e costi partendo dalle Linee di Codice (LOC) stimate per ogni sottosistema si sviluppa attraverso una griglia analitica (Contenuto Informativo dell'Immagine):
 
-*   Si stimano le LOC per ogni modulo funzionale (es. *UICF*, *2DGA*, *3DGA*, *DBM*, *CGDF*, *PCF*, *DAM*), arrivando a un totale stimato di **33.360 LOC**.
-*   Si associa a ciascun modulo 
+*   Si stimano le LOC per ogni **modulo funzionale** (es. *UICF*, *2DGA*, *3DGA*, *DBM*, *CGDF*, *PCF*, *DAM*), arrivando a un totale stimato di **33.360 LOC**.
 	* **indice di produttività storica** in LOC per mese/uomo (`LOC/pm`)
 	* **costo unitario per** singola riga di codice (`$/LOC`).
 *   **Calcolo Costo Totale:** Somma dei costi stimati per ogni singolo modulo $\rightarrow$ **$655.000**.
@@ -128,7 +128,7 @@ $$FP = UFC \times TCF$$
 * **Jones' Backfiring**: situazione in cui l'uso esclusivo di LOC porta a risultati, previsioni errate in termini di sforzo di sviluppo.
 ---
 
-## 7. Il Modello Algoritmico COCOMO (COnstructive COst MOdel)
+## 7. Il Modello Algoritmico COCOMO (COnst<ructive COst MOdel)
 Introdotto da Barry Boehm nel 1981, stima l'effort e la durata a partire dalle dimensioni del codice espresse in **KLOC** (migliaia di righe di codice).
 ### Modi di Sviluppo del Prodotto
 *   **Organic:** **Progetti di dimensioni ridotte**, team coesi e requisiti flessibili.

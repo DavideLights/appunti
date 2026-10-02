@@ -1416,15 +1416,17 @@ In generale, l'obiettivo è massimizzare la coesione di un modulo, poiché una *
 ## OBJECT ORIENTED DESIGN - OOD
 Object-Oriented Design è una fase del processo di sviluppo del software che segue l'Object-Oriented Analysis (OOA). La fase di OOD è suddivisa in due sottofasi principali:
 
-- **Fase Preliminare (o Architetturale, o di Sistema) di OOD:** Questa fase definisce la strategia generale per costruire una soluzione che risolva il problema specificato durante l'Object-Oriented Analysis (OOA). Le decisioni prese durante questa fase riguardano l'organizzazione complessiva del software, inclusa l'architettura di sistema.
-- **Fase Dettagliata (o degli Oggetti) di OOD:** Questa fase fornisce la definizione completa delle classi e delle associazioni che devono essere implementate, così come le strutture dati e gli algoritmi dei metodi che implementano le operazioni delle classi. Durante questa fase, si aggiungono dettagli tecnici alla soluzione hardware/software, definendo come il software deve essere implementato. Secondo un approccio di sviluppo iterativo e incrementale, il modello OOA viene "trasformato" nel modello OOD. Questa trasformazione aggiunge dettagli tecnici alla soluzione, specificando come il software deve essere implementato. Questo approccio consente di affinare gradualmente la progettazione in base a feedback e requisiti in evoluzione.
+- **Fase Preliminare (o Architetturale, o di Sistema) di OOD:** Questa fase definisce la strategia generale per costruire una soluzione che risolva il problema specificato durante l'Object-Oriented Analysis (OOA). Le decisioni prese durante questa fase riguardano l'organizzazione comple**ssiva del software, inclusa l'architettura di sistema.**
+- **Fase Dettagliata (o degli Oggetti) di OOD:** Questa fase fornisce la **definizione completa delle classi e delle associazioni che devono essere implementate**, così come le strutture dati e gli algoritmi dei metodi che implementano le operazioni delle classi. Durante questa fase, si aggiungono **dettagli tecnici alla soluzione hardware/software**, definendo come il software deve essere implementato. Secondo un approccio di **sviluppo iterativo e incrementale**, il modello OOA viene "trasformato" nel modello OOD. Questa trasformazione aggiunge dettagli tecnici alla soluzione, specificando come il software deve essere implementato. Questo approccio consente di affinare gradualmente la progettazione in base a feedback e requisiti in evoluzione.
 
 ## ARCHITETTURA DI SISTEMA
 L'architettura di sistema (system architecture) definisce la struttura dei componenti del sistema software insieme alle relazioni tra tali componenti e ai principi che guidano la progettazione e l'evoluzione del sistema. Sistemi Software Distribuiti: I sistemi software distribuiti prevedono che l'elaborazione sia distribuita su un insieme di host di esecuzione indipendenti, collegati da un'infrastruttura di rete (locale o a vasta area).
 
 - **Set di Host di Esecuzione Indipendenti:** L'elaborazione è distribuita su più host di esecuzione, visti dagli utenti come un singolo host.
 - **Infrastruttura di Rete:** Gli host sono collegati da un'infrastruttura di rete, che può essere di tipo locale (LAN) o di vasta area (WAN).
-- **Ruolo della Tecnologia Middleware:** La tecnologia middleware gioca un ruolo essenziale nella transizione da architetture centralizzate a distribuite. Middleware è il software che fornisce la connettività tra applicazioni distribuite. Si trova tra i livelli di applicazione e sistema operativo, offrendo servizi per stabilire l'interazione tra i processi delle varie applicazioni eseguite su host di rete. Architetture Client/Server (C/S): Le architetture client/server sono un modello di progettazione comune nei sistemi distribuiti. In questo modello, i processi coinvolti possono essere distinti in due ruoli principali:
+- **Ruolo della Tecnologia Middleware:** La tecnologia middleware gioca un ruolo essenziale nella transizione da architetture centralizzate a distribuite. **Middleware è il software che fornisce la connettività tra applicazioni distribuite**. Si trova tra i livelli di applicazione e sistema operativo, offrendo servizi per **stabilire l'interazione tra i processi delle varie applicazioni** eseguite su host di rete. 
+ 
+-Architetture Client/Server (C/S): Le architetture client/server sono un modello di progettazione comune nei sistemi distribuiti. In questo modello, i processi coinvolti possono essere distinti in due ruoli principali:
 
 - **Ruolo del Processo Cliente:** Il processo cliente interagisce direttamente con l'utente e svolge le seguenti funzioni:
 
@@ -1435,7 +1437,9 @@ L'architettura di sistema (system architecture) definisce la struttura dei compo
 
 - Risponde alle richieste dei clienti (non è il server che inizia la conversazione con il cliente).
 - Nasconde la complessità dell'intero sistema C/S all'utente.
-- Un server può a sua volta agire come un cliente, inoltrando la richiesta iniziale a un server secondario, senza far sapere al cliente o all'utente della catena di inoltro. Livelli di Applicazione (Application Layers): Nei sistemi software, i livelli di applicazione sono divisioni logiche o componenti che organizzano e separano le funzionalità del sistema.
+- Un server può a sua volta agire come un cliente, inoltrando la richiesta iniziale a un server secondario, senza far sapere al cliente o all'utente della catena di inoltro.
+ 
+Livelli di Applicazione (Application Layers): Nei sistemi software, i livelli di applicazione sono divisioni logiche o componenti che organizzano e separano le funzionalità del sistema.
 
 ![[p056-fig-024.jpeg|450]]
 
@@ -1455,12 +1459,21 @@ L'architettura di sistema (system architecture) definisce la struttura dei compo
 - Fornire meccanismi per garantire l'integrità e la coerenza dei dati. Architetture Client/Server a Due Livelli (Two-tier C/S): Nelle architetture client/server a due livelli, si distinguono due modelli principali:
 
 - **Modello Thin-Client:** Tutte le elaborazioni dell'applicazione e la gestione dei dati vengono eseguite sul server. Il client è responsabile solo dell'esecuzione del software di presentazione. Il client raccoglie l'input dell'utente, trasmette le richieste al server, e il server esegue tutte le operazioni di business logic e di gestione dei dati. Il risultato viene quindi restituito al client, che si occupa solo di presentare i dati all'utente.
-- **Modello Fat-Client:** Il server è responsabile solo della gestione dei dati. Il software sul client implementa sia la logica dell'applicazione che il software di presentazione. Il client è coinvolto attivamente nell'elaborazione dell'applicazione, eseguendo parte della logica aziendale e gestendo la presentazione dei dati. Il server fornisce i dati necessari, ma il client ha un ruolo significativo nell'elaborazione. Architetture Client/Server a Tre Livelli (Three-tier C/S): Nelle architetture client/server a tre livelli, ogni livello dell'architettura dell'applicazione viene eseguito su un processore separato. Questa divisione consente un miglioramento delle prestazioni rispetto all'approccio a due livelli, mantenendo una gestione più semplice rispetto a un modello fat-client.
+- **Modello Fat-Client:** Il server è responsabile solo della gestione dei dati. Il software sul client implementa sia la logica dell'applicazione che il software di presentazione. Il client è coinvolto attivamente nell'elaborazione dell'applicazione, eseguendo parte della logica aziendale e gestendo la presentazione dei dati. Il server fornisce i dati necessari, ma il client ha un ruolo significativo nell'elaborazione. 
+- 
+- 
+Architetture Client/Server a Tre Livelli (Three-tier C/S): Nelle architetture client/server a tre livelli, ogni livello dell'architettura dell'applicazione viene eseguito su un processore separato. Questa divisione consente un miglioramento delle prestazioni rispetto all'approccio a due livelli, mantenendo una gestione più semplice rispetto a un modello fat-client.
 
-- Ogni livello (presentazione, elaborazione dell'applicazione, gestione dei dati) è eseguito su un processore separato. Il client è responsabile solo della presentazione, il server dell'elaborazione dell'applicazione e della gestione dei dati. Architettura più scalabile: l'aggiunta di server può gestire aumenti di domanda. Architetture di Oggetti Distribuiti: Le architetture di oggetti distribuiti rompono la distinzione tradizionale tra client e server. Ogni oggetto distribuito può agire sia come client che come server, invocando metodi e rispondendo a invocazioni remote. La comunicazione tra oggetti è gestita da middleware basato sul concetto di "software bus", che rende trasparente la comunicazione remota. Architetture Basate su Componenti: Definiscono il software come un insieme di componenti software autonomi, riusabili e sostituibili che collaborano all'interno di un framework di componenti. Questo approccio sfrutta l'astrazione, in cui i componenti fungono da blocchi di costruzione per sistemi più complessi, nascondendo i dettagli delle strutture minori.
+- Ogni livello (presentazione, elaborazione dell'applicazione, gestione dei dati) è eseguito su un processore separato. Il client è responsabile solo della presentazione, il server dell'elaborazione dell'applicazione e della gestione dei dati. Architettura più scalabile: l'aggiunta di server può gestire aumenti di domanda. 
+
+**Architetture di Oggetti Distribuiti**: Le architetture di oggetti distribuiti rompono la distinzione tradizionale tra client e server. **Ogni oggetto distribuito può agire sia come client che come server**, *invocando metodi e rispondendo a invocazioni remote*. La comunicazione tra oggetti è gestita da middleware basato sul concetto di *"software bus", che rende trasparente la comunicazione remota*. 
+
+**Architetture Basate su Componenti**: Definiscono il software come un insieme di componenti software autonomi, riusabili e sostituibili che collaborano all'interno di un framework di componenti. Questo approccio sfrutta l'astrazione, in cui i componenti fungono da blocchi di costruzione per sistemi più complessi, nascondendo i dettagli delle strutture minori.
 
 - **Riutilizzo a Scatola Nera:** Il software è costruito attraverso il riutilizzo di componenti software come entità "black-box". Ogni componente ha dei "plug" con regole predefinite su come può essere collegato ad altri componenti. Invece di dover adattare la struttura di un software per modificare la sua funzionalità, un utente inserisce il comportamento desiderato nei parametri del componente.
-- **Adattabilità e Variabilità:** Gli sviluppatori adattano i componenti ai requisiti dell'applicazione senza dover modificare il software esistente. Garantisce variabilità attraverso l'incapsulamento delle strutture software come componenti astratte e adattabilità attraverso la composizione dei componenti con parametri specifici. Oggetti vs. componenti:
+- **Adattabilità e Variabilità:** Gli sviluppatori adattano i componenti ai requisiti dell'applicazione senza dover modificare il software esistente. Garantisce variabilità attraverso l'incapsulamento delle strutture software come componenti astratte e adattabilità attraverso la composizione dei componenti con parametri specifici. 
+- 
+Oggetti vs. componenti:
 
 - Gli oggetti incapsulano servizi, mentre i componenti sono astrazioni (che possono essere utilizzate per costruire sistemi orientati agli oggetti).
 - Gli oggetti hanno identità, stato e comportamento, e sono sempre entità in esecuzione; i componenti, d'altra parte, sono generalmente entità statiche necessarie al momento della costruzione del sistema (e non necessariamente esistono durante l'esecuzione).
@@ -1484,11 +1497,16 @@ L'architettura di sistema (system architecture) definisce la struttura dei compo
 - **Utilizzo:** Gli utenti finali interagiscono direttamente con l'applicazione per ottenere i benefici previsti senza dover necessariamente comprendere la complessità del framework utilizzato.
 
 ## SERVICE ORIENTED ARCHITECTURE (SOA)
-La SOA è un'architettura software distribuita che è composta da più servizi autonomi. In questa architettura, i servizi sono distribuiti in modo tale che possano essere eseguiti su nodi diversi forniti da diversi provider di servizi. L'obiettivo principale di SOA è progettare servizi come componenti autonomi e riutilizzabili. Ciò significa che i servizi devono essere autosufficienti e indipendenti. SOA Protocols: Per consentire la comunicazione tra i servizi e lo scambio di informazioni, vengono forniti protocolli standard basati su Internet. Ogni servizio ha una descrizione del servizio che consente alle applicazioni di scoprire e comunicare con il servizio. Questa descrizione definisce il nome del servizio, la sua posizione e i requisiti di scambio di dati. Service Providers and Consumers: Un service provider è un'entità che supporta servizi utilizzati da più client (o consumatori di servizi). A differenza delle architetture client/server tradizionali, le SOA si basano sul concetto di servizi debolmente accoppiati che possono essere scoperti e collegati dai client (chiamati anche consumatori di servizi o richiedenti di servizi) con l'assistenza di broker di servizi. In sintesi, la SOA promuove la creazione di sistemi software flessibili, scalabili e riutilizzabili, in cui le funzionalità sono fornite come servizi indipendenti che possono essere combinati per soddisfare le esigenze specifiche di un'applicazione o di un processo aziendale. La comunicazione tra questi servizi avviene attraverso protocolli standard, e i servizi sono progettati per essere debolmente accoppiati, consentendo una maggiore flessibilità e riusabilità nel sistema complessivo. Principali concetti di progettazione SOA:
+La SOA è un'architettura software distribuita che è composta da più **servizi autonomi**. In questa architettura, i servizi sono **distribuiti in modo tale che possano essere eseguiti su nodi diversi forniti da diversi provider di servizi**. L'obiettivo principale di SOA è progettare **servizi come componenti autonomi e riutilizzabili**. Ciò significa che i **servizi devono essere autosufficienti e indipendenti**. 
 
-- **Componenti autonomi riutilizzabili:** L'obiettivo principale della SOA è progettare servizi come componenti autonomi e riutilizzabili. Questo significa che ogni servizio dovrebbe essere autocontenuto e progettato per essere utilizzato in modo indipendente da altri servizi.
-- **Accoppiamento debole:** I servizi devono essere debolmente accoppiati, il che significa che le dipendenze tra i servizi devono essere ridotte al minimo. Questo favorisce la flessibilità e la facilità di aggiornamento o sostituzione di un servizio senza influire sugli altri.
-- **Servizi di coordinamento:** Invece di avere un servizio che dipende direttamente da un altro, vengono forniti servizi di coordinamento in situazioni in cui più servizi devono essere acceduti e l'accesso a essi deve essere sequenziato. Ciò può includere modelli come Service Registration, Service Brokering e Service Discovery.
+SOA **Protocols**: *Per consentire la comunicazione tra i servizi* e lo scambio di informazioni, vengono forniti **protocolli standard** basati su Internet. Ogni servizio ha una descrizione del servizio che consente alle applicazioni di scoprire e comunicare con il servizio. Questa descrizione definisce il nome del servizio, la sua posizione e i requisiti di scambio di dati. 
+
+**Service Providers and Consumers**: Un service provider è un'entità che supporta **servizi utilizzati da più client** (o consumatori di servizi). A differenza delle architetture client/server tradizionali, le SOA si basano sul concetto di *servizi debolmente accoppiati che possono essere scoperti e collegati dai client* (chiamati anche consumatori di servizi o richiedenti di servizi) con l'assistenza di **broker di servizi**. In sintesi, la *SOA promuove la creazione di sistemi software flessibili, scalabili e riutilizzabili, in cui le funzionalità sono fornite come **servizi indipendenti che possono essere combinati per soddisfare** le esigenze specifiche di un'applicazione o di un processo aziendale*. La *comunicazione tra questi servizi avviene attraverso protocolli standard*, e i servizi sono progettati per essere debolmente accoppiati, consentendo una maggiore flessibilità e riusabilità nel sistema complessivo. 
+
+Principali concetti di progettazione SOA:
+- **Componenti autonomi riutilizzabili:** L'obiettivo principale della SOA è progettare servizi come componenti autonomi e riutilizzabili. Questo significa che *ogni servizio dovrebbe essere autocontenuto e progettato per essere utilizzato in modo indipendente* da altri servizi.
+- **Accoppiamento debole:** I servizi devono essere debolmente accoppiati, il che significa che *le dipendenze tra i servizi devono essere ridotte al minimo*. Questo favorisce la flessibilità e la facilità di aggiornamento o sostituzione di un servizio senza influire sugli altri.
+- **Servizi di coordinamento:** Invece di avere un servizio che **dipende** direttamente da un altro, vengono forniti servizi di coordinamento in situazioni in cui più servizi devono essere acceduti e l'accesso a essi deve essere sequenziato. Ciò può includere modelli come Service Registration, Service Brokering e Service Discovery.
 - **Pattern architetturali:** Vengono descritti diversi modelli architetturali per applicazioni orientate ai servizi, tra cui modelli di broker, modelli di transazione (come Two-Phase Commit, Compound e Long-Living Transaction), e modelli di negoziazione.
 - **Autonomia:** I servizi devono essere autonomi e indipendenti, gestendo internamente la propria logica e stato.
 - **Astrazione:** Nascondere i dettagli interni del servizio, fornendo solo le informazioni essenziali attraverso il contratto.
@@ -1559,7 +1577,9 @@ Il "Service Discovery Pattern" (Modello di Scoperta dei Servizi), anche chiamato
 
 - **Registrazione dei Servizi:** I fornitori di servizi registrano i propri servizi presso un registro dei servizi. Questa registrazione include informazioni sul servizio stesso e una descrizione del servizio, spesso realizzata utilizzando il linguaggio di descrizione dei servizi Web (WSDL).
 - **Ricerca dei Servizi:** I clienti che cercano un particolare servizio possono consultare il registro dei servizi. Questo può essere particolarmente utile in scenari in cui i clienti non conoscono a priori la disponibilità o la posizione di un servizio.
-- **Utilizzo di WSDL:** Il linguaggio di descrizione dei servizi Web (WSDL) è uno strumento comune per descrivere cosa fa un servizio, dove si trova e come invocarlo. I clienti possono utilizzare queste descrizioni per comprendere come interagire con un servizio specifico. Brokering and Discovery Services: In un ambiente distribuito, un broker di oggetti è un intermediario nelle interazioni tra clienti e servizi. Un esempio di tecnologia di intermediazione è un broker di servizi Web.
+- **Utilizzo di WSDL:** Il linguaggio di descrizione dei servizi Web (WSDL) è uno strumento comune per descrivere cosa fa un servizio, dove si trova e come invocarlo. I clienti possono utilizzare queste descrizioni per comprendere come interagire con un servizio specifico. 
+
+Brokering and Discovery Services: In un ambiente distribuito, un broker di oggetti è un intermediario nelle interazioni tra clienti e servizi. Un esempio di tecnologia di intermediazione è un broker di servizi Web.
 
 - **UDDI Framework per Web Services:** Il framework di Universal Description, Discovery, and Integration (UDDI) è utilizzato per l'integrazione dei servizi Web. Si compone di documenti correlati e uno schema XML che definisce un protocollo basato su SOAP per registrare e scoprire i servizi Web.
 - **Utilizzo di UDDI:** Un broker di servizi Web può utilizzare il framework UDDI per fornire un meccanismo attraverso il quale i clienti possono trovare dinamicamente i servizi sul Web. In sostanza, questi servizi di registrazione e scoperta sono fondamentali in un ambiente distribuito per consentire una dinamica individuazione e utilizzo dei servizi. Consentono ai fornitori di servizi di pubblicizzare le loro offerte e ai clienti di trovare e utilizzare dinamicamente i servizi desiderati.
@@ -1604,7 +1624,10 @@ I servizi in un sistema software spesso encapsulano dati o forniscono accesso a 
 - **Atomicità (A):** Le transazioni sono unità indivisibili di lavoro. Sono o completamente completate (validate) o annullate (rollback), il che significa che se una parte della transazione fallisce, l'intera transazione viene annullata per mantenere la coerenza.
 - **Coerenza (C):** Dopo che una transazione viene eseguita, il sistema deve trovarsi in uno stato coerente. Questo garantisce che i dati rispettino le regole predefinite e i vincoli di integrità.
 - **Isolamento (I):** Il comportamento di una transazione non deve essere influenzato da altre transazioni. Ogni transazione dovrebbe essere eseguita in isolamento dalle altre, impedendo interferenze reciproche.
-- **Durabilità (D):** Le modifiche apportate da una transazione sono permanenti dopo il completamento. Queste modifiche devono sopravvivere a guasti di sistema, garantendo che i dati persistano anche in caso di arresto improvviso o perdita di alimentazione. In sintesi, queste proprietà ACID sono fondamentali per garantire l'affidabilità, l'integrità e la coerenza dei dati in un sistema distribuito in cui più servizi potrebbero interagire contemporaneamente. L'obiettivo è mantenere un alto livello di integrità dei dati e prevenire problemi che potrebbero derivare dall'accesso e dalla modifica concorrente dei dati da parte di diverse parti del sistema. Protocollo del Commit a Due Fasi: Il protocollo a due fasi (Two-Phase Commit Protocol) è un meccanismo utilizzato per gestire transazioni atomiche in sistemi distribuiti. Una transazione atomica è un insieme di operazioni che devono essere eseguite in modo atomico, cioè in modo tale che o tutte le operazioni vengano completate con successo o nessuna di esse venga eseguita affatto.
+- **Durabilità (D):** Le modifiche apportate da una transazione sono permanenti dopo il completamento. Queste modifiche devono sopravvivere a guasti di sistema, garantendo che i dati persistano anche in caso di arresto improvviso o perdita di alimentazione. In sintesi, queste proprietà ACID sono fondamentali per garantire l'affidabilità, l'integrità e la coerenza dei dati in un sistema distribuito in cui più servizi potrebbero interagire contemporaneamente. L'obiettivo è mantenere un alto livello di integrità dei dati e prevenire problemi che potrebbero derivare dall'accesso e dalla modifica concorrente dei dati da parte di diverse parti del sistema. 
+- 
+
+Protocollo del Commit a Due Fasi: Il protocollo a due fasi (Two-Phase Commit Protocol) è un meccanismo utilizzato per gestire transazioni atomiche in sistemi distribuiti. Una transazione atomica è un insieme di operazioni che devono essere eseguite in modo atomico, cioè in modo tale che o tutte le operazioni vengano completate con successo o nessuna di esse venga eseguita affatto.
 
 - **CommitCoordinator (Coordinatore di Commit):** Questo è il componente responsabile della coordinazione della transazione. Il suo ruolo principale è garantire che tutti i partecipanti alla transazione siano d'accordo sul commit (impegno) o sull'annullamento della transazione. Il CommitCoordinator sincronizza le fasi di preparazione e di commit tra i partecipanti.
 - **Partecipanti:** Ogni nodo coinvolto nella transazione è rappresentato da un servizio partecipante.
@@ -1712,12 +1735,12 @@ Deployment Model Modeling Elements (Elementi di Modellazione del Modello di Depl
 <!-- Pagina PDF 67 -->
 
 ## DESIGN PATTERNS
-La progettazione del software orientato agli oggetti è un processo complesso che coinvolge la creazione di programmi informatici organizzati in modo che le entità fondamentali siano gli "oggetti", che raggruppano dati e funzionalità correlate. Ogni oggetto è un'istanza di una "classe", che definisce la struttura e il comportamento dell'oggetto. Una delle maggiori difficoltà che il progettista deve affrontare è l’individuazione di un insieme di oggetti. Gli oggetti devono essere identificati correttamente, devono essere riusabili e le relazioni tra di essi devono essere ben definite. Questo processo richiede una comprensione approfondita del dominio del problema e delle relazioni tra le entità coinvolte. Caratteristiche:
+La progettazione del software orientato agli oggetti è un processo complesso che coinvolge la creazione di programmi informatici organizzati in modo che le *entità fondamentali siano gli "oggetti", che raggruppano dati e funzionalità correlate*. *Ogni oggetto è un'istanza di una "classe", che definisce la struttura e il comportamento dell'oggetto*. Una delle maggiori difficoltà che il progettista deve affrontare è l’individuazione di un insieme di oggetti. Gli oggetti devono essere identificati correttamente, devono essere riusabili e le relazioni tra di essi devono essere ben definite. Questo processo richiede una comprensione approfondita del dominio del problema e delle relazioni tra le entità coinvolte. Caratteristiche:
 
-- Gli oggetti dovrebbero rappresentare soluzioni a problemi comuni che si presentano durante lo sviluppo del software. Favoriscono il riuso del codice, impedendo al progettista di dover "reinventare la ruota" ogni volta che affronta un nuovo problema. Consentono di imparare dagli altri, evitando errori comuni e promuovendo la condivisione di conoscenze.
-- **Linguaggio comune:** Gli oggetti consentono di definire un linguaggio comune che semplifica la comunicazione tra coloro che lavorano al progetto. Questo riduce la possibilità di fraintendimenti e promuove una comprensione più chiara tra i membri del team.
-- **Strutture valide:** Indirizzano verso la scrittura di codice che utilizza strutture valide, migliorando la qualità complessiva del software.
-- **Buona progettazione:** In genere, portano a una buona progettazione del software, semplificando la manutenzione in tutte le sue forme (adattativa, perfettiva, preventiva e correttiva).
+- **Gli oggetti dovrebbero rappresentare soluzioni a problemi comuni che si presentano durante lo sviluppo del software**. Favoriscono il riuso del codice, impedendo al progettista di dover "reinventare la ruota" ogni volta che affronta un nuovo problema. Consentono di imparare dagli altri, evitando errori comuni e promuovendo la condivisione di conoscenze.
+- **Linguaggio comune:** Gli oggetti consentono di definire un **linguaggio comune che semplifica la comunicazione tra coloro che lavorano al progetto**. Questo riduce la possibilità di fraintendimenti e promuove una comprensione più chiara tra i membri del team.
+- **Strutture valide:** **Indirizzano verso la scrittura di codice che utilizza strutture valide**, migliorando la qualità complessiva del software.
+- **Buona progettazione:** In genere, portano a una **buona progettazione del software, semplificando la manutenzione** in tutte le sue forme (adattativa, perfettiva, preventiva e correttiva).
 - **Limitazioni:** Nonostante i vantaggi, la progettazione orientata agli oggetti non risolve tutti i problemi.
 
 ## CLASSIFICAZIONE
@@ -1750,44 +1773,54 @@ La descrizione dei design pattern fornisce un approfondimento dettagliato su com
 - **Pattern correlati:** Indica altri design pattern correlati, offrendo un collegamento a soluzioni simili o complementari che possono essere considerate durante il processo di progettazione. In sintesi, la descrizione dei design pattern fornisce una guida completa per comprendere, applicare e implementare questi schemi di soluzione nel contesto dello sviluppo del software.
 
 ## FRAMEWORK
-Un framework è un insieme di strumenti e convenzioni che forniscono una struttura per lo sviluppo di software. A differenza di una libreria, che è un insieme di funzioni che possono essere chiamate dal tuo codice, un framework è più simile a un'architettura predefinita che fornisce linee guida su come organizzare e sviluppare il tuo software.
+Un framework è un insieme di strumenti e convenzioni che forniscono una struttura per lo sviluppo di software. A differenza di una libreria, che è un insieme di funzioni che possono essere chiamate dal tuo codice, **un framework è più simile a un'architettura predefinita che fornisce linee guida su come organizzare e sviluppare il tuo software.**
 
-- **Design Riutilizzabile:** Un framework offre un design riutilizzabile per un sistema o una parte di esso. Questo significa che è possibile utilizzare il framework come base per progetti simili senza dover reinventare la ruota ogni volta.
-- **Classi Astratte:** Nel contesto dei framework, le classi astratte sono classi che contengono almeno un metodo astratto, ovvero un metodo che deve essere implementato dalle classi derivate. Le classi astratte forniscono uno scheletro o un template per le implementazioni specifiche.
-- **Personalizzazione da Parte dello Sviluppatore:** Gli sviluppatori utilizzano il framework come uno scheletro per la propria applicazione. Personalizzano il framework implementando le classi astratte e le interfacce secondo le esigenze specifiche del loro progetto.
+- **Design Riutilizzabile:** Un framework offre un **design riutilizzabile per un sistema o una parte di esso**. Questo significa che è possibile utilizzare il framework come base per progetti simili senza dover reinventare la ruota ogni volta.
+- **Classi Astratte:** Nel contesto dei framework, le classi astratte sono classi che **contengono almeno un metodo astratto, ovvero un metodo che deve essere implementato** dalle classi derivate. Le classi astratte forniscono uno scheletro o un template per le implementazioni specifiche.
+- **Personalizzazione da Parte dello Sviluppatore:** Gli sviluppatori utilizzano il framework come uno **scheletro per la propria applicazione**. Personalizzano il framework implementando le classi astratte e le interfacce secondo le esigenze specifiche del loro progetto.
 - **Struttura Statica del Sistema:** Il framework definisce la struttura statica del sistema, cioè l'organizzazione e la relazione tra le diverse parti del software. Vantaggi:
 
 - **Riuso del Design:** Gli sviluppatori possono riutilizzare il design del framework come punto di partenza per sviluppare nuove applicazioni.
-- **Riuso del Codice:** Il codice già implementato nel framework può essere riutilizzato, contribuendo a una maggiore efficienza nello sviluppo.
-- **Progettazione Orientata agli Oggetti:** I framework sono spesso basati su principi di progettazione orientata agli oggetti, che promuovono la modularità e la manutenibilità del codice. Classe Astratta: Una classe astratta è una classe che contiene almeno un metodo astratto, cioè un metodo che è dichiarato, ma non è implementato nella classe astratta stessa. Le classi astratte forniscono uno scheletro o un modello per le classi derivate che devono implementare i metodi astratti. Pattern: I pattern sono spesso utilizzati nella progettazione di framework. I pattern sono soluzioni generali per problemi ricorrenti che si verificano durante lo sviluppo del software. Essi possono essere considerati come "mattoni" che vengono utilizzati nella costruzione di un framework, fornendo soluzioni comuni e testate per determinati tipi di problemi.
+- **Riuso del Codice:** Il **codice già implementato nel framework** può essere riutilizzato, contribuendo a una maggiore efficienza nello sviluppo.
+- **Progettazione Orientata agli Oggetti:** I framework sono spesso basati su principi di progettazione orientata agli oggetti, che promuovono la modularità e la manutenibilità del codice. 
+- 
+Classe Astratta: Una classe astratta è una classe che contiene almeno un metodo astratto, cioè un metodo che è dichiarato, ma non è implementato nella classe astratta stessa. Le classi astratte forniscono uno scheletro o un modello per le classi derivate che devono implementare i metodi astratti. Pattern: I pattern sono spesso utilizzati nella progettazione di framework. I pattern sono soluzioni generali per problemi ricorrenti che si verificano durante lo sviluppo del software. Essi possono essere considerati come "mattoni" che vengono utilizzati nella costruzione di un framework, fornendo soluzioni comuni e testate per determinati tipi di problemi.
 
 <!-- Pagina PDF 69 -->
 
 ## ABSTRACT FACTORY
-L'Abstract Factory è un pattern creazionale che fornisce un'interfaccia per la creazione di famiglie di oggetti correlati senza specificarne le classi concrete. Questo è particolarmente utile quando si desidera sviluppare un sistema indipendente dalle modalità di creazione dei prodotti con cui opera. Motivazione: Un esempio comune di utilizzo dell'Abstract Factory è nella realizzazione di strumenti per lo sviluppo di interfacce utente (UI) che devono supportare diversi tipi di "look & feel". Per garantire la portabilità di un'applicazione tra diverse modalità di interfaccia utente, è importante che gli oggetti non siano direttamente "cablati" nel codice, ma che l'applicazione utilizzi un'interfaccia comune fornita dalla factory. Classificazione: L'Abstract Factory rientra nella categoria creazionale basato su oggetti, poiché si concentra sulla creazione di oggetti, in particolare di famiglie di oggetti correlati. Applicabilità:
+L'Abstract Factory è un pattern creazionale che fornisce un'interfaccia per la **creazione di famiglie di oggetti correlati senza specificarne le classi concrete**. Questo è particolarmente utile quando si desidera sviluppare un sistema indipendente dalle modalità di creazione dei prodotti con cui opera. 
+
+Motivazione: Un esempio comune di utilizzo dell'Abstract Factory è nella **realizzazione di strumenti per lo sviluppo di interfacce utente** (UI) che devono supportare diversi tipi di "look & feel". Per garantire la portabilità di un'applicazione tra diverse modalità di interfaccia utente, è importante che gli oggetti non siano direttamente "cablati" nel codice, ma che l'applicazione utilizzi un'interfaccia comune fornita dalla factory. 
+
+Classificazione: L'Abstract Factory rientra nella categoria creazionale basato su oggetti, poiché si concentra sulla creazione di oggetti, in particolare di famiglie di oggetti correlati. 
+
+Applicabilità:
 
 ![[p069-fig-032.png|700]]
 
-- A sistemi che devono essere indipendenti dalle modalità di creazione dei prodotti con cui operano.
-- A sistemi che devono poter essere configurati per utilizzare famiglie di prodotti diverse.
-- Il client (l'applicazione) non deve essere legato a una specifica famiglia di oggetti. Partecipanti:
+- A **sistemi che devono essere indipendenti dalle modalità di creazione** dei prodotti con cui operano.
+- A sistemi che devono poter essere configurati per **utilizzare famiglie di prodotti diverse**.
+- Il client (l'applicazione) non deve essere legato a una specifica famiglia di oggetti. 
 
+Partecipanti:
 - **AbstractFactory e ConcreteFactory:** 
-
 - L'AbstractFactory dichiara un'interfaccia per la creazione di prodotti astratti.
-- La ConcreteFactory implementa l'interfaccia dell'AbstractFactory per creare prodotti concreti.
-- **AbstractProduct e ConcreteProduct:** 
+- La **ConcreteFactory implementa l'interfaccia dell'AbstractFactory** per creare prodotti concreti.
 
-- L'AbstractProduct dichiara un'interfaccia comune per un tipo di prodotto.
-- La ConcreteProduct implementa l'interfaccia dell'AbstractProduct e fornisce l'implementazione concreta di un prodotto.
-- **Applicazione Client:** Utilizza le interfacce definite da AbstractFactory e AbstractProduct per interagire con i prodotti senza dover conoscere le classi concrete. Conseguenze:
-
+**AbstractProduct e ConcreteProduct:** 
+- L'AbstractProduct dichiara un'**interfaccia comune** per un tipo di prodotto.
+- La ConcreteProduct **implementa l'interfaccia** dell'AbstractProduct e fornisce l'implementazione concreta di un prodotto.
+- **Applicazione Client:** Utilizza le interfacce definite da AbstractFactory e AbstractProduct per interagire con i prodotti senza dover conoscere le classi concrete. 
+Conseguenze:
 - Le classi concrete sono isolate e sotto controllo.
 - La famiglia di prodotti può essere cambiata rapidamente perché l'intera factory compare in un unico punto del codice.
 - Aggiungere nuove famiglie di prodotti richiede la ricompilazione poiché l'insieme di prodotti gestiti è legato all'interfaccia della factory.
 
 ## FACTORY METHOD
-Il Factory Method è un pattern creazionale che ha come scopo principale quello di definire un'interfaccia per creare un oggetto in una classe, lasciando alle sottoclassi il compito di modificare il tipo di oggetto che verrà istanziato. Questo consente di decidere dinamicamente, a tempo di esecuzione, quale specifico oggetto deve essere creato. Motivazione: Nel contesto dei framework, le classi astratte definiscono spesso le relazioni tra gli elementi del dominio, ma è compito delle sottoclassi fornire l'implementazione concreta degli oggetti. Il Factory Method è utile quando una classe non può sapere in anticipo quali classi di oggetti deve creare o quando si desidera che le sottoclassi scelgano gli oggetti da creare.
+Il Factory Method è un pattern creazionale che ha come scopo principale quello di definire un'interfaccia per creare un oggetto in una classe, lasciando alle sottoclassi il compito di modificare il tipo di oggetto che verrà istanziato. Questo consente di decidere dinamicamente, a tempo di esecuzione, quale specifico oggetto deve essere creato. 
+
+Motivazione: Nel contesto dei framework, le classi astratte definiscono spesso le relazioni tra gli elementi del dominio, ma è compito delle sottoclassi fornire l'implementazione concreta degli oggetti. Il Factory Method è utile quando una classe non può sapere in anticipo quali classi di oggetti deve creare o quando si desidera che le sottoclassi scelgano gli oggetti da creare.
 
 ![[p069-fig-033.png|700]]
 
@@ -1812,7 +1845,13 @@ Classificazione: Il Factory Method è un pattern creazionale basato su classi, p
 - Fornisce una maggiore flessibilità alle sottoclassi per cambiare il tipo di oggetto creato senza modificare il codice client. In breve, il Factory Method è utile quando si desidera che le sottoclassi forniscano l'implementazione concreta degli oggetti da creare, offrendo una maggiore flessibilità nel cambiare il tipo di oggetto istanziato senza modificare il codice cliente.
 
 ## ADAPTER
-L'Adapter è un pattern strutturale utilizzato quando si ha una classe con un'interfaccia incompatibile con quella richiesta da un client, e si desidera adattare l'interfaccia della classe esistente in modo che possa essere utilizzata dal client senza modificare il codice sorgente della classe stessa. In altre parole, fornisce un modo per far collaborare classi con interfacce diverse che altrimenti non potrebbero lavorare insieme. Motivazione: Immagina di avere un editor che consente di disegnare e comporre elementi grafici, dove l'astrazione chiave è rappresentata da un singolo oggetto grafico. Ora, se vuoi integrare un nuovo componente che, per qualche motivo, ha un'interfaccia incompatibile con l'editor, puoi utilizzare l'Adapter per creare un ponte tra l'interfaccia del nuovo componente (Adaptee) e quella richiesta dall'editor (Target). Applicabilità: Si usa quando si vuole riutilizzare una classe esistente, ma la sua interfaccia è incompatibile con quella desiderata. Partecipanti:
+L'Adapter è un pattern strutturale utilizzato quando **si ha una classe con un'interfaccia incompatibile con quella richiesta da un client**, e si desidera *adattare l'interfaccia della classe esistente in modo che possa essere utilizzata dal client senza modificare il codice sorgente* della classe stessa. In altre parole, fornisce un modo per far *collaborare classi con interfacce diverse che altrimenti non potrebbero lavorare insieme*. 
+
+Motivazione: Immagina di avere un *editor che consente di disegnare e comporre elementi grafici*, dove l'astrazione chiave è rappresentata da un **singolo oggetto grafico**. Ora, se vuoi integrare un nuovo componente che, per qualche motivo, *ha un'interfaccia incompatibile con l'editor,* puoi utilizzare l'Adapter per creare un ponte tra l'interfaccia del nuovo componente (Adaptee) e quella richiesta dall'editor (Target). 
+
+**Applicabilità**: Si usa quando si vuole **riutilizzare una classe esistente, ma la sua interfaccia è incompatibile** con quella desiderata. 
+
+Partecipanti:
 
 ![[p070-fig-034.png|700]]
 
@@ -1828,7 +1867,11 @@ L'Adapter è un pattern strutturale utilizzato quando si ha una classe con un'in
 In sintesi, l'Adapter è un pattern utile quando si ha una classe esistente con un'interfaccia incompatibile e si desidera riutilizzarla in un contesto in cui si richiede un'interfaccia diversa. L'Adapter funge da intermediario, consentendo al client di interagire con l'Adaptee attraverso un'interfaccia compatibile.
 
 ## COMPOSITE
-Il Composite è un pattern strutturale utilizzato per creare strutture gerarchiche di oggetti, in modo che oggetti singoli (Leaf) e oggetti composti (Composite) possano essere trattati in modo uniforme. Questo è particolarmente utile in situazioni in cui si desidera manipolare una gerarchia di oggetti in modo uniforme, ad esempio nelle applicazioni grafiche in cui si devono gestire sia le forme geometriche di base che gli oggetti più complessi costruiti da queste forme. Motivazione: Nei contesti come gli editor grafici, è comune avere oggetti singoli come linee o cerchi, ma anche oggetti composti come gruppi di figure. Il Composite consente di trattare entrambi i tipi di oggetti in modo uniforme, semplificando il codice del client. Classificazione: Il Composite è un pattern strutturale basato su oggetti, poiché coinvolge la composizione di oggetti per formare strutture più complesse. Applicabilità: Si usa quando si vogliono rappresentare gerarchie di oggetti in modo che oggetti semplici e oggetti compositi siano trattati in modo uniforme. Partecipanti:
+Il Composite è un pattern strutturale utilizzato per creare strutture **gerarchiche di oggetti**, in modo che **oggetti singoli** (Leaf) e oggetti **composti** (Composite) possano essere trattati in **modo uniforme**. Questo è particolarmente utile in situazioni in cui si desidera **manipolare una gerarchia di oggetti in modo uniforme**, ad esempio nelle applicazioni grafiche in cui si devono gestire sia le forme geometriche di base che gli oggetti più complessi costruiti da queste forme. 
+
+Motivazione: Nei contesti come gli editor grafici, è comune avere oggetti singoli come linee o cerchi, ma anche oggetti composti come gruppi di figure. Il Composite consente di trattare entrambi i tipi di oggetti in modo uniforme, semplificando il codice del client. Classificazione: Il Composite è un pattern strutturale basato su oggetti, poiché **coinvolge la composizione di oggetti per formare strutture più complesse**. 
+
+Applicabilità: Si usa quando si vogliono rappresentare gerarchie di oggetti in modo che **oggetti semplici e oggetti compositi siano trattati in modo uniforme**. Partecipanti:
 
 ![[p071-fig-035.png|700]]
 
@@ -1844,13 +1887,19 @@ Il Composite è un pattern strutturale utilizzato per creare strutture gerarchic
 - Può rendere il sistema troppo generico. Non è possibile imporre restrizioni su quali tipi di oggetti un oggetto composito può contenere. In sintesi, il Composite è utile quando si desidera trattare in modo uniforme sia gli oggetti singoli che quelli composti. La sua struttura gerarchica consente una maggiore flessibilità nella creazione e manipolazione di strutture complesse di oggetti.
 
 ## DECORATOR
-Il pattern Decorator è un pattern strutturale il cui scopo principale è aggiungere dinamicamente funzionalità (responsabilità) ad un oggetto senza modificare la sua interfaccia. Questo è particolarmente utile quando si vuole estendere il comportamento di un oggetto in modo flessibile e dinamico, senza ricorrere all'eccessivo uso di sottoclassi. Motivazione: Uno scenario classico di applicazione per il pattern Decorator si trova nell'implementazione di interfacce utente, dove si possono aggiungere dinamicamente funzionalità come un testo scorrevole o un particolare
+Il pattern Decorator è un pattern strutturale il cui scopo principale è **aggiungere dinamicamente funzionalità** (responsabilità) ad un oggetto senza modificare la sua interfaccia. Questo è particolarmente utile quando si vuole ***estendere il comportamento** di un oggetto in modo flessibile e dinamico, senza ricorrere all'**eccessivo** uso di **sottoclassi***. 
+
+**Motivazione**: Uno scenario classico di applicazione per il pattern Decorator si trova nell'**implementazione di interfacce utente**, dove si possono aggiungere dinamicamente funzionalità come un testo scorrevole o un particolare
 
 ![[p071-fig-036.png|600]]
 
 <!-- Pagina PDF 72 -->
 
-bordo a un oggetto senza modificare la sua struttura di base. L'alternativa statica, come il subclassing, può essere limitata poiché è a livello di classe e non di oggetto. Classificazione: Il Decorator è un pattern strutturale basato su oggetti, poiché coinvolge la composizione di oggetti per estendere le loro funzionalità. Applicabilità:
+bordo a un oggetto **senza modificare la sua struttura di base**. L'alternativa statica, come il subclassing, può essere limitata poiché è a livello di classe e non di oggetto. 
+
+**Classificazione**: Il Decorator è un pattern strutturale basato su oggetti, **poiché coinvolge la composizione di oggetti** per estendere le loro funzionalità. 
+
+Applicabilità:
 
 - Si applica quando è necessario aggiungere responsabilità agli oggetti in modo trasparente e dinamico.
 - Si applica quando il subclassing non è adatto o potrebbe generare una gerarchia di classi troppo complessa. Partecipanti:
@@ -1872,19 +1921,23 @@ bordo a un oggetto senza modificare la sua struttura di base. L'alternativa stat
 - È anche simile al pattern Adapter, ma mentre l'Adapter si limita a un adattamento limitato di un'interfaccia, il Decorator estende le funzionalità dell'oggetto in modo più flessibile. In breve, il pattern Decorator è utile quando si desidera estendere le funzionalità di un oggetto in modo dinamico e flessibile, senza dover ricorrere a una gerarchia di classi troppo complessa.
 
 ## OBSERVER
-Il pattern Observer è un pattern comportamentale che ha come scopo principale definire una dipendenza uno a molti tra oggetti, mantenendo basso il grado di accoppiamento. In altre parole, il pattern Observer consente a un oggetto, chiamato Subject, di notificare automaticamente gli oggetti interessati, chiamati Observer, quando il suo stato cambia, in modo che tutti gli oggetti dipendenti possano aggiornarsi automaticamente. Motivazione: Un tipico scenario in cui si applica il pattern Observer è nelle applicazioni con interfaccia grafica (GUI), realizzate secondo il paradigma Model-View-Control. Quando il Model cambia, gli oggetti che implementano la View devono aggiornarsi per riflettere correttamente lo stato attuale del Model. Classificazione: Il pattern Observer è un pattern comportamentale basato su oggetti, poiché coinvolge la definizione di come gli oggetti interagiscono tra loro durante il cambiamento di stato.
+Il pattern Observer è un pattern comportamentale che ha come scopo principale definire una **dipendenza uno a molti tra oggetti**, mantenendo basso il grado di accoppiamento. In altre parole, il pattern *Observer consente a un oggetto, chiamato Subject, di notificare automaticamente gli oggetti interessati, chiamati Observer, quando il suo stato cambia, in modo che tutti gli oggetti dipendenti possano aggiornarsi automaticamente*. 
+Motivazione: Un tipico scenario in cui si applica il pattern Observer è nelle applicazioni con interfaccia grafica (GUI), realizzate secondo il paradigma **Model-View-Control**. Quando il Model cambia, gli oggetti che implementano la View devono aggiornarsi per riflettere correttamente lo stato attuale del Model. Classificazione: Il pattern Observer è un pattern comportamentale basato su oggetti, poiché **coinvolge la definizione di come gli oggetti interagiscono tra loro** durante il cambiamento di stato.
 
 ![[p072-fig-037.jpeg|700]]
 
 <!-- Pagina PDF 73 -->
 
-L'approccio corretto: Il pattern Observer prevede che gli osservatori si registrino presso l'oggetto osservato. In questo modo, è l'oggetto osservato che notifica ogni cambiamento di stato agli osservatori. Quando un osservatore rileva la notifica, può interrogare l'oggetto osservato o svolgere altre operazioni indipendenti dal valore specifico dello stato. Applicabilità:
+L'approccio corretto: Il pattern Observer prevede che gli **osservatori si registrino presso l'oggetto osservato**. In questo modo, è l'**oggetto osservato che notifica ogni cambiamento** di stato agli osservatori. Quando un osservatore rileva la notifica, può interrogare l'oggetto osservato o svolgere altre operazioni indipendenti dal valore specifico dello stato. 
+
+Applicabilità:
 
 - Si applica quando un'azione può essere scomposta in due ambiti, ciascuno dei quali è incapsulato in oggetti separati per mantenere basso il livello di accoppiamento.
-- È utile per gestire le modifiche di oggetti conseguenti alla variazione dello stato di un oggetto. Partecipanti:
+- *È utile per gestire le modifiche di oggetti conseguenti alla variazione dello stato di un oggetto*. 
+ 
+Partecipanti:
 
 - **Subject e ConcreteSubject:** 
-
 - `Subject` definisce l'interfaccia comune per l'oggetto osservato.
 - `ConcreteSubject` è l'oggetto osservato concreto che implementa l'interfaccia di `Subject`.
 - **Observer e ConcreteObserver:** 
@@ -1897,12 +1950,18 @@ L'approccio corretto: Il pattern Observer prevede che gli osservatori si registr
 - Attenzione perché una modifica al `Subject` scatena una serie di modifiche su tutti gli osservatori e su tutti gli oggetti da questi dipendenti. In sintesi, il pattern Observer è utile quando si vuole stabilire una dipendenza uno-a-molti tra oggetti in modo che quando uno cambia, tutti gli altri interessati vengano notificati e aggiornati automaticamente. Questo riduce l'accoppiamento e aumenta la flessibilità nella gestione degli stati e delle dipendenze nel sistema.
 
 ## TEMPLATE METHOD
-Il pattern Template Method è un pattern comportamentale che ha come scopo principale definire la struttura di un algoritmo all'interno di un metodo di una classe base (AbstractClass), delegando alcuni passi specifici alle sottoclassi concrete (ConcreteClass). Questo pattern è particolarmente utile quando si desidera fornire un'implementazione generica di un algoritmo e permettere alle sottoclassi di personalizzare alcune parti dell'algoritmo senza modificarne la struttura di base. Motivazione: Considera un framework per costruire applicazioni in grado di gestire documenti diversi. Il Template Method definisce un algoritmo in base ad operazioni astratte che saranno definite nelle sottoclassi specifiche. In questo modo, è possibile fornire una struttura di base per l'algoritmo e lasciare alle sottoclassi la definizione di passi variabili. Classificazione: Il Template Method è un pattern comportamentale basato su classi, in quanto coinvolge la definizione di comportamenti comuni nella classe astratta e la delega di comportamenti specifici alle sottoclassi concrete. Applicabilità:
+Il pattern Template Method è un pattern comportamentale che ha come scopo principale **definire la struttura di un algoritmo all'interno di un metodo di una classe base** (AbstractClass), delegando alcuni passi specifici alle sottoclassi concrete (ConcreteClass). Questo pattern è particolarmente utile quando si desidera **fornire un'implementazione generica di un algoritmo e permettere alle sottoclassi di personalizzare alcune parti dell'algoritmo** senza modificarne la struttura di base. 
+
+**Motivazione**: Considera un framework per costruire applicazioni in grado di gestire documenti diversi. *Il Template Method definisce un algoritmo in base ad operazioni astratte che saranno definite nelle sottoclassi specifiche*. In questo modo, è possibile fornire una *struttura di base per l'algoritmo e lasciare alle sottoclassi la definizione di passi variabili*. 
+
+**Classificazione**: Il Template Method è un pattern comportamentale basato su classi, in quanto coinvolge la definizione di comportamenti comuni nella classe astratta e la delega di comportamenti specifici alle sottoclassi concrete. 
+
+**Applicabilità**:
 
 ![[p073-fig-038.png|700]]
 
-- È utilizzato per implementare la parte invariante di un algoritmo, lasciando alle sottoclassi la definizione degli step variabili.
-- È utile quando ci sono comportamenti comuni che possono essere inseriti nel template. Partecipanti:
+- È utilizzato per implementare la parte invariante di un algoritmo, lasciando alle sottoclassi la **definizione degli step variabili**.
+- È utile quando ci sono **comportamenti comuni** che possono essere inseriti nel template. Partecipanti:
 
 - **AbstractClass e ConcreteClass:** 
 
@@ -1922,11 +1981,13 @@ Il pattern Template Method è un pattern comportamentale che ha come scopo princ
 - **Tuttavia, indirizzano problemi diversi:** il Template Method generalizza un algoritmo, mentre il Factory Method crea e restituisce un'istanza di classe concreta per sganciare il cliente dalla scelta del tipo specifico. In sintesi, il Template Method è utile quando si vuole fornire una struttura generica per un algoritmo e consentire alle sottoclassi di personalizzarne alcune parti senza modificare la struttura complessiva dell'algoritmo. Questo promuove il riuso del codice e la flessibilità nell'estensione del comportamento.
 
 ## STRATEGY
-Il pattern Strategy è un pattern comportamentale che ha come scopo principale definire ed incapsulare una famiglia di algoritmi in modo da renderli intercambiabili indipendentemente dal client che li usa. Questo pattern permette di definire un'interfaccia comune per un insieme di algoritmi, incapsulare ciascun algoritmo in una classe separata, e permettere ai client di selezionare dinamicamente l'algoritmo da utilizzare. Motivazione: Considera una situazione in cui hai una famiglia di algoritmi, ad esempio algoritmi di ordinamento come QuickSort, BubbleSort e MergeSort. Invece di implementare tutti questi algoritmi all'interno di una singola classe, il pattern Strategy suggerisce di creare una classe separata per ciascun algoritmo, tutte implementando la stessa interfaccia (Strategy). In questo modo, puoi facilmente cambiare l'algoritmo utilizzato in un'applicazione senza dover modificare il client. Classificazione: Il pattern Strategy è un pattern comportamentale basato su oggetti, poiché coinvolge la definizione di comportamenti (algoritmi) all'interno di oggetti. Applicabilità:
+Il pattern Strategy è un pattern comportamentale che ha come scopo principale definire ed **incapsulare una famiglia di algoritmi in modo da renderli intercambiabili indipendentemente dal client che li usa**. Questo pattern permette di definire un'interfaccia comune per un insieme di algoritmi, **incapsulare ciascun algoritmo in una classe separata, e permettere ai client di selezionare dinamicamente l'algoritmo da utilizzare**.
+
+Motivazione: Considera una situazione in cui hai una famiglia di algoritmi, ad esempio algoritmi di ordinamento come QuickSort, BubbleSort e MergeSort. Invece di implementare tutti questi algoritmi all'interno di una singola classe, il pattern Strategy suggerisce di **creare una classe separata per ciascun algoritmo**, tutte implementando la **stessa interfaccia** (**Strategy**). In questo modo, puoi facilmente cambiare l'algoritmo utilizzato in un'applicazione senza dover modificare il client. Classificazione: Il pattern Strategy è un pattern comportamentale basato su oggetti, poiché coinvolge la definizione di comportamenti (algoritmi) all'interno di oggetti. Applicabilità:
 
 ![[p074-fig-039.png|700]]
 
-- Molte classi correlate differiscono solo per il comportamento. Il pattern fornisce un modo per avere un'interfaccia comune.
+- *Molte classi correlate differiscono solo per il comportamento. Il pattern fornisce un modo per avere un'interfaccia comune*.
 - Sono necessarie più varianti di uno stesso algoritmo, a seconda dei tipi di dato in ingresso o delle condizioni operative. Partecipanti:
 
 - **Strategy e ConcreteStrategy:** 
@@ -1951,20 +2012,29 @@ Il pattern Strategy è un pattern comportamentale che ha come scopo principale d
 
 ## MISURE DI PROGETTAZIONE PRELIMINARE
 
-- **Misure Intermodulari:** Si prendono in considerazione le dipendenze tra i moduli secondo l'architettura di sistema sviluppata nella fase di progettazione. Queste misure considerano come i vari moduli interagiscono tra loro.
-- **Misure Intramodulari:** Si riferiscono alle caratteristiche dei singoli moduli. Vengono utilizzate durante la progettazione dettagliata e l'implementazione di ciascun modulo. Definizione di Modulo: Un modulo è una sequenza contigua di istruzioni del programma, delimitata da elementi di confine. Impatto delle Decisioni di Architettura:
+- **Misure Intermodulari:** Si prendono in considerazione le **dipendenze tra i moduli secondo l'architettura di sistema sviluppata nella fase di progettazione**. Queste misure considerano come i vari moduli interagiscono tra loro.
+- **Misure Intramodulari:** Si riferiscono alle **caratteristiche dei singoli moduli**. Vengono utilizzate durante la progettazione dettagliata e l'implementazione di ciascun modulo. 
+- 
 
-- Le decisioni prese durante la fase di progettazione preliminare influenzano molte qualità importanti del software risultante, come facilità di implementazione, affidabilità e manutenibilità.
-- Le misure di progettazione preliminare possono fornire un feedback cruciale sulle caratteristiche del sistema in fase di sviluppo. Relazioni tra Progettazione Preliminare e Codice: Esiste una relazione uno a uno tra i moduli indicati nella progettazione e i moduli effettivamente presenti nel codice.
+**Definizione di Modulo**: Un modulo è una sequenza **contigua di istruzioni del programma, delimitata da elementi di confine**. 
+
+**Impatto delle Decisioni di Architettura**:
+- Le decisioni prese durante la fase di **progettazione preliminare** influenzano molte qualità importanti del software risultante, come **facilità di implementazione, affidabilità e manutenibilità**.
+- Le misure di progettazione preliminare possono fornire un feedback cruciale sulle caratteristiche del sistema in fase di sviluppo. 
+**Relazioni tra Progettazione Preliminare e Codice**: Esiste una *relazione uno a uno tra i moduli indicati nella progettazione e i moduli effettivamente presenti nel codice*.
 
 - **Corrispondenza Connessione Intermodulare:** Le connessioni tra moduli indicate nella progettazione devono corrispondere alle referenze intermodulari nel codice.
-- **Corrispondenza Interfaccia Dati Intermodulare:** Le interfacce dati intermodulari definite nella progettazione devono riflettersi nei dati condivisi tra i moduli nel codice. In breve, la progettazione preliminare svolge un ruolo cruciale nel determinare l'architettura del sistema e influenza le qualità chiave del software risultante. La correlazione tra progettazione preliminare e codice assicura che l'implementazione rispecchi fedelmente le decisioni prese durante la progettazione del sistema.
+- **Corrispondenza Interfaccia Dati Intermodulare:** Le interfacce dati intermodulari definite nella progettazione devono riflettersi nei dati condivisi tra i moduli nel codice. 
+
+In breve, la progettazione preliminare svolge un ruolo cruciale nel **determinare l'architettura del sistema e influenza le qualità chiave del software risultante**. La correlazione tra progettazione preliminare e codice assicura che l'implementazione rispecchi fedelmente le decisioni prese durante la progettazione del sistema.
 
 ## ARCHITETTURA DEI MODULI – STRUCTURE CHART
 L'architettura dei moduli di un sistema software può essere rappresentata mediante un grafo, denotato da S = {N, R}.
 
 - N rappresenta l'insieme dei nodi, dove ogni nodo n corrisponde a un modulo.
-- R rappresenta l'insieme delle relazioni, dove ogni arco r indica una relazione tra due sottosistemi (ad esempio, chiamata di procedura, flusso di dati, ecc.). Modularità: La modularità è l'estensione in cui il software è composto da componenti discrete in modo che una modifica a una componente abbia un impatto minimo sulle altre componenti. Un'elevata modularità è desiderabile perché i programmi con una bassa modularità sono ritenuti più soggetti agli errori, meno manutenibili, meno riutilizzabili, ecc. Attributi della Modularità:
+- R rappresenta l'insieme delle relazioni, dove ogni arco r indica una relazione tra due sottosistemi (ad esempio, chiamata di procedura, flusso di dati, ecc.).
+
+Modularità: La modularità è l'estensione in cui il software è composto da componenti discrete in modo che una modifica a una componente abbia un impatto minimo sulle altre componenti. Un'elevata modularità è desiderabile perché i programmi con una bassa modularità sono ritenuti più soggetti agli errori, meno manutenibili, meno riutilizzabili, ecc. Attributi della Modularità:
 
 - **Coesione:** L'estensione in cui un singolo modulo svolge un compito ben definito.
 - **Accoppiamento:** Il grado di interdipendenza tra i moduli.
@@ -1975,14 +2045,14 @@ L'architettura dei moduli di un sistema software può essere rappresentata media
 La morfologia si riferisce alla forma generale dell'architettura di un sistema software. In altre parole, è una caratteristica che descrive la struttura e la disposizione complessiva dei componenti del sistema.
 
 - **Dimensione (Size):** Indica il numero totale di nodi e archi nel grafo che rappresenta l'architettura del sistema.
-- **Profondità (Depth):** Rappresenta il percorso più lungo dal nodo radice a un nodo foglia. In altre parole, è la lunghezza massima di una catena di nodi dal vertice principale al punto più distante nel sistema.
-- **Ampiezza (Width):** Indica il numero massimo di nodi in qualsiasi livello del grafo. Questo offre un'idea della larghezza massima del sistema a ogni livello di profondità.
-- **Rapporto tra Archi e Nodi (Edge-to-Node Ratio):** Misura la densità di connettività del sistema. Indica quanti archi ci sono rispetto al numero totale di nodi. Un rapporto più alto potrebbe indicare una maggiore complessità delle connessioni nel sistema.
+- **Profondità (Depth):** Rappresenta il percorso più lungo dal nodo **radice a un nodo foglia**. In altre parole, è la lunghezza massima di una catena di nodi dal vertice principale al punto più distante nel sistema.
+- **Ampiezza (Width):** Indica il **numero massimo di nodi in qualsiasi livello del grafo**. Questo offre un'idea della larghezza massima del sistema a ogni livello di profondità.
+- **Rapporto tra Archi e Nodi (Edge-to-Node Ratio):** Misura la densità di connettività del sistema. Indica quanti archi ci sono rispetto al numero totale di nodi. **Un rapporto più alto potrebbe indicare una maggiore complessità delle connessioni nel sistema.**
 
 <!-- Pagina PDF 77 -->
 
 ## TREE IMPURUTY
-La "Tree Impurity" è una misura utilizzata per valutare quanto un grafo G sia diverso da un albero. In altre parole, si cerca di misurare quanto il grafo differisce da una struttura ad albero, che è spesso associata a una buona organizzazione e chiarezza nella progettazione. La Tree Impurity può essere definita come la differenza tra il numero massimo di archi possibili in un grafo e il numero effettivo di archi nel grafo, diviso per il numero massimo di archi possibili in un albero:
+La "Tree Impurity" è una misura utilizzata per valutare **quanto un grafo G sia diverso da un albero**. In altre parole, si cerca di misurare quanto il grafo differisce da una struttura ad albero, che è spesso associata a una buona organizzazione e chiarezza nella progettazione. La Tree Impurity può essere definita come la differenza tra il numero massimo di archi possibili in un grafo e il numero effettivo di archi nel grafo, diviso per il numero massimo di archi possibili in un albero:
 
 𝑚(𝐺) = 𝑛𝑢𝑚𝑒𝑟𝑜 𝑚𝑎𝑠𝑠𝑖𝑚𝑜 𝑑𝑖 𝑎𝑟𝑐ℎ𝑖 𝑝𝑜𝑠𝑠𝑖𝑏𝑖𝑙𝑖 𝑖𝑛 𝑢𝑛 𝑔𝑟𝑎𝑓𝑜−𝑛𝑢𝑚𝑒𝑟𝑜 𝑑𝑖 𝑎𝑟𝑐ℎ𝑖 𝑛𝑒𝑙 𝑔𝑟𝑎𝑓𝑜
 
@@ -2021,17 +2091,18 @@ Il concetto di flusso di informazioni in ingegneria del software si basa sull'id
 
 <!-- Pagina PDF 78 -->
 
-Utilità delle Misure del Flusso di Informazioni:
+**Utilità delle Misure del Flusso di Informazioni**:
 
-- **Identificazione delle Parti Critiche del Sistema:** Le misure del flusso di informazioni possono essere utilizzate per individuare le parti critiche di un sistema software, cioè le parti che sono fortemente coinvolte nella trasmissione di informazioni.
-- **Individuazione dei Punti di Stress nel Sistema:** Le misure del flusso di informazioni possono evidenziare i punti di stress nel sistema, dove la quantità di informazioni che attraversa determinati moduli è significativamente elevata.
-- **Comprensione dei Problemi di Progettazione Potenziali:** Forniscono una visione sui possibili problemi di progettazione, poiché la complessità derivante dai flussi di informazioni può indicare aree in cui la struttura del sistema potrebbe essere migliorata. In sintesi, le misure del flusso di informazioni forniscono un modo per valutare quanto le informazioni si muovono attraverso il sistema e possono essere utilizzate per identificare aree critiche, punti di stress e potenziali problemi di progettazione all'interno di un sistema software.
+- **Identificazione delle Parti Critiche del Sistema:** Le misure del flusso di informazioni possono essere utilizzate per **individuare** le **parti critiche di un sistema software**, cioè le parti che sono fortemente coinvolte nella trasmissione di informazioni.
+- **Individuazione dei Punti di Stress nel Sistema:** Le misure del flusso di informazioni possono evidenziare i **punti di stress nel sistema**, dove la quantità di informazioni che attraversa determinati moduli è **significativamente elevata**.
+- **Comprensione dei Problemi di Progettazione Potenziali:** Forniscono una visione sui possibili problemi di progettazione, poiché la complessità derivante dai flussi di informazioni può **indicare aree in cui la struttura del sistema potrebbe essere migliorata**. 
+In sintesi, le misure del flusso di informazioni forniscono un modo per valutare quanto le informazioni si muovono attraverso il sistema e possono essere utilizzate per identificare aree critiche, punti di stress e potenziali problemi di progettazione all'interno di un sistema software.
 
 ![[p078-fig-040.jpeg|450]]
 
 Fan-in e Fan-out: I concetti di "Fan-in" e "Fan-out" sono misure utilizzate per quantificare i flussi di informazioni in un sistema software, concentrandosi su un modulo specifico.
-- Il "Fan-in" di un modulo M è il numero totale di flussi locali (diretti e indiretti) che terminano in M, più il numero di flussi globali (strutture dati) da cui M recupera informazioni.
-- Il "Fan-out" di un modulo M è il numero totale di flussi locali (diretti e indiretti) che iniziano in M, più il numero di flussi globali (strutture dati) che vengono aggiornati da M. Interpretazione delle Misure Fan-in e Fan-out:
+- Il "Fan-in" di un modulo M è il **numero totale di flussi locali** (diretti e indiretti) che terminano in M, **più il numero di flussi globali** (strutture dati) da cui M recupera informazioni.
+- Il "Fan-out" di un modulo M è il **numero totale di flussi locali** (diretti e indiretti) che iniziano in M, **più il numero di flussi globali** (strutture dati) che vengono aggiornati da M. Interpretazione delle Misure Fan-in e Fan-out:
 - **Alto Fan-out:** Indica che il modulo influenza o controlla molti altri moduli.
 - **Alto Fan-in:** Indica che il modulo è influenzato o controllato da molti altri moduli.
 - **Modulo Centrale:** Un modulo con alto fan-in e fan-out è spesso al centro del sistema, influenzando molti moduli e venendo influenzato da molti altri.
@@ -2041,21 +2112,26 @@ Fan-in e Fan-out: I concetti di "Fan-in" e "Fan-out" sono misure utilizzate per 
 𝐼𝐹(𝑀௜) = [𝑓𝑎𝑛−𝑖𝑛(𝑀௜) ∗𝑓𝑎𝑛−𝑜𝑢𝑡(𝑀௜)]ଶ L'IF per un sistema con n moduli è la somma dell'IF per ciascun modulo nel sistema. La misura originale di Henry-Kafura include sia i flussi di controllo che i flussi di informazioni nel conteggio di fan-in e fan-out. Una variante proposta da Shepperd include solo i flussi di informazioni. In sintesi, fan-in e fan-out sono misure che riflettono quanto un modulo è coinvolto nelle informazioni che fluiscono attraverso il sistema. Valori elevati possono indicare complessità e potenziali problemi di progettazione, mentre la misura dell'Information Flow cerca di quantificare questi flussi in modo più consolidato.
 
 ## STRUTTURA DI MISURAZIONE
-La "Struttura di Misurazione" in ambito software si riferisce al modo in cui viene organizzato e gestito il flusso di controllo, il flusso di dati e la struttura dei dati all'interno di un programma durante la progettazione dettagliata e l'implementazione. Si suddivide in tre componenti principali:
+La "Struttura di Misurazione" in ambito software si riferisce al **modo in cui viene organizzato e gestito il flusso di controllo, il flusso di dati e la struttura** dei dati all'interno di un programma durante la progettazione dettagliata e l'implementazione. Si suddivide in tre componenti principali:
 
-- **Struttura del Flusso di Controllo:** Rappresenta la sequenza di esecuzione delle istruzioni del programma. In altre parole, indica l'ordine in cui vengono eseguite le diverse parti del codice.
-- **Flusso di Dati:** Traccia dei dati mentre vengono creati o gestiti dal programma. Aiuta a comprendere come i dati si muovono attraverso il programma e come vengono manipolati.
-- **Struttura Dati:** Rappresenta l'organizzazione dei dati indipendentemente dal programma. Si concentra sulla disposizione e la gestione dei dati nel contesto complessivo.
+- **Struttura del Flusso di Controllo:** Rappresenta la sequenza di esecuzione delle istruzioni del programma. In altre parole, **indica l'ordine in cui vengono eseguite le diverse parti del codice**.
+- **Flusso di Dati:** Traccia dei dati mentre vengono creati o gestiti dal programma. Aiuta **a comprendere come i dati si muovono** attraverso il programma e come vengono manipolati.
+- **Struttura Dati:** **Rappresenta l'organizzazione dei dati indipendentemente dal programma**. Si concentra sulla disposizione e la gestione dei dati nel contesto complessivo.
 
 <!-- Pagina PDF 79 -->
 
-Rappresentazione della Struttura di un Programma: Viene rappresentata utilizzando un "grafo di flusso di controllo" o semplicemente "grafo di flusso". Questo grafo mostra le relazioni e il flusso tra diverse istruzioni del programma. Definizione della Complessità Strutturale: La "complessità" in termini di struttura viene definita utilizzando il concetto di "complessità ciclomatica". Questa misura offre un'indicazione della complessità del codice sorgente misurando il numero di cammini linearmente indipendenti attraverso il grafo di controllo. Struttura di Controllo di Base (BCS): Le BCS sono meccanismi essenziali di flusso di controllo utilizzati per costruire la struttura logica del programma. I tipi di BCS includono: Sequenza, Selezione, Iterazione. Strutture di Controllo Avanzate (ACS): Oltre alle BCS, ci sono anche le ACS, che includono Chiamata di Procedura/Funzione/Agente, Ricorsione (auto-chiamata), Interruzione, Concorrenza. Queste ACS aggiungono complessità alla struttura del programma e possono influenzare la sua esecuzione e il flusso di controllo.
+**Rappresentazione della Struttura di un Programma**: 
+Viene rappresentata utilizzando un "grafo di flusso di controllo" o semplicemente "grafo di flusso". Questo grafo mostra le **relazioni** e il **flusso** tra **diverse istruzioni del programma**. 
+
+**Definizione della Complessità Strutturale**: La "complessità" in termini di struttura viene definita utilizzando il concetto di "**complessità ciclomatica**". Questa misura offre un'indicazione della *complessità del codice sorgente misurando il numero di cammini linearmente indipendenti attraverso il grafo di controllo*. 
+
+**Struttura di Controllo di Base (BCS)**: Le BCS sono meccanismi essenziali di flusso di controllo utilizzati per costruire la struttura logica del programma. I tipi di BCS includono: Sequenza, Selezione, Iterazione. Strutture di Controllo Avanzate (ACS): Oltre alle BCS, ci sono anche le ACS, che includono Chiamata di Procedura/Funzione/Agente, Ricorsione (auto-chiamata), Interruzione, Concorrenza. Queste ACS aggiungono complessità alla struttura del programma e possono influenzare la sua esecuzione e il flusso di controllo.
 
 ## FLOWGRAPH – GRAFO DI FLUSSO
-Il grafo di flusso (Flowgraph) è un modo di modellare la struttura del flusso di controllo di un programma attraverso un grafo diretto (di-graph). Questo grafo è rappresentato come: FG = {N, E} dove N è l'insieme di nodi, ognuno dei quali corrisponde a un'istruzione del programma ed E è l'insieme di archi, che rappresentano il flusso di controllo da un'istruzione del programma a un'altra. Nodi Speciali nel Flowgraph:
+Il grafo di flusso (Flowgraph) è un modo di **modellare la struttura del flusso di controllo di un programma attraverso un grafo diretto** (di-graph). Questo grafo è rappresentato come: FG = {N, E} dove N è l'insieme di nodi, ognuno dei quali corrisponde a un'istruzione del programma ed E è l'insieme di archi, che rappresentano il flusso di controllo da un'istruzione del programma a un'altra. Nodi Speciali nel Flowgraph:
 
-- **Nodi di Procedura:** Nodi con un grado uscente di 1. Rappresentano il punto in cui il controllo passa a una procedura, funzione o sotto-programma.
-- **Nodi Predicato:** Nodi con un grado uscente diverso da 1. Indicano la presenza di un'istruzione di selezione (if) e possono condurre a percorsi diversi a seconda delle condizioni.
+- **Nodi di Procedura:** Nodi con un grado **uscente di 1**. Rappresentano **il punto in cui il controllo passa a una procedura**, funzione o sotto-programma.
+- **Nodi Predicato:** Nodi con un grado uscente diverso da 1. Indicano la presenza di un'**istruzione di selezione (if) e possono condurre a** percorsi diversi a seconda delle condizioni.
 - **Nodo di Inizio:** Nodi con un grado entrante di 0. Rappresentano il punto di inizio del programma o di una porzione del programma.
 - **Nodi Terminali (End):** Nodi con un grado uscente di 0. Rappresentano il punto di fine del programma o di una porzione del programma. Grado Entrante e Grado Uscente:
 
