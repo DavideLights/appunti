@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architettura BlueAgent & BlueCTFd - Sezione 2</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Mermaid.js for Architecture Diagrams in Section 2.3 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CSS CUSTOM PROPERTIES & THEME (Minimalist Lead Funnel Aesthetic)
+           ========================================================================== */
+        :root {
+            /* Palette: Terracotta / Slate / Warm Sand / Off-White */
+            --bg-canvas: #121316;
+            --stage-bg: #F7F5EE;
+            --card-bg: #FFFFFF;
+            --card-muted: #F0EDE4;
+            --text-primary: #1C1E21;
+            --text-secondary: #5E636A;
+            --text-muted: #8E939B;
+
+            --accent-primary: #D9532F;
+            /* Warm Terracotta / Rust */
+            --accent-primary-soft: #FBF0EB;
+            --accent-secondary: #244242;
+            /* Deep Slate Sage */
+            --accent-secondary-soft: #EDF3F3;
+            --accent-blue: #2A5C8A;
+            --accent-blue-soft: #EEF4F9;
+            --accent-emerald: #1B6E4A;
+            --accent-emerald-soft: #EDF7F1;
+
+            --border-light: #E5E1D5;
+            --border-strong: #CDC7B8;
+            --tag-bg: #ECE7DA;
+
+            /* Typography */
+            --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Motion */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-normal: 0.45s;
+        }
+
+        /* ==========================================================================
+           2. VIEWPORT-BASE.CSS (Mandatory 16:9 Stage Fixed Architecture)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-canvas);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .deck-viewport {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-canvas);
+        }
+
+        .deck-stage {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            transform-origin: 0 0;
+            background: var(--stage-bg);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            display: block;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            background: var(--stage-bg);
+            padding: 68px 92px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide.active,
+        .slide.visible {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           3. SLIDE REVEAL ANIMATIONS
+           ========================================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .reveal:nth-child(2) {
+            transition-delay: 0.10s;
+        }
+
+        .reveal:nth-child(3) {
+            transition-delay: 0.15s;
+        }
+
+        .reveal:nth-child(4) {
+            transition-delay: 0.20s;
+        }
+
+        .reveal:nth-child(5) {
+            transition-delay: 0.25s;
+        }
+
+        .reveal:nth-child(6) {
+            transition-delay: 0.30s;
+        }
+
+        /* ==========================================================================
+           4. MINIMALIST LEAD-FUNNEL SLIDE COMPONENTS
+           ========================================================================== */
+        /* Header Region */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1.5px solid var(--border-light);
+            padding-bottom: 22px;
+            margin-bottom: 28px;
+        }
+
+        .slide-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            background: var(--accent-primary-soft);
+            padding: 5px 14px;
+            border-radius: 999px;
+            width: fit-content;
+            border: 1px solid rgba(217, 83, 47, 0.2);
+        }
+
+        .section-badge.secondary {
+            color: var(--accent-secondary);
+            background: var(--accent-secondary-soft);
+            border-color: rgba(36, 66, 66, 0.2);
+        }
+
+        .section-badge.blue {
+            color: var(--accent-blue);
+            background: var(--accent-blue-soft);
+            border-color: rgba(42, 92, 138, 0.2);
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            line-height: 1.15;
+        }
+
+        .slide-subtitle {
+            font-size: 19px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .slide-number-box {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            padding: 8px 16px;
+            border-radius: 12px;
+        }
+
+        /* Slide Main Body */
+        .slide-body {
+            flex: 1;
+            display: grid;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .grid-2col {
+            grid-template-columns: 1.15fr 0.85fr;
+        }
+
+        .grid-2col-equal {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-2col-diagram {
+            grid-template-columns: 0.85fr 1.15fr;
+        }
+
+        .grid-3col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .grid-4col {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        .grid-full {
+            grid-template-columns: 1fr;
+        }
+
+        /* Points / Cards List */
+        .points-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .point-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 14px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .point-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-strong);
+        }
+
+        .point-index {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .point-index.secondary {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+        }
+
+        .point-index.blue {
+            background: var(--accent-blue-soft);
+            color: var(--accent-blue);
+        }
+
+        .point-text {
+            font-size: 19px;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .point-text strong {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+
+        .point-text p {
+            margin-top: 3px;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Highlight / Feature Boxes */
+        .feature-box {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 18px;
+            padding: 26px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 12px;
+        }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--tag-bg);
+            color: var(--text-secondary);
+        }
+
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* Pill Badges */
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--card-muted);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .badge-pill.primary {
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            border-color: rgba(217, 83, 47, 0.25);
+        }
+
+        .badge-pill.secondary {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+            border-color: rgba(36, 66, 66, 0.25);
+        }
+
+        /* Code Terminal Component */
+        .code-terminal {
+            background: #141619;
+            border: 1px solid #282C34;
+            border-radius: 14px;
+            padding: 16px 20px;
+            font-family: var(--font-mono);
+            color: #F0EDE4;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: #8E939B;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-red {
+            background: #E06C75;
+        }
+
+        .dot-yellow {
+            background: #E5C07B;
+        }
+
+        .dot-green {
+            background: #98C379;
+        }
+
+        .terminal-body {
+            font-size: 14.5px;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            color: #E2E4E8;
+            overflow-y: auto;
+        }
+
+        .cmd-line {
+            color: #7EC7A2;
+            font-weight: 600;
+        }
+
+        .cmd-prompt {
+            color: #8E939B;
+            user-select: none;
+        }
+
+        .cmd-comment {
+            color: #7A8290;
+            font-style: italic;
+        }
+
+        .cmd-val {
+            color: #F8B179;
+        }
+
+        /* Mermaid Container */
+        .mermaid-container {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 18px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .mermaid-container pre.mermaid {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            font-size: 13px;
+        }
+
+        .mermaid-container svg {
+            max-width: 100%;
+            max-height: 520px;
+            height: auto;
+        }
+
+        /* Minimalist Placeholders */
+        .placeholder-box {
+            background: var(--card-bg);
+            border: 2px dashed var(--border-strong);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            text-align: center;
+            gap: 16px;
+            height: 100%;
+            min-height: 240px;
+        }
+
+        .placeholder-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .placeholder-icon.secondary {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+        }
+
+        .placeholder-title {
+            font-family: var(--font-display);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-desc {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            max-width: 340px;
+            line-height: 1.45;
+        }
+
+        .placeholder-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--stage-bg);
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Comparison Table */
+        .matrix-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 16px;
+            overflow: hidden;
+            font-size: 15px;
+        }
+
+        .matrix-table th {
+            background: var(--card-muted);
+            padding: 14px 18px;
+            text-align: left;
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--text-primary);
+            border-bottom: 1.5px solid var(--border-light);
+        }
+
+        .matrix-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .matrix-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .matrix-table td strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Footer Region */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1.5px solid var(--border-light);
+            padding-top: 16px;
+            margin-top: 24px;
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .footer-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+        }
+
+        /* ==========================================================================
+           5. PRESENTATION CONTROLS (Floating UI Outside 16:9 Stage)
+           ========================================================================== */
+        .deck-controls {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(20, 22, 25, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+        }
+
+        .deck-btn {
+            background: transparent;
+            border: none;
+            color: #E2E4E8;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .deck-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+        }
+
+        .deck-btn:active {
+            transform: scale(0.92);
+        }
+
+        .deck-progress-text {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: #A0A5B0;
+            padding: 0 10px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .deck-kbd-hint {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #6C7280;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 12px;
+            margin-left: 4px;
+        }
+
+        /* Inline Editing Hotzone & Toggle Button */
+        .edit-hotzone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .edit-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            z-index: 10001;
+            background: rgba(20, 22, 25, 0.92);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        [contenteditable="true"] {
+            outline: 2px dashed rgba(217, 83, 47, 0.4) !important;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           6. PRINT STYLES
+           ========================================================================== */
+        @media print {
+
+            html,
+            body {
+                width: 1920px;
+                height: auto;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+
+            .deck-viewport {
+                position: static;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+
+            .deck-stage {
+                position: static;
+                width: auto;
+                height: auto;
+                transform: none !important;
+                box-shadow: none;
+            }
+
+            .slide {
+                position: relative;
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                width: 1920px;
+                height: 1080px;
+                break-after: page;
+                page-break-after: always;
+            }
+
+            .slide:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+
+            .deck-controls,
+            .edit-hotzone,
+            .edit-toggle {
+                display: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.15s !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="deck-viewport">
+        <main class="deck-stage" id="deckStage">
+
+            <!-- ===============================================================
+                 SLIDE 01 (Sez. 2.1) - Introduzione all'Architettura
+                 =============================================================== -->
+            <section class="slide active visible" data-slide="1">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.1 • PANORAMICA DELLA SOLUZIONE</span>
+                        <h1 class="slide-title reveal">Architettura BlueCTFd & BlueAgent</h1>
+                        <p class="slide-subtitle reveal">Piattaforma difensiva per la gestione e verifica automatica di
+                            challenge di patch</p>
+                    </div>
+                    <div class="slide-number-box reveal">01 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Componenti della Soluzione</h3>
+                            <span class="feature-tag">Software Stack</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">01</div>
+                                <div class="point-text">
+                                    <strong>Plugin BlueCTFd</strong>
+                                    <p>Estensione nativa per CTFd: interfaccia utente per concorrenti e gestione sfide
+                                        difensive.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">02</div>
+                                <div class="point-text">
+                                    <strong>Demone BlueAgent</strong>
+                                    <p>Servizio asincrono HTTP (FastAPI) per il controllo di rete, storage e container
+                                        sull'host.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">03</div>
+                                <div class="point-text">
+                                    <strong>Control Plane Disaccoppiato</strong>
+                                    <p>Separazione netta tra il portale di gara (CTFd) e il motore di virtualizzazione
+                                        ed esecuzione.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Prerequisiti del Nodo Host</h3>
+                            <span class="feature-tag">Kernel & Daemons</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">01</div>
+                                <div class="point-text">
+                                    <strong>Kernel Linux & nftables</strong>
+                                    <p>Bridge L2 nativi, forwarding isolato per team e TCP MSS clamping.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">02</div>
+                                <div class="point-text">
+                                    <strong>Incus & Storage ZFS</strong>
+                                    <p>System container completi e clonazione CoW istantanea a blocchi (≤ 100 ms).</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">03</div>
+                                <div class="point-text">
+                                    <strong>OVN / Open vSwitch & WireGuard</strong>
+                                    <p>SDN per sandbox effimere isolate e VPN L3 cifrata per l'accesso dei partecipanti.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>BlueAgent Framework • Introduzione e componenti chiave</span>
+                    </div>
+                    <span>Sezione 2.1 • Diapositiva 01</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 02 (Sez. 2.2 - Slide 1/10) - Mappa degli Attori
+                 =============================================================== -->
+            <section class="slide" data-slide="2">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.2 • USE CASES & REQUISITI (1/10)</span>
+                        <h1 class="slide-title reveal">I Quattro Attori Primari del Sistema</h1>
+                        <p class="slide-subtitle reveal">Ruoli umani ed entità software autonome che governano la
+                            piattaforma</p>
+                    </div>
+                    <div class="slide-number-box reveal">02 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="point-card reveal">
+                        <div class="point-index blue">01</div>
+                        <div class="point-text">
+                            <strong>1. CTFd (Upstream Orchestrator)</strong>
+                            <p>Attore primario Machine-to-Machine: consuma le REST API protette per governare ciclo di vita team, membri, deploy sfide e verifiche.</p>
+                        </div>
+                    </div>
+
+                    <div class="point-card reveal">
+                        <div class="point-index secondary">02</div>
+                        <div class="point-text">
+                            <strong>2. Autore Sfida (Red Teamer)</strong>
+                            <p>Attore esterno: definisce le specifiche dichiarative IaC (Pydantic v2) e sottomette le build Distrobuilder via <code>POST /images</code>.</p>
+                        </div>
+                    </div>
+
+                    <div class="point-card reveal">
+                        <div class="point-index">03</div>
+                        <div class="point-text">
+                            <strong>3. Amministratore di Sistema</strong>
+                            <p>Operatore di infrastruttura: esegue il bootstrap host (DevOps) e monitora l'affidabilità globale del nodo tramite <code>GET /health</code>.</p>
+                        </div>
+                    </div>
+
+                    <div class="point-card reveal">
+                        <div class="point-index">04</div>
+                        <div class="point-text">
+                            <strong>4. Partecipante (Beneficiario)</strong>
+                            <p>Utente finale fuori dal confine API: fruisce del tunnel WireGuard e opera sui container live (<code>br-team-k</code>) senza interagire col Control Plane.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Attori formali e ruoli di sicurezza • BlueAgent</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 02</span>
+                </footer>
+            </section>
+                     <!-- ===============================================================
+                 SLIDE 03 (Sez. 2.2 - Slide 2/10) - Attori, Confini & Build Pipeline
+                 =============================================================== -->
+            <section class="slide" data-slide="3">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.2 • USE CASES & REQUISITI (2/10)</span>
+                        <h1 class="slide-title reveal">Attori, Confini & Pipeline Immagini</h1>
+                        <p class="slide-subtitle reveal">Delimitazione dei confini di sistema, compiti utente e build pipeline</p>
+                    </div>
+                    <div class="slide-number-box reveal">03 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Confine di Sistema & Blue Teamer</strong>
+                                <p>I partecipanti sono beneficiari: operano via WireGuard (<code>10.k.0.0/24</code>) e accedono direttamente ai container (<code>10.k.1.x</code>). Le azioni interne sono compiti esterni al Control Plane.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>IaC Offline (Red Teamer)</strong>
+                                <p>La stesura del manifesto YAML <code>ChallengeConfig</code> (quote, readiness, verifiche) è un'attività di specifica offline, resa esecutiva da CTFd via REST API.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>UC-06: Compilazione Immagini Base</strong>
+                                <p><code>POST /images</code>: Pipeline asincrona Distrobuilder con prenotazione atomica CAS Write-Ahead, import nello storage pool Incus e caching SHA-256.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Tracciabilità Requisiti Utente</strong>
+                                <p>Garantisce connettività L3 diretta (<code>UR-ACC-01</code>), uniformità topologica (<code>UR-ACC-02</code>) e conformità IaC (<code>UR-CHL-01</code>).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon">🛡️</div>
+                        <h4 class="placeholder-title">Delimitazione Confini di Sistema</h4>
+                        <p class="placeholder-desc">[ Placeholder: Schema architetturale formale con confine BlueAgent API, attori esterni CTFd/Red Teamer e compiti operativi Blue Team ]</p>
+                        <span class="placeholder-tag">System Boundary & UC Scope</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Tracciabilità: UC-06 • UR-ACC-01..03, UR-CHL-01</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 03</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 04 (Sez. 2.2 - Slide 3/10) - CTFd: Provisioning & Deploy Sfide
+                 =============================================================== -->
+            <section class="slide" data-slide="4">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.2 • USE CASES & REQUISITI (3/10)</span>
+                        <h1 class="slide-title reveal">CTFd: Provisioning & Deploy Sfide</h1>
+                        <p class="slide-subtitle reveal">Allocazione connettività, gestione idempotente e deployment atomico</p>
+                    </div>
+                    <div class="slide-number-box reveal">04 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>UC-01: Provisioning Connettività Team</strong>
+                                <p><code>POST /teams</code>: Creazione Linux bridge unmanaged (<code>br-team-k</code>), interfaccia crittografica <code>wg-k</code> e regole nftables.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Registrazione Membri & Hole-Filling</strong>
+                                <p><code>POST /teams/{k}/members</code>: Allocazione IP automatica (<code>.2..254</code>), chiavi Curve25519/PSK e gestione idempotente del re-click.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>UC-02: Distribuzione Dichiarativa Sfida</strong>
+                                <p><code>POST /challenges</code>: Istanziazione container Incus, quote cgroups v2 (<code>limits.cpu/memory</code>) e binding IP statico deterministico.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Readiness Probes & Rollback Atomico</strong>
+                                <p>Esecuzione sequenziale dei controlli di boot: in caso di timeout o fallimento, distruzione istantanea dei container senza stati sporchi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">📝</div>
+                        <h4 class="placeholder-title">Provisioning & Lifecycle Deployment</h4>
+                        <p class="placeholder-desc">[ Placeholder: Sequenza temporale POST /teams -> POST /members -> POST /challenges -> Readiness -> Stato Running ]</p>
+                        <span class="placeholder-tag">UC-01 & UC-02 • Lifecycle Orchestration</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Tracciabilità: UC-01, UC-02 • UR-ACC-01, UR-CHL-01..04, UR-ORG-01</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 04</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 05 (Sez. 2.2 - Slide 4/10) - CTFd: Verifica Dark Sandbox & Teardown
+                 =============================================================== -->
+            <section class="slide" data-slide="5">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge blue reveal">SEZIONE 2.2 • USE CASES & REQUISITI (4/10)</span>
+                        <h1 class="slide-title reveal">CTFd: Verifica Dark Sandbox & Teardown</h1>
+                        <p class="slide-subtitle reveal">Convalida atomica su OVN isolata e dismissione programmata delle risorse</p>
+                    </div>
+                    <div class="slide-number-box reveal">05 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Verifica Automatica Isolata</h3>
+                            <span class="feature-tag">UC-03 • Dark OVN</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index blue">01</div>
+                                <div class="point-text">
+                                    <strong>UC-03: Dark Sandbox OVN</strong>
+                                    <p><code>POST /challenges/{id}/verify?team_k={k}</code>: Switch logico Geneve effimero (<code>verify-*</code>) e cloni CoW ZFS sub-secondari (&le; 100 ms).</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">02</div>
+                                <div class="point-text">
+                                    <strong>Dual-Mode & Zero Live Crash</strong>
+                                    <p>Audit white-box (in-container) ed exploit black-box (runner <code>10.k.1.250</code>); zero alterazioni o crash dei servizi di produzione.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">03</div>
+                                <div class="point-text">
+                                    <strong>Teardown Atomico LIFO (RAII)</strong>
+                                    <p>Chiusura garantita via <code>__aexit__</code>: distruzione runner &rarr; eliminazione cloni ZFS &rarr; rimozione switch OVN.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Dismissione & Concorrenza</h3>
+                            <span class="feature-tag">UC-04 • Teardown</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index blue">04</div>
+                                <div class="point-text">
+                                    <strong>UC-04: Dismissione Singola Sfida</strong>
+                                    <p><code>DELETE /challenges/{id}/teams/{k}</code>: Rimozione forzata dei soli container di sfida, preservando bridge e tunnel VPN.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">05</div>
+                                <div class="point-text">
+                                    <strong>UC-04: De-provisioning Totale Team</strong>
+                                    <p><code>DELETE /teams/{k}</code>: Rimozione interfacce <code>wg-k</code>, bridge <code>br-team-k</code>, regole nftables e cascade cleanup SQLite.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">06</div>
+                                <div class="point-text">
+                                    <strong>TwoTierLock Registry</strong>
+                                    <p>Sincronizzazione distribuita locale e filesystem lock: prevenzione race condition (HTTP 409) su richieste parallele.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Tracciabilità: UC-03, UC-04 • UR-VER-01..04, UR-ORG-01..03</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 05</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 06 (Sez. 2.2 - Slide 5/10) - Telemetria & Resilienza Host
+                 =============================================================== -->
+            <section class="slide" data-slide="6">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.2 • USE CASES & REQUISITI (5/10)</span>
+                        <h1 class="slide-title reveal">Telemetria, Diagnostica & Resilienza Host</h1>
+                        <p class="slide-subtitle reveal">Monitoraggio live, garbage collection autonoma e auto-guarigione</p>
+                    </div>
+                    <div class="slide-number-box reveal">06 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>UC-05: Telemetria Live Peer WireGuard</strong>
+                                <p><code>GET /teams/{k}/peers</code>: Dump kernel <code>wg show dump</code> (byte rx/tx, handshake crittografico) correlato a SQLite.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>UC-05: Diagnostica & Liveness Probe</strong>
+                                <p><code>GET /health</code>: Verifica reattività demone, accessibilità socket Incus (<code>unix.socket</code>) e loop asincrono.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Self-Healing: LifecycleManager</strong>
+                                <p>Demone asincrono interno (<code>SR-CON-03</code>): scansione periodica risorse <code>verify-*</code> e bonifica orfani oltre il grace period di 90s.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Bootstrap DevOps dell'Host</strong>
+                                <p>Script <code>host_setup.sh</code> (<code>SR-HST-01..04</code>): inizializzazione moduli kernel, pool ZFS <code>blueagent-zfs</code>, demoni OVS/OVN e nftables.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon">🔄</div>
+                        <h4 class="placeholder-title">Ciclo di Riconciliazione & Diagnostica</h4>
+                        <p class="placeholder-desc">[ Placeholder: Diagramma unificato con endpoint di telemetria UC-05 e loop periodico del LifecycleManager ]</p>
+                        <span class="placeholder-tag">UC-05 & SR-CON-03 • Automated Self-Healing</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Tracciabilità: UC-05 • UR-ORG-01..03, SR-CON-03..04</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 06</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 07 (Sez. 2.2 - Slide 6/10) - Requisiti Rete Live: UR-ACC & SR-NET
+                 =============================================================== -->
+            <section class="slide" data-slide="7">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.2 • USE CASES & REQUISITI (6/10)</span>
+                        <h1 class="slide-title reveal">Requisiti di Rete Live & Connettività</h1>
+                        <p class="slide-subtitle reveal">Isolamento crittografico e prestazioni near-bare-metal durante
+                            la gara</p>
+                    </div>
+                    <div class="slide-number-box reveal">07 / 20</div>
+                </header>
+
+                <div class="slide-body grid-3col">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">UR-ACC-01 / SR-NET-01</h3>
+                            <span class="feature-tag">VPN L3</span>
+                        </div>
+                        <div class="feature-content">
+                            <p><strong>Tunnel WireGuard Dedicato:</strong> Per ciascun team <em>k</em>, interfaccia
+                                <code>wg-k</code> su subnet <code>10.k.0.1/24</code>.</p>
+                            <p><strong>Cryptokey Routing:</strong> Assegnazione vincolata
+                                <code>AllowedIPs = 10.k.0.x/32</code> basata su chiave pubblica e PSK.</p>
+                            <p><strong>Hole-Filling:</strong> Capacità fino a 253 membri per team con riallocazione
+                                automatica degli IP disconnessi.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">UR-ACC-02 / SR-NET-02</h3>
+                            <span class="feature-tag">Bridge L2</span>
+                        </div>
+                        <div class="feature-content">
+                            <p><strong>Topologia Deterministica:</strong> Ogni team dispone della medesima subnet
+                                interna (<code>10.k.1.0/24</code>) e degli stessi suffissi IP.</p>
+                            <p><strong>Linux Bridge Nativo:</strong> Bridge kernel <code>br-team-k</code> con gateway
+                                <code>10.k.1.1</code>; traffico live esente da overhead SDN.</p>
+                            <p><strong>Aggancio Veth Diretto:</strong> Profilo Incus <code>team-k-profile</code> per
+                                instradamento rapido e sniffing host.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">UR-ACC-03 / SR-NET-05</h3>
+                            <span class="feature-tag">Ottimizzazione</span>
+                        </div>
+                        <div class="feature-content">
+                            <p><strong>Throughput Near-Bare-Metal:</strong> Comunicazione memoria/bus locale senza
+                                incapsulamenti aggiuntivi nel gameplay.</p>
+                            <p><strong>TCP MSS Clamping:</strong> Regola nftables per forzare l'MSS a livello di MTU per
+                                prevenire MTU blackholes.</p>
+                            <p><strong>SNAT Masquerade:</strong> Accesso controllato a Internet per i container tramite
+                                la scheda WAN fisica.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Requisiti tecnici: SR-NET-01, SR-NET-02, SR-NET-05</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 07</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 08 (Sez. 2.2 - Slide 7/10) - Requisiti Ambienti & Storage: UR-CHL & SR-ENG
+                 =============================================================== -->
+            <section class="slide" data-slide="8">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.2 • USE CASES & REQUISITI (7/10)</span>
+                        <h1 class="slide-title reveal">Requisiti di Virtualizzazione & Storage</h1>
+                        <p class="slide-subtitle reveal">System container completi, isolamento hardware e clonazione CoW
+                        </p>
+                    </div>
+                    <div class="slide-number-box reveal">08 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">System Container Stateful</h3>
+                            <span class="feature-tag">UR-CHL-02 • SR-ENG-01</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">01</div>
+                                <div class="point-text">
+                                    <strong>OS Completo con systemd</strong>
+                                    <p>A differenza dei micro-jail OCI/nsjail (kCTF), supporta demoni multipli, cron,
+                                        logging e ambienti realistici.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">02</div>
+                                <div class="point-text">
+                                    <strong>Architetture Multi-Tier</strong>
+                                    <p>Possibilità di comporre scenari complessi distribuiti su più macchine (es. Web
+                                        Server + Database separato).</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">03</div>
+                                <div class="point-text">
+                                    <strong>Quote Hardware Rigide (cgroups v2)</strong>
+                                    <p>Applicazione dei parametri <code>limits.cpu</code> e <code>limits.memory</code>
+                                        per prevenire saturazione dell'host.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Storage ZFS Copy-on-Write</h3>
+                            <span class="feature-tag">SR-HST-02 • SR-ENG-04</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">01</div>
+                                <div class="point-text">
+                                    <strong>Storage Pool blueagent-zfs</strong>
+                                    <p>Configurazione su ZFS integrato direttamente in Incus per operazioni atomiche a
+                                        livello di blocco.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">02</div>
+                                <div class="point-text">
+                                    <strong>Clonazione Sub-Secondaria (≤ 100 ms)</strong>
+                                    <p>Creazione istantanea di snapshot CoW: zero duplicazione fisica di dati prima
+                                        delle modifiche effettive.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">03</div>
+                                <div class="point-text">
+                                    <strong>Client UDS Asincrono</strong>
+                                    <p>Comunicazione efficiente via socket Unix
+                                        (<code>/var/lib/incus/unix.socket</code>) con long-polling per le operation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Requisiti tecnici: SR-HST-02, SR-ENG-01..05</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 08</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 09 (Sez. 2.2 - Slide 8/10) - Requisiti Verifica: UR-VER & SR-VRF
+                 =============================================================== -->
+            <section class="slide" data-slide="9">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.2 • USE CASES & REQUISITI (8/10)</span>
+                        <h1 class="slide-title reveal">Requisiti di Verifica & Sicurezza</h1>
+                        <p class="slide-subtitle reveal">Zero Live Crash, protezione da Side-Channel ed esecuzione
+                            atomica RAII</p>
+                    </div>
+                    <div class="slide-number-box reveal">09 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>UR-VER-01: Verifica Non Distruttiva (Zero Live Crash)</strong>
+                                <p>Gli exploit di validazione vengono iniettati esclusivamente su cloni CoW effimeri:
+                                    l'ambiente di gara non subisce interruzioni.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>UR-VER-02 / SR-NET-03: Protezione da Side-Channel Leaks</strong>
+                                <p>Sandbox isolata su switch OVN (datapath Geneve): impossibile intercettare payload o
+                                    flag tramite <code>tcpdump</code> sul bridge live.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>SR-VRF-01: Pattern RAII Asincrono (OVNVerifier)</strong>
+                                <p>Gestione tramite Context Manager (<code>__aenter__</code> / <code>__aexit__</code>):
+                                    pulizia totale garantita anche in caso di eccezioni.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>SR-VRF-04: Teardown Atomico Inverso (LIFO)</strong>
+                                <p>Sequenza rigorosa di deallocazione: 1) stop runner effimero → 2) eliminazione cloni
+                                    target → 3) distruzione switch OVN.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">🔒</div>
+                        <h4 class="placeholder-title">Isolamento Datapath & Dark Sandbox</h4>
+                        <p class="placeholder-desc">[ Placeholder: Illustrazione del confinamento dei pacchetti Geneve
+                            OVN separati dal bridge live br-team-k ]</p>
+                        <span class="placeholder-tag">Zero Side-Channel Leakage Guarantee</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Requisiti tecnici: UR-VER-01..04 • SR-VRF-01..05</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 09</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 10 (Sez. 2.2 - Slide 9/10) - Dual-Mode Verification
+                 =============================================================== -->
+            <section class="slide" data-slide="10">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge blue reveal">SEZIONE 2.2 • USE CASES & REQUISITI (9/10)</span>
+                        <h1 class="slide-title reveal">Strategie di Verifica Dual-Mode</h1>
+                        <p class="slide-subtitle reveal">Flessibilità di testing per autori di sfide: White-Box vs
+                            Black-Box</p>
+                    </div>
+                    <div class="slide-number-box reveal">10 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. In-Container Audit (White-Box)</h3>
+                            <span class="feature-tag">target: "container"</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index blue">01</div>
+                                <div class="point-text">
+                                    <strong>Esecuzione Interna Diretta</strong>
+                                    <p>I comandi di validazione vengono eseguiti nel clone target tramite
+                                        <code>incus exec</code>.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">02</div>
+                                <div class="point-text">
+                                    <strong>Casi d'Uso Tipici</strong>
+                                    <p>Ispezione di file di configurazione, permessi di sistema, patch al codice
+                                        sorgente e audit locale.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">03</div>
+                                <div class="point-text">
+                                    <strong>Overhead Minimo</strong>
+                                    <p>Nessun container ausiliario da avviare; tempi di risposta sub-secondari
+                                        immediati.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Verifier Runner (Black-Box)</h3>
+                            <span class="feature-tag">target: "verifier"</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">01</div>
+                                <div class="point-text">
+                                    <strong>Attaccante Effimero sulla LAN</strong>
+                                    <p>Avvio del container runner (<code>verify-runner-xxxx</code>, IP
+                                        <code>10.k.1.250</code>) collegato allo switch OVN.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">02</div>
+                                <div class="point-text">
+                                    <strong>Casi d'Uso Tipici</strong>
+                                    <p>Iniezione di exploit reali di rete L2/L3, payload Web/Binary e tentativi di
+                                        penetrazione esterni.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">03</div>
+                                <div class="point-text">
+                                    <strong>Fedeltà Completa dello Scenario</strong>
+                                    <p>Replica esatta della posizione di un attaccante esterno senza esporre i test al
+                                        team.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Tracciabilità: UR-VER-03 • SR-VRF-03, SR-VRF-05</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 10</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 11 (Sez. 2.2 - Slide 10/10) - Matrice di Tracciabilità Requisiti
+                 =============================================================== -->
+            <section class="slide" data-slide="11">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.2 • USE CASES & REQUISITI (10/10)</span>
+                        <h1 class="slide-title reveal">Matrice di Tracciabilità: Obiettivi & Soluzioni</h1>
+                        <p class="slide-subtitle reveal">Mappatura sintetica tra bisogni operativi e architettura
+                            implementata</p>
+                    </div>
+                    <div class="slide-number-box reveal">11 / 20</div>
+                </header>
+
+                <div class="slide-body grid-full">
+                    <table class="matrix-table reveal">
+                        <thead>
+                            <tr>
+                                <th style="width: 24%;">Requisito Utente (UR)</th>
+                                <th style="width: 28%;">Requisiti di Sistema (SR)</th>
+                                <th style="width: 48%;">Meccanismo Architetturale Implementato</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>UR-ACC-01</strong> (VPN Sicura Dedicata)</td>
+                                <td><code>SR-NET-01</code>, <code>SR-HST-01</code></td>
+                                <td>Interfaccia <code>wg-k</code> dedicata, porta <code>51820+k</code>, Cryptokey
+                                    Routing (<code>10.k.0.x/32</code>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UR-ACC-03</strong> (Prestazioni I/O Native)</td>
+                                <td><code>SR-NET-02</code>, <code>SR-NET-05</code></td>
+                                <td>Bridge kernel Linux <code>br-team-k</code> per il live game; MSS clamping su
+                                    nftables.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UR-VER-01</strong> (Zero Live Crash)</td>
+                                <td><code>SR-ENG-04</code>, <code>SR-VRF-01</code></td>
+                                <td>Snapshot CoW istantaneo su pool ZFS; verifica isolata esclusivamente sui cloni.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UR-VER-02</strong> (No Side-Channel Leak)</td>
+                                <td><code>SR-NET-03</code>, <code>SR-VRF-01</code></td>
+                                <td>Switch logico OVN su Geneve incapsulato nel localhost: zero sniffing da
+                                    <code>br-team-k</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UR-ACC-02</strong> (Fedeltà Topologica)</td>
+                                <td><code>SR-NET-04</code>, <code>SR-MOD-02</code></td>
+                                <td>Stessi IP (<code>10.k.1.x</code>) e gateway in prod e verifica; zero route clash nel
+                                    kernel host.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UR-ORG-03</strong> (Bonifica Risorse)</td>
+                                <td><code>SR-VRF-04</code>, <code>SR-CON-03</code></td>
+                                <td>Context Manager RAII asincrono LIFO + background daemon
+                                    <code>LifecycleManager</code> (90s).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Matrice di tracciabilità requisiti • BlueAgent Architettura</span>
+                    </div>
+                    <span>Sezione 2.2 • Diapositiva 11</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 12 (Sez. 2.3 - Slide 1/3) - Rete di Produzione production-k
+                 =============================================================== -->
+            <section class="slide" data-slide="12">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.3 • ESPOSIZIONE ARCHITETTURA (1/3)</span>
+                        <h1 class="slide-title reveal">Architettura della Rete di Produzione</h1>
+                        <p class="slide-subtitle reveal">Topologia e componenti per il live game del team k
+                            (production-k)</p>
+                    </div>
+                    <div class="slide-number-box reveal">12 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-diagram">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>Terminazione VPN wg-k (L3)</strong>
+                                <p>Gateway VPN su <code>10.k.0.1/24</code>; assegna IP statici dedicati
+                                    (<code>10.k.0.2..254</code>) ai client concorrenti.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Linux Bridge br-team-k (L2)</strong>
+                                <p>Switch kernel con gateway <code>10.k.1.1/24</code> per instradare verso i container a
+                                    velocità di memoria nativa.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>Stack nftables (inet blueagent)</strong>
+                                <p>Forwarding autorizzato esclusivo tra <code>wg-k</code> e <code>br-team-k</code>; TCP
+                                    MSS Clamping e SNAT egress WAN.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Container Live su Storage ZFS</strong>
+                                <p>Istanze Incus (Web su <code>.2</code>, DB su <code>.3</code>) collegate via veth su
+                                    <code>br-team-k</code> con profili dedicati.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mermaid-container reveal">
+                        <pre class="mermaid">
+flowchart TD
+    subgraph CLIENTS ["Client Partecipanti (Team k)"]
+        USER1["Partecipante 1 (10.k.0.2)"]
+        USER2["Partecipante 2 (10.k.0.3)"]
+    end
+
+    subgraph HOST ["Host Debian (BlueAgent)"]
+        subgraph VPN_LAYER ["Terminazione VPN (L3)"]
+            WG["wg-k (10.k.0.1/24)<br/>Porta: 51820+k"]
+        end
+
+        subgraph KERNEL_NET ["Stack di Rete Host"]
+            NFTABLES["nftables (inet blueagent)<br/>- MSS Clamping (MTU 1420)<br/>- Forwarding wg-k &lt;-&gt; br-team-k<br/>- SNAT Masquerade verso WAN"]
+        end
+
+        subgraph LAN_LAYER ["Bridge di Produzione (L2)"]
+            BR["br-team-k (10.k.1.1/24)<br/>Linux Bridge standard (FDB)"]
+        end
+
+        subgraph PROD_CONTAINERS ["Container di Produzione (Incus)"]
+            C_WEB["Container Web (10.k.1.2)<br/>eth0 (veth)"]
+            C_DB["Container DB (10.k.1.3)<br/>eth0 (veth)"]
+        end
+    end
+
+    subgraph WAN ["Rete Esterna"]
+        INTERNET["Internet / WAN"]
+    end
+
+    USER1 & USER2 -- "Tunnel WireGuard (UDP)" --> WG
+    WG <--> KERNEL_NET
+    KERNEL_NET <--> BR
+    KERNEL_NET -- "NAT Egress" --> INTERNET
+    BR <--> C_WEB
+    BR <--> C_DB
+                        </pre>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Topologia di produzione • Prestazioni L2 native esenti da SDN</span>
+                    </div>
+                    <span>Sezione 2.3 • Diapositiva 12</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 13 (Sez. 2.3 - Slide 2/3) - Rete di Verifica verify-k
+                 =============================================================== -->
+            <section class="slide" data-slide="13">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.3 • ESPOSIZIONE ARCHITETTURA (2/3)</span>
+                        <h1 class="slide-title reveal">Architettura della Dark Sandbox di Verifica</h1>
+                        <p class="slide-subtitle reveal">Ambiente effimero OVN con cloni CoW e oracolo di test
+                            (verify-k)</p>
+                    </div>
+                    <div class="slide-number-box reveal">13 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-diagram">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Rete OVN Effimera (verify-ovn-k)</strong>
+                                <p>Switch e router logici virtuali isolati su tunnel Geneve nel localhost, indipendenti
+                                    dallo stack di produzione.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Uplink Parent Bridge (incusbr0)</strong>
+                                <p>Bridge dedicato per il transito e il routing del traffico verso la WAN esterna
+                                    tramite regole SNAT.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Cloni Istantanei ZFS CoW</strong>
+                                <p>Duplicazione istantanea dei container live con rebinding a caldo dell'interfaccia
+                                    <code>eth0</code> sullo switch OVN.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Verifier Runner (10.k.1.250)</strong>
+                                <p>Container effimero attaccante che inietta exploit e payload di verifica direttamente
+                                    sulla LAN virtuale OVN.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mermaid-container reveal">
+                        <pre class="mermaid">
+flowchart TD
+    subgraph WAN ["Rete Esterna"]
+        INTERNET["Internet / WAN"]
+    end
+
+    subgraph HOST ["Host Debian (BlueAgent)"]
+        INCUS_BR["incusbr0 (Parent Uplink Bridge)<br/>172.16.0.1/24 (Range OVN)"]
+
+        subgraph OVN_DOMAIN ["Rete OVN Effimera (verify-ovn-k)"]
+            OVN_ROUTER["Logical Router OVN<br/>Gateway: 10.k.1.1/24<br/>SNAT verso incusbr0"]
+            OVN_SWITCH["Logical Switch OVN (Dark L2)<br/>Isolamento Datapath Geneve"]
+        end
+
+        subgraph VERIFY_CONTAINERS ["Ambiente di Verifica Effimero"]
+            V_RUNNER["verify-runner-xxxx (10.k.1.250)<br/>Oracolo / Exploit Runner"]
+            CLONE_WEB["Clone Web (10.k.1.2)<br/>ZFS CoW Clone &bull; eth0"]
+            CLONE_DB["Clone DB (10.k.1.3)<br/>ZFS CoW Clone &bull; eth0"]
+        end
+    end
+
+    OVN_ROUTER -- "Uplink Egress (SNAT)" --> INCUS_BR
+    INCUS_BR -- "Accesso WAN" --> INTERNET
+    OVN_ROUTER <--> OVN_SWITCH
+    OVN_SWITCH <--> V_RUNNER
+    OVN_SWITCH <--> CLONE_WEB
+    OVN_SWITCH <--> CLONE_DB
+
+    V_RUNNER -- "Test Exploit / Payload" --> CLONE_WEB
+    V_RUNNER -- "Test Exploit / Payload" --> CLONE_DB
+                        </pre>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Sandbox OVN • Isolamento e fedeltà per test distruttivi</span>
+                    </div>
+                    <span>Sezione 2.3 • Diapositiva 13</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 14 (Sez. 2.3 - Slide 3/3) - Vista Integrata (Merge)
+                 =============================================================== -->
+            <section class="slide" data-slide="14">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge blue reveal">SEZIONE 2.3 • ESPOSIZIONE ARCHITETTURA (3/3)</span>
+                        <h1 class="slide-title reveal">Vista Integrata: Coesistenza su Singolo Host</h1>
+                        <p class="slide-subtitle reveal">Fedeltà topologica e zero conflitti di routing nel kernel Linux
+                        </p>
+                    </div>
+                    <div class="slide-number-box reveal">14 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-diagram">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index blue">01</div>
+                            <div class="point-text">
+                                <strong>Topologia e Indirizzamento Invarianti</strong>
+                                <p>I container clonati mantengono esattamente lo stesso IP (<code>10.k.1.x</code>) e
+                                    gateway (<code>10.k.1.1</code>) della produzione.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index blue">02</div>
+                            <div class="point-text">
+                                <strong>Zero Conflitti di Routing nell'Host</strong>
+                                <p>Sull'host esiste solo il gateway di <code>br-team-k</code>. La rete
+                                    <code>verify</code> opera solo nel datapath virtuale OVN.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index blue">03</div>
+                            <div class="point-text">
+                                <strong>Isolamento Totale Anti-Sniffing</strong>
+                                <p>I payload di attacco del runner non transitano su <code>br-team-k</code>: impossibile
+                                    intercettarli con <code>tcpdump</code>.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index blue">04</div>
+                            <div class="point-text">
+                                <strong>Orchestrazione Atomica Fast-Path</strong>
+                                <p>CTFd invoca la verifica → snapshot CoW ZFS sub-secondo → test OVN → deallocazione
+                                    pulita LIFO.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mermaid-container reveal">
+                        <pre class="mermaid">
+flowchart TB
+    subgraph ACTORS ["Attori Esterni"]
+        CLIENT["Partecipante (10.k.0.x)"]
+        CTFD["CTFd Orchestrator"]
+    end
+
+    subgraph HOST ["Host Debian 13 (BlueAgent)"]
+        BLUEAGENT["FastAPI BlueAgent"]
+        ZFS_POOL[("Pool ZFS CoW")]
+
+        subgraph PROD_NET ["1. Produzione Live (Team k)"]
+            WG["wg-k (10.k.0.1/24)"]
+            BR_PROD["br-team-k (10.k.1.1/24)"]
+            PROD_C["Container Live (10.k.1.x)"]
+        end
+
+        subgraph VERIFY_NET ["2. Dark Sandbox Effimera (OVN)"]
+            OVN_SW["Switch OVN verify-xxxx"]
+            RUNNER["verify-runner (10.k.1.250)"]
+            CLONE_C["Cloni Target (10.k.1.x)"]
+        end
+    end
+
+    CLIENT -- "Accesso VPN" --> WG <--> BR_PROD <--> PROD_C
+    CTFD -- "POST /verify" --> BLUEAGENT
+    BLUEAGENT -- "Snapshot CoW" --> ZFS_POOL -.-> CLONE_C
+    BLUEAGENT -- "Crea switch & test" --> OVN_SW
+    RUNNER -- "Dark Exploit" --> OVN_SW <--> CLONE_C
+                        </pre>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Coesistenza simultanea • Produzione L2 + Dark Sandbox OVN</span>
+                    </div>
+                    <span>Sezione 2.3 • Diapositiva 14</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 15 (Sez. 2.4 - Slide 1/3) - Setup Host: OVN, ZFS & Uplink
+                 =============================================================== -->
+            <section class="slide" data-slide="15">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.4 • SETUP ARCHITETTURA (1/3)</span>
+                        <h1 class="slide-title reveal">Inizializzazione Host: OVN, ZFS & Uplink</h1>
+                        <p class="slide-subtitle reveal">Configurazione dei demoni SDN e dello storage pool (skip
+                            package install)</p>
+                    </div>
+                    <div class="slide-number-box reveal">15 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Configurazione Open vSwitch & OVN</h3>
+                            <span class="feature-tag">SDN Plane</span>
+                        </div>
+                        <div class="code-terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <span>bash • ovs & ovn setup</span>
+                            </div>
+                            <div class="terminal-body"><span class="cmd-comment"># Imposta socket SB, tunneling Geneve e
+                                    terminazione localhost</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ovs-vsctl set open_vswitch
+                                    . \</span>
+                                <span class="cmd-val">external_ids:ovn-remote=unix:/run/ovn/ovnsb_db.sock \</span>
+                                <span class="cmd-val">external_ids:ovn-encap-type=geneve \</span>
+                                <span class="cmd-val">external_ids:ovn-encap-ip=127.0.0.1</span>
+
+                                <span class="cmd-comment"># Espone interfaccia Northbound per Incus</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ovn-nbctl set-connection
+                                    ptcp:6641:127.0.0.1</span>
+
+                                <span class="cmd-comment"># Registra endpoint OVN Northbound in Incus</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus config set
+                                    network.ovn.northbound_connection tcp:127.0.0.1:6641</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Storage Pool ZFS & Bridge Uplink</h3>
+                            <span class="feature-tag">Storage & Network</span>
+                        </div>
+                        <div class="code-terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <span>bash • zfs & incusbr0</span>
+                            </div>
+                            <div class="terminal-body"><span class="cmd-comment"># Inizializza Incus e crea pool ZFS per
+                                    clonazione CoW</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus admin init
+                                    --auto</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus storage create
+                                    blueagent-zfs zfs</span>
+
+                                <span class="cmd-comment"># Configura uplink incusbr0 con NAT per uscita WAN</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus network set incusbr0
+                                    ipv4.address=172.16.0.1/24 ipv4.nat=true</span>
+
+                                <span class="cmd-comment"># Riserva range DHCP e range dedicato per subnet logiche
+                                    OVN</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus network set incusbr0
+                                    \</span>
+                                <span class="cmd-val">ipv4.dhcp.ranges=172.16.0.2-172.16.0.99 \</span>
+                                <span class="cmd-val">ipv4.ovn.ranges=172.16.0.100-172.16.0.199</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Setup infrastrutturale host • Open vSwitch, OVN e Incus</span>
+                    </div>
+                    <span>Sezione 2.4 • Diapositiva 15</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 16 (Sez. 2.4 - Slide 2/3) - Setup Rete Produzione: Bridge, VPN & Nftables
+                 =============================================================== -->
+            <section class="slide" data-slide="16">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.4 • SETUP ARCHITETTURA (2/3)</span>
+                        <h1 class="slide-title reveal">Setup Rete Produzione: Bridge, VPN & Firewall</h1>
+                        <p class="slide-subtitle reveal">Configurazione per team 0: br-team-0, wg-0, nftables e
+                            container live</p>
+                    </div>
+                    <div class="slide-number-box reveal">16 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Bridge Kernel & Tunnel WireGuard</h3>
+                            <span class="feature-tag">L2 / L3 Interfaces</span>
+                        </div>
+                        <div class="code-terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <span>bash • bridge & wireguard</span>
+                            </div>
+                            <div class="terminal-body"><span class="cmd-comment"># Crea bridge kernel L2 per il team
+                                    0</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ip link add name br-team-0
+                                    type bridge</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ip addr add 10.0.1.1/24
+                                    dev br-team-0 && sudo ip link set dev br-team-0 up</span>
+
+                                <span class="cmd-comment"># Crea device WireGuard e assegna gateway VPN</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ip link add dev wg-0 type
+                                    wireguard</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ip addr add 10.0.0.1/24
+                                    dev wg-0</span>
+
+                                <span class="cmd-comment"># Associa porta di ascolto, chiave privata e peer del
+                                    client</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo wg set wg-0 listen-port
+                                    51820 private-key wg-0.key \</span>
+                                <span class="cmd-val">peer "$(cat client-0.pub)" allowed-ips 10.0.0.2/32</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo ip link set dev wg-0
+                                    up</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Regole nftables & Avvio Container</h3>
+                            <span class="feature-tag">Filtering & Incus Profile</span>
+                        </div>
+                        <div class="code-terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <span>bash • nftables & launch</span>
+                            </div>
+                            <div class="terminal-body"><span class="cmd-comment"># Tabella inet blueagent e TCP MSS
+                                    Clamping per evitare frammentazione</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo nft add table inet
+                                    blueagent</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo nft add chain inet
+                                    blueagent forward '{ type filter hook forward priority 0; policy accept; }'</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo nft add rule inet
+                                    blueagent forward tcp flags syn / syn,rst tcp option maxseg size set rt mtu</span>
+
+                                <span class="cmd-comment"># Masquerade NAT per accesso internet dei container</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo nft add chain inet
+                                    blueagent postrouting '{ type nat hook postrouting priority 100; policy accept;
+                                    }'</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo nft add rule inet
+                                    blueagent postrouting ip saddr 10.0.1.0/24 ip daddr != 10.0.1.0/24 masquerade</span>
+
+                                <span class="cmd-comment"># Crea profilo Incus e avvia il container live su pool
+                                    ZFS</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus profile create
+                                    team-0-profile</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus profile device add
+                                    team-0-profile eth0 nic nictype=bridged parent=br-team-0 name=eth0</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus launch ubuntu:22.04
+                                    c0-web -p default -p team-0-profile -s blueagent-zfs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Setup produzione team 0 • Kernel bridge, WireGuard L3 e nftables</span>
+                    </div>
+                    <span>Sezione 2.4 • Diapositiva 16</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 17 (Sez. 2.4 - Slide 3/3) - Setup Verifica: OVN & Clonazione CoW
+                 =============================================================== -->
+            <section class="slide" data-slide="17">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.4 • SETUP ARCHITETTURA (3/3)</span>
+                        <h1 class="slide-title reveal">Setup Sandbox Verifica: OVN & Clonazione CoW</h1>
+                        <p class="slide-subtitle reveal">Generazione switch logico, snapshot ZFS istantaneo e override
+                            di rete</p>
+                    </div>
+                    <div class="slide-number-box reveal">17 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Creazione Switch OVN & Clone CoW</h3>
+                            <span class="feature-tag">OVN Network & Copy</span>
+                        </div>
+                        <div class="code-terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <span>bash • ovn & clone</span>
+                            </div>
+                            <div class="terminal-body"><span class="cmd-comment"># Crea rete OVN con lo stesso gateway
+                                    della produzione (10.0.1.1)</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">VERIFY_UUID="0"</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus network create
+                                    verify-ovn-${VERIFY_UUID} \</span>
+                                <span class="cmd-val">--type=ovn network=incusbr0 \</span>
+                                <span class="cmd-val">ipv4.address=10.0.1.1/24 ipv4.nat=true</span>
+
+                                <span class="cmd-comment"># Clona istantaneamente il container di produzione da ZFS
+                                    CoW</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus copy c0-web
+                                    c0-web-v-${VERIFY_UUID} --instance-only</span>
+
+                                <span class="cmd-comment"># Esegue il rebinding a caldo dell'interfaccia eth0 sulla rete
+                                    OVN</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus config device
+                                    override c0-web-v-${VERIFY_UUID} eth0 \</span>
+                                <span class="cmd-val">network=verify-ovn-${VERIFY_UUID} parent=</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Boot Clone, Verifica & Bonifica</h3>
+                            <span class="feature-tag">Run & Teardown</span>
+                        </div>
+                        <div class="code-terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <span>bash • exec & cleanup</span>
+                            </div>
+                            <div class="terminal-body"><span class="cmd-comment"># Avvia il container clonato nella
+                                    sandbox dark</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus start
+                                    c0-web-v-${VERIFY_UUID}</span>
+
+                                <span class="cmd-comment"># Esegue test di verifica (es. audit locale
+                                    in-container)</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus exec
+                                    c0-web-v-${VERIFY_UUID} -- /bin/check_patch.sh</span>
+
+                                <span class="cmd-comment"># Teardown atomico immediato LIFO delle risorse
+                                    effimere</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus delete -f
+                                    c0-web-v-${VERIFY_UUID}</span>
+                                <span class="cmd-prompt">$ </span><span class="cmd-line">sudo incus network delete
+                                    verify-ovn-${VERIFY_UUID}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Setup sandbox OVN • Clonazione CoW e teardown atomico LIFO</span>
+                    </div>
+                    <span>Sezione 2.4 • Diapositiva 17</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 18 (Sez. 2.6 - Slide 1/3) - Proprietà Fondamentali
+                 =============================================================== -->
+            <section class="slide" data-slide="18">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 2.6 • DIFESA DELL'ARCHITETTURA (1/3)</span>
+                        <h1 class="slide-title reveal">Proprietà Fondamentali dell'Architettura</h1>
+                        <p class="slide-subtitle reveal">I pilastri di progettazione della piattaforma BlueAgent</p>
+                    </div>
+                    <div class="slide-number-box reveal">18 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="point-card reveal">
+                        <div class="point-index">01</div>
+                        <div class="point-text">
+                            <strong>Zero Side-Channel Leakage</strong>
+                            <p>Esecuzione dei test su cloni isolati in una rete OVN inaccessibile. Impossibile per i
+                                partecipanti intercettare exploit, payload o flag tramite sniffing o ispezione processi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="point-card reveal">
+                        <div class="point-index">02</div>
+                        <div class="point-text">
+                            <strong>Nessun Impatto sulla Produzione</strong>
+                            <p>Exploit instabili o test distruttivi non alterano lo stato né causano crash dei container
+                                live, preservando l'SLA di uptime e il lavoro salvato dalla squadra.</p>
+                        </div>
+                    </div>
+
+                    <div class="point-card reveal">
+                        <div class="point-index secondary">03</div>
+                        <div class="point-text">
+                            <strong>Fedeltà Topologica Assoluta</strong>
+                            <p>I container mantengono le stesse interfacce di rete, gli stessi IP statici
+                                (<code>10.k.1.x</code>) e lo stesso gateway sia in produzione che in fase di verifica.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="point-card reveal">
+                        <div class="point-index secondary">04</div>
+                        <div class="point-text">
+                            <strong>Ambiente Stateful Completo</strong>
+                            <p>Superamento dei limiti di kCTF (nsjail/OCI): supporto nativo a container con
+                                <code>systemd</code>, file di log persistenti e architetture multi-tier realistiche.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Difesa dell'architettura • Proprietà e vantaggi competitivi</span>
+                    </div>
+                    <span>Sezione 2.6 • Diapositiva 18</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 19 (Sez. 2.6 - Slide 2/3) - Fattibilità & Prestazioni
+                 =============================================================== -->
+            <section class="slide" data-slide="19">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 2.6 • DIFESA DELL'ARCHITETTURA (2/3)</span>
+                        <h1 class="slide-title reveal">Fattibilità Tecnica & Prestazioni</h1>
+                        <p class="slide-subtitle reveal">Efficienza delle risorse, tempi di risposta e benchmark
+                            misurati</p>
+                    </div>
+                    <div class="slide-number-box reveal">19 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Benchmark & Metriche di Clonazione</h3>
+                            <span class="feature-tag">Storage & RAM</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">⚡</div>
+                                <div class="point-text">
+                                    <strong>Clonazione Sub-Secondaria (~700 ms)</strong>
+                                    <p>Duplicazione di uno scenario multi-tier (2 container Ubuntu completi) su pool ZFS
+                                        Copy-on-Write completata in circa 700 ms.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">💾</div>
+                                <div class="point-text">
+                                    <strong>Densità ad Alta Efficienza</strong>
+                                    <p>Basso overhead di memoria per container di sistema (~100 MB RAM): fattibile
+                                        istanziare centinaia di container su un unico host.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Ottimizzazioni Architetturali</h3>
+                            <span class="feature-tag">SDN & Self-Healing</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">🌐</div>
+                                <div class="point-text">
+                                    <strong>Isolamento dell'Overhead SDN</strong>
+                                    <p>OVN è circoscritto alla sola sandbox di verifica: la produzione opera su bridge
+                                        kernel standard senza degrado di throughput.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">🧹</div>
+                                <div class="point-text">
+                                    <strong>Prevenzione Resource Leak</strong>
+                                    <p>Il demone <code>LifecycleManager</code> distrugge automaticamente risorse e
+                                        switch orfani dopo 90s di inattività.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Fattibilità tecnica e misurazioni prestazionali</span>
+                    </div>
+                    <span>Sezione 2.6 • Diapositiva 19</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 20 (Sez. 2.6 - Slide 3/3) - Destinatari, Limiti & Trade-off
+                 =============================================================== -->
+            <section class="slide" data-slide="20">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge blue reveal">SEZIONE 2.6 • DIFESA DELL'ARCHITETTURA (3/3)</span>
+                        <h1 class="slide-title reveal">Destinatari, Limiti Noti & Evoluzioni</h1>
+                        <p class="slide-subtitle reveal">Casi d'uso operativi e vincoli architetturali del sistema
+                            attuale</p>
+                    </div>
+                    <div class="slide-number-box reveal">20 / 20</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Destinatari & Casi d'Uso</h3>
+                            <span class="feature-tag">Target Audience</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index blue">01</div>
+                                <div class="point-text">
+                                    <strong>Corsi Universitari di Sicurezza</strong>
+                                    <p>Laboratori accademici di patch management, analisi forense e configurazione di
+                                        contromisure su sistemi reali.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">02</div>
+                                <div class="point-text">
+                                    <strong>Training Aziendale Blue Team / SOC</strong>
+                                    <p>Simulazioni difensive realistiche per analisti di sicurezza con remediation su
+                                        servizi multi-container.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index blue">03</div>
+                                <div class="point-text">
+                                    <strong>Competizioni Attack-Defense / Defense-Only</strong>
+                                    <p>Eventi competitivi con decine di team e infrastrutture ad alta densità a costo
+                                        computazionale contenuto.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Critica & Limiti Architetturali</h3>
+                            <span class="feature-tag">Trade-offs & Roadmap</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">⚠️</div>
+                                <div class="point-text">
+                                    <strong>UDP Path MTU Blackhole</strong>
+                                    <p>WireGuard (MTU 1420) e Geneve (MTU 1442) riducono l'MTU: pacchetti UDP di grandi
+                                        dimensioni con flag DF possono essere scartati.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">⚠️</div>
+                                <div class="point-text">
+                                    <strong>Limite Scalabilità a 254 Team</strong>
+                                    <p>Indirizzamento deterministico <code>10.k.x.x</code> confina <em>k</em> a un
+                                        singolo byte (0..254), limitando la capacità per host a 254 team.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">⚠️</div>
+                                <div class="point-text">
+                                    <strong>Concorrenza Mononodo</strong>
+                                    <p>Il lock <code>TwoTierLock</code> è vincolato al singolo host locale; per scalare
+                                        su cluster multi-nodo occorre un broker distribuito (es. Redis).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Ambiti operativi e trasparenza sui limiti progettuali</span>
+                    </div>
+                    <span>Sezione 2.6 • Diapositiva 20</span>
+                </footer>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Presentation Chrome Controls -->
+    <nav class="deck-controls" aria-label="Controlli presentazione">
+        <button class="deck-btn" id="prevBtn" title="Diapositiva precedente (←)">◀</button>
+        <span class="deck-progress-text" id="progressText">01 / 20</span>
+        <button class="deck-btn" id="nextBtn" title="Diapositiva successiva (→)">▶</button>
+        <span class="deck-kbd-hint">Frecce o Spazio</span>
+    </nav>
+
+    <!-- Hotzone & Edit Mode Toggle (Lightweight inline editing affordance) -->
+    <div class="edit-hotzone" id="editHotzone" title="Zona attivazione modifica"></div>
+    <button class="edit-toggle" id="editToggle" title="Attiva modalità modifica testi (E)">
+        <span>✏️</span> <span>Modifica (E)</span>
+    </button>
+
+    <script>
+        /**
+         * Initialize Mermaid diagrams
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof mermaid !== 'undefined') {
+                mermaid.initialize({
+                    startOnLoad: true,
+                    theme: 'base',
+                    flowchart: {
+                        useMaxWidth: true,
+                        htmlLabels: true,
+                        curve: 'basis'
+                    },
+                    themeVariables: {
+                        primaryColor: '#FBF0EB',
+                        primaryBorderColor: '#D9532F',
+                        primaryTextColor: '#1C1E21',
+                        lineColor: '#244242',
+                        secondaryColor: '#EDF3F3',
+                        tertiaryColor: '#FFFFFF',
+                        fontFamily: 'Plus Jakarta Sans, sans-serif',
+                        fontSize: '13px'
+                    }
+                });
+            }
+        });
+
+        /**
+         * Core Slide Presentation Controller
+         */
+        class SlidePresentation {
+            constructor() {
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.stage = document.getElementById('deckStage');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.progressText = document.getElementById('progressText');
+
+                this.currentSlide = 0;
+                this.isEditMode = false;
+
+                this.setupStageScale();
+                this.setupControls();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupInlineEditor();
+
+                this.showSlide(0);
+            }
+
+            setupStageScale() {
+                const scale = () => {
+                    const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+                    const x = (window.innerWidth - 1920 * factor) / 2;
+                    const y = (window.innerHeight - 1080 * factor) / 2;
+                    this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+                };
+                scale();
+                window.addEventListener('resize', scale);
+            }
+
+            setupControls() {
+                this.prevBtn.addEventListener('click', () => this.prev());
+                this.nextBtn.addEventListener('click', () => this.next());
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (this.isEditMode && e.target.getAttribute('contenteditable') === 'true') {
+                        return; // Let user type freely in edit mode
+                    }
+
+                    switch (e.key) {
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.next();
+                            break;
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                        case 'PageUp':
+                        case 'Backspace':
+                            e.preventDefault();
+                            this.prev();
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.showSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.showSlide(this.slides.length - 1);
+                            break;
+                    }
+                });
+
+                // Wheel navigation (debounced)
+                let wheelTimeout = null;
+                window.addEventListener('wheel', (e) => {
+                    if (this.isEditMode) return;
+                    if (wheelTimeout) return;
+                    if (Math.abs(e.deltaY) > 30) {
+                        if (e.deltaY > 0) this.next();
+                        else this.prev();
+                        wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 400);
+                    }
+                }, { passive: true });
+            }
+
+            setupTouchNav() {
+                let touchStartX = 0;
+                let touchStartY = 0;
+
+                window.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    touchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+
+                window.addEventListener('touchend', (e) => {
+                    if (this.isEditMode) return;
+                    const deltaX = e.changedTouches[0].screenX - touchStartX;
+                    const deltaY = e.changedTouches[0].screenY - touchStartY;
+
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+                        if (deltaX < 0) this.next();
+                        else this.prev();
+                    }
+                }, { passive: true });
+            }
+
+            showSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+
+                this.slides.forEach((slide, i) => {
+                    const isActive = (i === index);
+                    slide.classList.toggle('active', isActive);
+                    slide.classList.toggle('visible', isActive);
+                });
+
+                this.currentSlide = index;
+                const formattedCur = String(this.currentSlide + 1).padStart(2, '0');
+                const formattedTot = String(this.slides.length).padStart(2, '0');
+                this.progressText.textContent = `${formattedCur} / ${formattedTot}`;
+
+                this.prevBtn.style.opacity = (this.currentSlide === 0) ? '0.35' : '1';
+                this.nextBtn.style.opacity = (this.currentSlide === this.slides.length - 1) ? '0.35' : '1';
+            }
+
+            next() {
+                if (this.currentSlide < this.slides.length - 1) {
+                    this.showSlide(this.currentSlide + 1);
+                }
+            }
+
+            prev() {
+                if (this.currentSlide > 0) {
+                    this.showSlide(this.currentSlide - 1);
+                }
+            }
+
+            setupInlineEditor() {
+                const hotzone = document.getElementById('editHotzone');
+                const toggle = document.getElementById('editToggle');
+                let hideTimeout = null;
+
+                const showToggle = () => {
+                    clearTimeout(hideTimeout);
+                    toggle.classList.add('show');
+                };
+
+                const hideToggle = () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isEditMode) toggle.classList.remove('show');
+                    }, 400);
+                };
+
+                hotzone.addEventListener('mouseenter', showToggle);
+                hotzone.addEventListener('mouseleave', hideToggle);
+                toggle.addEventListener('mouseenter', showToggle);
+                toggle.addEventListener('mouseleave', hideToggle);
+
+                const toggleMode = () => {
+                    this.isEditMode = !this.isEditMode;
+                    toggle.classList.toggle('active', this.isEditMode);
+                    toggle.innerHTML = this.isEditMode
+                        ? '<span>💾</span> <span>Salva Modifiche</span>'
+                        : '<span>✏️</span> <span>Modifica (E)</span>';
+
+                    const editables = document.querySelectorAll('.slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide span, .slide strong, .slide .point-text, .slide td');
+                    editables.forEach(el => {
+                        el.setAttribute('contenteditable', this.isEditMode ? 'true' : 'false');
+                    });
+                };
+
+                hotzone.addEventListener('click', toggleMode);
+                toggle.addEventListener('click', toggleMode);
+
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) {
+                        toggleMode();
+                    }
+                });
+            }
+        }
+
+        // Initialize presentation on DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+
+</html>

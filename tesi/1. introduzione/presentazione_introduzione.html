@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduzione CTF & Meccanismi di Verifica</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. CSS CUSTOM PROPERTIES & THEME (Minimalist Lead Funnel Aesthetic)
+           ========================================================================== */
+        :root {
+            /* Palette: Terracotta / Slate / Warm Sand / Off-White */
+            --bg-canvas: #121316;
+            --stage-bg: #F7F5EE;
+            --card-bg: #FFFFFF;
+            --card-muted: #F0EDE4;
+            --text-primary: #1C1E21;
+            --text-secondary: #5E636A;
+            --text-muted: #8E939B;
+            
+            --accent-primary: #D9532F;       /* Warm Terracotta / Lead Funnel Rust */
+            --accent-primary-soft: #FBF0EB;
+            --accent-secondary: #244242;     /* Deep Slate Sage */
+            --accent-secondary-soft: #EDF3F3;
+            --border-light: #E5E1D5;
+            --border-strong: #CDC7B8;
+            --tag-bg: #ECE7DA;
+
+            /* Typography */
+            --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Motion */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-normal: 0.5s;
+        }
+
+        /* ==========================================================================
+           2. VIEWPORT-BASE.CSS (Mandatory 16:9 Stage Fixed Architecture)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-canvas);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .deck-viewport {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-canvas);
+        }
+
+        .deck-stage {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            transform-origin: 0 0;
+            background: var(--stage-bg);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            display: block;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            background: var(--stage-bg);
+            padding: 72px 96px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide.active,
+        .slide.visible {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           3. SLIDE REVEAL ANIMATIONS
+           ========================================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.08s; }
+        .reveal:nth-child(2) { transition-delay: 0.16s; }
+        .reveal:nth-child(3) { transition-delay: 0.24s; }
+        .reveal:nth-child(4) { transition-delay: 0.32s; }
+        .reveal:nth-child(5) { transition-delay: 0.40s; }
+
+        /* ==========================================================================
+           4. MINIMALIST LEAD-FUNNEL SLIDE COMPONENTS
+           ========================================================================== */
+        /* Header Region */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1.5px solid var(--border-light);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+        }
+
+        .slide-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            background: var(--accent-primary-soft);
+            padding: 6px 14px;
+            border-radius: 999px;
+            width: fit-content;
+            border: 1px solid rgba(217, 83, 47, 0.2);
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 46px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            line-height: 1.15;
+        }
+
+        .slide-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .slide-number-box {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            padding: 8px 18px;
+            border-radius: 12px;
+        }
+
+        /* Slide Main Body */
+        .slide-body {
+            flex: 1;
+            display: grid;
+            gap: 36px;
+            align-items: stretch;
+        }
+
+        .grid-2col {
+            grid-template-columns: 1.15fr 0.85fr;
+        }
+
+        .grid-2col-equal {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-3col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .grid-full {
+            grid-template-columns: 1fr;
+        }
+
+        /* Points / Cards List */
+        .points-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .point-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 16px;
+            padding: 22px 28px;
+            display: flex;
+            align-items: flex-start;
+            gap: 22px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .point-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-strong);
+        }
+
+        .point-index {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .point-index.secondary {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+        }
+
+        .point-text {
+            font-size: 21px;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .point-text strong {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+
+        .point-text p {
+            margin-top: 4px;
+            font-size: 17px;
+            color: var(--text-secondary);
+        }
+
+        /* Comparison Container */
+        .compare-box {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 20px;
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.02);
+        }
+
+        .compare-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 14px;
+        }
+
+        .compare-title {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .compare-tag {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: var(--tag-bg);
+            color: var(--text-secondary);
+        }
+
+        /* Funnel Flow Components */
+        .funnel-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .funnel-step {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 16px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .funnel-step.step-1 { border-left: 6px solid var(--accent-primary); }
+        .funnel-step.step-2 { border-left: 6px solid #E08244; }
+        .funnel-step.step-3 { border-left: 6px solid #4B6E6E; }
+        .funnel-step.step-4 { border-left: 6px solid var(--accent-secondary); }
+
+        .funnel-num {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-muted);
+            width: 36px;
+        }
+
+        .funnel-info h4 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .funnel-info p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Minimalist Placeholders */
+        .placeholder-box {
+            background: var(--card-bg);
+            border: 2px dashed var(--border-strong);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 36px;
+            text-align: center;
+            gap: 18px;
+            height: 100%;
+            min-height: 280px;
+        }
+
+        .placeholder-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .placeholder-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 360px;
+            line-height: 1.45;
+        }
+
+        .placeholder-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--stage-bg);
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Footer Region */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1.5px solid var(--border-light);
+            padding-top: 18px;
+            margin-top: 28px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+        }
+
+        /* ==========================================================================
+           5. PRESENTATION CONTROLS (Floating UI Outside 16:9 Stage)
+           ========================================================================== */
+        .deck-controls {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(26, 29, 33, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+        }
+
+        .deck-btn {
+            background: transparent;
+            border: none;
+            color: #E2E4E8;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .deck-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+        }
+
+        .deck-btn:active {
+            transform: scale(0.92);
+        }
+
+        .deck-progress-text {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: #A0A5B0;
+            padding: 0 10px;
+            min-width: 75px;
+            text-align: center;
+        }
+
+        .deck-kbd-hint {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #6C7280;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 12px;
+            margin-left: 4px;
+        }
+
+        /* Inline Editing Hotzone & Toggle Button */
+        .edit-hotzone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .edit-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            z-index: 10001;
+            background: rgba(26, 29, 33, 0.9);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        /* Editable highlight */
+        [contenteditable="true"] {
+            outline: 2px dashed rgba(217, 83, 47, 0.4) !important;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           6. PRINT STYLES
+           ========================================================================== */
+        @media print {
+            html, body {
+                width: 1920px;
+                height: auto;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+            .deck-viewport {
+                position: static;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+            .deck-stage {
+                position: static;
+                width: auto;
+                height: auto;
+                transform: none !important;
+                box-shadow: none;
+            }
+            .slide {
+                position: relative;
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                width: 1920px;
+                height: 1080px;
+                break-after: page;
+                page-break-after: always;
+            }
+            .slide:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+            .deck-controls, .edit-hotzone, .edit-toggle {
+                display: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.15s !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="deck-viewport">
+        <main class="deck-stage" id="deckStage">
+
+            <!-- ===============================================================
+                 SLIDE 01 (Sez. 1.1) - Introduzione & Obiettivo Tesi
+                 =============================================================== -->
+            <section class="slide active visible" data-slide="1">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.1 • INTRODUZIONE AL PROBLEMA</span>
+                        <h1 class="slide-title reveal">Gestione di Competizioni CTF</h1>
+                        <p class="slide-subtitle reveal">Automazione e orchestrazione di scenari applicativi di sicurezza</p>
+                    </div>
+                    <div class="slide-number-box reveal">01 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Competizioni Capture The Flag (CTF)</strong>
+                                <p>Sfida competitiva in cui team o singoli risolvono problemi tecnici per conquistare una <em>flag</em>.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Focus della Tesi: Paradigma Difensivo</strong>
+                                <p>Gestire uno o più sistemi vulnerabili dove la flag si ottiene correggendo (*patchando*) la falla.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Sistemi Distribuiti Multi-Host</strong>
+                                <p>Scenari realistici composti da macchine comunicanti (es. web server esposto e database interno).</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Esigenza di un Oracolo Automatizzato</strong>
+                                <p>Necessità di un verificatore autonomo capace di certificare la correttezza della mitigazione.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">🎯</div>
+                            <div class="placeholder-title">Architettura dello Scenario di Gara</div>
+                            <div class="placeholder-desc">Interazione tra concorrente, host bersaglio vulnerabile e verificatore automatico</div>
+                            <div class="placeholder-tag">[ Placeholder: Diagramma Contesto CTF ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Tesi di Laurea • Piattaforma CTF di Difesa</span>
+                    </div>
+                    <div>SEZIONE 1.1: INTRODUZIONE</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 02 (Sez. 1.1) - Formati CTF a Confronto
+                 =============================================================== -->
+            <section class="slide" data-slide="2">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.1 • FORMATI DI COMPETIZIONE</span>
+                        <h1 class="slide-title reveal">Jeopardy vs Attack & Defense</h1>
+                        <p class="slide-subtitle reveal">I due modelli canonici e i loro limiti per la verifica di patch</p>
+                    </div>
+                    <div class="slide-number-box reveal">02 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="compare-box reveal">
+                        <div class="compare-header">
+                            <span class="compare-title">CTF Jeopardy</span>
+                            <span class="compare-tag">MODELLO STATICO</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">J1</div>
+                                <div class="point-text">
+                                    <strong>Sfide a Punteggio Indipendente</strong>
+                                    <p>I partecipanti risolvono task isolati recuperando stringhe statiche standard (es. <code>{flag}</code>).</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">J2</div>
+                                <div class="point-text">
+                                    <strong>Nessuna Valutazione della Difesa</strong>
+                                    <p>Misura solo l'efficacia dell'exploit; non verifica la riparazione del servizio né la sua integrità.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compare-box reveal">
+                        <div class="compare-header">
+                            <span class="compare-title">Attack & Defense</span>
+                            <span class="compare-tag">MODELLO DINAMICO</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">AD1</div>
+                                <div class="point-text">
+                                    <strong>Difesa e Attacco Concorrente</strong>
+                                    <p>Ogni team riceve una macchina da difendere mentre attacca i server degli altri team.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">AD2</div>
+                                <div class="point-text">
+                                    <strong>Overhead e Rumore di Rete Elevati</strong>
+                                    <p>Complessità infrastrutturale notevole; il traffico di rete espone exploit tra concorrenti.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Confronto Metodologico dei Formati di Gara</span>
+                    </div>
+                    <div>SEZIONE 1.1: INTRODUZIONE</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 03 (Sez. 1.1) - Il Paradigma del Patching & l'Oracolo
+                 =============================================================== -->
+            <section class="slide" data-slide="3">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.1 • IL PARADIGMA DI DIFESA</span>
+                        <h1 class="slide-title reveal">Patching CTF & il Ruolo dell'Oracolo</h1>
+                        <p class="slide-subtitle reveal">Requisiti di convalida: correzione della vulnerabilità e preservazione del servizio</p>
+                    </div>
+                    <div class="slide-number-box reveal">03 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Conquista della Flag via Patching</strong>
+                                <p>La flag non è nascosta nel sistema: viene rilasciata solo dopo che la patch è stata validata.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>L'Oracolo di Verifica</strong>
+                                <p>Entità automatizzata preposta a interrogare il sistema e verificare la chiusura della vulnerabilità.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Funzionalità Applicativa Intatta</strong>
+                                <p>La patch non deve disabilitare il servizio (no shutdown o porte chiuse); la business logic deve rimanere attiva.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Trasparenza e Non-Interferenza</strong>
+                                <p>La verifica non deve lasciare tracce o indizi che facilitino la risoluzione agli altri concorrenti.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">⚡</div>
+                            <div class="placeholder-title">Flusso di Verifica dell'Oracolo</div>
+                            <div class="placeholder-desc">Sottomissione Patch ➔ Test Funzionale ➔ Test Anti-Exploit ➔ Concessione Flag</div>
+                            <div class="placeholder-tag">[ Placeholder: Pipeline dell'Oracolo ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Definizione del Problema & Requisiti Fondamentali</span>
+                    </div>
+                    <div>SEZIONE 1.1: INTRODUZIONE</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 04 (Sez. 1.2) - Cyber Range Alternativi (Panoramica)
+                 =============================================================== -->
+            <section class="slide" data-slide="4">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2 • CYBER RANGE ALTERNATIVI</span>
+                        <h1 class="slide-title reveal">Stato dell'Arte dei Cyber Range</h1>
+                        <p class="slide-subtitle reveal">Piattaforme di riferimento analizzate nella letteratura e nell'industria</p>
+                    </div>
+                    <div class="slide-number-box reveal">04 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>kCTF (Google)</strong>
+                                <p>Infrastruttura Kubernetes con sandboxing a livello di processo tramite nsjail.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>CTFBox</strong>
+                                <p>Piattaforma Attack & Defense basata su container di sistema Incus e VPN WireGuard.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>CyTrONE & KYPO</strong>
+                                <p>Framework per il training incentrati su emulazione cloud mediante macchine virtuali e OpenStack.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>CyberPatriot & DARPA</strong>
+                                <p>Sistemi closed-source ed eccezionalmente specializzati per la difesa ad agenti o format proprietari.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="funnel-container reveal">
+                        <div class="funnel-step step-1">
+                            <div class="funnel-num">01</div>
+                            <div class="funnel-info">
+                                <h4>kCTF (Google)</h4>
+                                <p>Kubernetes + nsjail • Jeopardy oriented</p>
+                            </div>
+                        </div>
+                        <div class="funnel-step step-2">
+                            <div class="funnel-num">02</div>
+                            <div class="funnel-info">
+                                <h4>CTFBox</h4>
+                                <p>Incus + WireGuard • Attack/Defense</p>
+                            </div>
+                        </div>
+                        <div class="funnel-step step-3">
+                            <div class="funnel-num">03</div>
+                            <div class="funnel-info">
+                                <h4>CyTrONE & KYPO</h4>
+                                <p>Virtual Machine + Cloud OpenStack</p>
+                            </div>
+                        </div>
+                        <div class="funnel-step step-4">
+                            <div class="funnel-num">04</div>
+                            <div class="funnel-info">
+                                <h4>CyberPatriot</h4>
+                                <p>CSS Daemon su VM • Closed-source</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Mappatura delle Tecnologie Esistenti</span>
+                    </div>
+                    <div>SEZIONE 1.2: CYBER RANGE ALTERNATIVI</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 05 (Sez. 1.2) - kCTF Architettura
+                 =============================================================== -->
+            <section class="slide" data-slide="5">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2.1 • GOOGLE kCTF</span>
+                        <h1 class="slide-title reveal">kCTF: Architettura & nsjail</h1>
+                        <p class="slide-subtitle reveal">Piattaforma scalabile basata su cluster Kubernetes e fork isolati</p>
+                    </div>
+                    <div class="slide-number-box reveal">05 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Orchestrazione con Kubernetes</strong>
+                                <p>Ogni challenge corrisponde a un Deployment K8s con service discovery e rollback automatizzato.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Sandboxing con nsjail</strong>
+                                <p>Fork di processo a ogni connessione TCP: isolamento degli sfidanti all'interno dello stesso container.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Healthcheck Integrato</strong>
+                                <p>Container dedicato per eseguire verifiche periodiche sullo stato del servizio vulnerabile.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Isolamento Kernel via Seccomp</strong>
+                                <p>Policy di sicurezza stringenti per abilitare selettivamente solo le syscall consentite.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">☸️</div>
+                            <div class="placeholder-title">Architettura del Cluster kCTF</div>
+                            <div class="placeholder-desc">Deployment Kubernetes ➔ Pod con nsjail ➔ Fork per connessione TCP</div>
+                            <div class="placeholder-tag">[ Placeholder: Diagramma Cluster kCTF ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Analisi di Google kCTF</span>
+                    </div>
+                    <div>SEZIONE 1.2.1: kCTF</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 06 (Sez. 1.2) - kCTF Limiti
+                 =============================================================== -->
+            <section class="slide" data-slide="6">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2.1 • GOOGLE kCTF</span>
+                        <h1 class="slide-title reveal">Limiti di kCTF per la Difesa</h1>
+                        <p class="slide-subtitle reveal">I vincoli architetturali che impediscono attività di persistenza e patching</p>
+                    </div>
+                    <div class="slide-number-box reveal">06 / 13</div>
+                </header>
+
+                <div class="slide-body grid-full">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Filesystem Read-Only Obbligato</strong>
+                                <p>La root viene montata in sola lettura (<code>rw: false</code>). Impossibile applicare patch su file di sistema, configurare <code>/etc</code> o usare gestori pacchetti (es. <code>apt</code>).</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Stato Effimero Volatile (RAM Loss)</strong>
+                                <p>Ogni sessione è legata a una singola connessione TCP: se la connessione si interrompe, tutto il lavoro e le modifiche in memoria vanno persi istantaneamente.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Filtri Seccomp Bloccanti</strong>
+                                <p>Le policy restrittive (<code>DEFAULT KILL</code>) impediscono le syscall necessarie a compilatori, editor di testo o script di riconfigurazione usati dai difensori.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Costi & Complessità di Kubernetes</strong>
+                                <p>Gestire un intero cluster K8s per sfide di patching introduce overhead computazionale e sistemistico sproporzionato rispetto alle necessità.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Incompatibilità di kCTF con il Patching Realistico</span>
+                    </div>
+                    <div>SEZIONE 1.2.1: kCTF</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 07 (Sez. 1.2) - CTFBox
+                 =============================================================== -->
+            <section class="slide" data-slide="7">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2.2 • CTFBox</span>
+                        <h1 class="slide-title reveal">CTFBox: Incus & Attack/Defense</h1>
+                        <p class="slide-subtitle reveal">Orchestrazione di nodi di team con VPN WireGuard e router di gara</p>
+                    </div>
+                    <div class="slide-number-box reveal">07 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Incus per i Nodi dei Team</strong>
+                                <p>Esecuzione di macchine su sottorete dedicata (<code>10.60.0.0/16</code>); Docker Compose per la gestione del gioco.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Routing con WireGuard</strong>
+                                <p>VPN esterna con subnet per team (<code>10.80.team_id.0/24</code>) gestita da un Cloud Router centrale.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>SLA Tick Check</strong>
+                                <p>Penalità automatica al punteggio del team se una patch introdotta rende irraggiungibile il servizio bersaglio.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Limite per Scenari di Sola Difesa</strong>
+                                <p>Overhead ingente di VM e infrastruttura di routing non necessaria quando non si devono attaccare gli avversari.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">🛡️</div>
+                            <div class="placeholder-title">Rete & Routing CTFBox</div>
+                            <div class="placeholder-desc">Cloud Router ➔ Subnet WireGuard ➔ Macchine Team con Incus</div>
+                            <div class="placeholder-tag">[ Placeholder: Diagramma Rete CTFBox ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Analisi di CTFBox</span>
+                    </div>
+                    <div>SEZIONE 1.2.2: CTFBox</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 08 (Sez. 1.2) - CyTrONE
+                 =============================================================== -->
+            <section class="slide" data-slide="8">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2.3 • CyTrONE</span>
+                        <h1 class="slide-title reveal">CyTrONE: Training & Information Leak</h1>
+                        <p class="slide-subtitle reveal">Integrazione LMS su macchine virtuali e vulnerabilità all'ispezione</p>
+                    </div>
+                    <div class="slide-number-box reveal">08 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Architettura Tripartita</strong>
+                                <p>Composta da CyLMS (Moodle), CyRIS (provisioning su VM) e CyPROM (monitoraggio dell'avanzamento).</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Definizione Dichiarativa YAML</strong>
+                                <p>Descrizione di topologia di rete, scenari di attacco e risposte statiche codificate in file di configurazione.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Criticità: Leak Informativo Diretto</strong>
+                                <p>L'utente opera nella stessa VM mentre l'attacco viene sferrato: tracce visibili in <code>/proc</code>, log e traffico di rete.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Tempi Elevati & Dipendenza Cloud</strong>
+                                <p>Il setup delle VM richiede tempi significativi (minuti per host) e ingenti risorse computazionali.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">⏱️</div>
+                            <div class="placeholder-title">Benchmark di Setup CyTrONE</div>
+                            <div class="placeholder-desc">Analisi tempi di provisioning: Level 1 (Desktop VM) vs Level 2 (Desktop + WebServer)</div>
+                            <div class="placeholder-tag">[ Placeholder: Grafico Tempi Setup CyTrONE ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Analisi di CyTrONE</span>
+                    </div>
+                    <div>SEZIONE 1.2.3: CyTrONE</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 09 (Sez. 1.2) - KYPO
+                 =============================================================== -->
+            <section class="slide" data-slide="9">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2.4 • KYPO CYBER RANGE</span>
+                        <h1 class="slide-title reveal">KYPO: Cloud Sandboxes su OpenStack</h1>
+                        <p class="slide-subtitle reveal">Virtualizzazione ad alta fedeltà e barriere hardware considerevoli</p>
+                    </div>
+                    <div class="slide-number-box reveal">09 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Piattaforma Basata su OpenStack</strong>
+                                <p>Emula intere infrastrutture aziendali e sistemi operativi eterogenei per migliaia di partecipanti.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Gerarchia a Sandbox & Pool</strong>
+                                <p>Ogni utente ottiene una Sandbox con VM dedicate collegate in topologie complesse accessibili via SSH.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Flessibilità Totale via Repository Git</strong>
+                                <p>Definizione delle topologie tramite repository versionati e allocazione automatica tramite portale GUI.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Requisiti Hardware Inaccessibili</strong>
+                                <p>Richiede nodi server massicci (16+ CPU core, 128GB RAM, storage in TB), non sostenibili per uso agile.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">☁️</div>
+                            <div class="placeholder-title">Architettura Concettuale KYPO</div>
+                            <div class="placeholder-desc">Portal GUI ➔ Git Sandbox Definition ➔ OpenStack VM Pool</div>
+                            <div class="placeholder-tag">[ Placeholder: Diagramma Architettura KYPO ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Analisi di KYPO Cyber Range Platform</span>
+                    </div>
+                    <div>SEZIONE 1.2.4: KYPO</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 10 (Sez. 1.2) - CyberPatriot & DARPA
+                 =============================================================== -->
+            <section class="slide" data-slide="10">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.2.5 • SISTEMI DEDICATI</span>
+                        <h1 class="slide-title reveal">CyberPatriot & DARPA CGC</h1>
+                        <p class="slide-subtitle reveal">Approcci chiusi o governativi orientati alla mitigazione su larga scala</p>
+                    </div>
+                    <div class="slide-number-box reveal">10 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="compare-box reveal">
+                        <div class="compare-header">
+                            <span class="compare-title">CyberPatriot (AFA)</span>
+                            <span class="compare-tag">EDUCATIONAL CLOSED-SOURCE</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">CP1</div>
+                                <div class="point-text">
+                                    <strong>Hardening di Macchine Virtuali</strong>
+                                    <p>I partecipanti mitigano vulnerabilità su VM entro un limite temporale prefissato.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">CP2</div>
+                                <div class="point-text">
+                                    <strong>CSS Daemon & Piattaforma Chiusa</strong>
+                                    <p>Demone locale per controlli periodici e server centrale di punteggio: codice proprietario non accessibile.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compare-box reveal">
+                        <div class="compare-header">
+                            <span class="compare-title">DARPA Cyber Grand Challenge</span>
+                            <span class="compare-tag">AUTONOMOUS REPAIR</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">DA1</div>
+                                <div class="point-text">
+                                    <strong>Sistemi Autonomi di Ragionamento</strong>
+                                    <p>Piattaforma creata per far competere agenti automatici capaci di analizzare, exploitare e patchare binari.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">DA2</div>
+                                <div class="point-text">
+                                    <strong>Non Adatto a Formazione Umana Standard</strong>
+                                    <p>Estrema complessità del sistema operativo custom (DECREE) e focus esclusivo su agenti automatizzati.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Sistemi Chiusi & Governativi</span>
+                    </div>
+                    <div>SEZIONE 1.2.5: CYBERPATRIOT & DARPA</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 11 (Sez. 1.3) - Meccanismi di Verifica: Statica
+                 =============================================================== -->
+            <section class="slide" data-slide="11">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.3 • MECCANISMI DI VERIFICA</span>
+                        <h1 class="slide-title reveal">Verifica Statica (Diff & SAST)</h1>
+                        <p class="slide-subtitle reveal">Ispezione dello storage del container target senza esecuzione di codice</p>
+                    </div>
+                    <div class="slide-number-box reveal">11 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Ispezione Diretta del Filesystem</strong>
+                                <p>Accesso allo storage del container per confrontare le modifiche applicate rispetto allo stato base.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Tool SAST & Analisi per Diff</strong>
+                                <p>Controllo sintattico del sorgente e scansione per identificare pattern di codice vulnerabili.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Vantaggio: Nessuna Esecuzione a Rischio</strong>
+                                <p>Zero impatto sulla stabilità della macchina bersaglio; tempo di verifica immediato e deterministico.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Limite Critico: Mancata Validazione a Runtime</strong>
+                                <p>Non rileva il comportamento reale: una vulnerabilità può superare l'analisi statica ed essere ancora sfruttabile.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">🔍</div>
+                            <div class="placeholder-title">Pipeline di Analisi Statica</div>
+                            <div class="placeholder-desc">Container Storage ➔ Diff Engine / SAST Scanner ➔ Decisione Pass/Fail</div>
+                            <div class="placeholder-tag">[ Placeholder: Schema Verifica Statica ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Metodologia di Verifica 1: Analisi Statica</span>
+                    </div>
+                    <div>SEZIONE 1.3: MECCANISMI DI VERIFICA</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 12 (Sez. 1.3) - Meccanismi di Verifica: Dinamica & Injection
+                 =============================================================== -->
+            <section class="slide" data-slide="12">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.3 • MECCANISMI DI VERIFICA</span>
+                        <h1 class="slide-title reveal">Attaccante Effimero & Injection</h1>
+                        <p class="slide-subtitle reveal">I rischi dei test dinamici tradizionali: information leak e instabilità</p>
+                    </div>
+                    <div class="slide-number-box reveal">12 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="compare-box reveal">
+                        <div class="compare-header">
+                            <span class="compare-title">Attaccante Effimero in Rete</span>
+                            <span class="compare-tag">TEST VIA NETWORK</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index">N1</div>
+                                <div class="point-text">
+                                    <strong>Esecuzione Exploit da Container Remoto</strong>
+                                    <p>Avvio di un nodo di test che lancia l'attacco e analizza la risposta inviata dal servizio.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index">N2</div>
+                                <div class="point-text">
+                                    <strong>Vulnerabile a Sniffing (tcpdump) & Crash</strong>
+                                    <p>I difensori intercettano i payload d'attacco; exploit mal calibrati causano crash irreversibili del servizio.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compare-box reveal">
+                        <div class="compare-header">
+                            <span class="compare-title">Command Injection (`exec`)</span>
+                            <span class="compare-tag">TEST LOCALE IN-GUEST</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">E1</div>
+                                <div class="point-text">
+                                    <strong>Invocazione Diretta di Comandi</strong>
+                                    <p>L'oracolo esegue controlli dentro il container (es. <code>incus exec target -- bash ...</code>).</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">E2</div>
+                                <div class="point-text">
+                                    <strong>Intercettabile Tramite pspy</strong>
+                                    <p>Utility come <code>pspy</code> permettono al team sfidante di spiare i comandi eseguiti e carpire la soluzione.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Vulnerabilità dei Metodi di Verifica Diretti</span>
+                    </div>
+                    <div>SEZIONE 1.3: MECCANISMI DI VERIFICA</div>
+                </footer>
+            </section>
+
+
+            <!-- ===============================================================
+                 SLIDE 13 (Sez. 1.3) - Soluzione Proposta: Clonazione in Rete Isolata
+                 =============================================================== -->
+            <section class="slide" data-slide="13">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 1.3 • LA SOLUZIONE PROPOSTA</span>
+                        <h1 class="slide-title reveal">Clonazione in Rete Separata</h1>
+                        <p class="slide-subtitle reveal">L'architettura BlueCTFD: verifica dinamica con protezione totale da leak</p>
+                    </div>
+                    <div class="slide-number-box reveal">13 / 13</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index">01</div>
+                            <div class="point-text">
+                                <strong>Clonazione Istantanea dei Container</strong>
+                                <p>Tutti i container coinvolti nella sfida vengono duplicati in una rete completamente isolata.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">02</div>
+                            <div class="point-text">
+                                <strong>Topologia di Rete Conservata</strong>
+                                <p>I legami tra host, indirizzi e servizi rimangono identici all'ambiente di gara originario.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">03</div>
+                            <div class="point-text">
+                                <strong>Zero Accesso & Impossibilità di Sniffing</strong>
+                                <p>I concorrenti non hanno accesso alla rete clonato: <code>tcpdump</code> e <code>pspy</code> sono totalmente inefficaci.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index">04</div>
+                            <div class="point-text">
+                                <strong>Esecuzione Oracolo su Immagine Certificata</strong>
+                                <p>Script dedicati (distrobuilder) validano l'output in sicurezza e rilasciano la flag al team meritevole.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="placeholder-box">
+                            <div class="placeholder-icon">🔒</div>
+                            <div class="placeholder-title">Schema di Clonazione Isolata BlueCTFD</div>
+                            <div class="placeholder-desc">Rete Team (Incus) ➔ Snapshot & Clone ➔ Rete Isolata Oracolo ➔ Rilascio Flag</div>
+                            <div class="placeholder-tag">[ Placeholder: Diagramma Rete Isolata ]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <span class="footer-dot"></span>
+                        <span>Sintesi della Soluzione Architetturale</span>
+                    </div>
+                    <div>SEZIONE 1.3: MECCANISMI DI VERIFICA</div>
+                </footer>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Presentation Chrome: Controls outside the fixed stage -->
+    <div class="deck-controls">
+        <button class="deck-btn" id="prevBtn" title="Slide precedente (←, Freccia Su, Pagina Su)">‹</button>
+        <span class="deck-progress-text" id="slideProgress">01 / 13</span>
+        <button class="deck-btn" id="nextBtn" title="Slide successiva (→, Spazio, Invio, Pagina Giù)">›</button>
+        <span class="deck-kbd-hint">← / → Naviga • E: Modifica testo</span>
+    </div>
+
+    <!-- Inline Editing Hotzone & Toggle -->
+    <div class="edit-hotzone" id="editHotzone" title="Passa il mouse per attivare la modalità modifica"></div>
+    <button class="edit-toggle" id="editToggle" title="Modalità modifica testo (E)">
+        <span>✏️</span> <span>Modifica (E)</span>
+    </button>
+
+    <!-- ==========================================================================
+         7. SLIDE CONTROLLER JAVASCRIPT (Responsive Scale, Nav, Inline Edit)
+         ========================================================================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                this.stage = document.getElementById('deckStage');
+                this.progressText = document.getElementById('slideProgress');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.isEditMode = false;
+                this.touchStartX = 0;
+                this.touchStartY = 0;
+
+                this.setupStageScale();
+                this.setupNavigation();
+                this.setupTouchNav();
+                this.setupInlineEditor();
+                this.showSlide(0);
+            }
+
+            setupStageScale() {
+                const resize = () => {
+                    const stageWidth = 1920;
+                    const stageHeight = 1080;
+                    const windowWidth = window.innerWidth;
+                    const windowHeight = window.innerHeight;
+
+                    const scale = Math.min(windowWidth / stageWidth, windowHeight / stageHeight);
+                    const translateX = (windowWidth - stageWidth * scale) / 2;
+                    const translateY = (windowHeight - stageHeight * scale) / 2;
+
+                    this.stage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                };
+
+                resize();
+                window.addEventListener('resize', resize);
+            }
+
+            setupNavigation() {
+                // Button clicks
+                this.prevBtn.addEventListener('click', () => this.prev());
+                this.nextBtn.addEventListener('click', () => this.next());
+
+                // Keyboard events
+                document.addEventListener('keydown', (e) => {
+                    // Do not navigate if user is actively editing text in edit mode
+                    if (document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true') {
+                        if (e.key === 'Escape') {
+                            document.activeElement.blur();
+                        }
+                        return;
+                    }
+
+                    switch(e.key) {
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case 'PageDown':
+                        case ' ':
+                        case 'Enter':
+                            e.preventDefault();
+                            this.next();
+                            break;
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                        case 'PageUp':
+                        case 'Backspace':
+                            e.preventDefault();
+                            this.prev();
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.showSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.showSlide(this.slides.length - 1);
+                            break;
+                    }
+                });
+
+                // Wheel navigation (debounced)
+                let wheelTimeout = null;
+                window.addEventListener('wheel', (e) => {
+                    if (this.isEditMode) return;
+                    if (wheelTimeout) return;
+                    if (Math.abs(e.deltaY) > 30) {
+                        if (e.deltaY > 0) this.next();
+                        else this.prev();
+                        wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 400);
+                    }
+                }, { passive: true });
+            }
+
+            setupTouchNav() {
+                window.addEventListener('touchstart', (e) => {
+                    this.touchStartX = e.changedTouches[0].screenX;
+                    this.touchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+
+                window.addEventListener('touchend', (e) => {
+                    if (this.isEditMode) return;
+                    const deltaX = e.changedTouches[0].screenX - this.touchStartX;
+                    const deltaY = e.changedTouches[0].screenY - this.touchStartY;
+
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+                        if (deltaX < 0) this.next();
+                        else this.prev();
+                    }
+                }, { passive: true });
+            }
+
+            showSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                
+                this.slides.forEach((slide, i) => {
+                    const isActive = (i === index);
+                    slide.classList.toggle('active', isActive);
+                    slide.classList.toggle('visible', isActive);
+                });
+
+                this.currentSlide = index;
+                const formattedCur = String(this.currentSlide + 1).padStart(2, '0');
+                const formattedTot = String(this.slides.length).padStart(2, '0');
+                this.progressText.textContent = `${formattedCur} / ${formattedTot}`;
+
+                this.prevBtn.style.opacity = (this.currentSlide === 0) ? '0.35' : '1';
+                this.nextBtn.style.opacity = (this.currentSlide === this.slides.length - 1) ? '0.35' : '1';
+            }
+
+            next() {
+                if (this.currentSlide < this.slides.length - 1) {
+                    this.showSlide(this.currentSlide + 1);
+                }
+            }
+
+            prev() {
+                if (this.currentSlide > 0) {
+                    this.showSlide(this.currentSlide - 1);
+                }
+            }
+
+            setupInlineEditor() {
+                const hotzone = document.getElementById('editHotzone');
+                const toggle = document.getElementById('editToggle');
+                let hideTimeout = null;
+
+                const showToggle = () => {
+                    clearTimeout(hideTimeout);
+                    toggle.classList.add('show');
+                };
+
+                const hideToggle = () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isEditMode) toggle.classList.remove('show');
+                    }, 400);
+                };
+
+                hotzone.addEventListener('mouseenter', showToggle);
+                hotzone.addEventListener('mouseleave', hideToggle);
+                toggle.addEventListener('mouseenter', showToggle);
+                toggle.addEventListener('mouseleave', hideToggle);
+
+                const toggleMode = () => {
+                    this.isEditMode = !this.isEditMode;
+                    toggle.classList.toggle('active', this.isEditMode);
+                    toggle.innerHTML = this.isEditMode 
+                        ? '<span>💾</span> <span>Salva Modifiche</span>' 
+                        : '<span>✏️</span> <span>Modifica (E)</span>';
+
+                    const editables = document.querySelectorAll('.slide h1, .slide h2, .slide h4, .slide p, .slide span, .slide strong, .slide .point-text, .slide .compare-title');
+                    editables.forEach(el => {
+                        el.setAttribute('contenteditable', this.isEditMode ? 'true' : 'false');
+                    });
+                };
+
+                hotzone.addEventListener('click', toggleMode);
+                toggle.addEventListener('click', toggleMode);
+
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) {
+                        toggleMode();
+                    }
+                });
+            }
+        }
+
+        // Initialize presentation
+        window.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>

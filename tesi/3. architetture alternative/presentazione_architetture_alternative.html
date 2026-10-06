@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architetture Alternative per la Verifica - Sezione 3</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. CSS CUSTOM PROPERTIES & THEME (Minimalist Lead Funnel Aesthetic)
+           ========================================================================== */
+        :root {
+            /* Palette: Terracotta / Slate / Warm Sand / Off-White */
+            --bg-canvas: #121316;
+            --stage-bg: #F7F5EE;
+            --card-bg: #FFFFFF;
+            --card-muted: #F0EDE4;
+            --text-primary: #1C1E21;
+            --text-secondary: #5E636A;
+            --text-muted: #8E939B;
+            
+            --accent-primary: #D9532F;       /* Warm Terracotta / Rust */
+            --accent-primary-soft: #FBF0EB;
+            --accent-secondary: #244242;     /* Deep Slate Sage */
+            --accent-secondary-soft: #EDF3F3;
+            --accent-blue: #2A5C8A;
+            --accent-blue-soft: #EEF4F9;
+            --accent-amber: #B45309;
+            --accent-amber-soft: #FEF3C7;
+            --accent-crimson: #991B1B;
+            --accent-crimson-soft: #FEE2E2;
+            
+            --border-light: #E5E1D5;
+            --border-strong: #CDC7B8;
+            --tag-bg: #ECE7DA;
+
+            /* Typography */
+            --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Motion */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-normal: 0.45s;
+        }
+
+        /* ==========================================================================
+           2. VIEWPORT-BASE.CSS (Mandatory 16:9 Stage Fixed Architecture)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-canvas);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .deck-viewport {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-canvas);
+        }
+
+        .deck-stage {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            transform-origin: 0 0;
+            background: var(--stage-bg);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            display: block;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            background: var(--stage-bg);
+            padding: 68px 92px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide.active,
+        .slide.visible {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           3. SLIDE REVEAL ANIMATIONS
+           ========================================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.10s; }
+        .reveal:nth-child(3) { transition-delay: 0.15s; }
+        .reveal:nth-child(4) { transition-delay: 0.20s; }
+        .reveal:nth-child(5) { transition-delay: 0.25s; }
+
+        /* ==========================================================================
+           4. MINIMALIST LEAD-FUNNEL SLIDE COMPONENTS
+           ========================================================================== */
+        /* Header Region */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1.5px solid var(--border-light);
+            padding-bottom: 22px;
+            margin-bottom: 28px;
+        }
+
+        .slide-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            background: var(--accent-primary-soft);
+            padding: 5px 14px;
+            border-radius: 999px;
+            width: fit-content;
+            border: 1px solid rgba(217, 83, 47, 0.2);
+        }
+
+        .section-badge.secondary {
+            color: var(--accent-secondary);
+            background: var(--accent-secondary-soft);
+            border-color: rgba(36, 66, 66, 0.2);
+        }
+
+        .section-badge.blue {
+            color: var(--accent-blue);
+            background: var(--accent-blue-soft);
+            border-color: rgba(42, 92, 138, 0.2);
+        }
+
+        .section-badge.amber {
+            color: var(--accent-amber);
+            background: var(--accent-amber-soft);
+            border-color: rgba(180, 83, 9, 0.2);
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            line-height: 1.15;
+        }
+
+        .slide-subtitle {
+            font-size: 19px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .slide-number-box {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            padding: 8px 16px;
+            border-radius: 12px;
+        }
+
+        /* Slide Main Body */
+        .slide-body {
+            flex: 1;
+            display: grid;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .grid-2col {
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        .grid-2col-equal {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-3col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .grid-full {
+            grid-template-columns: 1fr;
+        }
+
+        /* Points / Cards List */
+        .points-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .point-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 14px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .point-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-strong);
+        }
+
+        .point-index {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .point-index.secondary {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+        }
+
+        .point-index.blue {
+            background: var(--accent-blue-soft);
+            color: var(--accent-blue);
+        }
+
+        .point-index.crimson {
+            background: var(--accent-crimson-soft);
+            color: var(--accent-crimson);
+        }
+
+        .point-text {
+            font-size: 18.5px;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .point-text strong {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+
+        .point-text p {
+            margin-top: 3px;
+            font-size: 15.5px;
+            color: var(--text-secondary);
+        }
+
+        /* Feature Boxes */
+        .feature-box {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 18px;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 12px;
+        }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--tag-bg);
+            color: var(--text-secondary);
+        }
+
+        .feature-tag.flaw {
+            background: var(--accent-crimson-soft);
+            color: var(--accent-crimson);
+            border: 1px solid rgba(153, 27, 27, 0.2);
+        }
+
+        .feature-tag.pro {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+            border: 1px solid rgba(36, 66, 66, 0.2);
+        }
+
+        /* Minimalist Placeholders */
+        .placeholder-box {
+            background: var(--card-bg);
+            border: 2px dashed var(--border-strong);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            text-align: center;
+            gap: 16px;
+            height: 100%;
+            min-height: 240px;
+        }
+
+        .placeholder-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--accent-primary-soft);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .placeholder-icon.secondary {
+            background: var(--accent-secondary-soft);
+            color: var(--accent-secondary);
+        }
+
+        .placeholder-title {
+            font-family: var(--font-display);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-desc {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            max-width: 340px;
+            line-height: 1.45;
+        }
+
+        .placeholder-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--stage-bg);
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Matrix Table Component */
+        .matrix-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-light);
+            border-radius: 16px;
+            overflow: hidden;
+            font-size: 15px;
+        }
+
+        .matrix-table th {
+            background: var(--card-muted);
+            padding: 14px 18px;
+            text-align: left;
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--text-primary);
+            border-bottom: 1.5px solid var(--border-light);
+        }
+
+        .matrix-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .matrix-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .matrix-table td strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Footer Region */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1.5px solid var(--border-light);
+            padding-top: 16px;
+            margin-top: 24px;
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .footer-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+        }
+
+        /* ==========================================================================
+           5. PRESENTATION CONTROLS (Floating UI Outside 16:9 Stage)
+           ========================================================================== */
+        .deck-controls {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(20, 22, 25, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+        }
+
+        .deck-btn {
+            background: transparent;
+            border: none;
+            color: #E2E4E8;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .deck-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+        }
+
+        .deck-btn:active {
+            transform: scale(0.92);
+        }
+
+        .deck-progress-text {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: #A0A5B0;
+            padding: 0 10px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .deck-kbd-hint {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #6C7280;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 12px;
+            margin-left: 4px;
+        }
+
+        /* Inline Editing Hotzone & Toggle Button */
+        .edit-hotzone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .edit-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            z-index: 10001;
+            background: rgba(20, 22, 25, 0.92);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        [contenteditable="true"] {
+            outline: 2px dashed rgba(217, 83, 47, 0.4) !important;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           6. PRINT STYLES
+           ========================================================================== */
+        @media print {
+            html, body {
+                width: 1920px;
+                height: auto;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+            .deck-viewport {
+                position: static;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+            .deck-stage {
+                position: static;
+                width: auto;
+                height: auto;
+                transform: none !important;
+                box-shadow: none;
+            }
+            .slide {
+                position: relative;
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                width: 1920px;
+                height: 1080px;
+                break-after: page;
+                page-break-after: always;
+            }
+            .slide:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+            .deck-controls, .edit-hotzone, .edit-toggle {
+                display: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.15s !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="deck-viewport">
+        <main class="deck-stage" id="deckStage">
+
+            <!-- ===============================================================
+                 SLIDE 01 (Intro Sezione 3) - Mappa delle Architetture Alternative
+                 =============================================================== -->
+            <section class="slide active visible" data-slide="1">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">CAPITOLO 3 • INTRODUZIONE & QUADRO COMPARATIVO</span>
+                        <h1 class="slide-title reveal">Architetture Alternative di Verifica</h1>
+                        <p class="slide-subtitle reveal">Studio comparativo delle opzioni di isolamento e motivazioni tecniche di scarto</p>
+                    </div>
+                    <div class="slide-number-box reveal">01 / 14</div>
+                </header>
+
+                <div class="slide-body grid-full">
+                    <table class="matrix-table reveal">
+                        <thead>
+                            <tr>
+                                <th style="width: 22%;">Opzione Esplorata</th>
+                                <th style="width: 38%;">Pregio / Vantaggio Principale</th>
+                                <th style="width: 40%;">Difetto Fatale (Fatal Flaw)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>3.1 Shadow Bridge L2</strong></td>
+                                <td>Zero complessità SDN, solo primitive kernel native (FDB L2).</td>
+                                <td><strong>No WAN:</strong> Container isolati da Internet (`apt`, DNS, chiamate HTTP esterne).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.2 Dual NIC (`eth0`+`eth1`)</strong></td>
+                                <td>Ripristina connettività WAN verso `incusbr0`.</td>
+                                <td><strong>Rottura fedeltà topologica:</strong> Routing asimmetrico e drop da `rp_filter`.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.3 PID Namespace</strong></td>
+                                <td>Esecuzione in-place: zero clonazione di container o storage.</td>
+                                <td><strong>Leaky & Distruttivo:</strong> Log e `/tmp` visibili, sniffing su `lo`, crash live dell'SLA.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.4 Network Namespace</strong></td>
+                                <td>Isolamento IP nativo sull'host senza stack SDN OVN.</td>
+                                <td><strong>Bypass API Incus:</strong> Disallineamento orchestratore, contesa `rtnl_lock`, no cluster.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.5 In-Memory + Mascheramento</strong></td>
+                                <td>Esecuzione fileless volatile (`memfd_create` + `fexecve`).</td>
+                                <td><strong>Security by Obscurity:</strong> Bypass con binari statici Go/Rust, visibile a eBPF.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Quadro riassuntivo • Capitolo 3: Architetture Alternative</span>
+                    </div>
+                    <span>Sezione 3 • Diapositiva 01</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 02 (3.1 - Slide 1/2) - Shadow Bridge: Concetto & Topologia
+                 =============================================================== -->
+            <section class="slide" data-slide="2">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 3.1 • SHADOW BRIDGE L2 (1/2)</span>
+                        <h1 class="slide-title reveal">Architettura Shadow Bridge L2</h1>
+                        <p class="slide-subtitle reveal">Rete LAN virtuale pura priva di indirizzo IP e gateway a livello host</p>
+                    </div>
+                    <div class="slide-number-box reveal">02 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>Switch L2 nel Kernel Linux (struct net_bridge)</strong>
+                                <p>Inoltro a livello datalink tramite tabella FDB con MAC learning, senza alcuna configurazione L3 sull'host.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Indirizzi IP Invariati tra i Cloni</strong>
+                                <p>I container clonati conservano gli stessi indirizzi IP (<code>10.k.1.x</code>) e la stessa configurazione di rete della produzione.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>Zero Overhead SDN</strong>
+                                <p>Massima semplicità implementativa basata esclusivamente su primitive native del kernel Linux.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Invisibilità L3 sull'Host</strong>
+                                <p>Poiché il bridge non ha IP, non espone socket né porte di ascolto ed è trasparente per lo stack di routing dell'host.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">🌉</div>
+                        <h4 class="placeholder-title">Topologia Shadow Bridge L2</h4>
+                        <p class="placeholder-desc">[ Placeholder: Diagramma del bridge L2 senza IP collegato ai container cloni e isolato dall'host routing ]</p>
+                        <span class="placeholder-tag">Pure L2 Datapath Isolation</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Sezione 3.1 • Shadow Bridge L2 senza Gateway</span>
+                    </div>
+                    <span>Sezione 3.1 • Diapositiva 02</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 03 (3.1 - Slide 2/2) - Shadow Bridge: Il Limite Fatale
+                 =============================================================== -->
+            <section class="slide" data-slide="3">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.1 • SHADOW BRIDGE L2 (2/2)</span>
+                        <h1 class="slide-title reveal">Shadow Bridge: Il Limite Fatale</h1>
+                        <p class="slide-subtitle reveal">Impossibilità di routing WAN e collisione delle tabelle FIB</p>
+                    </div>
+                    <div class="slide-number-box reveal">03 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Mancata Risoluzione ARP del Gateway</h3>
+                            <span class="feature-tag flaw">Fatal Flaw</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">01</div>
+                                <div class="point-text">
+                                    <strong>Richiesta ARP senza Risposta</strong>
+                                    <p>I container cercano il gateway <code>10.k.1.1</code> via ARP broadcast: nessuno risponde sull'interfaccia host non configurata.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">02</div>
+                                <div class="point-text">
+                                    <strong>Isolamento Totale da Internet</strong>
+                                    <p>Comandi come <code>apt update</code>, risoluzione DNS esterna (<code>1.1.1.1</code>) o download di payload falliscono sistematicamente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Collisione FIB nel Kernel Host</h3>
+                            <span class="feature-tag flaw">Routing Clash</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">03</div>
+                                <div class="point-text">
+                                    <strong>Conflitto di Assegnazione IP</strong>
+                                    <p>Assegnare <code>10.k.1.1</code> sia a <code>br-team-k</code> che al bridge shadow creerebbe due rotte identiche per <code>10.k.1.0/24</code>.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">04</div>
+                                <div class="point-text">
+                                    <strong>Verdetto di Scarto</strong>
+                                    <p>Adatta solo per sfide completamente offline; scartata per garantire supporto a exploit con dipendenze esterne.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Motivo di scarto: Assenza connettività WAN e conflitto FIB</span>
+                    </div>
+                    <span>Sezione 3.1 • Diapositiva 03</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 04 (3.2 - Slide 1/2) - Dual NIC: Tentativo di Multi-Homing
+                 =============================================================== -->
+            <section class="slide" data-slide="4">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 3.2 • DUAL NIC (1/2)</span>
+                        <h1 class="slide-title reveal">Dual NIC: Tentativo di Multi-Homing</h1>
+                        <p class="slide-subtitle reveal">Aggiunta di un'interfaccia secondaria (eth1/wlan1) verso incusbr0</p>
+                    </div>
+                    <div class="slide-number-box reveal">04 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>Separazione dei Piani di Rete</strong>
+                                <p><code>eth0</code> collegata allo Shadow Bridge L2 per il traffico interno tra servizi clonati.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Interfaccia Dedicata per la WAN (eth1)</strong>
+                                <p>Seconda interfaccia agganciata direttamente al bridge di sistema <code>incusbr0</code> con default route per Internet.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>Risoluzione della Connettività Esterna</strong>
+                                <p>Il container può contattare repository esterni e scaricare pacchetti senza assegnare IP L3 allo Shadow Bridge.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Complessità Apparente Moderata</strong>
+                                <p>Tentativo di evitare stack SDN complessi ricorrendo alla configurazione multi-scheda tradizionale.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">🔌</div>
+                        <h4 class="placeholder-title">Schema Dual NIC (eth0 + eth1)</h4>
+                        <p class="placeholder-desc">[ Placeholder: Illustrazione del container duplicato con eth0 su Shadow Bridge ed eth1 su incusbr0 ]</p>
+                        <span class="placeholder-tag">Multi-Homed Container Layout</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Sezione 3.2 • Interfaccia secondaria verso incusbr0</span>
+                    </div>
+                    <span>Sezione 3.2 • Diapositiva 04</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 05 (3.2 - Slide 2/2) - Dual NIC: Rottura Fedeltà & rp_filter
+                 =============================================================== -->
+            <section class="slide" data-slide="5">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.2 • DUAL NIC (2/2)</span>
+                        <h1 class="slide-title reveal">Dual NIC: Rottura Fedeltà & rp_filter</h1>
+                        <p class="slide-subtitle reveal">Routing asimmetrico, silent drop dei pacchetti e overhead di sistema</p>
+                    </div>
+                    <div class="slide-number-box reveal">05 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Violazione della Fedeltà Topologica</h3>
+                            <span class="feature-tag flaw">Topological Flaw</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">01</div>
+                                <div class="point-text">
+                                    <strong>Ambiente Alterato</strong>
+                                    <p>Il container in verifica ha 2 interfacce anziché 1: altera comandi come <code>ip a</code>, regole firewall locali e socket bind.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">02</div>
+                                <div class="point-text">
+                                    <strong>Routing Asimmetrico</strong>
+                                    <p>I pacchetti di test entrano da <code>eth0</code>, ma la risposta viene instradata su <code>eth1</code> perché default route.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Drop Silenzioso da rp_filter</h3>
+                            <span class="feature-tag flaw">Kernel Security</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">03</div>
+                                <div class="point-text">
+                                    <strong>Reverse Path Filtering (rp_filter=1)</strong>
+                                    <p>Il kernel Linux scarta i pacchetti asimmetrici considerandoli IP spoofing: le connessioni di verifica cadono misteriosamente.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">04</div>
+                                <div class="point-text">
+                                    <strong>Raddoppio Coppie veth</strong>
+                                    <p>Raddoppia il numero di interfacce virtuali (da <em>N</em> a 2<em>N</em>), incrementando contesa e interrupt software nell'host.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Motivo di scarto: Routing asimmetrico e rottura della fedeltà</span>
+                    </div>
+                    <span>Sezione 3.2 • Diapositiva 05</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 06 (3.3 - Slide 1/3) - PID Namespace: Esecuzione In-Place
+                 =============================================================== -->
+            <section class="slide" data-slide="6">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 3.3 • PID NAMESPACE (1/3)</span>
+                        <h1 class="slide-title reveal">PID Namespace: Esecuzione In-Place</h1>
+                        <p class="slide-subtitle reveal">Verifica diretta nei container live senza duplicazione di risorse</p>
+                    </div>
+                    <div class="slide-number-box reveal">06 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>Esecuzione nello Stesso Container Live</strong>
+                                <p>Gli script di verifica vengono lanciati direttamente nel container di produzione del team.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Isolamento dei Processi (CLONE_NEWPID)</strong>
+                                <p>Creazione di un albero di processi separato per nascondere i comandi a tool di monitoraggio come <code>ps</code> e <code>top</code>.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>Zero Overhead di Clonazione</strong>
+                                <p>Elimina del tutto il tempo e il consumo di spazio disco/RAM necessari per duplicare i container.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Obiettivo di Segretezza Apparente</strong>
+                                <p>Impedire che il partecipante veda il processo dell'exploit e i relativi parametri di invocazione.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">⚙️</div>
+                        <h4 class="placeholder-title">Schema In-Place PID Isolation</h4>
+                        <p class="placeholder-desc">[ Placeholder: Rappresentazione dell'albero PID virtualizzato all'interno dello stesso container live ]</p>
+                        <span class="placeholder-tag">In-Place Process Isolation</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Sezione 3.3 • PID namespace separato per la verifica</span>
+                    </div>
+                    <span>Sezione 3.3 • Diapositiva 06</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 07 (3.3 - Slide 2/3) - PID Namespace: Side-Channel Leaks
+                 =============================================================== -->
+            <section class="slide" data-slide="7">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.3 • PID NAMESPACE (2/3)</span>
+                        <h1 class="slide-title reveal">PID Namespace: Canali di Fuga Informativa</h1>
+                        <p class="slide-subtitle reveal">Filesystem condiviso, inotify su /proc e network sniffing su loopback</p>
+                    </div>
+                    <div class="slide-number-box reveal">07 / 14</div>
+                </header>
+
+                <div class="slide-body grid-3col">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Filesystem Condiviso</h3>
+                            <span class="feature-tag flaw">FS Leaks</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">📁</div>
+                                <div class="point-text">
+                                    <strong>File Temporanei in /tmp</strong>
+                                    <p>Script o exploit che creano artefatti temporanei lasciano tracce leggibili dal concorrente.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">📜</div>
+                                <div class="point-text">
+                                    <strong>Tracce nei File di Log</strong>
+                                    <p>I servizi web o database loggano le richieste in <code>/var/log</code>: il concorrente può estrarre il payload.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Inotify & /proc Spying</h3>
+                            <span class="feature-tag flaw">pspy Vulnerable</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">👁️</div>
+                                <div class="point-text">
+                                    <strong>Eventi Inotify del Kernel</strong>
+                                    <p>Tool come <code>pspy</code> intercettano la creazione di directory in <code>/proc</code> rivelando comandi e argomenti.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">🗂️</div>
+                                <div class="point-text">
+                                    <strong>Mount Namespace Obbligatorio</strong>
+                                    <p>Isolare solo il PID non basta: serve anche isolare il mount namespace per smontare <code>/proc</code>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Sniffing su Loopback</h3>
+                            <span class="feature-tag flaw">Network Leaks</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">📡</div>
+                                <div class="point-text">
+                                    <strong>tcpdump -i lo in Chiaro</strong>
+                                    <p>Lo stack di rete resta identico: il partecipante può sniffare l'interfaccia <code>lo</code> o <code>eth0</code>.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">🔍</div>
+                                <div class="point-text">
+                                    <strong>Ispezione Socket con ss</strong>
+                                    <p>Connessioni verso porte locali compaiono nelle tabelle di stato visibili all'utente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Side-channel inevitabili in ambiente in-place condiviso</span>
+                    </div>
+                    <span>Sezione 3.3 • Diapositiva 07</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 08 (3.3 - Slide 3/3) - PID Namespace: Blast Radius & SLA
+                 =============================================================== -->
+            <section class="slide" data-slide="8">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.3 • PID NAMESPACE (3/3)</span>
+                        <h1 class="slide-title reveal">PID Namespace: Blast Radius & SLA Crash</h1>
+                        <p class="slide-subtitle reveal">Impatto distruttivo sui servizi live e compromissione della gara</p>
+                    </div>
+                    <div class="slide-number-box reveal">08 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Test Distruttivi & Crash dei Servizi</h3>
+                            <span class="feature-tag flaw">Critical Risk</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">💥</div>
+                                <div class="point-text">
+                                    <strong>Exploit di Tipo DoS o Corruzione</strong>
+                                    <p>La verifica invia payload reali: se il servizio vulnerabile va in crash, cade il sistema di produzione del team.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">🛑</div>
+                                <div class="point-text">
+                                    <strong>Interruzione del Workflow Concorrente</strong>
+                                    <p>Il partecipante vede arrestarsi i propri processi di lavoro a causa del test eseguito dalla piattaforma.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Penalizzazione Ingiusta dell'SLA</h3>
+                            <span class="feature-tag flaw">Scoreboard Penalty</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">📉</div>
+                                <div class="point-text">
+                                    <strong>Perdita Punti di Disponibilità</strong>
+                                    <p>Nelle gare con SLA, il downtime causato dal test di verifica penalizza ingiustamente il punteggio della squadra.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">❌</div>
+                                <div class="point-text">
+                                    <strong>Verdetto Finale</strong>
+                                    <p>Completamente inaccettabile: la verifica deve operare sempre in un sandbox protetto a impatto zero sul live.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Motivo di scarto: Blast radius non isolato e caduta dell'SLA</span>
+                    </div>
+                    <span>Sezione 3.3 • Diapositiva 08</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 09 (3.4 - Slide 1/2) - Network Namespace: Topologia Host
+                 =============================================================== -->
+            <section class="slide" data-slide="9">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 3.4 • NETWORK NAMESPACE (1/2)</span>
+                        <h1 class="slide-title reveal">Network Namespace Separato sull'Host</h1>
+                        <p class="slide-subtitle reveal">Isolamento dello stack IP tramite ip netns per evitare complessità SDN</p>
+                    </div>
+                    <div class="slide-number-box reveal">09 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>Namespace di Rete Dedicato (verify-k)</strong>
+                                <p>Stack di rete isolato nel kernel host: tabelle di routing, ARP cache e regole netfilter indipendenti.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Coesistenza dello Stesso IP Gateway</strong>
+                                <p>Un bridge L2 nel namespace <code>verify-k</code> può avere l'IP <code>10.k.1.1</code> senza entrare in collisione con <code>br-team-k</code>.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>Uplink tramite Coppia veth & NAT</strong>
+                                <p>Interconnessione tra il namespace di verifica e il root namespace dell'host con regole di masquerading.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Nessun Demone SDN Esterno</strong>
+                                <p>Eliminazione di Open vSwitch e OVN, affidandosi unicamente a primitive kernel built-in.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">🔀</div>
+                        <h4 class="placeholder-title">Schema Host Network Namespace</h4>
+                        <p class="placeholder-desc">[ Placeholder: Illustrazione di due ip netns separati sull'host con bridge identici collegati da veth pair ]</p>
+                        <span class="placeholder-tag">Host ip netns Architecture</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Sezione 3.4 • Network namespace separato per la verifica</span>
+                    </div>
+                    <span>Sezione 3.4 • Diapositiva 09</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 10 (3.4 - Slide 2/2) - Network Namespace: Disallineamento Incus
+                 =============================================================== -->
+            <section class="slide" data-slide="10">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.4 • NETWORK NAMESPACE (2/2)</span>
+                        <h1 class="slide-title reveal">Network Namespace: Disallineamento Incus</h1>
+                        <p class="slide-subtitle reveal">Bypass dell'orchestratore, script manuali e contesa su rtnl_lock</p>
+                    </div>
+                    <div class="slide-number-box reveal">10 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Nessuna API Nativa in Incus</h3>
+                            <span class="feature-tag flaw">Orchestrator Bypass</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">01</div>
+                                <div class="point-text">
+                                    <strong>Incus non Gestisce ip netns Arbitrari</strong>
+                                    <p>Il motore Incus opera nel proprio namespace e non supporta l'aggancio diretto a bridge collocati in altri netns.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">02</div>
+                                <div class="point-text">
+                                    <strong>Manipolazione Manuale di veth</strong>
+                                    <p>L'agente dovrebbe spostare le veth con <code>ip link set dev ... netns</code>, creando uno stato non tracciato dall'orchestratore.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Contesa Kernel & Mancanza di Scalabilità</h3>
+                            <span class="feature-tag flaw">Kernel Bottleneck</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">03</div>
+                                <div class="point-text">
+                                    <strong>Contesa su rtnl_lock & Dangling Devices</strong>
+                                    <p>Creazione e distruzione continua di netns causa contese sul lock globale di routing e rischio di leak di descrittori.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">04</div>
+                                <div class="point-text">
+                                    <strong>Inadatto a Cluster Multi-Nodo</strong>
+                                    <p>I network namespace sono strettamente locali all'host, mentre OVN astrae switch logici distribuiti su tunnel Geneve.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Motivo di scarto: Disallineamento da Incus e complessità manutentiva</span>
+                    </div>
+                    <span>Sezione 3.4 • Diapositiva 10</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 11 (3.5 - Slide 1/3) - In-Memory: Tecniche Fileless
+                 =============================================================== -->
+            <section class="slide" data-slide="11">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge secondary reveal">SEZIONE 3.5 • ESECUZIONE IN-MEMORY (1/3)</span>
+                        <h1 class="slide-title reveal">Esecuzione In-Memory & Mascheramento</h1>
+                        <p class="slide-subtitle reveal">Tecniche fileless e hooking del dynamic linker in user-space</p>
+                    </div>
+                    <div class="slide-number-box reveal">11 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col">
+                    <div class="points-stack">
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">01</div>
+                            <div class="point-text">
+                                <strong>Esecuzione Fileless in RAM</strong>
+                                <p>Caricamento del binario in memoria anonima tramite <code>memfd_create</code> ed esecuzione diretta via <code>fexecve</code>.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">02</div>
+                            <div class="point-text">
+                                <strong>Nessun File Creato su Disco</strong>
+                                <p>Tentativo di evitare tracce persistenti sul filesystem del container live per non insospettire il partecipante.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">03</div>
+                            <div class="point-text">
+                                <strong>Hooking delle API libc (LD_PRELOAD)</strong>
+                                <p>Iniezione di una libreria in <code>/etc/ld.so.preload</code> per intercettare <code>readdir</code> e nascondere le directory PID in <code>/proc</code>.</p>
+                            </div>
+                        </div>
+
+                        <div class="point-card reveal">
+                            <div class="point-index secondary">04</div>
+                            <div class="point-text">
+                                <strong>Riscrittura Metadati di Processo</strong>
+                                <p>Modifica al volo del nome processo nelle strutture dati per ingannare visualizzatori come <code>pspy</code> e <code>top</code>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="placeholder-box reveal">
+                        <div class="placeholder-icon secondary">🧠</div>
+                        <h4 class="placeholder-title">Schema Esecuzione Fileless memfd</h4>
+                        <p class="placeholder-desc">[ Placeholder: Flusso di memfd_create -> fexecve -> hooking ld.so per mascheramento in user-space ]</p>
+                        <span class="placeholder-tag">User-Space Evasion Architecture</span>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Sezione 3.5 • Esecuzione in-memory con mascheramento</span>
+                    </div>
+                    <span>Sezione 3.5 • Diapositiva 11</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 12 (3.5 - Slide 2/3) - In-Memory: Limiti & Fragilità
+                 =============================================================== -->
+            <section class="slide" data-slide="12">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.5 • ESECUZIONE IN-MEMORY (2/3)</span>
+                        <h1 class="slide-title reveal">Esecuzione In-Memory: Fragilità Tecnica</h1>
+                        <p class="slide-subtitle reveal">Perché i trucchi di occultamento falliscono in ambienti reali</p>
+                    </div>
+                    <div class="slide-number-box reveal">12 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">1. Bypass Immediato di LD_PRELOAD</h3>
+                            <span class="feature-tag flaw">User-Space Failure</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">01</div>
+                                <div class="point-text">
+                                    <strong>Binari Statici & Go/Rust</strong>
+                                    <p>I programmi statici o compilati in Go/Rust non usano <code>glibc</code>: effettuano syscall dirette, ignorando del tutto l'hook.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">02</div>
+                                <div class="point-text">
+                                    <strong>Partecipante con Privilegi Root</strong>
+                                    <p>Il partecipante può rimuovere o modificare <code>/etc/ld.so.preload</code> in qualsiasi istante, disarmando il mascheramento.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">2. Osservabilità a Livello Kernel</h3>
+                            <span class="feature-tag flaw">Kernel Tracing</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">03</div>
+                                <div class="point-text">
+                                    <strong>eBPF & Syscall Auditing</strong>
+                                    <p>Strumenti di tracing come eBPF (<code>tracepoint:syscalls:sys_enter_execve</code>) intercettano l'esecuzione in Ring 0.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">04</div>
+                                <div class="point-text">
+                                    <strong>/proc/[pid]/exe Revelatorio</strong>
+                                    <p>Il descrittore <code>/proc/[pid]/exe</code> punta palesemente alla stringa <code>/memfd:... (deleted)</code> denunciando l'attività.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Fragilità dell'occultamento in presenza di binari statici ed eBPF</span>
+                    </div>
+                    <span>Sezione 3.5 • Diapositiva 12</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 13 (3.5 - Slide 3/3) - In-Memory: Fallimento Obscurity
+                 =============================================================== -->
+            <section class="slide" data-slide="13">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge reveal">SEZIONE 3.5 • ESECUZIONE IN-MEMORY (3/3)</span>
+                        <h1 class="slide-title reveal">Il Fallimento della Security by Obscurity</h1>
+                        <p class="slide-subtitle reveal">Violazione dei principi di Saltzer e Schroeder e superiorità del modello CoW</p>
+                    </div>
+                    <div class="slide-number-box reveal">13 / 14</div>
+                </header>
+
+                <div class="slide-body grid-2col-equal">
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">I Limiti della "Sicurezza per Oscuramento"</h3>
+                            <span class="feature-tag flaw">Design Flaw</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index crimson">01</div>
+                                <div class="point-text">
+                                    <strong>Nessuna Protezione della Rete</strong>
+                                    <p>Anche se il binario è in RAM, le richieste HTTP dell'exploit viaggiano su rete e sono visibili a <code>tcpdump</code>.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">02</div>
+                                <div class="point-text">
+                                    <strong>Nessuna Protezione da Crash</strong>
+                                    <p>L'ambiente è pur sempre di produzione: payload distruttivi mandano comunque in crash il servizio live.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index crimson">03</div>
+                                <div class="point-text">
+                                    <strong>Violazione Principi di Saltzer-Schroeder</strong>
+                                    <p>La sicurezza deve basarsi su confini formali di isolamento (CoW, hypervisor, OVN), non su artifici di camuffamento.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-box reveal">
+                        <div class="feature-header">
+                            <h3 class="feature-title">Perché BlueAgent è Superiore</h3>
+                            <span class="feature-tag pro">Formal Isolation</span>
+                        </div>
+                        <div class="points-stack">
+                            <div class="point-card">
+                                <div class="point-index secondary">01</div>
+                                <div class="point-text">
+                                    <strong>Isolamento Totale a Livello di Blocco</strong>
+                                    <p>Clonazione ZFS Copy-on-Write in ~700 ms: indipendenza assoluta da memoria, file e processi della produzione.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">02</div>
+                                <div class="point-text">
+                                    <strong>Dark Sandbox SDN (OVN)</strong>
+                                    <p>Datapath incapsulato su Geneve nel localhost: impossibile intercettare pacchetti tramite sniffing locale.</p>
+                                </div>
+                            </div>
+                            <div class="point-card">
+                                <div class="point-index secondary">03</div>
+                                <div class="point-text">
+                                    <strong>SLA Immutabile & Zero Rischio</strong>
+                                    <p>Qualsiasi crash distruttivo si esaurisce nel clone effimero, preservando l'integrità del team.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Conclusione: L'isolamento formale supera l'occultamento in user-space</span>
+                    </div>
+                    <span>Sezione 3.5 • Diapositiva 13</span>
+                </footer>
+            </section>
+
+            <!-- ===============================================================
+                 SLIDE 14 (Conclusione Sezione 3) - Quadro Sinottico Comparativo
+                 =============================================================== -->
+            <section class="slide" data-slide="14">
+                <header class="slide-header">
+                    <div class="slide-header-left">
+                        <span class="section-badge blue reveal">SEZIONE 3 • SINTESI COMPARATIVA FINALE</span>
+                        <h1 class="slide-title reveal">Quadro Sinottico delle Architetture</h1>
+                        <p class="slide-subtitle reveal">Matrice comparativa complessiva dei 5 approcci alternativi rispetto a BlueAgent</p>
+                    </div>
+                    <div class="slide-number-box reveal">14 / 14</div>
+                </header>
+
+                <div class="slide-body grid-full">
+                    <table class="matrix-table reveal">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Architettura</th>
+                                <th style="width: 16%;">Isolamento Test</th>
+                                <th style="width: 16%;">Fedeltà Topologica</th>
+                                <th style="width: 16%;">Connettività WAN</th>
+                                <th style="width: 16%;">Protezione SLA</th>
+                                <th style="width: 16%;">Manutenibilità</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>3.1 Shadow Bridge</strong></td>
+                                <td>Buono (cloni)</td>
+                                <td>Alta (IP invariati)</td>
+                                <td><span style="color: #991B1B; font-weight: 700;">No (bloccata)</span></td>
+                                <td>Sì (cloni isolati)</td>
+                                <td>Alta (semplice)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.2 Dual NIC</strong></td>
+                                <td>Buono (cloni)</td>
+                                <td><span style="color: #991B1B; font-weight: 700;">Bassa (2 NIC)</span></td>
+                                <td>Sì (via eth1)</td>
+                                <td>Sì (cloni isolati)</td>
+                                <td>Bassa (rp_filter)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.3 PID Namespace</strong></td>
+                                <td><span style="color: #991B1B; font-weight: 700;">Scadente (leaks)</span></td>
+                                <td>Alta (in-place)</td>
+                                <td>Sì (live)</td>
+                                <td><span style="color: #991B1B; font-weight: 700;">No (crash live)</span></td>
+                                <td>Media</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.4 Network Namespace</strong></td>
+                                <td>Buono (cloni)</td>
+                                <td>Alta (IP invariati)</td>
+                                <td>Sì (veth + NAT)</td>
+                                <td>Sì (cloni isolati)</td>
+                                <td><span style="color: #991B1B; font-weight: 700;">Bassa (no Incus API)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.5 In-Memory Evasion</strong></td>
+                                <td><span style="color: #991B1B; font-weight: 700;">Fragile (obscurity)</span></td>
+                                <td>Alta (in-place)</td>
+                                <td>Sì (live)</td>
+                                <td><span style="color: #991B1B; font-weight: 700;">No (crash live)</span></td>
+                                <td>Bassa (fragile)</td>
+                            </tr>
+                            <tr style="background: #FBF0EB; font-weight: 600;">
+                                <td><strong style="color: #D9532F;">BlueAgent (ZFS + OVN)</strong></td>
+                                <td><strong style="color: #1B6E4A;">Ottimo (Dark SDN)</strong></td>
+                                <td><strong style="color: #1B6E4A;">Assoluta (10.k.1.x)</strong></td>
+                                <td><strong style="color: #1B6E4A;">Sì (incusbr0 NAT)</strong></td>
+                                <td><strong style="color: #1B6E4A;">Garantita (100%)</strong></td>
+                                <td><strong style="color: #1B6E4A;">Alta (API Incus)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="slide-footer">
+                    <div class="footer-note">
+                        <div class="footer-dot"></div>
+                        <span>Matrice sinottica • Perché BlueAgent è l'architettura vincente</span>
+                    </div>
+                    <span>Sezione 3 • Diapositiva 14</span>
+                </footer>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Presentation Chrome Controls -->
+    <nav class="deck-controls" aria-label="Controlli presentazione">
+        <button class="deck-btn" id="prevBtn" title="Diapositiva precedente (←)">◀</button>
+        <span class="deck-progress-text" id="progressText">01 / 14</span>
+        <button class="deck-btn" id="nextBtn" title="Diapositiva successiva (→)">▶</button>
+        <span class="deck-kbd-hint">Frecce o Spazio</span>
+    </nav>
+
+    <!-- Hotzone & Edit Mode Toggle (Lightweight inline editing affordance) -->
+    <div class="edit-hotzone" id="editHotzone" title="Zona attivazione modifica"></div>
+    <button class="edit-toggle" id="editToggle" title="Attiva modalità modifica testi (E)">
+        <span>✏️</span> <span>Modifica (E)</span>
+    </button>
+
+    <script>
+        /**
+         * Core Slide Presentation Controller
+         */
+        class SlidePresentation {
+            constructor() {
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.stage = document.getElementById('deckStage');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.progressText = document.getElementById('progressText');
+                
+                this.currentSlide = 0;
+                this.isEditMode = false;
+
+                this.setupStageScale();
+                this.setupControls();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupInlineEditor();
+                
+                this.showSlide(0);
+            }
+
+            setupStageScale() {
+                const scale = () => {
+                    const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+                    const x = (window.innerWidth - 1920 * factor) / 2;
+                    const y = (window.innerHeight - 1080 * factor) / 2;
+                    this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+                };
+                scale();
+                window.addEventListener('resize', scale);
+            }
+
+            setupControls() {
+                this.prevBtn.addEventListener('click', () => this.prev());
+                this.nextBtn.addEventListener('click', () => this.next());
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (this.isEditMode && e.target.getAttribute('contenteditable') === 'true') {
+                        return; // Let user type freely in edit mode
+                    }
+
+                    switch(e.key) {
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.next();
+                            break;
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                        case 'PageUp':
+                        case 'Backspace':
+                            e.preventDefault();
+                            this.prev();
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.showSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.showSlide(this.slides.length - 1);
+                            break;
+                    }
+                });
+
+                // Wheel navigation (debounced)
+                let wheelTimeout = null;
+                window.addEventListener('wheel', (e) => {
+                    if (this.isEditMode) return;
+                    if (wheelTimeout) return;
+                    if (Math.abs(e.deltaY) > 30) {
+                        if (e.deltaY > 0) this.next();
+                        else this.prev();
+                        wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 400);
+                    }
+                }, { passive: true });
+            }
+
+            setupTouchNav() {
+                let touchStartX = 0;
+                let touchStartY = 0;
+
+                window.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    touchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+
+                window.addEventListener('touchend', (e) => {
+                    if (this.isEditMode) return;
+                    const deltaX = e.changedTouches[0].screenX - touchStartX;
+                    const deltaY = e.changedTouches[0].screenY - touchStartY;
+
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+                        if (deltaX < 0) this.next();
+                        else this.prev();
+                    }
+                }, { passive: true });
+            }
+
+            showSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                
+                this.slides.forEach((slide, i) => {
+                    const isActive = (i === index);
+                    slide.classList.toggle('active', isActive);
+                    slide.classList.toggle('visible', isActive);
+                });
+
+                this.currentSlide = index;
+                const formattedCur = String(this.currentSlide + 1).padStart(2, '0');
+                const formattedTot = String(this.slides.length).padStart(2, '0');
+                this.progressText.textContent = `${formattedCur} / ${formattedTot}`;
+
+                this.prevBtn.style.opacity = (this.currentSlide === 0) ? '0.35' : '1';
+                this.nextBtn.style.opacity = (this.currentSlide === this.slides.length - 1) ? '0.35' : '1';
+            }
+
+            next() {
+                if (this.currentSlide < this.slides.length - 1) {
+                    this.showSlide(this.currentSlide + 1);
+                }
+            }
+
+            prev() {
+                if (this.currentSlide > 0) {
+                    this.showSlide(this.currentSlide - 1);
+                }
+            }
+
+            setupInlineEditor() {
+                const hotzone = document.getElementById('editHotzone');
+                const toggle = document.getElementById('editToggle');
+                let hideTimeout = null;
+
+                const showToggle = () => {
+                    clearTimeout(hideTimeout);
+                    toggle.classList.add('show');
+                };
+
+                const hideToggle = () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isEditMode) toggle.classList.remove('show');
+                    }, 400);
+                };
+
+                hotzone.addEventListener('mouseenter', showToggle);
+                hotzone.addEventListener('mouseleave', hideToggle);
+                toggle.addEventListener('mouseenter', showToggle);
+                toggle.addEventListener('mouseleave', hideToggle);
+
+                const toggleMode = () => {
+                    this.isEditMode = !this.isEditMode;
+                    toggle.classList.toggle('active', this.isEditMode);
+                    toggle.innerHTML = this.isEditMode 
+                        ? '<span>💾</span> <span>Salva Modifiche</span>' 
+                        : '<span>✏️</span> <span>Modifica (E)</span>';
+
+                    const editables = document.querySelectorAll('.slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide span, .slide strong, .slide .point-text, .slide td');
+                    editables.forEach(el => {
+                        el.setAttribute('contenteditable', this.isEditMode ? 'true' : 'false');
+                    });
+                };
+
+                hotzone.addEventListener('click', toggleMode);
+                toggle.addEventListener('click', toggleMode);
+
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) {
+                        toggleMode();
+                    }
+                });
+            }
+        }
+
+        // Initialize presentation on DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>
