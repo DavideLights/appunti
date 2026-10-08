@@ -51,18 +51,18 @@
 * preventiva
 
 **build and fix**:
-![[Pasted image 20260827180048.png]]
+![[Pasted image 20260827180048 1.png]]
 
 **waterfall**:
-![[Pasted image 20260827180109.png]]
+![[Pasted image 20260827180109 1.png]]
 * $V\&V$: verifica e validazione 
 
-![[Pasted image 20260827180140.png]] 
+![[Pasted image 20260827180140 1.png]] 
 * **verifica**: riguarda consistenza interna
 * **validazione**: conformita rispetto utente.
 
 **rapid prototyping**: 
-![[Pasted image 20260827180257.png]]
+![[Pasted image 20260827180257 1.png]]
 * come waterfall,ma inizio con prototipo rapido.
 
 **prototipo**: riduce rischi sui requisiti.
@@ -72,7 +72,7 @@
 	* valore legale
 	* prestazioni e affidabilita
 
-![[Pasted image 20260827180432.png]]
+![[Pasted image 20260827180432 1.png]]
 
 
 **Throw-away prototyping**:
@@ -83,7 +83,7 @@
 	* struttura degrada
 	* bassa qualita
 
-![[Pasted image 20260827180819.png]]
+![[Pasted image 20260827180819 1.png]]
 * **struttura**
 	* prototipazione in alto
 	* sviluppo in basso

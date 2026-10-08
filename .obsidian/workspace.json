@@ -4,49 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "a05ea3c6f48ebb5f",
+        "id": "6189fac64898fc9b",
         "type": "tabs",
         "children": [
           {
-            "id": "d311ab26c753ac6f",
+            "id": "f6c859846c67f74f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "tesi/2. architettura/2.4 comandi.md",
-                "mode": "source",
-                "source": false
+                "file": "immagini/Pasted image 20250829165917.png"
               },
-              "icon": "lucide-file",
-              "title": "2.4 comandi"
-            }
-          },
-          {
-            "id": "000c62de8c2bcb97",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "tesi/2. architettura/2.4 comandi.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2.4 comandi"
-            }
-          },
-          {
-            "id": "3bcbf4889247d33f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "hackaton/buffer overflow.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "buffer overflow"
+              "icon": "lucide-image",
+              "title": "Pasted image 20250829165917"
             }
           }
         ]
@@ -111,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 283.8467903137207
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -242,54 +212,54 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "d311ab26c753ac6f",
+  "active": "f6c859846c67f74f",
   "lastOpenFiles": [
-    "tesi/2. architettura/2.2.3 use cases dettagliati.md",
-    "tesi/2. architettura/2.4 comandi.md",
-    "tesi/2. architettura/2.2.2 tabella use cases.md",
-    "tesi/2. architettura/2.2.1 attori use cases.md",
-    "tesi/2. architettura/2.2.4 requisiti sistema.md",
-    "hackaton/buffer overflow.md",
-    "tesi/3. architetture alternative/concetti e risorse di riferimento.md",
-    "hackaton",
-    "tesi/2. architettura/2.6 difesa dell'architettura.md",
-    "3o anno/ing/parte 1/4. ingegneria requisiti.md",
-    "3o anno/ing/parte 1/3. requisiti.md",
-    "tesi/2. architettura/2.1 introduzione.md",
-    "tesi/3. architetture alternative/presentazione_architetture_alternative.html",
-    "tesi/1. introduzione/1.3 meccanismi di verifica.md",
-    "tesi/1. introduzione/1.2.5 cyber range alternativi (CyberPatrion e DARPA).md",
-    "tesi/1. introduzione/1.2.4 cyber range alternativi (KYPO).md",
-    "tesi/1. introduzione/1.2.3 cyber range alternativi (CyTrONE).md",
-    "tesi/1. introduzione/1.2.1 cyber range alternativi (kctf).md",
-    "tesi/1. introduzione/1.2.2 cyber range alternativi CTFBox.md",
+    "tesi/1. Introduzione/1.1 Introduzione.md",
+    "tesi/1. Introduzione/1.2 Meccanismi di Verifica.md",
+    "tesi/1. Introduzione/1.2 meccanismi di verifica",
+    "tesi/1. Introduzione/1.1 introduzione.md",
+    "tesi/1. Introduzione",
+    "tesi/1. introduzione/1.2 meccanismi di verifica",
+    "tesi/1. introduzione/1.2",
     "tesi/1. introduzione/1.1 introduzione.md",
-    "tesi/2. architettura/presentazione_architettura.html",
-    "tesi/1. introduzione/presentazione_introduzione.html",
-    "tesi/blueagent-context/blueagent_documentation/8_ctfd_integration.md",
-    "tesi/blueagent-context/blueagent_documentation/7_team_and_wireguard_api.md",
-    "tesi/blueagent-context/blueagent_documentation/6_yaml_configuration.md",
-    "tesi/blueagent-context/blueagent_documentation/5_ovn_sandbox_creation.md",
-    "tesi/blueagent-context/blueagent_documentation/4_asynch_management.md",
-    "tesi/blueagent-context/blueagent_documentation/3_network_architecture.md",
-    "tesi/blueagent-context/blueagent_documentation/2_alternatives.md",
-    "tesi/blueagent-context/blueagent_documentation/1_problem_introduction.md",
-    "tesi/blueagent-context/blueagent_documentation",
-    "tesi/blueagent-context/DoNotRead",
-    "tesi/blueagent-context",
-    "tesi/agent/blueagent_documentation",
-    "tesi/agent/DoNotRead",
-    "tesi/agent",
-    "Pasted image 20261004010504.png",
-    "Pasted image 20261002000350.png",
-    "Pasted image 20261002155846.png",
-    "Pasted image 20261002155542.png",
-    "Pasted image 20261002155254.png",
-    "Pasted image 20261002154936.png",
-    "Pasted image 20261001233828.png",
-    "Pasted image 20261001214515.png",
-    "immagini/Pasted image 20260923221431.png",
-    "immagini/Pasted image 20260930145000.png",
+    "tesi/template.tex",
+    "tesi/tvg.tex",
+    "tesi/1. introduzione/tvg.tex",
+    "tesi/context/blueagent-context/blueagent_documentation/8_ctfd_integration.md",
+    "tesi/context/blueagent-context/blueagent_documentation/7_team_and_wireguard_api.md",
+    "tesi/context/blueagent-context/blueagent_documentation/6_yaml_configuration.md",
+    "tesi/context/blueagent-context/blueagent_documentation/5_ovn_sandbox_creation.md",
+    "tesi/context/blueagent-context/blueagent_documentation/4_asynch_management.md",
+    "tesi/context/blueagent-context/blueagent_documentation/3_network_architecture.md",
+    "tesi/context/blueagent-context/blueagent_documentation/2_alternatives.md",
+    "tesi/context/blueagent-context/blueagent_documentation/1_problem_introduction.md",
+    "tesi/context/blueagent-context/DoNotRead/use_cases.md",
+    "tesi/context/blueagent-context/DoNotRead/requirements_and_use_cases.md",
+    "tesi/context/blueagent-context/DoNotRead/blueagent_extended_docuent.md",
+    "tesi/context/blueagent-context/blueagent_documentation",
+    "tesi/context/blueagent-context/context.md",
+    "tesi/context/blueagent-context/DoNotRead",
+    "tesi/context/blueagent-context",
+    "tesi/context/context.md",
+    "immagini/Pasted image 20250720162837.png",
+    "immagini/Pasted image 20250720163255.png",
+    "immagini/Pasted image 20260318094343.png",
+    "immagini/Pasted image 20260429092308.png",
+    "immagini/Pasted image 20260718005015.png",
+    "immagini/Pasted Image 20260827152513_783.png",
+    "immagini/Pasted Image 20260826163659_616.png",
+    "immagini/Pasted Image 20260826222844_861.png",
+    "immagini/Pasted Image 20260826223414_730 1.png",
+    "immagini/Pasted image 20260817173518 1.png",
+    "tesi/bozza/1. introduzione/1.2.1 cyber range alternativi (kctf).md",
+    "tesi/Senza nome.md",
+    "tesi/bozza/2. architettura/2.6 difesa dell'architettura.md",
+    "tesi/bozza/2. architettura/2.4 comandi.md",
+    "tesi/bozza/2. architettura/2.3 esposizione architettura.md",
+    "tesi/context.md",
+    "tesi/spunti.md",
+    "tesi/todo list.md",
+    "tesi/problemi gravi.md",
     "Senza nome.canvas"
   ]
 }
