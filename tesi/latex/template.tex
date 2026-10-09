@@ -1,4 +1,5 @@
 \documentclass[a4paper, 12pt, italian]{report}
+\usepackage[a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, headheight=15pt]{geometry}
 \usepackage[italian]{babel}
 %\usepackage[latin1]{inputenc}
 %\usepackage[T1]{fontenc}
@@ -79,19 +80,12 @@
 \fancyhead{}\renewcommand{\headrulewidth}{0pt} } \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{\small CAP. \thechapter \textit{ #1}} {} }
 \renewcommand{\sectionmark}[1]{\markright{\small  \thesection \textit{ #1}} {} }
-\voffset=-20pt    % distanza tra il limite superiore del foglio e l'intestazione
-\headsep=40pt     % distanza  l'intestazione ed il testo del corpo
-\hoffset=0 pt     % misura equivalente al margine sinistro
-\textheight=620pt % altezza del corpo del testo
-\textwidth=435pt  % larghezza del corpo del testo
-\footskip=40pt    % distanza tra il testo del corpo ed il pie' di pagina
-\fancyhead{}      % cancella qualsiasi impostazione per l'intestazione
-\fancyfoot{}      % cancella qualsiasi impostazione per il pie' di pagina
-\headwidth=435pt  % larghezza del'intestazione e del pie' di pagina
+\fancyhead{}
+\fancyfoot{}
 \fancyhead[R]{\rightmark} \fancyfoot[L]{\leftmark}
 \fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}   % spessore della linea dell'intestazione
-\renewcommand{\footrulewidth}{0.3pt}   % spessore della linea del pi�di pagina
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
 
 \numberwithin{equation}{section}
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
@@ -106,13 +100,13 @@
 
 %\dedicate{Inserire la dedica}
 
-\titoloTesi{TITOLO} 
+\titoloTesi{sbergz on the sburgz} 
 \anno{2023-2024}
-\relatore{Nome Cognome}
-\correlatore{Nome Cognome}
-\candidato{Nome Cognome}
-\baselineskip=25pt
+\relatore{Pierpaolo Loreti}
+\correlatore{Ing. Francesco Mancini}
+\candidato{Davide Luci}
 \intestazione 
+\linespread{1.15}\selectfont 
 %------------------------------------------------
 % INTRODUZIONE E RINGRAZIAMENTI (NON MODIFICARE)
 %------------------------------------------------
@@ -121,22 +115,17 @@
 \fancyhead{}\renewcommand{\headrulewidth}{0pt} } \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{\small Cap. \thechapter \textit{ #1}} {} }
 \renewcommand{\sectionmark}[1]{\markright{\small  \S \thesection \textit{ #1}} {} }
-\voffset=-20pt                         % distanza tra il limite superiore del foglio e l'intestazione
-\headsep=40pt                          % distanza  l'intestazione ed il testo del corpo
-\hoffset=0pt                           % misura equivalente al margine sinistro
-\textheight=620pt                      % altezza del corpo del testo
-\textwidth=435pt                       % larghezza del corpo del testo
-\footskip=40pt                         % distanza tra il testo del corpo ed il pie' di pagina
-\fancyhead{}                           % cancella qualsiasi impostazione per l'intestazione
-\fancyfoot{}                           % cancella qualsiasi impostazione per il pie' di pagina
-\headwidth=435pt                       % larghezza del'intestazione e del pie' di pagina
+\fancyhead{}
+\fancyfoot{}
 \fancyhead[R]{\rightmark} \fancyfoot[L]{\leftmark}
 \fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}   % spessore della linea dell'intestazione
-\renewcommand{\footrulewidth}{0.3pt}   % spessore della linea del pi�di pagina
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
 
 \pagenumbering{Roman} \tableofcontents
 \newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 
 

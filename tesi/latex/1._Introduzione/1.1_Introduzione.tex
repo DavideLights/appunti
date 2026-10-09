@@ -1,0 +1,38 @@
+\section{Introduzione al Problema}\label{introduzione-al-problema}
+
+Nel lavoro di tesi, vogliamo gestire una competizione CTF.
+
+Di solito, in una competizione CTF, uno o piu\textquotesingle{} utenti
+(eventualmente organizzati in team) si sfidano per risolvere
+un\textquotesingle insieme di challenge. Generalmente una challenge vuol
+dire: recuperare una \textbf{flag}.
+
+Ci sono vari tipi di competizioni CTF, tra cui:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Jeopardy}: gli utenti devono risolvere vari problemi, la cui
+  flag e\textquotesingle{} di solito una stringa del tipo
+  \passthrough{\lstinline!\{hai\_trovato\_la\_flag\}!}
+\item
+  \textbf{Attacco e Difesa}: e\textquotesingle{} un tipo di competizione
+  dove ogni team, deve recuperare una o piu flag attaccando i sistemi
+  dei team avversare, mentre ognuno si occupa di difendere il proprio
+  sistema.
+\end{itemize}
+
+In particolare, con il nostro lavoro, vogliamo gestire uno o
+piu\textquotesingle{} sistemi vulnerabili ad un qualche tipo di attacco.
+
+La flag si ottiene difendendo il sistema, ossia \emph{"patchando"} la
+vulnerabilita. Dunque la flag non e\textquotesingle{} piu una stringa
+come nelle \textbf{Jeopardy}, ma piuttosto e\textquotesingle: uno stato
+che deve raggiungere il sistema target mediante il susseguirsi di azioni
+che il partecipante applica quest\textquotesingle ultimo.
+
+Nel lavoro si tiene conte del fatto che il sistema vulnerabile, spesso,
+potrebbe essere costituito da uno o piu host/nodi che comunicano tra di
+loro. Per esempio si condideri il seguente scenario: un server
+vulnerabile ha bisogno di comunicare con database in esecuzione su un
+nodo differente da quello del server.

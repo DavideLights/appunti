@@ -1,0 +1,34 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tesisty}[2026/10/09 Stile tesi personalizzato]
+
+\newcommand{\titoloTesi}[1]{\gdef\@titolo{#1}}
+\newcommand{\anno}[1]{\gdef\@annoAccademico{#1}}
+\newcommand{\relatore}[1]{\gdef\@relatore{#1}}
+\newcommand{\correlatore}[1]{\gdef\@correlatore{#1}}
+\newcommand{\candidato}[1]{\gdef\@candidato{#1}}
+\newcommand{\dedicate}[1]{\gdef\@dedica{#1}}
+
+\newcommand{\intestazione}{
+  \begin{titlepage}
+    \begin{center}
+      {\large \scshape Università degli Studi}\\[1.5cm]
+      {\Large \textbf{\@titolo}}\\[2cm]
+    \end{center}
+    \vfill
+    \begin{flushleft}
+      \textbf{Relatore:} \@relatore\\[0.3cm]
+      \ifdefined\@correlatore
+      \textbf{Correlatore:} \@correlatore\\[0.3cm]
+      \fi
+    \end{flushleft}
+    \begin{flushright}
+      \textbf{Candidato:}\\[0.2cm]
+      \@candidato
+    \end{flushright}
+    \vfill
+    \begin{center}
+      \rule{\textwidth}{0.4pt}\\[0.3cm]
+      Anno Accademico \@annoAccademico
+    \end{center}
+  \end{titlepage}
+}

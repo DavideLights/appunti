@@ -1,0 +1,203 @@
+\section{Oracoli e Meccanismi di
+Verifica}\label{oracoli-e-meccanismi-di-verifica}
+
+Per decidere se un team ha recuperato la \textbf{flag}, bisogna definire
+un\textquotesingle{}\emph{\textbf{oracolo}}, che determini lo stato in
+cui si trova il sistema target.
+
+L\textquotesingle oracolo e\textquotesingle{} in grado di accedere al
+sistema e di fare due azioni:
+
+\begin{itemize}
+\tightlist
+\item
+  puo\textquotesingle{} leggere la memoria fisica di ogni nodo
+\item
+  puo\textquotesingle{} eseguire comandi su qualsiasi nodo
+\end{itemize}
+
+Per ogni tipo di azione eseguita, l\textquotesingle oracolo determina lo
+stato del sistema confrontando il risultato dell\textquotesingle azione
+con il valore che l\textquotesingle oracolo si aspettava (ossia i valori
+vengono validati).
+
+Dunque all\textquotesingle iterno del processo di verifica, il sistema
+si puo\textquotesingle{} definire \emph{patchato} se e soltanto se tutte
+le azioni sono validate rispetto al valore che ci si aspettava in
+output.
+
+Di seguito sono discussi alcuni meccanismi di verifica che abbiamo
+identificato.
+
+\subsection{Verifica Statica}\label{verifica-statica}
+
+La verifica statica prevede che l\textquotesingle oracolo possa accedere
+alla memoria fisica, comparando le patch applicate nei file in memoria,
+ad una patch considerata di riferimento per l\textquotesingle oracolo.
+
+Questo tipo di verifica puo\textquotesingle{} essere implementato in
+vari modi:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{diff}: ad ogni file interessato corrisponde un file di
+  riferimento per l\textquotesingle oracolo. Ogni file viene dunque
+  confrontato, riga per riga, con il suo riferimento per determinare se
+  il team ha applicato la patch correttamente.
+\item
+  \textbf{SAST}: Static Analysis Security Testing. Prevede
+  l\textquotesingle accesso al codice sorgente non compilato in modo da
+  analizzare pattern di codice vulnerabili e fallace logiche.\footnote{\label{fn:ref_1}\url{https://aetic.theiaer.org/archive/v4/v4n3/p1.html}
+    2. Currrent Status of SAST based on Checkmarx}
+\end{itemize}
+
+Tuttavia, SAST non e\textquotesingle{} un metodo di analisi efficace,
+sebbene efficiente:
+
+\begin{itemize}
+\tightlist
+\item
+  possono essere identificati nel processo di verifica, vari falsi
+  positivi (e falsi negativi)\footref{fn:ref_1}
+\item
+  non posso identificare staticamente tutti i tipi di errori di
+  sicurezza \footref{fn:ref_1}
+\item
+  non posso identificare vulnerabilita all\textquotesingle interno dei
+  binari compilati\footref{fn:ref_1}
+\end{itemize}
+
+Dunque l\textquotesingle analisi statica puo\textquotesingle{} in alcuni
+casi risultare inesetta, e non coprire tutti i casi
+d\textquotesingle uso per quanto riguarda la gestione di competizioni
+CTF.
+
+\subsection{Verifica Dinamica tramite sistema
+esterno}\label{verifica-dinamica-tramite-sistema-esterno}
+
+Questo meccanismo di verifica prevede l\textquotesingle uso di un
+\textbf{orchestratore esterno} alle macchine vulnerabili, ossia
+l\textquotesingle attaccante, che possa interagire con la vulnerabilita
+utilizzando la rete locale. L\textquotesingle attaccante orchestra
+l\textquotesingle esecuzione di uno o piu comandi, con
+l\textquotesingle obiettivo di inviare il payload
+all\textquotesingle interno di un pacchetto di rete.
+
+Durante una competizione di questo tipo, tuttavia, i membri dei team
+sono legittimati ad accedere alla macchina vulnerabile come utente
+\passthrough{\lstinline!root!}: cosi da permettere
+l\textquotesingle applicazione delle patch sui file di sistema. Questo
+implica che i partecipanti dei team siano in grado di eseguire tool come
+\passthrough{\lstinline!tcpdump!} e \passthrough{\lstinline!wireshark!}
+per intercettare il traffico di rete e di conseguenza, di visualizzarne
+il payload, ottenendo un suggerimento per la soluzione della challenge.
+
+Inoltre, il payload inviato potrebbe essere tale da mandare in crash il
+servizio target, causando una penalita alla percentuale di \textbf{SLA}
+\emph{(Service Level Agreement)}, ed interferendo potenzialmente con il
+lavoro del team sfidante (portando per esempio alla perdita di alcuni
+file). Si vuole dunque trovare un sistema di verifica che esegua
+completamente all\textquotesingle oscuro del team sfidante.
+
+Il sistema di verifica tramite sistema esterno non copre nemmeno tutte
+le vulnerabilita. Banalmente, non tutti i servizi vulnerabili sono
+esposti in rete, ma sono accessibili solo in locale.
+
+Riassumendo quindi, abbiamo identificato alcuni spunti per ideare un
+meccanismo di verifica migliore:
+
+\begin{itemize}
+\tightlist
+\item
+  Il traffico di rete non dovrebbe essere letto dal team sfidante al
+  fine di ottenere suggerimenti per la soluzione.
+\item
+  Se l\textquotesingle exploit manda in crash il servizio, questo non
+  dovrebbe penalizzare il team, o piu in generale: il team sfidante non
+  vede il servizio distruggersi.
+\item
+  Dobbiamo gestire anche vulnerabilita non esposte in rete.
+\end{itemize}
+
+\subsection{Verifica Dinamica tramite injection dei comandi di
+verifica}\label{verifica-dinamica-tramite-injection-dei-comandi-di-verifica}
+
+Questo meccanismo di verifica prevede l\textquotesingle uso di un
+\textbf{orcehstratore esterno} al sistema vulnerabile, che ha la facolta
+di eseguire comandi all\textquotesingle interno delle macchine
+vulnerabili che compongono il sistema. Dunque
+l\textquotesingle orchestratore esegue uno o piu comandi con il fine di
+verificare che il sistema sia resistente alla vulnerabilita.
+
+Considerando il caso in cui una macchina \passthrough{\lstinline!A!}
+contenga un file binario vulnerabile ad un \emph{buffer overflow},
+l\textquotesingle orchestratore potrebbe eseguire ad esempio il comando
+\passthrough{\lstinline!/path/to/service\_logger payload!} e verificare
+l\textquotesingle esito dell\textquotesingle esecuzione.
+
+L\textquotesingle esecuzione di questi comandi e\textquotesingle{}
+possibile per esempio in ambienti containerizzati, sfruttando utility
+come \passthrough{\lstinline!docker exec!} o
+\passthrough{\lstinline!incus exec!}, che permettono di iniettare
+comandi all\textquotesingle interno dei container.
+
+Tuttavia: comandi come \passthrough{\lstinline!pspy!}, (che ascoltano
+attivamente le chiamate di sistema effettuate e gli eventi sul file
+system in \passthrough{\lstinline!/proc!}) possono intercettare
+l\textquotesingle esecuzione dei comandi
+dell\textquotesingle orchestratore e di mostrarli al team, suggerendo al
+team sfidante la soluzione. \footnote{\label{fn:ref_2}\url{https://github.com/DominicBreuker/pspy}}
+
+Dunque, dobbiamo ideare un meccanismo di verifica che deve sia
+completamente invisibile a questi meccanismi di intercettazione.
+
+\subsection{Clonazione del sistema in una rete
+separata}\label{clonazione-del-sistema-in-una-rete-separata}
+
+In base a quanto visto prima, in BlueAgent faremo cosi:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Si clonano tutte le macchine del sistema vulnerabile, in una rete
+  separata, mantenendone la topologia originale.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    La rete di verifica per il team \(k\)-esimo sara\textquotesingle{}
+    chiamata \(\text{verify-}k\)
+  \end{itemize}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Gli sfidanti non devono poter instradare i pacchetti da e verso la
+  rete \(\text{verify-}k\).
+\item
+  Gli sfidanti non devono poter fare injection dei comandi nel sistema
+  nella rete \(\text{verify-}k\).
+\item
+  Si aspetta che il sistema si operativo, facendo dei controlli di
+  readyness.
+\item
+  Si esegue una batteria di test sul sistema clonato. Questo test
+  e\textquotesingle{} costituita da una serie di comandi da iniettare
+  nel sistema clonato.
+\item
+  Per ogni comando eseguito si comparano
+  \passthrough{\lstinline!stdout!}, \passthrough{\lstinline!stderr!} ed
+  \passthrough{\lstinline!exit\_code!} con il valore attesso.
+\item
+  Se il test ha avuto successo, allora BlueAgent risponde con lo stato
+  \passthrough{\lstinline!PATCHED!}. (TODO: CONTROLLA CHE SIA CORRETTO!)
+\end{enumerate}

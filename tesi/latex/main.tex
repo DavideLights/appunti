@@ -1,0 +1,192 @@
+\documentclass[a4paper, 12pt, italian]{report}
+\usepackage[a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, headheight=15pt]{geometry}
+\usepackage[italian,provide=*]{babel}
+%\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{newlfont}
+\usepackage{fancyhdr}
+\usepackage{tesisty}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage[T1]{fontenc}
+\usepackage{fancyvrb}
+\usepackage{listings}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
+
+\algdef{SE}[VARIABLES]{Variables}{EndVariables}
+   {\algorithmicvariables}
+   {\algorithmicend\ \algorithmicvariables}
+\algnewcommand{\algorithmicvariables}{\textbf{global variables}}
+
+\addto\captionsitalian{%
+\renewcommand{\lstlistingname}{Codice}}
+\addto\captionsitalian{%
+\renewcommand{\lstlistlistingname}{Elenco dei codici}}
+\floatname{algorithm}{Algoritmo}
+\addto\captionsitalian{%
+\renewcommand{\listalgorithmname}{Elenco degli algoritmi}}
+\newcommand{\myalgosize}{\scriptsize}
+
+%necessario per commenti
+\usepackage[table]{xcolor}
+\usepackage{xcolor}
+
+%-------------------------------
+% DEFINIZIONE DEGLI ENVIRONMENT
+%-------------------------------
+
+\newtheorem{obs}{Osservazione}[section]
+\newenvironment{oss}
+    {\begin{obs}\begin{normalfont}}
+    {\hfill $\square \!\!\!\!\checkmark$ \end{normalfont}\end{obs}}
+
+\newtheorem{pro}{Problema}[chapter]
+\newenvironment{prob}
+    {\begin{pro}\begin{normalfont}}
+    {\hfill $\spadesuit$ \end{normalfont}\end{pro}}
+
+\newtheorem{teor}{Teorema}[section]
+\newenvironment{teorema}
+    {\begin{teor}\textit }
+    {\hfill  \end{teor}}
+
+\newtheorem{defn}{Definizione}[section]
+\newenvironment{de}
+    {\begin{defn}\begin{normalfont}}
+    {\hfill $\clubsuit$ \end{normalfont}\end{defn}}
+
+%-----------------------------
+% CONFIGURAZIONE DELLA PAGINA
+%-----------------------------
+
+\hfuzz2pt % Don't bother to report over-full boxes if over-edge is < 2pt
+
+\fancypagestyle{plain}{
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} } \pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\small CAP. \thechapter \textit{ #1}} {} }
+\renewcommand{\sectionmark}[1]{\markright{\small  \thesection \textit{ #1}} {} }
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{\rightmark} \fancyfoot[L]{\leftmark}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\numberwithin{equation}{section}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+
+\setcounter{secnumdepth}{3} % Abilita la numerazione fino alle sottosottosezioni
+\setcounter{tocdepth}{3} % Abilita l'inclusione delle sottosottosezioni nell'indice
+
+
+ 
+
+% Support for pandoc-generated LaTeX & listings styling
+\usepackage[plainpages=false,pdfpagelabels]{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{calc}
+\usepackage{textcomp}
+\setlength{\headheight}{15pt}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+% Search images in parent root as well
+\graphicspath{{../}{./}}
+
+% Global image constraints: never exceed text width or height
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{olive}\itshape,
+    stringstyle=\color{teal},
+    showstringspaces=false,
+    frame=lines
+}
+
+\begin{document}
+
+
+
+%\dedicate{Inserire la dedica}
+
+\titoloTesi{sbergz on the sburgz} 
+\anno{2023-2024}
+\relatore{Pierpaolo Loreti}
+\correlatore{Ing. Francesco Mancini}
+\candidato{Davide Luci}
+\intestazione 
+\linespread{1.15}\selectfont 
+%------------------------------------------------
+% INTRODUZIONE E RINGRAZIAMENTI (NON MODIFICARE)
+%------------------------------------------------
+
+\fancypagestyle{plain}{
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} } \pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\small Cap. \thechapter \textit{ #1}} {} }
+\renewcommand{\sectionmark}[1]{\markright{\small  \S \thesection \textit{ #1}} {} }
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{\rightmark} \fancyfoot[L]{\leftmark}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\pagenumbering{Roman} \tableofcontents
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+
+
+\fancyhead[R]{Introduzione} \fancyfoot[L]{Introduzione}
+\include{Introduzione}
+
+
+
+
+\fancyhead[R]{\rightmark} \fancyhead[L]{\leftmark}
+\fancyfoot[R]{\thepage}\fancyfoot[L]{\leftmark}
+
+
+% ELENCO DELLE FIGURE (OPZIONALE)
+\addcontentsline{toc}{chapter}{Elenco delle figure}
+\listoffigures
+\addcontentsline{toc}{chapter}{Elenco dei codici}
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Elenco degli algoritmi}
+\listofalgorithms
+
+
+% BIBLIOGRAFIA
+\bibliographystyle{IEEEtran} 
+\bibliography{Bibliography}
+
+
+\end{document}

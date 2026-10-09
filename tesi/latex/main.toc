@@ -1,0 +1,15 @@
+\babel@toc {italian}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduzione al Problema}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Oracoli e Meccanismi di Verifica}{1}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Verifica Statica}{2}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Verifica Dinamica tramite sistema esterno}{3}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Verifica Dinamica tramite injection dei comandi di verifica}{3}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}Clonazione del sistema in una rete separata}{4}{subsection.1.2.4}%
+\contentsline {section}{\numberline {1.3}Cyber-Range: lo stato dell\textquotesingle arte}{4}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}CR Alternativi: kCTF}{5}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}CR Alternativi: CTFBox}{8}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}CR Alternativi: CyTrONE}{9}{subsection.1.3.3}%
+\contentsline {chapter}{Elenco delle figure}{14}{Item.18}%
+\contentsline {chapter}{Elenco dei codici}{14}{Item.18}%
+\contentsline {chapter}{Elenco degli algoritmi}{15}{chapter*.1}%
