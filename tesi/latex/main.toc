@@ -15,81 +15,81 @@
 \contentsline {subsection}{\numberline {1.3.5}CR Alternativi: CyberPatrion}{19}{subsection.1.3.5}%
 \contentsline {chapter}{\numberline {2}BlueAgent}{20}{chapter.2}%
 \contentsline {section}{\numberline {2.1}2. Introduzione a BlueAgent}{20}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Attori}{21}{section.2.2}%
+\contentsline {section}{\numberline {2.2}Attori}{20}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}CTF Manager (attore)}{21}{subsection.2.2.1}%
-\contentsline {section}{\numberline {2.3}CTF Manager (sistema)}{21}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Giocatore (attore esterno per CTF Manager)}{21}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Autore della sfida (attore esterno per CTF Manager)}{21}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Amministratore della competizione (attore esterno per CTF Manager)}{22}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Use Cases per CTF Manager}{22}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}\texttt {UC-01}: Deploy dell\textquotesingle infrastruttura di rete per il team \(k\)}{22}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}\texttt {UC-02}: Deploy della challenge per il team \(k\)}{23}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}\texttt {UC-03}: Verifica della challenge per il team \(k\)}{23}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}\texttt {UC-04}: Deploy di un unico container per il team \(k\) {[}TODODOD{]}}{24}{subsection.2.4.4}%
-\contentsline {subsection}{\numberline {2.4.5}\texttt {UC-05}: Dismissione e rilascio di un unico container per il team \(k\) {[}TODO!!!@\#@!\#{]}}{25}{subsection.2.4.5}%
-\contentsline {subsection}{\numberline {2.4.6}\texttt {UC-06}: Dismissione e rilascio di una challenge per il team \(k\)}{26}{subsection.2.4.6}%
-\contentsline {subsection}{\numberline {2.4.7}\texttt {UC-07}: Dismissione e rilascio di un intero team \(k\)}{26}{subsection.2.4.7}%
-\contentsline {subsection}{\numberline {2.4.8}\texttt {UC-08}: Compilazione e Import di un\textquotesingle immagine per container}{27}{subsection.2.4.8}%
-\contentsline {subsection}{\numberline {2.4.9}\texttt {UC-09}: Dismissione di un\textquotesingle immagine per container {[}TPDOAODODSA{]}}{28}{subsection.2.4.9}%
-\contentsline {subsection}{\numberline {2.4.10}\texttt {UC-10}: Ispezione dei Peer WireGuard}{28}{subsection.2.4.10}%
-\contentsline {subsection}{\numberline {2.4.11}\texttt {UC-11}: Ispezione delle macchine in esecuzione}{29}{subsection.2.4.11}%
-\contentsline {subsection}{\numberline {2.4.12}\texttt {UC-12}: Healthcheck}{29}{subsection.2.4.12}%
-\contentsline {subsection}{\numberline {2.4.13}\texttt {UC-13}: Registrazione e configurazione WireGuard per un membro del team \(k\)}{30}{subsection.2.4.13}%
-\contentsline {subsection}{\numberline {2.4.14}\texttt {UC-14}: Revoca di un membro WireGuard per il team \(k\)}{30}{subsection.2.4.14}%
-\contentsline {section}{\numberline {2.5}Requisiti di Sistema}{31}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Piattaforma Host e Infrastruttura (\texttt {SR-HST})}{31}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Motore di Containerizzazione (\texttt {SR-ENG})}{31}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Rete Ibrida e Connettivita (\texttt {SR-NET})}{32}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Motore di Verifica OVN Sandbox (\texttt {SR-VRF})}{32}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}Control Plane, Concorrenza e Persistenza (\texttt {SR-CON})}{32}{subsection.2.5.5}%
-\contentsline {subsection}{\numberline {2.5.6}Pipeline Immagini Distrobuilder (\texttt {SR-IMG})}{33}{subsection.2.5.6}%
-\contentsline {section}{\numberline {2.6}Esposizione dell\textquotesingle Architettura}{33}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}rete \(\text {production-}k\)}{33}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}rete \(\text {verify-}k\)}{33}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}vista integrata (merge produzione e verifica)}{35}{subsection.2.6.3}%
-\contentsline {section}{\numberline {2.7}Difesa dell\textquotesingle architettura}{35}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}4. Destinatari e Casi d\textquotesingle Uso}{38}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}5. Critica e Limiti Architetturali}{39}{subsection.2.7.2}%
-\contentsline {section}{\numberline {2.8}Benchmarks}{39}{section.2.8}%
-\contentsline {chapter}{\numberline {3}Architetture Alternative}{40}{chapter.3}%
-\contentsline {subsection}{\numberline {3.0.1}PID namespace separato per la verifica}{40}{subsection.3.0.1}%
-\contentsline {subsection}{\numberline {3.0.2}network namespace separato per la verifica}{41}{subsection.3.0.2}%
-\contentsline {subsubsection}{\numberline {3.0.2.1}Conclusione}{42}{subsubsection.3.0.2.1}%
-\contentsline {subsection}{\numberline {3.0.3}Esecuzione in-memory con mascheramento}{42}{subsection.3.0.3}%
-\contentsline {chapter}{\numberline {4}Appendice}{44}{chapter.4}%
-\contentsline {section}{\numberline {4.1}linux network: \texttt {net\_device}}{44}{section.4.1}%
-\contentsline {section}{\numberline {4.2}linux network: \texttt {net\_device} e \texttt {sk\_buff}}{44}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}network device drivers}{44}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Socket Buffer}{45}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Netfilter}{45}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Connection Tracking}{47}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}TODO: NAT e masquarade}{47}{section.4.3}%
-\contentsline {section}{\numberline {4.4}bridge}{47}{section.4.4}%
-\contentsline {section}{\numberline {4.5}linux bridge}{48}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}STP}{49}{subsection.4.5.1}%
-\contentsline {section}{\numberline {4.6}cosa approfondire}{49}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}shadow bridge}{49}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}dual nic}{49}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}PID namespace separato}{50}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}network namespace separato}{50}{subsection.4.6.4}%
-\contentsline {subsection}{\numberline {4.6.5}esecuzione in memoryu}{50}{subsection.4.6.5}%
-\contentsline {section}{\numberline {4.7}VPN wireguard}{51}{section.4.7}%
-\contentsline {section}{\numberline {4.8}SDN}{52}{section.4.8}%
-\contentsline {section}{\numberline {4.9}ZFS}{53}{section.4.9}%
-\contentsline {subsection}{\numberline {4.9.1}pool}{54}{subsection.4.9.1}%
-\contentsline {subsection}{\numberline {4.9.2}transaction groups}{54}{subsection.4.9.2}%
-\contentsline {subsection}{\numberline {4.9.3}vantaggi di pool e transazioni}{55}{subsection.4.9.3}%
-\contentsline {subsection}{\numberline {4.9.4}quando ZFS costa in memoria?}{55}{subsection.4.9.4}%
-\contentsline {section}{\numberline {4.10}struttura di una pool}{55}{section.4.10}%
-\contentsline {subsection}{\numberline {4.10.1}\texttt {vdev}}{55}{subsection.4.10.1}%
-\contentsline {subsection}{\numberline {4.10.2}quindi a che serve un vdev?}{56}{subsection.4.10.2}%
-\contentsline {section}{\numberline {4.11}dataset}{56}{section.4.11}%
-\contentsline {section}{\numberline {4.12}snapshots}{57}{section.4.12}%
-\contentsline {subsection}{\numberline {4.12.1}clones}{57}{subsection.4.12.1}%
-\contentsline {subsubsection}{\numberline {4.12.1.1}nsjail}{57}{subsubsection.4.12.1.1}%
-\contentsline {subsubsection}{\numberline {4.12.1.2}namespaces}{58}{subsubsection.4.12.1.2}%
-\contentsline {subsubsection}{\numberline {4.12.1.3}seccomp bpf}{58}{subsubsection.4.12.1.3}%
-\contentsline {subsubsection}{\numberline {4.12.1.4}cgroups}{58}{subsubsection.4.12.1.4}%
-\contentsline {chapter}{Elenco delle figure}{59}{subsubsection.4.12.1.4}%
-\contentsline {chapter}{Elenco dei codici}{59}{subsubsection.4.12.1.4}%
-\contentsline {chapter}{Elenco degli algoritmi}{60}{chapter*.1}%
+\contentsline {subsection}{\numberline {2.2.2}Giocatore (attore esterno per CTF Manager)}{21}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Autore della sfida (attore esterno per CTF Manager)}{21}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Amministratore della competizione (attore esterno per CTF Manager)}{21}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}Use Cases per CTF Manager}{22}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}\texttt {UC-01}: Deploy dell\textquotesingle infrastruttura di rete per il team \(k\)}{22}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}\texttt {UC-02}: Deploy della challenge per il team \(k\)}{22}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}\texttt {UC-03}: Verifica della challenge per il team \(k\)}{23}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}\texttt {UC-04}: Deploy di un unico container per il team \(k\) {[}DA RIVEDERE{]}}{24}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}\texttt {UC-05}: Dismissione e rilascio di un unico container per il team \(k\) {[}DA RIVEDERE{]}}{24}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}\texttt {UC-06}: Dismissione e rilascio di una challenge per il team \(k\)}{25}{subsection.2.3.6}%
+\contentsline {subsection}{\numberline {2.3.7}\texttt {UC-07}: Dismissione e rilascio di un intero team \(k\)}{25}{subsection.2.3.7}%
+\contentsline {subsection}{\numberline {2.3.8}\texttt {UC-08}: Compilazione e Import di un\textquotesingle immagine per container}{26}{subsection.2.3.8}%
+\contentsline {subsection}{\numberline {2.3.9}\texttt {UC-09}: Dismissione di un\textquotesingle immagine per container {[}DA RIVEDERE{]}}{27}{subsection.2.3.9}%
+\contentsline {subsection}{\numberline {2.3.10}\texttt {UC-10}: Ispezione dei Peer WireGuard}{27}{subsection.2.3.10}%
+\contentsline {subsection}{\numberline {2.3.11}\texttt {UC-11}: Ispezione delle macchine in esecuzione}{28}{subsection.2.3.11}%
+\contentsline {subsection}{\numberline {2.3.12}\texttt {UC-12}: Registrazione e configurazione WireGuard per un membro del team \(k\)}{28}{subsection.2.3.12}%
+\contentsline {subsection}{\numberline {2.3.13}\texttt {UC-13}: Revoca di un membro WireGuard per il team \(k\)}{29}{subsection.2.3.13}%
+\contentsline {section}{\numberline {2.4}Requisiti di Sistema}{29}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Piattaforma Host e Infrastruttura}{29}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Motore di Containerizzazione}{30}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Rete Ibrida e Connettivita}{30}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Motore di Verifica OVN Sandbox}{30}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}Control Plane, Concorrenza e Persistenza}{31}{subsection.2.4.5}%
+\contentsline {subsection}{\numberline {2.4.6}Pipeline Immagini Distrobuilder}{31}{subsection.2.4.6}%
+\contentsline {section}{\numberline {2.5}Esposizione dell\textquotesingle Architettura}{31}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Architettura di Rete}{31}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}rete \(\text {production-}k\)}{32}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}rete \(\text {verify-}k\)}{32}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}vista integrata (merge produzione e verifica)}{35}{subsection.2.5.4}%
+\contentsline {section}{\numberline {2.6}Difesa dell\textquotesingle architettura}{35}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}4. Destinatari e Casi d\textquotesingle Uso}{37}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}5. Critica e Limiti Architetturali}{38}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Benchmarks}{38}{section.2.7}%
+\contentsline {section}{\numberline {2.8}CTFd.md}{38}{section.2.8}%
+\contentsline {chapter}{\numberline {3}Architetture Alternative}{39}{chapter.3}%
+\contentsline {subsection}{\numberline {3.0.1}PID namespace separato per la verifica}{39}{subsection.3.0.1}%
+\contentsline {subsection}{\numberline {3.0.2}network namespace separato per la verifica}{40}{subsection.3.0.2}%
+\contentsline {subsubsection}{\numberline {3.0.2.1}Conclusione}{41}{subsubsection.3.0.2.1}%
+\contentsline {subsection}{\numberline {3.0.3}Esecuzione in-memory con mascheramento}{41}{subsection.3.0.3}%
+\contentsline {chapter}{\numberline {4}Appendice}{43}{chapter.4}%
+\contentsline {section}{\numberline {4.1}linux network: \texttt {net\_device}}{43}{section.4.1}%
+\contentsline {section}{\numberline {4.2}linux network: \texttt {net\_device} e \texttt {sk\_buff}}{43}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}network device drivers}{43}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Socket Buffer}{44}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Netfilter}{44}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Connection Tracking}{46}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}TODO: NAT e masquarade}{46}{section.4.3}%
+\contentsline {section}{\numberline {4.4}bridge}{46}{section.4.4}%
+\contentsline {section}{\numberline {4.5}linux bridge}{47}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}STP}{48}{subsection.4.5.1}%
+\contentsline {section}{\numberline {4.6}cosa approfondire}{48}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}shadow bridge}{48}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}dual nic}{48}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}PID namespace separato}{49}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}network namespace separato}{49}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}esecuzione in memoryu}{49}{subsection.4.6.5}%
+\contentsline {section}{\numberline {4.7}VPN wireguard}{50}{section.4.7}%
+\contentsline {section}{\numberline {4.8}SDN}{51}{section.4.8}%
+\contentsline {section}{\numberline {4.9}ZFS}{52}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}pool}{53}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}transaction groups}{53}{subsection.4.9.2}%
+\contentsline {subsection}{\numberline {4.9.3}vantaggi di pool e transazioni}{54}{subsection.4.9.3}%
+\contentsline {subsection}{\numberline {4.9.4}quando ZFS costa in memoria?}{54}{subsection.4.9.4}%
+\contentsline {section}{\numberline {4.10}struttura di una pool}{54}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}\texttt {vdev}}{54}{subsection.4.10.1}%
+\contentsline {subsection}{\numberline {4.10.2}quindi a che serve un vdev?}{55}{subsection.4.10.2}%
+\contentsline {section}{\numberline {4.11}dataset}{55}{section.4.11}%
+\contentsline {section}{\numberline {4.12}snapshots}{56}{section.4.12}%
+\contentsline {subsection}{\numberline {4.12.1}clones}{56}{subsection.4.12.1}%
+\contentsline {subsubsection}{\numberline {4.12.1.1}nsjail}{56}{subsubsection.4.12.1.1}%
+\contentsline {subsubsection}{\numberline {4.12.1.2}namespaces}{57}{subsubsection.4.12.1.2}%
+\contentsline {subsubsection}{\numberline {4.12.1.3}seccomp bpf}{57}{subsubsection.4.12.1.3}%
+\contentsline {subsubsection}{\numberline {4.12.1.4}cgroups}{57}{subsubsection.4.12.1.4}%
+\contentsline {chapter}{Elenco delle figure}{58}{subsubsection.4.12.1.4}%
+\contentsline {chapter}{Elenco dei codici}{58}{subsubsection.4.12.1.4}%
+\contentsline {chapter}{Elenco degli algoritmi}{59}{chapter*.1}%

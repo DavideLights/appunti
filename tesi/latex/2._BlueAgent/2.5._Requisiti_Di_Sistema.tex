@@ -2,35 +2,41 @@
 
 I requisiti di sistema definiscono i vincoli architetturali,
 infrastrutturali e operativi che BlueAgent deve garantire per supportare
-i casi d\textquotesingle uso descritti. Di seguito sono formalizzati in
-maniera sintetica, raggruppati per categoria funzionale con codice
-univoco \passthrough{\lstinline!SR-<CATEGORIA>-<ID>!}.
+i casi d\textquotesingle uso descritti.
 
-\subsection{\texorpdfstring{Piattaforma Host e Infrastruttura
-(\texttt{SR-HST})}{Piattaforma Host e Infrastruttura (SR-HST)}}\label{piattaforma-host-e-infrastruttura-sr-hst}
+\subsection{Piattaforma Host e
+Infrastruttura}\label{piattaforma-host-e-infrastruttura}
 
 \begin{itemize}
 \tightlist
 \item
   \textbf{\passthrough{\lstinline!SR-HST-01!} (Sistema Operativo Host)}:
   L\textquotesingle host deve eseguire Debian 13 con kernel Linux, IP
-  forwarding abilitato e supporto completo al framework di filtraggio
-  \passthrough{\lstinline!nftables!}.
+  forwarding abilitat e fornir \passthrough{\lstinline!nftables!}.
 \item
   \textbf{\passthrough{\lstinline!SR-HST-02!} (Storage Pool CoW)}:
   L\textquotesingle host deve disporre di uno storage pool ZFS con
-  supporto a snapshot e clonazione a livello di blocchi.
+  supporto nativo a snapshot e clonazione a livello di blocchi.
 \item
   \textbf{\passthrough{\lstinline!SR-HST-03!} (Demoni SDN OVN)}:
   L\textquotesingle host deve eseguire i servizi Open vSwitch e OVN
   (\passthrough{\lstinline!ovs-vswitchd!},
   \passthrough{\lstinline!ovn-northd!},
   \passthrough{\lstinline!ovn-controller!}) per il provisioning di
-  switch logici.
+  switch e router logici.
+\item
+  \textbf{\passthrough{\lstinline!SR-HST-04!} (Supporto Kernel
+  WireGuard)}: L\textquotesingle host deve disporre di WireGuard per la
+  gestione dei tunnel VPN.
+\item
+  \textbf{\passthrough{\lstinline!SR-HST-05!}} (Distrobuilder):
+  L\textquotesingle host deve disporre del compilatore
+  \passthrough{\lstinline!distrobuilder!} per la generazione delle
+  immagini.
 \end{itemize}
 
-\subsection{\texorpdfstring{Motore di Containerizzazione
-(\texttt{SR-ENG})}{Motore di Containerizzazione (SR-ENG)}}\label{motore-di-containerizzazione-sr-eng}
+\subsection{Motore di
+Containerizzazione}\label{motore-di-containerizzazione}
 
 \begin{itemize}
 \tightlist
@@ -41,7 +47,8 @@ univoco \passthrough{\lstinline!SR-<CATEGORIA>-<ID>!}.
   portabilita del runtime.
 \item
   \textbf{\passthrough{\lstinline!SR-ENG-02!} (Client Asincrono UDS)}:
-  Comunicazione non bloccante con Incus via Unix Domain Socket.
+  Comunicazione non bloccante con Incus via Unix Domain Socket mediante
+  client HTTP asincrono.
 \item
   \textbf{\passthrough{\lstinline!SR-ENG-03!} (Isolamento Cgroups v2)}:
   Applicazione perentoria di quote hardware per container
@@ -51,92 +58,128 @@ univoco \passthrough{\lstinline!SR-<CATEGORIA>-<ID>!}.
 \item
   \textbf{\passthrough{\lstinline!SR-ENG-04!} (Clonazione Snapshot
   CoW)}: Duplicazione istantanea delle istanze container basata su
-  snapshot CoW a livello di storage, azzerando la duplicazione fisica
-  iniziale dei dati.
+  snapshot CoW a livello di storage.
 \end{itemize}
 
-\subsection{\texorpdfstring{Rete Ibrida e Connettivita
-(\texttt{SR-NET})}{Rete Ibrida e Connettivita (SR-NET)}}\label{rete-ibrida-e-connettivita-sr-net}
+\subsection{Rete Ibrida e
+Connettivita}\label{rete-ibrida-e-connettivita}
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{\passthrough{\lstinline!SR-NET-02!} (Linux Bridge L2)}: Uso di
-  bridge L2 a livello kernel per la rete di produzione per garantire
-  prestazioni I/O vicine alla velocita della RAM.
+  \textbf{\passthrough{\lstinline!SR-NET-01!} (Terminazione Gateway
+  VPN)}: Ogni team ha a disposizione l\textquotesingle interfaccia
+  WireGuard \passthrough{\lstinline!wg-k!} su porta UDP \(51820+k\) ed
+  IP gateway \passthrough{\lstinline!10.k.0.1/24!}.
+\item
+  \textbf{\passthrough{\lstinline!SR-NET-02!} (Linux Bridge L2)}: Ogni
+  team ha a disposizione un bridge L2
+  \passthrough{\lstinline!br-team-k!}, con gateway
+  \passthrough{\lstinline!10.k.1.1/24!} per garantire prestazioni di
+  inoltro alla velocita della RAM che funziona da punto
+  d\textquotesingle aggancio per i container del team.
+\item
+  \textbf{\passthrough{\lstinline!SR-NET-03!} (Indirizzamento e
+  Credenziali VPN)}: Allocazione degli indirizzi IP per i membri del
+  team nella subnet \passthrough{\lstinline!10.k.0.0/24!} e generazione
+  delle chiavi asimmetriche.
 \item
   \textbf{\passthrough{\lstinline!SR-NET-04!} (Topologia
-  Deterministica)}: Configurazione statica deterministica della rete nei
-  container in base al suffisso per l\textquotesingle indirizzo ip
-  fornito nella configurazione.
+  Deterministica)}: Configurazione statica della rete nei container in
+  base al suffisso per l\textquotesingle indirizzo IP fornito nella
+  configurazione.
 \item
   \textbf{\passthrough{\lstinline!SR-NET-05!} (TCP MSS Clamping)}:
   Applicazione di regole \passthrough{\lstinline!nftables!} per forzare
   il clamping del MSS, prevenendo blackhole dovuti alla riduzione di MTU
-  (WireGuard/Geneve).
+  causata dai tunnel WireGuard e Geneve.
 \item
   \textbf{\passthrough{\lstinline!SR-NET-06!} (Isolamento e Masquerading
-  NAT)}: Isolamento del traffico tra team differenti via set
-  \passthrough{\lstinline!@team\_links!} e mascheramento postrouting del
-  traffico uscente.
+  NAT)}: Isolamento del traffico tra team differenti via
+  \passthrough{\lstinline!@team\_links!} e masquerading postrouting del
+  traffico uscente verso la WAN dell\textquotesingle host tramite NAT.
 \end{itemize}
 
-\subsection{\texorpdfstring{Motore di Verifica OVN Sandbox
-(\texttt{SR-VRF})}{Motore di Verifica OVN Sandbox (SR-VRF)}}\label{motore-di-verifica-ovn-sandbox-sr-vrf}
+\subsection{Motore di Verifica OVN
+Sandbox}\label{motore-di-verifica-ovn-sandbox}
 
 \begin{itemize}
 \tightlist
 \item
   \textbf{\passthrough{\lstinline!SR-VRF-01!} (Dark Switch OVN L2)}:
-  Creazione di uno switch logico effimero OVN in fase di verifica,
-  isolato e senza gateway host, per prevenire sovrapposizioni di rotte
-  con il bridge live.
+  Creazione di uno switch logico OVN in fase di verifica, isolato e
+  senza gateway host, per prevenire sovrapposizioni di rotte.
 \item
   \textbf{\passthrough{\lstinline!SR-VRF-02!} (Fedelta Topologica)}: I
-  cloni nella sandbox preservano l\textquotesingle interfaccia
-  \passthrough{\lstinline!eth0!} e la configurazione IP identica a
-  quella di produzione (\passthrough{\lstinline!10.k.1.x!}).
+  cloni nella sandbox di verifica preservano
+  l\textquotesingle interfaccia \passthrough{\lstinline!eth0!} e la
+  configurazione IP identica a quella di produzione.
 \item
   \textbf{\passthrough{\lstinline!SR-VRF-03!} (Readiness Probes e
-  Timeout)}: Esecuzione di controlli di
-  \passthrough{\lstinline!readiness!} con tentativi periodici prima
-  della verifica effettiva e gestione esplicita dei timeout sui comandi
-  con restituzione dell\textquotesingle oggetto
-  \passthrough{\lstinline!VerifyResultResp!}.
+  Timeout)}: Esecuzione di controlli di readiness con tentativi
+  periodici prima della verifica effettiva e gestione esplicita dei
+  timeout sui comandi di test.
+\item
+  \textbf{\passthrough{\lstinline!SR-VRF-04!} (Zero Side-Channel)}:
+  Confinamento rigoroso dell\textquotesingle ambiente di test allo
+  switch virtuale isolato per impedire sniffing del traffico di exploit
+  o interferenze con l\textquotesingle ambiente live dei partecipanti.
+\item
+  \textbf{\passthrough{\lstinline!SR-VRF-05!} (Bonifica Deterministica
+  Sandbox)}: Deallocazione di tutte le risorse allocate al completamento
+  della verifica o in caso di errore.
 \end{itemize}
 
-\subsection{\texorpdfstring{Control Plane, Concorrenza e Persistenza
-(\texttt{SR-CON})}{Control Plane, Concorrenza e Persistenza (SR-CON)}}\label{control-plane-concorrenza-e-persistenza-sr-con}
+\subsection{Control Plane, Concorrenza e
+Persistenza}\label{control-plane-concorrenza-e-persistenza}
 
 \begin{itemize}
 \tightlist
 \item
   \textbf{\passthrough{\lstinline!SR-CON-01!} (Two-Tier Locking)}:
-  Meccanismo di lock a due livelli
-  (\passthrough{\lstinline!asyncio.Lock!} per coroutine e file-lock
-  cross-processo) per prevenire mutazioni concorrenti sulla stessa
-  risorsa (\passthrough{\lstinline!HTTP 409 Conflict!}).
+  Meccanismo di lock a due livelli per prevenire mutazioni concorrenti
+  sulla stessa risorsa.
 \item
-  \textbf{\passthrough{\lstinline!SR-CON-02!} (Self-Healing
-  Automatico)}: Demone in background
+  \textbf{\passthrough{\lstinline!SR-CON-02!} (Self-Healing Automatico)
+  {[}DA IMPLEMENTARE{]}}: Demone in background
   \passthrough{\lstinline!LifecycleManager!} che bonifica switch OVN e
-  container di verifica orfani con un periodo di tolleranza (\emph{grace
-  period}) di 90 secondi.
+  container di verifica orfani con un periodo di tolleranza di 90
+  secondi.
 \item
   \textbf{\passthrough{\lstinline!SR-CON-03!} (Healthcheck \&
-  Telemetria)}: Endpoint pubblico \passthrough{\lstinline!GET /health!}
-  per la diagnostica del servizio e
-  \passthrough{\lstinline!GET /teams/\{team\_k\}/peers!} per monitorare
-  handshake e metriche di traffico dei peer.
+  Telemetria)}: Endpoint di monitoraggio per liveness probe
+  (\passthrough{\lstinline!GET /health!}) ed estrazione live di
+  handshake e metriche di traffico dei peer WireGuard.
+\item
+  \textbf{\passthrough{\lstinline!SR-CON-04!} (Persistenza Locale
+  Asincrona)}: Memorizzazione dello stato e delle associazioni (team,
+  macchine, peer e immagini) su database relazionale SQLite locale
+  tramite driver asincrono.
+\item
+  \textbf{\passthrough{\lstinline!SR-CON-05!} (Rollback in caso di
+  errore)}: qualunque errore imprevisto durante la creazione delle
+  risorse innesca il rilascio delle risorse allocate.
+\item
+  \textbf{\passthrough{\lstinline!SR-CON-06!} (Idempotenza Operativa)}:
+  Le richieste di provisioning per risorse gia allocate non alterano lo
+  stato del sistema.
 \end{itemize}
 
-\subsection{\texorpdfstring{Pipeline Immagini Distrobuilder
-(\texttt{SR-IMG})}{Pipeline Immagini Distrobuilder (SR-IMG)}}\label{pipeline-immagini-distrobuilder-sr-img}
+\subsection{Pipeline Immagini
+Distrobuilder}\label{pipeline-immagini-distrobuilder}
 
 \begin{itemize}
 \tightlist
 \item
   \textbf{\passthrough{\lstinline!SR-IMG-01!} (Definizione IaC
   Distrobuilder)}: Creazione dichiarativa di immagini per container di
-  sistema a partire da file di definizione YAML,
+  sistema a partire da file di definizione YAML.
+\item
+  \textbf{\passthrough{\lstinline!SR-IMG-02!} (Deduplicazione
+  Crittografica e Caching)}: Calcolo dell\textquotesingle hash
+  crittografico della specifica YAML per prevenire compilazioni
+  ridondanti di immagini identiche già presenti a catalogo.
+\item
+  \textbf{\passthrough{\lstinline!SR-IMG-04!} (Compilazione Asincrona)}:
+  Esecuzione delle fasi di build in background tramite worker asincrono.
 \end{itemize}

@@ -1,7 +1,7 @@
 \section{Esposizione
 dell\textquotesingle Architettura}\label{esposizione-dellarchitettura}
 
-Sia \(k\in[0,\dots,n-1]\) con \(n\) il numero di team partecipenti.
+\subsection{Architettura di Rete}\label{architettura-di-rete}
 
 La topologia e\textquotesingle{} suddivisa logicamente in più reti:
 
@@ -12,7 +12,7 @@ La topologia e\textquotesingle{} suddivisa logicamente in più reti:
   \(\text{production-}k\) identifica gli oggetti di rete usati per
   collegare i container vulnerabili alla rete per il team \(k\)
 \item
-  \textbf{una o più reti di verifica, al più una per team}. la rete
+  \textbf{al piu una rete di verifica per ogni team}, dove la rete
   \(\text{verify-}k\) identifica gli oggetti di rete ed i container
   duplicati utilizzati per la verifica richiesta dal \(\text{team-}k\)
 \end{itemize}
@@ -26,17 +26,12 @@ contiene:
 \begin{itemize}
 \tightlist
 \item
-  \(\text{wg-}k\): dispositivo L3, fa da terminazione per il tunnel del
-  team \(k\) esimo. Assegna l\textquotesingle ip
-  \passthrough{\lstinline!10.k.0.2/32!} al client che si collega.
+  \(\text{wg-}k\): dispositivo L3 gestito da WireGuard, fa da
+  terminazione per il tunnel del team \(k\) esimo. Ha come indirizzo IP
+  gateway \passthrough{\lstinline!10.k.0.0/24!}
 \item
-  \(\text{br-team-}k\): switch L2. Ha un gateway assegnato in modo da
-  poter permettere all\textquotesingle Host di instradare da reti
-  esterne.
-\item
-  \(\text{team-}k\text{-profile}\): profilo Incus per collegare
-  l\textquotesingle interfaccia \(\text{eth}0\) del container del team
-  \(k\) a \(\text{br-team-}k\)
+  \(\text{br-team-}k\): dispositivo L2 gestito dal kernel Linux. Ha come
+  indirizzo IP gateway \passthrough{\lstinline!10.k.1.0/24!}
 \item
   \(\text{eth0}\): le interfacce di rete \(\text{eth0}\) dei container
   vengono collegate a \(\text{br-team-}k\).

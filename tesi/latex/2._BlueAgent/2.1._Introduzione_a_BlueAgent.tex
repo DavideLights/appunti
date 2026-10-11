@@ -1,11 +1,12 @@
 \section{2. Introduzione a BlueAgent}\label{2-introduzione-a-blueagent}
 
 Si vuole presentare dunque il nostro CyberRange: \textbf{BlueAgent}. Un
-servizio \emph{HTTP} che implementa delle \emph{API} per la gestione e
-la verifica delle macchine a partire da definizioni \emph{IaC}. Queste
-API potranno poi essere sfruttate ed implementate da qualsiasi
-applicativo per gestire le challenge, come per esempio un plugin per
-CTFd che vedremo in seguito.
+servizio \emph{HTTP} che implementa delle \emph{API REST} per la
+gestione e la verifica delle macchine a partire da definizioni
+\emph{IaC} fornite dagli organizzato della CTF. Queste API REST potranno
+poi essere sfruttate ed implementate da un qualsias applicativo
+(denominato CTF Manager) per gestire le challenge, come per esempio, un
+plugin per CTFd\footnote{\label{fn:ref_14}\url{https://ctfd.io/}}.
 
 \textbf{BlueAgent} e\textquotesingle{} basato \textbf{FastAPI}, per
 gestire in modo semplice ed efficiente le richieste HTTP.
@@ -26,13 +27,15 @@ a disposizione dell\textquotesingle architettura le seguenti componenti:
     nel Kernel
   \end{itemize}
 \item
+  \textbf{Python 3}: per eseguire BlueAgent.
+\item
   \textbf{ZFS}: filesystem che supporta il meccanismo
   \passthrough{\lstinline!COW!}.
 \item
   \textbf{OVN ed Open vSwitch}: per gestire la rete di verifica dei
   container.
 \item
-  \textbf{distrobuilder}: per generare le immagini dei container in modo
+  \textbf{Distrobuilder}: per generare le immagini dei container in modo
   dichiarativo.
 \item
   \textbf{WireGuard}: per fornire una VPN come punto
@@ -41,22 +44,6 @@ a disposizione dell\textquotesingle architettura le seguenti componenti:
   \textbf{Incus}: per la gestione dei container.
 \end{itemize}
 
-Il codice in Python che implementa BlueAgent usa i seguenti moduli:
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{uv}: per gestire in modo semplice ed efficace il
-  \passthrough{\lstinline!venv!} ed i pacchetti richiesti da BlueAgent
-\item
-  \textbf{pydantic}: per modellare e validare le strutture dati
-  utilizzate frequentemente.
-\item
-  \textbf{filelock}: per implementare il lock delle risorse in caso di
-  accesso concorrente.
-\item
-  \textbf{aiosqlite}: per interfacciarsi con il database.
-\end{itemize}
-
 \emph{Per comprendere passo-passo cosa permette di fare il sistema e
-come lo fa sono elencati gli use cases ed i requisiti di sistema.}
+come lo fa sono elencati gli attori, gli use cases ed i requisiti di
+sistema.}

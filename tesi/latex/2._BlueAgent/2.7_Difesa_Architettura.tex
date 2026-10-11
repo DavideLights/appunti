@@ -1,6 +1,47 @@
 \section{Difesa
 dell\textquotesingle architettura}\label{difesa-dellarchitettura}
 
+Spunti:
+
+\begin{itemize}
+\tightlist
+\item
+  perche\textquotesingle{} Debian 13?
+\item
+  perche\textquotesingle{} ZFS?
+\item
+  perche\textquotesingle{} OVN in verifica?
+\item
+  perche\textquotesingle{} Birdge L2 in produzione?
+\item
+  perche\textquotesingle{} Incus?
+\end{itemize}
+
+Codice:
+
+\begin{itemize}
+\tightlist
+\item
+  Motivazione per Async Context Manager
+\item
+  perche ContainerEngine ed IncusEngine?
+\item
+  perche esiste il problema della concorrenza?
+\item
+  perche disaccoppiare la creazione dei comandi?
+\item
+  perche gestire le API in modo asincorno?
+\item
+  percher usare httpx.AsyncClient per IncusEngine?
+\item
+  perche BlueAgent gestisce i container e non mantiene lo stato delle
+  challenge?
+\item
+  motivare le API rests
+\item
+  perche SQLite
+\end{itemize}
+
 La progettazione di BlueAgent risponde alle esigenze operative tipiche
 di scenari reali di Blue Teaming, bilanciando fedeltà
 dell\textquotesingle ambiente, isolamento dei test ed efficienza delle
