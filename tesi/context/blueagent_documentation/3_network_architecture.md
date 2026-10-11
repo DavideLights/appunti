@@ -84,7 +84,7 @@ incus network set incusbr0 ipv4.dhcp.ranges=172.16.0.2-172.16.0.99 ipv4.ovn.rang
 
 ## 5. Verification Domain (Incus + OVN Overlay)
 
-When automated verification is requested (`POST /challenges/{id}/verify`):
+When automated verification is requested (`POST /teams/{team_k}/verificator`):
 
 1. **Ephemeral Dark OVN L2 Switch Creation:**
    - Network Name: `verify-{session_id[:4]}` (strictly capped to $\le 11$ characters by Incus).

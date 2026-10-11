@@ -2,9 +2,10 @@
 
 ## 1. Pydantic v2 Data Models
 
-BlueAgent validates all challenge declarations and verification payloads using Pydantic v2:
+BlueAgent validates all challenge declarations, container configurations, and verification payloads using Pydantic v2:
 
 ```python
+from datetime import datetime
 from typing import List, Dict, Optional, Literal, Any
 from pydantic import BaseModel, Field
 
@@ -15,6 +16,8 @@ class CommandSpec(BaseModel):
     cmd: List[str]
     env: Dict[str, str] = Field(default_factory=dict)
     timeout: int = Field(15, ge=1, le=300)
+    retry_timeout: float = Field(default=15.0, ge=1.0, le=120.0)
+    interval: float = Field(default=0.5, ge=0.05, le=10.0)
 
 class ContainerSpec(BaseModel):
     """Specification of an application system container."""
@@ -52,20 +55,17 @@ class TeamCreateReq(BaseModel):
     """Payload to register a new team and allocate network namespaces."""
     team_k: int = Field(..., ge=0, le=254)
     name: str = Field(..., min_length=1, max_length=128)
-    ctfd_team_id: Optional[int] = Field(default=None, ge=0)
 
 class TeamMemberCreateReq(BaseModel):
     """Payload to generate a WireGuard configuration for an individual team member."""
     name: str = Field(..., min_length=1, max_length=128)
     ctfd_user_id: Optional[int] = Field(default=None, ge=0)
-    ctfd_team_id: Optional[int] = Field(default=None, ge=0)
     team_name: Optional[str] = None
     public_key: Optional[str] = None
 
 class TeamMemberWG(BaseModel):
     """Persisted WireGuard client configuration record for a team member."""
     member_id: str
-    team_id: int
     team_k: int
     name: str
     client_ip: str
@@ -99,6 +99,7 @@ class PeerStats(BaseModel):
 
 ```yaml
 challenge_id: "patch-web-sqli"
+team_k: 1
 title: "SQL Injection and Web Server Patch Management"
 description: "SQLi mitigation challenge on Nginx + Python Flask + MySQL stack"
 verify_internet_access: false   # Enable/disable NAT uplink inside ephemeral OVN sandbox
@@ -123,7 +124,7 @@ containers:
     limits_cpu: "1"
     limits_memory: "256MB"
 
-readiness_commands:             # Health checks executed at initial deploy before marking ready
+readiness_commands:             # Health checks executed inside dark OVN sandbox clone before verify_commands
   - target: "container"
     container_name: "database"
     cmd: ["mysqladmin", "ping", "-h", "127.0.0.1"]

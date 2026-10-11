@@ -11,10 +11,10 @@ The Team and WireGuard subsystem manages multi-member participant access to comp
 
 | Method | Endpoint | Description | Status Codes |
 |---|---|---|---|
-| `POST` | `/teams` | Provisions Linux bridge (`br-team-k`) and WireGuard interface (`wg-k`). Maps `ctfd_team_id` to `team_k`. Idempotent. | `201 Created` (new), `200 OK` (exists), `409 Conflict`, `503 Service Unavailable` |
+| `POST` | `/teams` | Provisions Linux bridge (`br-team-k`) and WireGuard interface (`wg-k`) for `team_k`. Idempotent. | `201 Created` (new), `200 OK` (exists), `409 Conflict`, `503 Service Unavailable` |
 | `GET` | `/teams` | Lists all registered teams ordered by `team_k`. | `200 OK` |
 | `GET` | `/teams/{team_k}` | Retrieves metadata for a specific team. | `200 OK`, `404 Not Found` |
-| `DELETE` | `/teams/{team_k}` | Tears down `wg-k`, `br-team-k`, removes nftables pairings, and cascades deletion in SQLite. Idempotent. | `204 No Content`, `503 Service Unavailable` |
+| `DELETE` | `/teams/{team_k}` | Tears down all running containers for `team_k`, `wg-k`, `br-team-k`, removes nftables pairings, and cascades deletion in SQLite. Idempotent. | `204 No Content`, `503 Service Unavailable` |
 
 ### 2.2 WireGuard Peer Management (`/teams/{team_k}/members`)
 
@@ -32,7 +32,7 @@ The Team and WireGuard subsystem manages multi-member participant access to comp
 ## 3. Key Design Patterns
 
 ### 3.1 Idempotency & Re-Click Safety
-- When a user re-clicks the download button in CTFd, `POST /teams/{team_k}/members` looks up the existing `ctfd_user_id`.
+- When a user re-clicks the download button in CTFd, `POST /teams/{team_k}/members` looks up the existing member (`member_id = "ctfd-{team_k}-{ctfd_user_id}"`).
 - Instead of allocating a new IP or generating new keys, it re-renders the exact same configuration from the securely stored private key and PSK in SQLite.
 - Returns `HTTP 200 OK` without wasting IPs or breaking active connections.
 
@@ -42,10 +42,11 @@ The Team and WireGuard subsystem manages multi-member participant access to comp
 - If member `.3` leaves (is deleted), their IP is immediately recycled and assigned to the next joining member.
 
 ### 3.3 Kernel Interface Teardown & Lifecycle
-- `DELETE /teams/{team_k}` invokes:
-  1. `wg.teardown_team_interface(team_k)`: Brings down `wg-k`, deletes device from kernel, unlinks private key.
-  2. `host_net.teardown_team_bridge(team_k)`: Unregisters `(wg-k, br-team-k)` pair from nftables `team_links` set, brings down bridge, deletes device.
-  3. `db.delete_team(team_k)`: Cascades deletion to all team members in SQLite.
+- `DELETE /teams/{team_k}` (orchestrated by `TeamService.teardown_team`):
+  1. Deletes and stops all running challenge containers for `team_k`.
+  2. `wg.teardown_team_interface(team_k)`: Brings down `wg-k`, deletes device from kernel, unlinks private key.
+  3. `host_net.teardown_team_bridge(team_k)`: Unregisters `(wg-k, br-team-k)` pair from nftables `team_links` set, brings down bridge, deletes device.
+  4. `db.delete_team(team_k)`: Cascades deletion to all team members in SQLite.
 - Both `wg-k` and `br-team-k` are completely eliminated from the kernel.
 
 ### 3.4 Boot Re-Synchronization
@@ -71,7 +72,7 @@ The Team and WireGuard subsystem manages multi-member participant access to comp
 The Team and WireGuard API was verified against a live Linux kernel:
 
 1. **Team 0 & User 0 Creation (`test_team0.sh`):**
-   - Issued `POST /teams` with `team_k=0`, `ctfd_team_id=0`.
+   - Issued `POST /teams` with `team_k=0`, `name="Team 0"`.
    - Verified kernel bridge creation: `br-team-0` on `10.0.1.1/24`.
    - Issued `POST /teams/0/members` with `ctfd_user_id=0`.
    - Verified WireGuard interface: `wg-0` listening on UDP `51820`.
@@ -80,4 +81,3 @@ The Team and WireGuard API was verified against a live Linux kernel:
    - Issued `DELETE /teams/0` with CTFd bearer token.
    - Verified `HTTP 204 No Content`.
    - Verified interface destruction: `ip link show wg-0` and `ip link show br-team-0` confirmed completely absent from kernel.
-

@@ -5,9 +5,9 @@
 | Phase | Endpoint / Trigger | Operations Performed | Output State |
 | :--- | :--- | :--- | :--- |
 | **1. Team Provisioning** | `POST /teams` | Allocates `wg-k` (`10.k.0.0/24`), creates `br-team-k` (`10.k.1.1/24`), sets nftables NAT/MSS rules. | Team VPN & network ready. |
-| **2. Challenge Deployment** | `POST /challenges` | Launches system containers from Distrobuilder images, binds `eth0` to `br-team-k`, sets static IPs (`10.k.1.x`), runs readiness health checks. | Live challenge services active. |
-| **3. Automated Verification** | `POST /challenges/{id}/verify` | Executes non-destructive tests inside ephemeral OVN sandbox (see sequence below). | JSON verification report (`VerifyResultResp`). |
-| **4. Teardown / Cleanup** | `DELETE /challenges/{id}` or `DELETE /teams/{id}` | Stops/deletes containers, tears down bridges, removes WireGuard peers. | Resources released. |
+| **2. Container Deployment** | `POST /teams/{team_k}/machines` | Launches system containers from Distrobuilder images, binds `eth0` to `br-team-k`, sets static IPs (`10.k.1.x`), records in DB. Readiness checks deferred to verification. | Live container services active. |
+| **3. Automated Verification** | `POST /teams/{team_k}/verificator` | Executes non-destructive tests inside ephemeral OVN sandbox (see sequence below). | JSON verification report (`VerifyResultResp`). |
+| **4. Teardown / Cleanup** | `DELETE /teams/{team_k}/machines` or `DELETE /teams/{team_k}` | Stops/deletes containers, tears down bridges, removes WireGuard peers. | Resources released. |
 
 ---
 

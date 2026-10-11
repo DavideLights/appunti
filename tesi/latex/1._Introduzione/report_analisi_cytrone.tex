@@ -1,0 +1,247 @@
+\section{Report di Analisi e Revisione: CyTrONE vs
+BlueAgent}\label{report-di-analisi-e-revisione-cytrone-vs-blueagent}
+
+\textbf{Documento analizzato:}
+\passthrough{\lstinline!1.3.3\_CR\_Alternativi\_CyTrONE.md!}\\
+\textbf{Data:} 09/10/2026
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Come "blastare" CyTrONE in ottica BlueAgent (Dominio A/D
+e Patch
+Management)}\label{1-come-blastare-cytrone-in-ottica-blueagent-dominio-ad-e-patch-management}
+
+Il framework \textbf{BlueAgent} è progettato specificamente per
+competizioni \textbf{Attack-Defense (A/D)} e scenari complessi di
+\textbf{Patch Management}, contesti caratterizzati da vincoli operativi
+e architetturali stringenti che CyTrONE non è strutturalmente in grado
+di soddisfare.
+
+\subsubsection{Punti critici da evidenziare contro
+CyTrONE:}\label{punti-critici-da-evidenziare-contro-cytrone}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Side-Channel Leakage sistematico nei controlli:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In una competizione A/D, la verifica periodica tramite checker
+    automatizzati richiede l\textquotesingle invio di exploit/payload
+    per testare lo stato di vulnerabilità del servizio.
+  \item
+    CyTrONE adotta un \emph{cyberattack controller} remoto che scaglia
+    attacchi (es. via Metasploit) direttamente attraverso la rete del
+    partecipante.
+  \item
+    \textbf{Conseguenza critica:} Un concorrente può eseguire
+    \passthrough{\lstinline!tcpdump!} o Wireshark sulla propria
+    interfaccia di rete, intercettare il payload malevolo inviato dal
+    checker e \textbf{replicarlo immediatamente contro gli altri team},
+    distruggendo l\textquotesingle integrità e l\textquotesingle equità
+    della competizione.
+  \item
+    \textbf{Soluzione BlueAgent:} Separazione netta tra ambiente Live e
+    Sandbox. Le verifiche avvengono su cloni Copy-on-Write (CoW) isolati
+    tramite OVN/Linux network namespaces, impedendo qualunque sniffing o
+    fuga di payload.
+  \end{itemize}
+\item
+  \textbf{Rischio di Denial of Service / Crash del sistema Live:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    L\textquotesingle esecuzione di payload aggressivi o malformati
+    contro l\textquotesingle istanza live di training può provocare
+    kernel panic, corruzione di database o blocco dei servizi.
+  \item
+    In CyTrONE ciò compromette l\textquotesingle intero ambiente del
+    partecipante, richiedendo interventi manuali o lunghi reset.
+  \item
+    In BlueAgent, il test viene eseguito esclusivamente su
+    un\textquotesingle istanza clonata effimera: anche in caso di crash
+    totale del clone, l\textquotesingle ambiente di produzione del team
+    rimane intatto e operativo.
+  \end{itemize}
+\item
+  \textbf{Latenza di Provisioning e Ripristino (Rollback
+  Inaccettabile):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Durante una CTF è frequente che un concorrente renda instabile il
+    proprio sistema e necessiti di un ripristino.
+  \item
+    CyTrONE impiega minuti (fino a 8+ minuti per scenari base con sole 2
+    VM) e degrada esponenzialmente con l\textquotesingle aumentare dei
+    nodi.
+  \item
+    BlueAgent garantisce provisioning e rollback in
+    \textbf{\textasciitilde100--500 ms} grazie all\textquotesingle uso
+    di container di sistema Incus/LXC e snapshot a livello di blocco
+    (ZFS/Btrfs).
+  \end{itemize}
+\item
+  \textbf{Inadeguatezza dell\textquotesingle Isolamento Topologico:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Una CTF A/D moderna richiede topologie di rete complesse e omogenee
+    (es. subnet identiche \passthrough{\lstinline!10.k.1.0/24!} per ogni
+    team \(k\)) per non dover riscrivere script o regole di routing.
+  \item
+    CyTrONE si affida a clonazione tradizionale
+    (\passthrough{\lstinline!parallel-scp!}) su hypervisor KVM,
+    risultando rigido e non scalabile nella gestione di reti
+    virtualizzate multi-tenant isolate.
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. Punti da Approfondire nel
+Testo}\label{2-punti-da-approfondire-nel-testo}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Quantificazione dell\textquotesingle overhead delle Macchine
+  Virtuali (VM):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Esplicitare i costi reali: 1--4 GB di RAM pre-allocata per VM guest,
+    overhead di virtualizzazione CPU (VT-x/AMD-V) e boot time completo
+    del kernel OS.
+  \item
+    Confrontarlo con i container di sistema (LXC/Incus): overhead di
+    memoria ridotto a \textasciitilde100--300 MB e condivisione sicura
+    del kernel host.
+  \end{itemize}
+\item
+  \textbf{Dicotomia "Training Guidato" vs "Competizione Dinamica":}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    CyTrONE assume verifiche elementari basate sul confronto di
+    stringhe/flag note (\emph{Assunzioni 1 e 2}).
+  \item
+    Nel Patch Management contemporaneo la validazione è \textbf{stateful
+    e bivalente}: deve attestare sia la neutralizzazione della falla,
+    sia la conservazione dell\textquotesingle integrità funzionale (SLA
+    del servizio per utenti legittimi).
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. Elementi Mancanti di Rilievo
+Architetturale}\label{3-elementi-mancanti-di-rilievo-architetturale}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Mancanza del concetto di Sandbox / Dual-Environment:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    CyTrONE opera su una singola istanza per utente. Manca completamente
+    il paradigma fondamentale di BlueAgent: \textbf{biforcazione tra
+    Live Environment e Sandbox effimera}.
+  \end{itemize}
+\item
+  \textbf{Modernità dello Storage (CoW vs Immagini monolitiche):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    La clonazione di intere immagini disco via rete con
+    \passthrough{\lstinline!parallel-scp!} è un collo di bottiglia non
+    accettabile; mancano riferimenti alla gestione moderna tramite
+    filesystem Copy-on-Write (ZFS/Btrfs).
+  \end{itemize}
+\item
+  \textbf{Sicurezza di Connessione e Anti-Spoofing:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Assenza di meccanismi di VPN crittograficamente confinata (come il
+    Cryptokey Routing di WireGuard in BlueAgent) per prevenire
+    intercettazioni e spoofing tra team differenti.
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. Revisione Qualitativa del Documento e Correzioni
+Formali}\label{4-revisione-qualitativa-del-documento-e-correzioni-formali}
+
+\subsubsection{Punti di Forza:}\label{punti-di-forza}
+
+\begin{itemize}
+\tightlist
+\item
+  Ottima linearità nell\textquotesingle esposizione dei macro-componenti
+  (CyLMS, CyRIS, CyPROM).
+\item
+  Sezione benchmark quantitativi (1.3.3.1) chiara, efficace e ben
+  argomentata tramite dati sperimentali (StarBED).
+\item
+  Perfetta impostazione per introdurre il contrasto prestazionale
+  cercato dalla tesi.
+\end{itemize}
+
+\subsubsection{Correzioni Formali da apportare (Typo e
+Sintassi):}\label{correzioni-formali-da-apportare-typo-e-sintassi}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Riga 7:} \passthrough{\lstinline!si occupa d icaricare!}
+  \(\rightarrow\) \passthrough{\lstinline!si occupa di caricare!}
+\item
+  \textbf{Riga 14:} \passthrough{\lstinline!si conentra!}
+  \(\rightarrow\) \passthrough{\lstinline!si concentra!}
+\item
+  \textbf{Riga 16:}
+  \passthrough{\lstinline!Quindi l'esperienza utente si concentra sul fatto che...!}
+  \(\rightarrow\) Stile informale. Riformulare in:\\
+  \emph{«L\textquotesingle esperienza utente è incentrata sulla
+  fruizione del percorso didattico tramite piattaforma LMS e sul
+  contestuale accesso al Cyber Range dedicato.»}
+\item
+  \textbf{Riga 23:} \passthrough{\lstinline!Training Coordinator".Le!}
+  \(\rightarrow\) Spaziatura errata dopo le virgolette e il punto
+  (\passthrough{\lstinline!Training Coordinator". Le!}).
+\item
+  \textbf{Riga 31:} \passthrough{\lstinline!vulnearbilita!}
+  \(\rightarrow\) \passthrough{\lstinline!vulnerabilità!}
+\item
+  \textbf{Riga 33 e 35:} \passthrough{\lstinline!Tutta via!}
+  \(\rightarrow\) \passthrough{\lstinline!Tuttavia!}
+\item
+  \textbf{Riga 59:}
+  \passthrough{\lstinline!Nella figura sborgz viene analizzato...!}
+  \(\rightarrow\) \textbf{Placeholder rimasto nel testo
+  (\passthrough{\lstinline!sborgz!})}. Sostituire con il corretto
+  riferimento (\passthrough{\lstinline!Nella Figura X!} o
+  \passthrough{\lstinline!Nella figura sottostante!}).
+\item
+  \textbf{Riga 66:}
+  \passthrough{\lstinline!Con il nostro lavoro di tesi, si vuole cercare di abbattere...!}
+  \(\rightarrow\) Preferibile formula accademica attiva:\\
+  \emph{«L\textquotesingle obiettivo del presente lavoro di tesi è
+  abbattere il tempo complessivo di approvvigionamento \(T\),
+  riducendolo dall\textquotesingle ordine dei minuti a quello dei
+  secondi su hardware non dedicato.»}
+\end{enumerate}

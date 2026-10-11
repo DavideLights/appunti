@@ -22,7 +22,7 @@ applicazioni. \footnote{\label{fn:ref_6}\url{https://github.com/google/nsjail/}}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.85\linewidth,height=0.65\textheight,keepaspectratio]{src/images/kctf-architecture.png}
+  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/kctf-architecture.png}
   \caption{Kctf Architecture}
   \label{fig:kctf-architecture}
 \end{figure}
@@ -160,26 +160,22 @@ sandbox non fornisce una propria istanza di
 neanche l\textquotesingle infrastruttura necessaria per eseguiure
 comandi come \passthrough{\lstinline!apt!}.
 
-Tale limitazione, porta ad escludere kCTF come possibile soluzione al
-problema orignale esposto, suggerendo come astrazione migliore per
-l\textquotesingle ambiente di un partecipante l\textquotesingle uso di
-un \textbf{container} (Incus o Docker), piuttosto che una sandbox
-generata da NsJail.
-
-TODO: \textbf{Problemi}:
+NsJail porta con se altri problemi:
 
 \begin{itemize}
 \tightlist
 \item
-  in nsjail il filesystem e\textquotesingle{} disponibile in sola
-  lettura. Comandi come \passthrough{\lstinline!apt!} e modifiche
-  diretta a \passthrough{\lstinline!/etc!} non funzionano.
+  Se dovesse cadere la connessione TCP allora tutto il contenuto del
+  filesytem in RAM andrebbe perso.
 \item
-  se la connessione TCP cade allora tutto il lavoro che risiede in RAM
-  e\textquotesingle{} perso
-\item
-  in nsjail, l\textquotesingle applicazione di filtri seccomp potrebbero
-  impedire l\textquotesingle esecuzione di alcune chiamate di sistema.
-\item
-  kCFT usa Kubernetes introducendo costi e complessita.
+  L\textquotesingle uso di \passthrough{\lstinline!seccomp!} per
+  filtrare le chiamate di sistema potrebbe impedire
+  l\textquotesingle esecuzione di alcuni programmi fondamentali per la
+  challenge.
 \end{itemize}
+
+Queste limitazioni esposte, portano ad escludere kCTF come possibile
+soluzione al problema orignale esposto, suggerendo come astrazione
+migliore per l\textquotesingle ambiente di un partecipante
+l\textquotesingle uso di un \textbf{container} (Incus o Docker),
+piuttosto che una sandbox generata da NsJail.

@@ -1,0 +1,78 @@
+\subsection{PID namespace separato per la
+verifica}\label{pid-namespace-separato-per-la-verifica}
+
+Si vuole eseguire gli script di verifica direttamente
+all\textquotesingle interno dell\textquotesingle ambiente di produzione
+del team, isolando i processi utilizzando un PID namespace separato.
+
+L\textquotesingle obiettivo e\textquotesingle{} quello di nascondere a
+tool come \passthrough{\lstinline!pspy!}, \passthrough{\lstinline!ps!} e
+\passthrough{\lstinline!top!} gli script eseguiti in fase di verifica,
+evitando che il concorrente, dal suo ambiente possa vedere
+l\textquotesingle exploit ed i suoi parametri di verifica.
+
+Questa soluzione evita il costo di clonare il container, tutta via
+e\textquotesingle{} inadatta al nostro scopo
+
+\textbf{Il filesystem, resta completamente condiviso}:
+
+\begin{itemize}
+\tightlist
+\item
+  se un exploit agisce su un servizio web, questo potrebbe lasciare
+  tracce dell\textquotesingle exploit nei log
+\item
+  se lo script di verifica o l\textquotesingle exploit crea cartelle
+  temporanee, possono essere lette dal partecipante
+\item
+  se lo script carica il payload su una porta in cui il servizio
+  vulnerabile e\textquotesingle{} esposto, allora con
+  \passthrough{\lstinline!tcpdump!} posso ascoltare il traffico nel
+  container.
+\end{itemize}
+
+Quando isoliamo il namespace bisogna anche:
+
+\begin{itemize}
+\tightlist
+\item
+  isolare il mount namespace, per isolare la cartella
+  \passthrough{\lstinline!/proc!}
+\end{itemize}
+
+Tuttavia, tool come \passthrough{\lstinline!pspy!} tramite lo
+\textbf{scanning degli eventi} \passthrough{\lstinline!inotify!} su
+\passthrough{\lstinline!/proc!}, e lo \textbf{scan delle chiamate di
+sistema}, puo\textquotesingle{} rilevare l\textquotesingle avvio di
+nuovi processi.
+
+Inoltre, l\textquotesingle exploit potrebbe essere di \textbf{tipo di
+struttivo}, portando al \textbf{crash} di un servizio importante o
+dell\textquotesingle intero sistema. Si vuole dunque evitare di
+\textbf{interrompere il workflow} del team in fase di verifica.
+
+Se e\textquotesingle{} abilitata la misurazione
+dell\textquotesingle{}\textbf{SLA}, per la challenge, far crashare un
+container vuol dire abbassare l\textquotesingle SLA e dunque penalizzare
+il punteggio del team.
+
+Per quanto riguarda la rete, un PID namespace separato non implica la
+creazione di una nuova interfaccia di rete:
+
+\begin{itemize}
+\tightlist
+\item
+  Se lo script verificatore si trova sulla macchina vulnerabile, allora
+  puo\textquotesingle{} mandare il payload utilizzando
+  l\textquotesingle interfaccia di loopback, che e\textquotesingle{}
+  accessibile anche ai partecipanti.
+\item
+  Il partecipante può eseguire \passthrough{\lstinline!tcpdump -i lo!} o
+  ispezionare le connessioni attive con \passthrough{\lstinline!ss!} e
+  \passthrough{\lstinline!netstat!}, catturando il traffico di verifica
+  in chiaro.
+\end{itemize}
+
+Dunque, l\textquotesingle approccio basato su pid namespace
+e\textquotesingle{} stato scartato, poiché non isola le altri componenti
+del sistema.

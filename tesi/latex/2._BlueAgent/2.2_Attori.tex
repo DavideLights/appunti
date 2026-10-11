@@ -1,0 +1,32 @@
+\section{Attori}\label{attori}
+
+L\textquotesingle attore e\textquotesingle{} un\textquotesingle entita
+logica esterna al sistema che interagisce direttamente con esso, tramite
+l\textquotesingle invio di messaggi.
+
+\subsection{CTF Manager (attore)}\label{ctf-manager-attore}
+
+E\textquotesingle{} un sistema software esterno a BlueAgent che si
+occupa di gestire la competizione (punteggi, team, utenti,
+configurazioni, gara). Comunica con BlueAgent tramite API REST per
+gestire l\textquotesingle intero ciclo di vita delle macchine dei team,
+ed agisce come entita autenticata (tramite l\textquotesingle utilizzo di
+un token) per BlueAgent.
+
+Richiede per conto dei Giocatori il deploy delle challenge, la verifica
+dei container e le configurazioni per accedere alla rete tramite VPN.
+
+Per conto dell\textquotesingle autore della sfida permette la gestione
+dei file di configurazione delle challenge. Permette invece
+all\textquotesingle admin di gestire i container attivi, i team, e altri
+aspetti della gara.
+
+Piu avanti, verra presentato un plugin per CTFd, che agisce come CTF
+Manager verso BlueAgent.
+
+Dunque CTF Manager e\textquotesingle{} l\textquotesingle unico attore
+per BlueAgent
+
+Rendere il CTF Manager esterno ed indipendente da BlueAgent nella sua
+architettura, permette di non vincolare l\textquotesingle uso di
+BlueAgent con CTFd per esempio.

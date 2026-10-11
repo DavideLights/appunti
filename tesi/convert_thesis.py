@@ -5,7 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-BASE_DIR = Path("/home/davidel/appunti/tesi").resolve()
+BASE_DIR = Path(__file__).resolve().parent
 LATEX_DIR = BASE_DIR / "latex"
 PANDOC_BIN = BASE_DIR / "pandoc-3.1.11.1" / "bin" / "pandoc"
 if not PANDOC_BIN.exists():
@@ -30,7 +30,138 @@ def section_sort_key(p: Path):
             pass
     return (1, (), p.name.lower())
 
-def preprocess_markdown(text: str) -> str:
+import base64
+import hashlib
+import json
+import shutil
+import urllib.request
+
+IMG_DIR = BASE_DIR / "src" / "images"
+
+def slugify_header(text: str) -> str:
+    text = re.sub(r"\\text\{([^}]*)\}", r"\1", text)
+    text = text.replace("$", "")
+    text = re.sub(r"`([^`]*)`", r"\1", text)
+    text = re.sub(r"[*_#]", "", text)
+    text = re.sub(r"[^\w\s-]", "", text)
+    slug = re.sub(r"[-\s]+", "_", text).strip("_").lower()
+    return slug or "diagram"
+
+def render_mermaid_diagram(code: str, slug: str) -> str:
+    """
+    Renders a mermaid diagram to PNG and caches it in src/images/.
+    Uses local cache if already rendered, otherwise renders via Kroki or Mermaid.ink.
+    Returns relative path to the image: src/images/<filename>.
+    """
+    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    code_hash = hashlib.sha256(code.strip().encode("utf-8")).hexdigest()[:10]
+    img_name = f"mermaid_{slug}_{code_hash}.png"
+    img_path = IMG_DIR / img_name
+
+    if img_path.exists() and img_path.stat().st_size > 0:
+        return f"src/images/{img_name}"
+
+    print(f"  [Mermaid] Rendering diagram '{slug}' ({code_hash})...")
+
+    # 1. Check local mmdc if installed
+    mmdc_bin = shutil.which("mmdc")
+    if mmdc_bin:
+        try:
+            p = subprocess.run(
+                [mmdc_bin, "-i", "-", "-o", str(img_path), "-b", "transparent"],
+                input=code.encode("utf-8"),
+                capture_output=True,
+                timeout=20
+            )
+            if p.returncode == 0 and img_path.exists() and img_path.stat().st_size > 0:
+                print(f"  [Mermaid] Rendered locally with mmdc -> {img_name}")
+                return f"src/images/{img_name}"
+        except Exception as e:
+            print(f"  [Mermaid] Local mmdc failed ({e}), trying online service...")
+
+    # 2. Try Kroki.io
+    headers = {
+        "Content-Type": "text/plain; charset=utf-8",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    try:
+        req = urllib.request.Request(
+            "https://kroki.io/mermaid/png",
+            data=code.strip().encode("utf-8"),
+            headers=headers
+        )
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = resp.read()
+            if data and data[:8] == b"\x89PNG\r\n\x1a\n":
+                with open(img_path, "wb") as f:
+                    f.write(data)
+                print(f"  [Mermaid] Rendered via Kroki -> {img_name} ({len(data)} bytes)")
+                return f"src/images/{img_name}"
+    except Exception as e:
+        print(f"  [Mermaid] Kroki request failed ({e}), trying mermaid.ink...")
+
+    # 3. Try Mermaid.ink
+    try:
+        obj = {"code": code.strip(), "mermaid": {"theme": "default"}}
+        payload = base64.b64encode(json.dumps(obj).encode("utf-8")).decode("ascii")
+        url = f"https://mermaid.ink/img/{payload}"
+        req = urllib.request.Request(url, headers={"User-Agent": headers["User-Agent"]})
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = resp.read()
+            if data and (data.startswith(b"\x89PNG") or data.startswith(b"\xff\xd8")):
+                with open(img_path, "wb") as f:
+                    f.write(data)
+                print(f"  [Mermaid] Rendered via Mermaid.ink -> {img_name} ({len(data)} bytes)")
+                return f"src/images/{img_name}"
+    except Exception as e:
+        print(f"  [Mermaid] Mermaid.ink request failed ({e})")
+
+    print(f"  [Mermaid Warning] Could not render diagram '{slug}'. Leaving raw code block.")
+    return None
+
+def process_mermaid_blocks(text: str, fallback_slug: str = "diagram") -> str:
+    """
+    Finds ```mermaid ... ``` code blocks in markdown, renders them to PNG,
+    and replaces them with ![](src/images/mermaid_...).
+    """
+    lines = text.splitlines()
+    new_lines = []
+    curr_header = fallback_slug
+    i = 0
+
+    while i < len(lines):
+        line = lines[i]
+        header_match = re.match(r"^#+\s*(.+)$", line)
+        if header_match:
+            curr_header = header_match.group(1).strip()
+
+        if line.strip().startswith("```mermaid"):
+            block_lines = []
+            i += 1
+            while i < len(lines) and not lines[i].strip().startswith("```"):
+                block_lines.append(lines[i])
+                i += 1
+
+            code = "\n".join(block_lines)
+            slug = slugify_header(curr_header)
+            img_rel_path = render_mermaid_diagram(code, slug)
+
+            if img_rel_path:
+                new_lines.append(f"![]({img_rel_path})")
+            else:
+                new_lines.append("```mermaid")
+                new_lines.extend(block_lines)
+                new_lines.append("```")
+        else:
+            new_lines.append(line)
+        i += 1
+
+    return "\n".join(new_lines)
+
+def preprocess_markdown(text: str, file_stem: str = "doc") -> str:
+    # 0. Render Mermaid diagrams into embedded images
+    text = process_mermaid_blocks(text, fallback_slug=file_stem)
+
     # 1. Clean box-drawing characters for LaTeX listings compatibility
     box_map = {
         '├': '+', '└': '+', '┌': '+', '┐': '+', '┘': '+', '┴': '+', '┬': '+', '┼': '+',
@@ -123,11 +254,20 @@ def format_images(tex: str) -> str:
     def repl_img(m):
         path = m.group(1).strip()
         base_name = os.path.splitext(os.path.basename(path))[0]
-        clean_title = base_name.replace('-', ' ').replace('_', ' ').title()
+        
+        if base_name.lower().startswith("mermaid_"):
+            clean_name = re.sub(r'^mermaid_', '', base_name, flags=re.I)
+            clean_name = re.sub(r'_[0-9a-f]{6,16}$', '', clean_name)
+            clean_title = clean_name.replace('-', ' ').replace('_', ' ').strip().title()
+            if not clean_title:
+                clean_title = "Diagramma Architetturale"
+        else:
+            clean_title = base_name.replace('-', ' ').replace('_', ' ').strip().title()
+
         return (
             "\n\\begin{figure}[htbp]\n"
             "  \\centering\n"
-            f"  \\includegraphics[width=0.85\\linewidth,height=0.65\\textheight,keepaspectratio]{{{path}}}\n"
+            f"  \\includegraphics[width=0.92\\linewidth,height=0.7\\textheight,keepaspectratio]{{{path}}}\n"
             f"  \\caption{{{clean_title}}}\n"
             f"  \\label{{fig:{base_name}}}\n"
             "\\end{figure}\n"
@@ -149,7 +289,7 @@ def convert_md_file(md_path: Path, target_dir: Path, global_fn_map: dict) -> Pat
             f.write("% Sezione vuota\n")
         return tex_path
 
-    processed_content = preprocess_markdown(content)
+    processed_content = preprocess_markdown(content, file_stem=md_path.stem)
 
     cmd = [
         str(PANDOC_BIN),

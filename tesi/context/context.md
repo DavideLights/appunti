@@ -1,165 +1,233 @@
-# BlueAgent / BlueCTFd: Reference Knowledge Base
+# BlueAgent v2: Architectural Context & Implementation Reference
 
-## 1. System Identity & Core Paradigm
-- **System**: BlueCTFd (CTFd plugin) + BlueAgent (FastAPI async daemon on Debian 13).
-- **Target**: Stateful Defense & Patch Management CTFs (multi-tier system containers with `systemd`).
-- **Production Path**: WireGuard (`wg-k`, `10.k.0.0/24`) $\rightarrow$ unmanaged Linux Bridge (`br-team-k`, `10.k.1.1/24`) $\rightarrow$ container `eth0` (`10.k.1.x`). Native I/O, zero SDN overhead, native `tcpdump` sniffing.
-- **Verification Path**: Ephemeral Incus OVN dark L2 switch (`verify-xxxx`, `ipv4.address: none`) $\rightarrow$ ZFS CoW clones $\rightarrow$ optional verifier runner (`verify-runner-xxxx`). Zero host route clash, zero side-channel leaks, zero live crash risk.
-- **Topological Fidelity**: Instances retain single `eth0`, static IP (`10.k.1.x`), and gateway (`10.k.1.1`) identically across live and sandbox. Static IP injected in rootfs via `systemd-networkd` (`/etc/systemd/network/10-eth0.network`).
-- **Cloning Speed**: Block-level ZFS snapshots (`POST /1.0/instances` copy, `instance_only=True`) in ~100 ms (~500 ms total verification setup).
+## 1. System Philosophy & Paradigms
 
----
-
-## 2. Network Plan & Addressing
-- **Scope**: $0 \le k \le 254$ (Hard limit: 254 teams due to `10.k.x.x/16` partitioning).
-- **VPN Domain (`wg-k`)**:
-  - Subnet: `10.k.0.0/24`, Gateway: `10.k.0.1/24`, Port: `51820 + k`.
-  - Members: `10.k.0.2` – `10.k.0.254` (cap 253 members, dynamic hole-filling).
-  - Cryptokey Routing: Peer `AllowedIPs = 10.k.0.x/32` bound to client public key.
-- **LAN Domain (`br-team-k`)**:
-  - Subnet: `10.k.1.0/24`, Gateway: `10.k.1.1/24`.
-  - Target Containers: `10.k.1.2` (Web), `10.k.1.3` (DB), up to `10.k.1.249`.
-  - Ephemeral Verifier Runner: `10.k.1.250`.
-- **Traffic Rules (`nftables`, table `inet blueagent`)**:
-  - Forward priority filter: MSS clamping before accept (`tcp flags syn / syn,rst tcp option maxseg size set rt mtu`).
-  - Isolation: Forwarding allowed only within pair `@team_links` (`(wg-k, br-team-k)`). Cross-team traffic dropped.
-  - Postrouting priority srcnat: Masquerade `10.0.0.0/8` exiting non-private interfaces.
-- **MTU & Encapsulation Headers**:
-  - WireGuard MTU: `1420` (60–80 byte header).
-  - OVN Geneve MTU: `1442` (host MTU - 58 bytes, UDP port 6081).
-
----
-
-## 3. Comparison with State of the Art (Thesis Cap. 1)
-
-| Platform | Technology | Workload | Latency | Verification Method | Fatal Limitation for Patch CTF |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **kCTF** | GKE + nsjail | Stateless OCI | ~10 ms | TCP disconnect / flag output | Read-only rootfs; RAM wiped on disconnect; no systemd / multi-container DB. |
-| **CTFBox** | Incus + Docker | System container / VM | 1–5 s | Periodic tick on live service | Live checks cause SLA penalty / crash; leaks exploit payloads to competitors. |
-| **CyTrONE** | OpenStack VMs | Full VMs | 5–15 min | Static YAML / live check | Massive VM RAM/CPU footprint; slow setup; requires external LMS (Moodle). |
-| **KYPO** | OpenStack Cloud | Full VMs | Minutes | SSH daemon polling | Requires heavy cloud cluster (16 cores, 128 GB RAM); heavy per-team cost. |
-| **CyberPatriot** | Desktop VMs | Desktop OS | Offline | Local CSS daemon vs specs | Closed-source; local config diff only; cannot test dynamic network exploits. |
-| **DARPA CGC** | DECREE / QEMU | Custom 32-bit binaries | Variable | Formal PoV + pollers | Synthetic binaries; non-standard OS; no standard Linux network stack. |
-| **BlueAgent** | Incus + OVN + ZFS | Stateful system containers | **~500 ms** | **CoW Clone + Dark OVN Switch** | Low RAM (~200MB/team); zero live interference; zero side-channel leaks. |
-
-### Verification Taxonomy
-1. **Static Analysis (SAST / Diff)**: Storage scan without execution. Fails to verify runtime functional correctness.
-2. **Dynamic Live Attacker**: Exploit sent to live `br-team-k`. Risks crashing live service; payload sniffable via `tcpdump`.
-3. **Command Injection Live (`incus exec`)**: Direct command execution. Leaks via `pspy` / `/proc`; risks file conflicts.
-4. **Dark Sandbox Cloning (BlueAgent)**: Block CoW clone into isolated dark OVN switch. Full execution, zero leak, zero live risk.
+1. **Client-Agnostic Container Management:**
+   - BlueAgent is designed to manage container topologies per team on dedicated host bridges without maintaining challenge state.
+   - Upstream clients (e.g. CTFd) are responsible for high-level challenge state tracking; BlueAgent reports running containers per team.
+2. **Identification via `team_k`:**
+   - All teams and network namespaces are uniquely identified by the integer index `team_k` (`0 <= team_k <= 254`).
+   - The deprecated `team_id` has been completely eliminated from models, database schemas, and endpoints.
+   - Team member identifiers are composite strings (`ctfd-{team_k}-{ctfd_user_id}`).
+3. **Service Layer Architecture:**
+   - Domain logic and infrastructure orchestration are encapsulated into dedicated service objects in `src/blueagent/services/` (`ChallengeService`, `ImageService`, `TeamService`).
+   - API controllers in `src/blueagent/api/` serve as thin routing layers that map HTTP requests to service calls and translate domain exceptions into HTTP status codes.
+4. **Hybrid Network Split:**
+   - **Production (Live Kernel):** WireGuard (`wg-k`, `10.k.0.0/24`) terminated into unmanaged Linux Bridge (`br-team-k`, gateway `10.k.1.1/24`). Containers run on `eth0` with static IPs (`10.k.1.x`). Maximum I/O, zero SDN overhead, native `tcpdump` sniffing.
+   - **Verification (Dark Sandbox):** Ephemeral Incus OVN overlay network (`verify-<session_id>`, parent `incusbr0`). Clones rebound to OVN switch without host routing table conflicts.
+5. **Topological Fidelity:**
+   - Instances maintain a single `eth0`, identical IP (`10.k.1.x`), and gateway (`10.k.1.1`) across live and sandbox. Application code is unaware of sandboxing.
+   - Dual network configuration pre-baked into rootfs: `systemd-networkd` (`/etc/systemd/network/10-eth0.network`) and OpenRC/ifupdown (`/etc/network/interfaces`). Runtime static IPs and default routes are applied immediately via `ip addr replace` on container start.
+6. **Sub-Second Copy-on-Write (CoW) Duplication:**
+   - Incus instances reside on ZFS storage pools (`zfs/containers`). Cloned via block-level snapshots (`POST /1.0/instances` copy) in ~100 ms.
+7. **Deferred Readiness & Dual-Mode Verification:**
+   - Readiness probes are deferred to the verification phase inside dark OVN clones before running verify checks.
+   - *In-Container (Agentless):* Executed inside target clone via `incus exec` (`check.target == "container"`).
+   - *Ephemeral Verifier Runner:* Ephemeral container (`verify-runner-<uuid>`, `check.target == "verifier"`) attached directly to OVN switch for black-box network checks.
+8. **Two-Tier Synchronization (Anti-HTTP 409):**
+   - Intra-process coroutine lock (`asyncio.Lock`) + inter-process OS lock (`filelock.AsyncFileLock` on `/tmp/blueagent_locks/<name>.lock`) with task-level reentrancy.
+9. **Self-Healing State Reconciliation:**
+   - Background daemon sweeps orphan `verify-*` containers and OVN networks. Enforces 90s grace period to prevent race conditions on newly created networks.
+10. **Traffic Engineering:**
+    - Cryptokey Routing: Peer WireGuard `AllowedIPs = 10.k.0.x/32` tied to public key.
+    - MSS Clamping: Enforced in `nftables` before accept rules to prevent PMTU blackhole packet drops (WireGuard MTU: `1420`, Geneve: `1442`).
 
 ---
 
-## 4. Alternative Architectures & Trade-Offs (Thesis Cap. 3)
+## 2. Directory Layout & Module Responsibilities
 
-| Design | Topology | Pro | Con / Fatal Flaw |
+```
+src/blueagent/
+├── config.py              # Pydantic BaseSettings (env prefix: BLUEAGENT_)
+├── models.py              # Pydantic v2 domain schemas, IaC definitions, API models
+├── database.py            # SQLite async database manager (aiosqlite) with WAL
+├── locks.py               # TwoTierLock & LockRegistry (process & file locks)
+├── dependencies.py        # FastAPI dependency injection providers (services, db, engine)
+├── main.py                # FastAPI entrypoint, lifespan startup/shutdown
+├── engine/
+│   ├── base.py            # ContainerEngine ABC & ExecResult
+│   ├── incus.py           # Concrete IncusEngine (UDS client /var/lib/incus/unix.socket)
+│   └── network.py         # Incus OVN/bridge device helpers
+├── network/
+│   ├── addressing.py      # Pure IP plan generator (plan_for, allocate_member_ip)
+│   ├── host_net.py        # HostNetworkManager (Linux bridges, routing, nftables)
+│   ├── wireguard.py       # WireGuardManager (wg-k interface, peer allocation, keys)
+│   └── _runner.py         # Async subprocess execution wrapper
+├── images/
+│   ├── __init__.py
+│   └── distrobuilder.py   # ImageBuilder pipeline (compiles unified Incus tarballs)
+├── services/
+│   ├── __init__.py        # Exported service interfaces
+│   ├── challenges.py      # ChallengeService (deploy, rollback, teardown, verify)
+│   ├── images.py          # ImageService (YAML parsing, build orchestration, catalog)
+│   └── teams.py           # TeamService (bridges, WireGuard, member keys, stats)
+├── verifier/
+│   └── ovn.py             # OVNVerifier async context manager (RAII verification)
+├── lifecycle/
+│   └── manager.py         # LifecycleManager (reconciliation loop, 90s grace period)
+└── api/
+    ├── __init__.py
+    ├── health.py          # /health liveness probe
+    ├── teams.py           # /teams endpoints (delegates to TeamService)
+    ├── challenges.py      # /teams/{team_k}/machines & /teams/{team_k}/verificator (delegates to ChallengeService)
+    └── images.py          # /images endpoints (delegates to ImageService)
+
+tests/
+├── test_api.py            # Basic API route sanity tests
+├── test_challenges_api.py # Challenges & containers REST API unit tests
+├── test_database.py       # SQLite database queries & state transition tests
+├── test_engine.py         # Incus container engine client unit tests
+├── test_images_api.py     # Image catalog and build unit tests
+├── test_lifecycle.py      # Resource reconciliation and cleanup tests
+├── test_locks.py          # Two-tier locking and reentrancy tests
+├── test_models.py         # Pydantic schemas validation tests
+├── test_network.py        # Network planning and WireGuard unit tests
+├── test_teams_api.py      # Teams and WireGuard peers API tests
+├── test_services.py       # Service layer direct unit tests (ChallengeService, ImageService, TeamService)
+├── test_performance.py    # Performance & resource usage profiling (ResourceMonitor)
+├── test_thesis.py         # Modular thesis benchmark harness (K challenges x M teams)
+└── usability/             # Live integration tests against real Incus & Linux kernel
+```
+
+---
+
+## 3. Comprehensive REST API Reference
+
+All protected endpoints require authentication via CTFd token (`Authorization: Bearer <token>` or `X-CTFd-Token: <token>`).
+
+### 3.1 Health & Liveness (`src/blueagent/api/health.py`)
+- `GET /health`
+  - **Auth**: Public
+  - **Description**: Probes service liveness and runtime health.
+  - **Response**: `{"status": "ok"}`
+
+### 3.2 Teams & WireGuard VPN Management (`src/blueagent/api/teams.py`)
+- `POST /teams`
+  - **Payload**: `TeamCreateReq(team_k: int, name: str)` (`0 <= team_k <= 254`)
+  - **Description**: Provisions dedicated Linux bridge `br-team-k` (`10.k.1.1/24`), WireGuard interface `wg-k` (port `51820 + team_k`), and adds interface to nftables `@team_links`. Idempotent.
+- `GET /teams`
+  - **Description**: Lists all provisioned teams.
+- `GET /teams/{team_k}`
+  - **Description**: Retrieves single team metadata and network parameters.
+- `DELETE /teams/{team_k}`
+  - **Description**: Tears down team containers, WireGuard interface, host bridge, and deletes team from database.
+- `POST /teams/{team_k}/members`
+  - **Payload**: `TeamMemberCreateReq(name: str, ctfd_user_id: int, public_key: Optional[str], team_name: Optional[str])`
+  - **Description**: Registers a team member, allocates VPN IP (`10.k.0.2` - `10.k.0.254` with hole-filling), generates Curve25519 keypair if not provided, sets PSK, and updates WireGuard peers. Returns `TeamMemberWG` including rendered configuration.
+- `GET /teams/{team_k}/members`
+  - **Description**: Lists registered peers for team `team_k` (cryptographic private keys and PSKs masked).
+- `GET /teams/{team_k}/members/{member_id}`
+  - **Description**: Retrieves specific member record.
+- `GET /teams/{team_k}/members/{member_id}/config`
+  - **Description**: Returns raw WireGuard `.conf` configuration file in `text/plain` format.
+- `DELETE /teams/{team_k}/members/{member_id}`
+  - **Description**: Removes member from WireGuard peer list and frees allocated VPN IP.
+- `GET /teams/{team_k}/peers`
+  - **Description**: Telemetry endpoint correlating database member records with live `wg show dump` transfer and handshake statistics.
+
+### 3.3 Container Management & Dark Verification (`src/blueagent/api/challenges.py`)
+- `POST /teams/{team_k}/machines`
+  - **Payload**: `ChallengeConfig` (`challenge_id: str`, `team_k: int`, `containers: List[ContainerSpec]`, `readiness_commands: List[CommandSpec]`, `verify_commands: List[CommandSpec]`, `verifier: Optional[VerifierSpec]`, `verify_internet_access: bool`)
+  - **Description**: Deploys a multi-container challenge to `br-team-k`. Injects static IP configuration (`10.k.1.{suffix}`) via `systemd-networkd` and `/etc/network/interfaces`, starts containers, applies runtime static IPs, and records containers in SQLite. Readiness checks are deferred to verification. Performs atomic rollback on failure.
+- `GET /teams/{team_k}/machines`
+  - **Description**: Retrieves list of running containers (`RunningContainerRecord`) for team `team_k`.
+- `DELETE /teams/{team_k}/machines`
+  - **Payload**: Optional `ChallengeConfig`
+  - **Description**: Tears down containers for team `team_k`. If config container list is supplied, only tears down specified containers.
+- `POST /teams/{team_k}/verificator`
+  - **Payload**: `ChallengeConfig`
+  - **Description**: Executes non-destructive automated verification against dark OVN sandbox clones. Clones containers with ZFS CoW, attaches them to isolated dark switch `verify-{session_id}`, runs readiness checks until healthy, then executes verification commands, and cleans up via RAII.
+
+### 3.4 Distrobuilder Image Catalog & Build Pipeline (`src/blueagent/api/images.py`)
+- `POST /images`
+  - **Form Data**: `definition` (Multipart File: Distrobuilder YAML), `alias` (Optional string)
+  - **Description**: Submits Distrobuilder YAML. Uses write-ahead CAS in database. If image is new, triggers background asynchronous compilation via `ImageBuilder.build_image()` and returns `202 Accepted`. If already building or ready, returns current record idempotently.
+- `GET /images`
+  - **Description**: Lists all registered container images, build statuses (`building`, `ready`, `failed`), and fingerprints.
+- `GET /images/{alias}`
+  - **Description**: Retrieves status and build metadata for a specific image alias.
+- `DELETE /images/{alias}`
+  - **Description**: Deletes image alias and deletes Incus image if not in use by active challenge containers (enforces SQLite foreign key constraints). Rejects with `409 Conflict` if in use.
+
+---
+
+## 4. Subsystems & Services
+
+### 4.1 Service Layer (`src/blueagent/services/`)
+- **`ChallengeService`**:
+  - Handles container provisioning, static IP injection, atomic rollbacks on failure, container teardowns, and dark OVN sandbox verification.
+  - Domain exceptions: `TeamNotFoundError`, `BridgeNotActiveError`, `ImageNotReadyError`, `DeploymentRollbackError`, `DeploymentFailedError`, `VerificationLockedError`, `TeardownError`.
+- **`ImageService`**:
+  - Validates Distrobuilder YAML, generates SHA256 hashes, handles alias naming patterns, coordinates background builds with `ImageBuilder`, and enforces safe deletions.
+  - Domain exceptions: `ImageYamlTooLargeError`, `ImageYamlInvalidError`, `ImageAliasInvalidError`, `ImageStateConflictError`, `ImageInUseConflictError`, `ImageNotFoundError`.
+- **`TeamService`**:
+  - Encapsulates idempotent host bridge and WireGuard network creation, whole-team container/namespace teardowns, IP allocation on `10.k.0.0/24`, Curve25519 key generation, config generation, and peer telemetry retrieval.
+  - Domain exceptions: `TeamNotFoundError`, `TeamNetworkError`, `TeamDatabaseError`, `MemberNotFoundError`, `MemberAlreadyAssignedError`, `MemberConflictError`, `TeamAddressSpaceExhaustedError`.
+
+### 4.2 Image Builder Subsystem (`src/blueagent/images/distrobuilder.py`)
+- **`ImageBuilder`**:
+  - `build_image(alias: str)`: Executes background compilation in an ephemeral directory using `distrobuilder build-incus <definition> --type=unified`.
+  - Captures stdout/stderr with configurable timeout (`settings.image_build_timeout`).
+  - Automatically locates generated unified image tarball (`*.tar.xz` or `*.tar.gz`), imports it into Incus via UDS, and associates the alias with the resulting SHA-256 fingerprint.
+  - Updates SQLite database state with CAS transitions (`building` $\rightarrow$ `ready` or `failed`).
+  - Protected by per-alias lock `locks.lock_global(f"image:{alias}")`.
+
+### 4.3 High-Frequency Resource Monitoring (`tests/test_performance.py` & `tests/test_thesis.py`)
+- **`ResourceMonitor`**:
+  - Context manager running a background thread sampling Linux kernel interfaces (`/proc/stat` and `/proc/meminfo`) at 50ms intervals.
+  - Accurately measures CPU usage percentage (delta of total vs idle ticks) and RAM consumption (MB used and percentage of `MemTotal` vs `MemAvailable`).
+  - Exposes `avg_cpu`, `max_cpu`, `avg_ram_mb`, `avg_ram_pct`, and `max_ram_mb` per operation.
+
+### 4.4 Modular Thesis Performance Harness (`tests/test_thesis.py`)
+- **`ThesisBenchmarkHarness`**:
+  - Implements complete modular benchmarking workflow for experimental thesis evaluation.
+  - Parameterized for $K$ distinct challenges and $M$ teams ($K \times M$ total deployments and verifications).
+  - Generates non-conflicting IP topologies and challenge definitions programmatically.
+  - Builds $K$ distinct Distrobuilder images, provisions $M$ teams, instantiates $K \times M$ challenges, and executes $K \times M$ dark OVN verifications.
+  - Automatically exports terminal summary table, `tests/thesis_performance_report.md`, and raw dataset `tests/thesis_performance_results.csv`.
+
+---
+
+## 5. Storage & Virtualization Subsystem (ZFS & Incus)
+
+- **Storage Pool**: ZFS on loopback image (`/var/lib/incus/disks/default.img`).
+- **ZFS Dataset Structure**:
+  - `default/images/<fingerprint>`: Base container images imported by Distrobuilder.
+  - `default/containers/<name>`: Live containers cloned from base image.
+  - CoW snapshot cloning (`POST /1.0/instances` with `source={"type": "copy", "instance_only": True}`):
+    - Sub-second cloning (~100ms) for OVN verification sandboxes.
+    - Zero data duplication on disk until files are modified.
+- **Incus Engine**:
+  - Unix Domain Socket (`/var/lib/incus/unix.socket`).
+  - Asynchronous HTTP/1.1 client using `httpx`.
+  - Background operation polling on `/1.0/operations/<uuid>/wait`.
+
+---
+
+## 6. Implementation Status & Component Inventory
+
+| Component | File / Location | Status | Description |
 | :--- | :--- | :--- | :--- |
-| **3.1 Shadow Bridge (No GW)** | Unmanaged L2 bridge without IP | Simple, pure kernel | **No WAN**: `apt`, DNS, external webhooks fail inside sandbox. |
-| **3.2 Dual NIC (`eth0` + `wan1`)** | `eth0` on shadow bridge, `wan1` on `incusbr0` | Restores WAN egress | **Breaks fidelity**: asymmetric routing inside container; dual veth overhead. |
-| **3.3 PID Namespace Split** | Exec in child PID netns in live container | No cloning needed | **Leaky**: visible via `/proc` timing / eBPF; crashes corrupt live state. |
-| **3.4 Kernel `netns` Split** | Separate host netns per verification | Pure kernel, no OVN | **Complex routing**: managing dynamic netns veth routing tables drifts; no cluster support. |
-| **3.5 In-Memory `/proc` Masking** | `memfd_create` + `libprocesshider` | Conceals process | **Obscurity**: bypassed by Go/Rust, static binaries, direct `sys_getdents64`. |
-| **BlueAgent Hybrid** | Live Linux bridge + Ephemeral OVN | Sub-second, isolated, WAN | Requires OVS/OVN daemons on host. |
+| **Settings & Config** | `src/blueagent/config.py` | Complete | Pydantic BaseSettings, 12-factor env vars, CTFd token |
+| **Domain Models** | `src/blueagent/models.py` | Complete | Pydantic v2 schemas for teams, containers, images, and OVN verify |
+| **Database Manager** | `src/blueagent/database.py` | Complete | Async SQLite (`aiosqlite`) with WAL mode, foreign keys, CAS transitions |
+| **Two-Tier Locking** | `src/blueagent/locks.py` | Complete | `asyncio.Lock` + `filelock.AsyncFileLock` with coroutine task reentrancy |
+| **Addressing Planner** | `src/blueagent/network/addressing.py` | Complete | Pure subnet calculator for 255 teams (`0 <= team_k <= 254`) |
+| **Host Bridge & nftables** | `src/blueagent/network/host_net.py` | Complete | Unmanaged Linux bridge `br-team-k`, sysctl forwarding, nftables MSS clamp & NAT |
+| **WireGuard Manager** | `src/blueagent/network/wireguard.py` | Complete | Kernel WireGuard interface, Curve25519 keys, client `.conf` generator |
+| **Subprocess Runner** | `src/blueagent/network/_runner.py` | Complete | Async subprocess executor with anonymous tempfile stdin descriptor (no ENXIO) |
+| **Incus Engine** | `src/blueagent/engine/incus.py` | Complete | Incus REST API client over UDS, operation polling, instances & networks |
+| **Distrobuilder Pipeline** | `src/blueagent/images/distrobuilder.py` | Complete | Automated image builder, tarball importer, and alias manager |
+| **Challenge Service** | `src/blueagent/services/challenges.py` | Complete | Challenge deployment, rollback, teardown, and OVN verification orchestration |
+| **Image Service** | `src/blueagent/services/images.py` | Complete | Image YAML parsing, hashing, build orchestration, and catalog management |
+| **Team Service** | `src/blueagent/services/teams.py` | Complete | Team provisioning, WireGuard credentials, member IP allocation, and peer telemetry |
+| **OVN Verifier** | `src/blueagent/verifier/ovn.py` | Complete | Async context manager (RAII), ZFS CoW clone, dark OVN switch, deferred readiness + verify |
+| **Lifecycle Manager** | `src/blueagent/lifecycle/manager.py` | Complete | Background daemon sweeping orphan OVN networks and verifier containers (90s grace) |
+| **Health API** | `src/blueagent/api/health.py` | Complete | `/health` liveness probe |
+| **Teams API** | `src/blueagent/api/teams.py` | Complete | `/teams` CRUD, WireGuard members, raw configs, live peer stats |
+| **Challenges API** | `src/blueagent/api/challenges.py` | Complete | `/teams/{team_k}/machines` and `/teams/{team_k}/verificator` |
+| **Images API** | `src/blueagent/api/images.py` | Complete | `/images` upload, build, query status, and delete |
+| **Performance Profiler** | `tests/test_performance.py` | Complete | Profiling suite with `ResourceMonitor` (CPU/RAM) |
+| **Thesis Benchmark Suite**| `tests/test_thesis.py` | Complete | Modular matrix ($K \times M$) test harness with CSV and Markdown export |
+| **CTFd Plugin Tutorial**  | `agent/ctfd_plugin_tutorial.md` | Complete | Guide & code reference for CTFd plugin integration |
 
----
-
-## 5. Actors, Use Cases & System Requirements (Thesis Cap. 2)
-
-### Actors
-- **Partecipante**: Uses WireGuard (`10.k.0.x`), accesses `10.k.1.x`, patches code, requests verification.
-- **Autore Sfida**: Writes `challenge.yaml` (topology, images, cgroup limits, readiness, verification commands).
-- **CTFd**: REST client with Bearer token. Provisions teams, generates configs, triggers verifications.
-- **LifecycleManager**: Background daemon sweeping orphaned `verify-*` resources older than 90s.
-
-### Use Case Codes
-- `UC-P01`: WireGuard connection (`wg-quick up wg-k.conf`).
-- `UC-P02`: Live service reconnaissance (`br-team-k`, SSH/HTTP).
-- `UC-P03`: Patch application on container rootfs.
-- `UC-P04`: Verification result consultation on CTFd scoreboard (`VerifyResultResp`).
-- `UC-A01`: Declarative IaC challenge authoring (`ChallengeConfig`).
-- `UC-A02`: Cgroups resource allocation (`limits.cpu`, `limits.memory`).
-- `UC-A03`: Readiness health check definition (`readiness_commands`).
-- `UC-A04`: In-Container white-box check definition (`target: "container"` via `incus exec`).
-- `UC-A05`: Black-box exploit check definition (`target: "verifier"` via runner container).
-- `UC-O01`: Team provisioning & WireGuard setup (`POST /teams`).
-- `UC-O02`: Team inspection (`GET /teams/{k}`).
-- `UC-O03`: Challenge deployment (`POST /challenges`).
-- `UC-O04`: List active challenges (`GET /challenges`).
-- `UC-O05`: Automated verification dispatch (`POST /challenges/{id}/verify?team_k={k}`).
-- `UC-O07`: Teardown challenge (`DELETE /challenges/{id}/teams/{k}`).
-- `UC-O08`: Teardown team (`DELETE /teams/{k}`).
-- `UC-S02`: Orphan cleanup daemon (`reconcile_once`, 90s grace).
-
-### System Requirements Matrix
-- `SR-HST-01`: Debian 13, kernel modules (wireguard, nftables), `net.ipv4.ip_forward=1`.
-- `SR-HST-02`: ZFS storage pool `blueagent-zfs` for sub-second snapshots.
-- `SR-HST-03`: OVS/OVN daemons (`ovs-vswitchd`, `ovsdb-server`, `ovn-northd`, `ovn-controller`) listening on `tcp:127.0.0.1:6641`.
-- `SR-HST-04`: Parent bridge `incusbr0` defining `ipv4.ovn.ranges` (`172.16.0.100-172.16.0.199`).
-- `SR-ENG-01..05`: `ContainerEngine` ABC, `IncusEngine` over UDS `/var/lib/incus/unix.socket`, long-polling `/operations/{uuid}/wait`, CoW snapshot cloning $\le 100\text{ ms}$, cgroups v2 limits.
-- `SR-NET-01..06`: `wg-k` L3, `br-team-k` L2, OVN dark sandbox, topological fidelity, TCP MSS clamping, NAT masquerade.
-- `SR-VRF-01..05`: `OVNVerifier` RAII context manager, dynamic `eth0` rebinding, verifier runner container, reverse LIFO teardown, command runner with timeout.
-- `SR-CON-01..04`: FastAPI REST, `TwoTierLock` (asyncio + flock), `LifecycleManager` 90s grace period, `GET /health`.
-- `SR-MOD-01..03`: Pydantic v2 schemas, `challenge.yaml` parser, deterministic IP planner.
-
----
-
-## 6. Implementation Architecture & Codebase Contracts
-
-### Module Map (`src/blueagent/`)
-- `config.py`: `Settings` (env prefix `BLUEAGENT_`, socket path, DB path, tokens, lock dir).
-- `models.py`: `CommandSpec`, `ContainerSpec`, `VerifierSpec`, `ChallengeConfig`, `VerifyResultResp`, `TeamMemberWG`, `PeerStats`.
-- `database.py`: Async SQLite (`aiosqlite`) with member IP hole-filling (`allocate_member_ip`).
-- `locks.py`: `TwoTierLock` (`asyncio.Lock` + `fcntl.flock` on `/tmp/blueagent_locks/<name>.lock`).
-- `engine/base.py` & `engine/incus.py`: `ContainerEngine` ABC and `IncusEngine` (UDS client, `_wait_op` polling).
-- `network/addressing.py`: `plan_for(team_k)` and `allocate_member_ip(team_k, used_ips)`.
-- `network/host_net.py`: Linux bridge setup/teardown, nftables `inet blueagent` table, `@team_links` set.
-- `network/wireguard.py`: Interface creation, Curve25519 keys, PSK, config generation & idempotent re-render.
-- `network/_runner.py`: Subprocess execution; fixes pipe `ENXIO` via anonymous `tempfile.TemporaryFile()` descriptors.
-- `verifier/ovn.py`: `OVNVerifier` RAII context manager.
-- `lifecycle/manager.py`: `LifecycleManager` background task (90s grace period).
-- `api/`: `teams.py`, `challenges.py`, `health.py`.
-
-### OVNVerifier Invariants
-1. Network Name: `verify-{session_id[:4]}` (strictly $\le 11$ characters due to Incus limit).
-2. Isolated L2 Config: `ipv4.address: "none"` (no parent uplink `network` parameter) $\rightarrow$ avoids host route conflict with `br-team-k` (`10.k.1.1/24`).
-3. Re-binding: `devices.eth0.network = verify-xxxx` without setting `ipv4.address` on the device $\rightarrow$ avoids Incus 500 DHCP error. IP assigned inside container via `ip addr replace 10.k.1.x/24 dev eth0`.
-4. Reverse LIFO Cleanup: Stop/delete verifier container $\rightarrow$ Stop/delete clones $\rightarrow$ Delete OVN network.
-
----
-
-## 7. Critical Gotchas, Edge Cases & Constraints
-
-1. **UDP Path MTU Blackhole**:
-   - WireGuard MTU: `1420`. OVN Geneve MTU: `1442`.
-   - nftables MSS clamping (`rt mtu`) **only affects TCP**.
-   - Large UDP datagrams (> 1420 bytes) with Don't Fragment (DF) flag set (DNSSEC, custom UDP protocols) are **silently dropped without warning**.
-2. **Multi-Worker ASGI Lock**:
-   - `LockRegistry` uses in-memory `asyncio.Lock`.
-   - If running multi-worker Uvicorn/Gunicorn without `BLUEAGENT_USE_FILE_LOCKS=true`, concurrent requests for the same team trigger Incus `HTTP 409 Conflict`.
-   - Multi-node setups require Redis `Redlock`.
-3. **Scale Ceiling**:
-   - 254 teams max ($0 \le k \le 254$) due to `10.k.x.x` single-byte scheme.
-4. **Intra-Bridge Sniffing**:
-   - `tcpdump -i br-team-k` sees ingress/egress and host-to-container packets, but container-to-container traffic on the same bridge does not cross the host routing stack.
-5. **Incus 11-Character OVN Name Limit**:
-   - Session prefix must never exceed 4 hex chars: `verify-{id[:4]}` ($6 + 4 = 10 \le 11$).
-6. **Linux Pipe `ENXIO`**:
-   - Piping secrets to `wg set ... /dev/stdin` over `asyncio.subprocess.PIPE` fails with `ENXIO`. Resolved via anonymous unlinked `tempfile.TemporaryFile()`.
-
----
-
-## 8. Theoretical Appendices Summary (Thesis Cap. 4 & 5)
-- **4.1 Linux Networking**: `netns` provides separate network stack instances; `veth` pairs act as bi-directional pipes; Linux bridges operate as L2 MAC-learning switches (FDB); Netfilter hooks (`PREROUTING`, `FORWARD`, `POSTROUTING`) process packets in `nftables`; cgroups v2 enforces CPU (`cpu.max`) and memory (`memory.max`) quotas.
-- **4.2 VPN & SDN**: WireGuard provides kernel-space crypto routing; Open vSwitch (OVS) runs user space `ovs-vswitchd` and transactional `ovsdb-server` with kernel fast-path datapath; OVN coordinates distributed SDN via Northbound DB, `ovn-northd`, Southbound DB, and `ovn-controller`; Geneve encapsulates L2 packets over UDP port 6081 with a 58-byte overhead.
-- **4.3 ZFS**: Uses tree-structured block pointers with Copy-on-Write (never overwrites blocks in-place); `zfs snapshot` freezes block pointers in ~100 ms; `zfs clone` creates writable branches with zero initial storage overhead.
-- **5.1 nsjail**: Uses chroot, namespaces, and seccomp-bpf to fork isolated processes per TCP connection; ideal for stateless single-binary tasks; unsuitable for multi-tier persistent system containers due to read-only rootfs and state loss on disconnect.
-
----
-
-## 9. Thesis Writing Tasks & Gaps to Fill
-- [x] **1. Introduzione**: Complete draft covering problem, CTF types, and alternative ranges.
-- [x] **2.6 Difesa dell'architettura**: Complete draft covering strong ideas, feasibility, practicality, audience, and architectural critique.
-- [x] **3.3 PID namespace separato**: Complete write-up on filesystem/log leaks, pspy detection, live service crash blast radius, and network transparency.
-- [x] **3.4 Network namespace separato**: Complete write-up on host routing drift, Incus API bypass, absence of cluster support, and kernel lock contention.
-- [x] **3.5 Esecuzione in-memory con mascheramento**: Complete write-up on LD_PRELOAD bypass, kernel eBPF detection, log persistence, and live blast radius.
-- [x] **4. & 5. Appendici**: Complete theoretical drafts on Linux networking, WireGuard/OVN, ZFS, and nsjail.

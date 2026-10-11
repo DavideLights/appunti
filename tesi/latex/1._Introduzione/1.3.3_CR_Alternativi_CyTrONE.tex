@@ -8,7 +8,7 @@ La seguente immagine mostra i componenti di CyTrONE:
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.85\linewidth,height=0.65\textheight,keepaspectratio]{src/images/cytrone-architecture.png}
+  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-architecture.png}
   \caption{Cytrone Architecture}
   \label{fig:cytrone-architecture}
 \end{figure}
@@ -86,7 +86,7 @@ CyTrONE utilizza un file YAML per definire il contenuto di un training:
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.85\linewidth,height=0.65\textheight,keepaspectratio]{src/images/cytrone-training.png}
+  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-training.png}
   \caption{Cytrone Training}
   \label{fig:cytrone-training}
 \end{figure}
@@ -96,7 +96,7 @@ E similmente, si usa un file YAML per definire la specifica del Cyber
 Range: 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.85\linewidth,height=0.65\textheight,keepaspectratio]{src/images/cytrone-cyberrange.png}
+  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-cyberrange.png}
   \caption{Cytrone Cyberrange}
   \label{fig:cytrone-cyberrange}
 \end{figure}
@@ -129,8 +129,118 @@ problemi:
   L\textquotesingle esecuzione del payload puo scatenare la produzione
   di file log accessibili allo studente.
 \item
+  L\textquotesingle esecuzione del payload potrebbe mandare in crash il
+  sistema del partecipante.
+\item
   Necessita di un LMS (per design) per tenere traccia del training
   progress.
 \end{enumerate}
 
-TODO: analisi del grafico!
+\subsubsection{Valutazione delle Performance di
+CyTrONE}\label{valutazione-delle-performance-di-cytrone}
+
+Le performance di CyTrONE per il deploy
+dell\textquotesingle infrastruttura sono state valutate usando il
+testbed StarBED \footnote{\label{fn:ref_12}\url{https://www.sciencedirect.com/science/article/pii/S0167404818306527\#bib0015}},
+usando 30 host fisici e 600 macchine virtuali. Gli host fisici usati per
+misurare le performance sono dei \emph{server rack Cisco UCS C200 M2 con
+Intel Xeon E5504 2.0 GHz a 4 core e 72 GB di memoria}
+
+Sono stati valutati 2 scenari:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Level 1}: un training base che include tra gli argomenti: log,
+  configurazioni di sistema, sniffing della rete e scansione delle
+  vulnerabilita. Richiede un\textquotesingle unica macchina Virtuale per
+  fare il deploy dello scenario
+\item
+  \emph{Level 2}: un training di difficolta media su topic come il
+  network discovery, penetration testing e password cracking. Richiede
+  due macchine virtuali per il deploy dello scenario.
+\end{itemize}
+
+Il processo di deploy del training, per una sola macchina virtuale, in
+CyTrONE avviene in 3 fasi distinte:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Preparazione}: Su un nodo denominato \emph{master} viene
+  configurata (per esempio, accesso tramite SSH) ed avviata la macchina
+  virtuale. \(T_p\) descrive il suo tempo di esecuzione
+\item
+  \textbf{Installazione}: Sulla macchina nel nodo master, vengono
+  installati contenuti aggiuntivi necessari per il traninig, sulla
+  macchina virtuale target. \(T_i\) descrive il suo tempo di esecuzione.
+\item
+  \textbf{Clonazione}: Copia tramite
+  \passthrough{\lstinline!parallel-scp!} dell\textquotesingle immagine
+  della macchina sui vari nodi della rete, garantendo al tempo stesso
+  che password e credenziali siano distinte per ogni immagine. \(T_c\)
+  descrive il suo tempo di esecuzione
+\end{enumerate}
+
+\begin{quote}
+E\textquotesingle{} dunque importante notare che per il \emph{Level 1},
+bisogna clonare con \passthrough{\lstinline!parallel-scp!} una sola
+immagine per nodo, mentre per il \emph{Level 2} bisogna clonare 2
+immagini per nodo.
+\end{quote}
+
+Sia \(T = T_p + T_i + T_c\), il grafico descrive come si comporta \(T\)
+al variare del numero di host su cui fare il deploy delle macchine.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-performance.png}
+  \caption{Cytrone Performance}
+  \label{fig:cytrone-performance}
+\end{figure}
+
+
+\begin{itemize}
+\tightlist
+\item
+  Nei casi dove abbiamo solo 1 host, allora non
+  c\textquotesingle e\textquotesingle{} bisogno di clonare
+  l\textquotesingle immagine, basta solo un host che esegue le 20
+  macchine virtuali, ossia il master. Dunque il tempo di clonazione
+  e\textquotesingle{} sotto i \emph{due minuti}, mentre \(T\) per lo
+  scenario \emph{Level 2} si attesta sotto gli 8 minuti.
+\item
+  All\textquotesingle aumentare del numero \(n\) degli host, con il
+  bisogno di clonare le macchine su piu nodi, il tempo di
+  approvvigionamento totale tende a peggiorare, poiche bisogna
+  trasferire l\textquotesingle immagine su piu nodi, sebbene ogni nodo
+  gestisca solo \(20/n\) macchine virtuali.
+\end{itemize}
+
+Invece, per gli esperimenti su larga scala dove si vuole effettuare il
+deploy di 20 macchine per ogni host su centinaia di host il tempo \(T\)
+peggiora esponenzialmente. Nella figura sborgz viene analizzato al
+variare di del numero di host fino a 600 cosa succede se ogni nodo deve
+eseguire 20 macchine, con 20 immagini differenti.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-largescaleperformance.png}
+  \caption{Cytrone Largescaleperformance}
+  \label{fig:cytrone-largescaleperformance}
+\end{figure}
+
+
+L\textquotesingle analisi delle performance permette di concludere che
+il sistema non e\textquotesingle{} ammissibile per organizzare
+competizioni che non hanno a disposizione macchine performanti come
+quelle utilizzate nei test mostrati prima. A priori
+dall\textquotesingle hardware a disposizione, l\textquotesingle uso di
+macchine virtuali costituisce un grande overhead in termini di memoria
+usata e di CPU allocata nel momento in cui la stessa macchina deve
+essere replicata per piu partecipanti.
+
+Con il nostro lavoro di tesi, si vuole cercare di abbattere il tempo
+\(T\), passando dall\textquotesingle ordine dei minuti,
+all\textquotesingle ordine dei secondi su hardware economico.
