@@ -1,0 +1,275 @@
+\section{Architettura del Codice}\label{architettura-del-codice}
+
+A livello software, BlueAgent organizza l\textquotesingle interazione
+con l\textquotesingle host disaccoppiando l\textquotesingle API in
+\passthrough{\lstinline!/api!} dalla gestione a basso livello dei
+container e delle componenti di rete, gestita ad alto livello dai
+servizi in \passthrough{\lstinline!/services!}, che contiene la logica
+di business, mentre le complessità operative sono delegate a moduli e
+driver specializzati (\textbf{aggiungi cartelle}).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{Astrazione del Runtime:
+\texttt{ContainerEngine}}{Astrazione del Runtime: ContainerEngine}}\label{astrazione-del-runtime-containerengine}
+
+BlueAgent non invoca direttamente il demone Incus
+all\textquotesingle interno della logica delle challenge. Tutte le
+operazioni di gestione del ciclo di vita dei container sono intermediate
+da un\textquotesingle interfaccia astratta denominata
+\passthrough{\lstinline!ContainerEngine!}.
+
+Questa classe astratta formalizza esclusivamente le primitive necessarie
+ai requisiti operativi del Cyber Range:
+
+\begin{itemize}
+\tightlist
+\item
+  Creazione, avvio, arresto forzato ed eliminazione delle istanze.
+\item
+  Duplicazione rapida e gestione delle interfacce di rete.
+\item
+  Esecuzione dei comandi nei container.
+\end{itemize}
+
+Disaccoppiare l\textquotesingle interfaccia
+dall\textquotesingle implementazione permette ai servizi di non dover
+conoscere come avviene la gestione dei container, e di predisporre il
+codice per poter utilizzare altri gestori.
+
+\begin{quote}
+\textbf{ATTENZIONE: anche la generazione delle immagini dovrebbe
+avvenire tramite interfaccia}
+\end{quote}
+
+L\textquotesingle implementazione concreta
+\passthrough{\lstinline!IncusEngine!} comunica con il demone di sistema
+tramite Unix Domain Socket
+(\passthrough{\lstinline!/var/lib/incus/unix.socket!}), traducendo le
+primitive astratte in chiamate REST HTTP asincrone.
+
+\begin{quote}
+\passthrough{\lstinline!Unix Domain Socket (UDS)!}: Meccanismo di
+Inter-Process Communication (IPC) gestito interamente dal kernel del
+sistema operativo. La comunicazione avviene trasferendo i dati
+direttamente tra i buffer di memoria dei processi nello spazio kernel
+senza attraversare lo stack di rete. L\textquotesingle endpoint è
+rappresentato da un file speciale sul filesystem (es:
+\passthrough{\lstinline!/var/lib/incus/unix.socket!}).\footnote{\label{fn:ref_21}Linux
+  manual page, unix(7) - Sockets for local interprocess communication:
+  \url{https://man7.org/linux/man-pages/man7/unix.7.html}}
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{Ciclo di Vita della Sandbox: Async Context
+Manager
+(\texttt{OVNVerifier})}{Ciclo di Vita della Sandbox: Async Context Manager (OVNVerifier)}}\label{ciclo-di-vita-della-sandbox-async-context-manager-ovnverifier}
+
+Il processo di verifica richiede di istanziare una replica fedele della
+rete di produzione che deve esistere esclusivamente per la durata dei
+test. In caso di qualsiasi tipo di fallimento,
+l\textquotesingle infrastruttura clonata deve essere rilasciata per
+evitare risorse allocate e sprecate.
+
+Per garantire questa proprietà, il ciclo di vita della sandbox è
+incapsulato all\textquotesingle interno della classe
+\passthrough{\lstinline!OVNVerifier!}, implementata come
+\textbf{Asynchronous Context Manager} di Python.
+
+\begin{quote}
+\textbf{Pattern RAII (Resource Acquisition Is Initialization):}
+L\textquotesingle allocazione delle risorse è vincolato
+dall\textquotesingle acquisizione del contesto, mentre il loro rilascio
+e smantellamento deterministico è garantito all\textquotesingle uscita
+dal blocco, gestendo automaticamente qualsiasi anomalia o interruzione.
+\footnote{\label{fn:ref_22}Bjarne Stroustrup, Resource Acquisition Is Initialization
+  (RAII), C++ Programming Language.}
+\end{quote}
+
+Il ciclo di vita dell\textquotesingle{}
+\passthrough{\lstinline!OVNVerifier!} segue tre fasi:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Inizializzazione (\passthrough{\lstinline!\_\_aenter\_\_!}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Creazione della rete OVN temporanea
+  \item
+    Duplicazione dei container tramite snapshot ZFS
+  \item
+    Riconnessione dell\textquotesingle interfaccia
+    \passthrough{\lstinline!eth0!} dei cloni alla nuova rete OVN
+  \item
+    Istanziazione opzionale del container \emph{Verifier Runner}.
+  \end{itemize}
+\item
+  \textbf{Esecuzione delle Verifiche
+  (\passthrough{\lstinline!run\_checks!}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Esecuzione controllata dei comandi di test con timeout
+  \end{itemize}
+\item
+  \textbf{Rilascio e Teardown
+  (\passthrough{\lstinline!\_\_aexit\_\_!}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Smantellamento delle risorse:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      Arresto ed eliminazione del container
+      \passthrough{\lstinline!verify-runner!};
+    \item
+      Arresto forzato ed eliminazione di tutti i container cloni;
+    \item
+      Eliminazione della rete virtuale OVN.
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+L\textquotesingle uso dell\textquotesingle{}\textbf{Async Context
+Manager} fornisce dunque un metodo sicuro per utilizzare
+l\textquotesingle oggetto \passthrough{\lstinline!OVNVerifier!}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Concorrenza e Two-Tier
+Locking}\label{concorrenza-e-two-tier-locking}
+
+Incus non supporta operazioni concorrenti sul medesimo container.
+Inoltre per evitare problemi di accesso alle risorse e\textquotesingle{}
+opportuno implementare un sistema di lock.
+
+BlueAgent implementa un meccanismo di sincronizzazione a due livelli
+(\passthrough{\lstinline!TwoTierLock!}), dove sequenzialmente si
+richiede un tier dopo l\textquotesingle altro:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Tier 1 (Intra-processo):} utilizza
+  \passthrough{\lstinline!asyncio.Lock!} per effettuare il lock delle
+  risorse all\textquotesingle interno di un singolo processo.
+\item
+  \textbf{Tier 2 (Inter-processo):} applica un lock non bloccante sul
+  filesystem (\passthrough{\lstinline!fcntl.flock!}) condiviso tra piu
+  processi
+\end{itemize}
+
+Questo lock protegge l\textquotesingle accesso alle risorse in due casi:
+
+\begin{itemize}
+\tightlist
+\item
+  BlueAgent esegue su un solo processo (worker), ma le richieste
+  potrebbero essere gestite da piu task contemporaneamente. Allora il
+  lock Tier 1 protegge l\textquotesingle accesso alla stessa risorsa da
+  parte di due task sullo stesso worker.
+\item
+  BlueAgent esegue su piu processi (worker), allora il lock Tier 2
+  protegge l\textquotesingle accesso alla stessa risorsa da parte di due
+  task su worker differenti.
+\end{itemize}
+
+\begin{quote}
+Come si avviano piu\textquotesingle{} worker?
+\passthrough{\lstinline!uvicorn main:app --workers 4!}
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!uvicorn!}: e\textquotesingle il web server su
+cui si basa FastAPI, dunque e\textquotesingle{} uvicorn che decide come
+gestire le richieste, e a quali task e processi assegnarli. Da solo
+FastAPI non funziona, non implementa il server di rete.
+\end{quote}
+
+Questa architettura protegge le risorse sia a livello di singolo
+processo sia in caso di server multi-worker, garantendo mutua esclusione
+sulle mutazioni su tutti i tipi di risorse.
+
+La risorsa principale su cui avviene la mutua esclusione nel codice
+e\textquotesingle{} il team. Qualsiasi operazione sul team \(k\) genera
+un lock a 2 tier per quel team.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Pipeline Asincrona non Bloccante su Socket
+Unix}\label{pipeline-asincrona-non-bloccante-su-socket-unix}
+
+Le operazioni di su container possono comportare latenze
+nell\textquotesingle ordine di decine o centinaia di millisecondi.
+L\textquotesingle adozione di un modello sincrono sarebbe totalmente
+inefficiente.
+
+BlueAgent è progettato secondo un paradigma completamente asincrono in
+modo da adattarsi al metodo \passthrough{\lstinline!wait!} di Incus:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!IncusEngine!} comunica con il socket UDS
+  locale (\passthrough{\lstinline!/var/lib/incus/unix.socket!}) per
+  mezzo di \passthrough{\lstinline!httpx.AsyncClient!}.
+\item
+  Poiché le operazioni bloccanti di Incus sono gestite in background,
+  BlueAgent interroga asincronamente l\textquotesingle endpoint
+  \passthrough{\lstinline!/1.0/operations/<uuid>/wait!} per sapere
+  quando l\textquotesingle operazione viene rilasciata.
+\end{itemize}
+
+Inoltre l\textquotesingle esecuzione dei comandi sulla macchina host
+avviene tramite: le chiamate verso il kernel Linux
+(\passthrough{\lstinline!nftables!}, \passthrough{\lstinline!ip link!},
+WireGuard) sfruttano
+\passthrough{\lstinline!asyncio.create\_subprocess\_exec!}.
+
+Questo approccio consente a un singolo processo BlueAgent di servire le
+richieste di telemetria utilizzando piu task e senza rimanere in attessa
+su una singola richiesta evitando di servire le altre richieste.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{Resilienza e Riconciliazione dello Stato
+(\texttt{LifecycleManager})}{Resilienza e Riconciliazione dello Stato (LifecycleManager)}}\label{resilienza-e-riconciliazione-dello-stato-lifecyclemanager}
+
+Qualora l\textquotesingle host subisca un riavvio forzato improvviso o
+il processo di BlueAgent venga terminato bruscamente con
+\passthrough{\lstinline!SIGKILL!}, le routine di pulizia
+(\passthrough{\lstinline!\_\_aexit\_\_!}) non possono intervenire,
+lasciando container e switch virtuali orfani sul sistema.
+
+Per risolvere queste anomalie senza intervento manuale, BlueAgent
+include il demone in background
+\passthrough{\lstinline!LifecycleManager!}:
+
+\begin{itemize}
+\tightlist
+\item
+  Scansiona periodicamente le istanze e le reti con prefisso
+  \passthrough{\lstinline!verify-*!} presenti su Incus, forzandone
+  l\textquotesingle eliminazione se risultano inattive.
+\item
+  \textbf{Grace Period di 90 Secondi:} il demone ignora qualsiasi
+  risorsa la cui creazione risalga a meno di 90 secondi. Questa finestra
+  temporale risolve una race condition fondamentale: durante
+  l\textquotesingle avvio di una verifica, la rete OVN viene creata
+  prima che i container cloni vi siano collegati. Senza il periodo di
+  grazia, il ciclo di bonifica interpreterebbe la rete appena creata
+  come una risorsa "vuota e orfana", distruggendola mentre la richiesta
+  legittima ne sta ancora completando la configurazione.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

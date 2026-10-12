@@ -3,8 +3,8 @@
 L\textquotesingle attore e\textquotesingle{} un\textquotesingle entita
 logica esterna al sistema che interagisce direttamente con esso, tramite
 l\textquotesingle invio di messaggi. E\textquotesingle{} utile
-identificare ai fini dello sviluppo quali sono gli attori principali del
-sistema e che cosa si aspettano da questo.
+identificare ai fini dell\textquotesingle esposizione quali sono gli
+attori principali del sistema e che cosa si aspettano di poter fare.
 
 \subsection{CTF Manager (attore)}\label{ctf-manager-attore}
 
@@ -28,9 +28,9 @@ Piu avanti, verra presentato un plugin per CTFd, che agisce come CTF
 Manager verso BlueAgent.
 
 Dunque CTF Manager e\textquotesingle{} l\textquotesingle unico attore
-per BlueAgent e render il CTF Manager esterno ed indipendente da
+per BlueAgent e rendere il CTF Manager esterno ed indipendente da
 BlueAgent nella sua architettura, permette di non vincolare
-l\textquotesingle uso di BlueAgent con CTFd per esempio.
+l\textquotesingle uso di BlueAgent con CTFd.
 
 Ora vogliamo definire meglio il ruolo che hanno l\textquotesingle Admin,
 il Giocatore e l\textquotesingle Autore della sfida. Chiariremo subito
@@ -39,12 +39,11 @@ che questi tre non sono attori che dialogano direttamente con BlueAgent.
 \subsection{Giocatore (attore esterno per CTF
 Manager)}\label{giocatore-attore-esterno-per-ctf-manager}
 
-E\textquotesingle{} un\textquotesingle entita che agisce in
-\textbf{team} con altri giocatori, oppure da solo. Ha accesso alle
-macchine delle challenge istanziate da BlueAgent, appartenenti al suo
-team. Non comunica direttamente con BlueAgent ma piuttosto si
-interfaccia con il \textbf{CTF Manager} per gestire la progressione
-nella competizione.
+E\textquotesingle{} un\textquotesingle entita che agisce in team con
+altri giocatori, oppure da solo. Ha accesso alle macchine delle
+challenge istanziate da BlueAgent, appartenenti al suo team. Non
+comunica direttamente con BlueAgent ma piuttosto si interfaccia con il
+CTF Manager per gestire la progressione nella competizione.
 
 \subsection{Autore della sfida (attore esterno per CTF
 Manager)}\label{autore-della-sfida-attore-esterno-per-ctf-manager}
@@ -61,4 +60,4 @@ Per aspetti legati alla gestione della competizione CTF si interfaccia
 direttamente con il CTF Manager. Se ha bisogno di interagire con
 configurazioni di team e container, CTF Manager cattura le richieste
 dell\textquotesingle amministratore (tramite interfaccia apposita di
-amministrazione) e le inoltra al blueagent.
+amministrazione) e le inoltra a BlueAgent.

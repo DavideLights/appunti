@@ -1,0 +1,156 @@
+\section{Difesa
+dell\textquotesingle Architettura}\label{difesa-dellarchitettura}
+
+Spunti:
+
+\begin{itemize}
+\tightlist
+\item
+  perche\textquotesingle{} Debian 13?
+\item
+  perche\textquotesingle{} ZFS?
+\item
+  perche\textquotesingle{} OVN in verifica?
+\item
+  perche\textquotesingle{} Birdge L2 in produzione?
+\item
+  perche\textquotesingle{} Incus?
+\end{itemize}
+
+Codice:
+
+\begin{itemize}
+\tightlist
+\item
+  Motivazione per Async Context Manager
+\item
+  perche ContainerEngine ed IncusEngine?
+\item
+  perche esiste il problema della concorrenza?
+\item
+  perche disaccoppiare la creazione dei comandi?
+\item
+  perche gestire le API in modo asincorno?
+\item
+  percher usare httpx.AsyncClient per IncusEngine?
+\item
+  perche BlueAgent gestisce i container e non mantiene lo stato delle
+  challenge?
+\item
+  motivare le API rests
+\item
+  perche SQLite
+\end{itemize}
+
+La progettazione di BlueAgent risponde alle esigenze operative tipiche
+di scenari reali di Blue Teaming, bilanciando fedeltà
+dell\textquotesingle ambiente, isolamento dei test ed efficienza delle
+risorse.
+
+l\textquotesingle architettura di blueagent ha le seguenti proprieta:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Zero Side-Channel Leakage}: invece di eseguire la verifica
+  sull\textquotesingle ambiente di produzione, Blueagent isola la
+  verifica su cloni effimeri ed una rete ovn inaccessibile. Dunque un
+  partecipante non puo\textquotesingle{} intercettare il payload di test
+  (accedendo alle interfacce di rete, guardando i log di systema,
+  intercettando le chiamate di sistema)
+\item
+  \textbf{Nessun impatto sull\textquotesingle ambiente di produzione}:
+  Test distruttivi o exploit instabili possono penalizzare
+  l\textquotesingle SLA del team, o di compromettere il lavoro del team
+  salvato nella macchina.
+\item
+  \textbf{Fedelta Topologica}: i container mantengo le interfacce come
+  definite in origine, gli stessi IP statici e lo stesso gateway, sia in
+  produzione che in verifica
+\item
+  \textbf{Ambiente Stateful Completo:} A differenza di soluzioni come
+  kCTF (nsjail/OCI), i container di sistema Incus integrano ambienti con
+  \passthrough{\lstinline!systemd!}, log persistenti e architetture
+  multi-tier (Web + DB), simulando sistemi reali.
+\end{itemize}
+
+inoltre, tecnicamente la clonazione dell\textquotesingle ambiente di
+produzione e\textquotesingle{} fattibile poiché:
+
+\begin{itemize}
+\tightlist
+\item
+  clonare un\textquotesingle ambiente con 2 container ubuntu, in un
+  filesystem \textbf{ZFS} che offre un meccanismo di \textbf{COW},
+  richiede secondo le misurazioni fatte,all\textquotesingle incirca
+  \textbf{700 ms}.
+\item
+  un singolo container di sistema (es: alpine) richiede
+  all\textquotesingle incirca 100 RAM. (da misurare). dunque
+  e\textquotesingle{} teoricamente possibile instanziare centinaia di
+  container all\textquotesingle interno di un singolo host che esegue
+  Blueagent.
+\item
+  la gestione delle risorse morte avviene tramite un demone
+  \passthrough{\lstinline!LifecycleManager!} che distrugge le risorse
+  orfane dopo 90 secondi di inattivita.
+\item
+  l\textquotesingle uso di reti OVN permette di replicare la topologia
+  di rete in produzione senza generare conflitti nelle tabelle di
+  routing nell\textquotesingle host.
+\end{itemize}
+
+Voglio precisare qui che ho deciso di utilizzare OVN per gestire la rete
+di verifica per evitare l\textquotesingle overhead dovuto ai tunnel
+Geneve, a tutto il resto dell\textquotesingle infrastruttura OVN
+all\textquotesingle interno dell\textquotesingle ambiente di produzione.
+
+\section{Destinatari e Casi
+d\textquotesingle Uso}\label{destinatari-e-casi-duso}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Corsi universitari di sicurezza informatica:} Laboratori
+  pratici di patch management e hardening di sistemi Linux completi.
+\item
+  \textbf{Training aziendale Blue Team / SOC:} Esercitazioni di
+  remediation, analisi forense e configurazione di contromisure su
+  servizi multi-container.
+\item
+  \textbf{Competizioni Attack-Defense e Defense-Only:} Gare con decine
+  di team che richiedono ambienti persistenti a basso costo
+  infrastrutturale.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Critica e Limiti
+Architetturali}\label{critica-e-limiti-architetturali}
+
+Nonostante i vantaggi, l\textquotesingle architettura presenta
+compromessi e vincoli strutturali:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UDP Path MTU Blackhole:} La combinazione di tunnel WireGuard
+  (\(\text{MTU } 1420\)) e Geneve OVN (\(\text{MTU } 1442\),
+  all\textquotesingle interno della \textbf{rete di verifica}) impone
+  riduzioni di MTU. Mentre il TCP beneficia del MSS clamping via
+  \passthrough{\lstinline!nftables!}, i pacchetti UDP di grandi
+  dimensioni con flag \emph{Don\textquotesingle t Fragment}, potrebbero
+  essere scartati dal kernel.
+\item
+  \textbf{Limite scalabilità a 254 team:}
+  L\textquotesingle indirizzamento deterministico
+  \passthrough{\lstinline!10.k.x.x!} vincola \(k\) a un singolo byte
+  (\(0 \le k \le 254\)), quindi ad un massimo di \(\text{255}\) team
+\item
+  \textbf{Concorrenza e blocco multi-nodo:} Il meccanismo
+  \passthrough{\lstinline!TwoTierLock!}
+  (\passthrough{\lstinline!asyncio.Lock!} combinato con
+  \passthrough{\lstinline!flock!}) è confinato al singolo nodo. Per
+  scalare l\textquotesingle architettura su piu nodi bisogna introdurre
+  l\textquotesingle uso di un gestore di lock distribuito come Redis.
+\end{itemize}

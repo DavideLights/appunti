@@ -1,0 +1,737 @@
+\section{Use Cases per CTF Manager}\label{use-cases-per-ctf-manager}
+
+Per rendere completa l\textquotesingle esposizione, sono elencati di
+seguito gli Use Case per il CTF Manager, arricchito con alcuni dettagli
+implementativi per comprendere al meglio l\textquotesingle architettura
+del software.
+
+Di seguito e\textquotesingle{} riportato un breve glossario:
+
+\begin{quote}
+\passthrough{\lstinline!br-team-k!}: e\textquotesingle{} il bridge di
+rete che fornisce una rete locale per i container del team \(k\). Ogni
+\passthrough{\lstinline!br-team-k!} e\textquotesingle{} logicamente
+separato dagli altri \passthrough{\lstinline!br-team-k!}.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!wg-k!}: e\textquotesingle{}
+l\textquotesingle interfaccia WireGuard che offre la connettivita VPN
+per il team \(k\) verso \passthrough{\lstinline!br-team-k!}.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!eth0!}: in questo documento, spesso identifica
+il nome dell\textquotesingle interfaccia che fornisce la connettivita
+alla LAN per un container.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!verify-k!}: e\textquotesingle{} il bridge di
+rete (gestito tramite SDN) utilizzato per implementare la rete di
+verifica per il team \passthrough{\lstinline!k!}. Questa rete
+e\textquotesingle{} completamente scollegata da
+\passthrough{\lstinline!br-team-k!} e da \passthrough{\lstinline!wg-k!}.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!database!}: e\textquotesingle{} il database SQL,
+usato da BlueAgent per tenere traccia delle risorse allocate.
+\end{quote}
+
+\subsection{\texorpdfstring{\texttt{UC-01}: Deploy
+dell\textquotesingle infrastruttura di rete per il team
+\(k\)}{UC-01: Deploy dell\textquotesingle infrastruttura di rete per il team k}}\label{uc-01-deploy-dellinfrastruttura-di-rete-per-il-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Effettuare il deploy delle interfacce di rete
+  necessarie al team \(k\) per eseguire i container e consentire
+  l\textquotesingle accesso VPN ai partecipanti.
+\item
+  \textbf{Precondizione}: BlueAgent e\textquotesingle{} attivo ed
+  e\textquotesingle{} raggiungibile via API REST.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!POST /teams!}, specificando
+  l\textquotesingle identificativo \(k\) del team ed il relativo nome.
+\item
+  BlueAgent verifica se l\textquotesingle infrastruttura per il team
+  \(k\) esiste gia:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Se il team e\textquotesingle{} gia registrato, risponde
+    \passthrough{\lstinline!HTTP 200 OK!}.
+  \item
+    Altrimenti, l\textquotesingle infrastruttura di rete viene creata da
+    zero:
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      Viene creato il bridge \passthrough{\lstinline!br-team-k!} per il
+      team \(k\) con IP per il gateway
+      \passthrough{\lstinline!10.k.1.1/24!}.
+    \item
+      Viene creata l\textquotesingle interfaccia WireGuard
+      \passthrough{\lstinline!wg-k!} per il team \(k\). La porta UDP
+      e\textquotesingle{} \passthrough{\lstinline!51820+k!},
+      l\textquotesingle IP per il gateway e\textquotesingle{}
+      \passthrough{\lstinline!10.k.0.1/24!}.
+    \item
+      Viene registrato il team all\textquotesingle interno del database.
+    \item
+      BlueAgent risponde con stato
+      \passthrough{\lstinline!HTTP 201 Created!} confermando
+      l\textquotesingle avvenuta creazione.
+    \end{enumerate}
+  \end{enumerate}
+\end{enumerate}
+
+Se avviene un errore irrimediabile durante la creazione, il bridge e
+l\textquotesingle interfaccia WireGuard create vengono rilasciate.
+
+\subsection{\texorpdfstring{\texttt{UC-02}: Deploy della challenge per
+il team
+\(k\)}{UC-02: Deploy della challenge per il team k}}\label{uc-02-deploy-della-challenge-per-il-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Effettuare il deploy dei container necessari alla
+  challenge da allestire per il team \(k\) richiedente.
+\item
+  \textbf{Precondizione}: \passthrough{\lstinline!UC-01!},
+  \passthrough{\lstinline!UC-08!}. E\textquotesingle{} stato eseguito
+  con successo il deploy dell\textquotesingle infrastruttura di rete per
+  il team \(k\) e le immagini dei container richieste sono presenti nel
+  sistema.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!POST /teams/\{team\_k\}/machines!}
+  specificando \passthrough{\lstinline!team\_k!}.
+\item
+  BlueAgent valida le precondizioni.
+\item
+  Per ogni container specificato nella configurazione:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Crea l\textquotesingle istanza del container.
+  \item
+    Collega l\textquotesingle interfaccia virtuale
+    \passthrough{\lstinline!eth0!} dell\textquotesingle istanza al
+    bridge del team \passthrough{\lstinline!br-team-k!}.
+  \item
+    Inietta nel filesystem dell\textquotesingle istanza la
+    configurazione di rete statica.
+  \item
+    Avvia l\textquotesingle istanza del container ed applica
+    l\textquotesingle indirizzo IP statico.
+  \item
+    Registra il container nel database.
+  \end{enumerate}
+\item
+  BlueAgent restituisce la risposta con stato
+  \passthrough{\lstinline!HTTP 201 Created!}.
+\end{enumerate}
+
+Se si verifica un errore durante l\textquotesingle avvio, BlueAgent
+arresta ed elimina tutte le istanze e le risorse create fino a quel
+momento per la challenge e risponde con un errore.
+
+\subsection{\texorpdfstring{\texttt{UC-03}: Verifica della challenge per
+il team
+\(k\)}{UC-03: Verifica della challenge per il team k}}\label{uc-03-verifica-della-challenge-per-il-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Verificare l\textquotesingle integrita dei servizi
+  e l\textquotesingle efficacia delle patch applicate dal team mediante
+  l\textquotesingle esecuzione dei comandi specificati nella
+  configurazione della challenge.
+\item
+  \textbf{Precondizioni}: \passthrough{\lstinline!UC-02!}. I container
+  relativi alla challenge specificata per il team \(k\) sono attivi.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!POST /teams/\{team\_k\}/verificator!}
+  trasmettendo la configurazione della challenge da verificare.
+\item
+  Se una verifica per lo stesso team e\textquotesingle{} gia in corso,
+  BlueAgent risponde con \passthrough{\lstinline!HTTP 409 Conflict!}.
+\item
+  Altrimenti, BlueAgent predispone l\textquotesingle ambiente di
+  verifica:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Crea uno switch virtuale denominato
+    \passthrough{\lstinline!verify-k!}.
+  \item
+    Esegue la clonazione di tutti i container della challenge del team
+    \(k\).
+  \item
+    Riconfigura l\textquotesingle interfaccia
+    \passthrough{\lstinline!eth0!} dei cloni agganciandola allo switch
+    di verifica.
+  \item
+    Avvia i cloni sandbox e configura al loro interno lo stesso
+    indirizzo IP statico di produzione
+    \passthrough{\lstinline!10.k.1.\{ip\_suffix\}/24!}.
+  \item
+    Se specificato nella configurazione, avvia un container di verifica.
+  \end{enumerate}
+\item
+  Esecuzione dei controlli di verifica: viene eseguito un ciclo di
+  tentativi finche\textquotesingle{} il comando non ha successo, oppure
+  fino allo scadere del timeout.
+\item
+  Esegue i comandi di verifica all\textquotesingle interno del container
+  specificato.
+\item
+  Dealloca le risorse sandbox create per il controllo.
+\item
+  BlueAgent risponde con stato \passthrough{\lstinline!HTTP 200 OK!}
+  comunicando l\textquotesingle esito della verifica.
+\end{enumerate}
+
+Se si verifica un errore le risorse utilizzate vengono rilasciate e
+viene comunicato l\textquotesingle errore.
+
+\subsection{\texorpdfstring{\texttt{UC-04}: Deploy di un unico container
+per il team \(k\) {[}DA
+RIVEDERE{]}}{UC-04: Deploy di un unico container per il team k {[}DA RIVEDERE{]}}}\label{uc-04-deploy-di-un-unico-container-per-il-team-k-da-rivedere}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Avviare un singolo container specifico per il team
+  \(k\), a partire dalla definizione della challenge che lo contiene.
+\item
+  \textbf{Precondizioni}: \passthrough{\lstinline!UC-01!}.
+  E\textquotesingle{} stato eseguito con successo il deploy
+  dell\textquotesingle infrastruttura di rete per il team \(k\).
+  L\textquotesingle immagine del container richiesta e\textquotesingle{}
+  presente nel catalogo in stato \passthrough{\lstinline!ready!}.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!POST /teams/\{team\_k\}/machines!} indicando
+  l\textquotesingle ID del team nel path e passando la configurazione
+  del container.
+\item
+  BlueAgent verifica che il team \(k\) esista e che il bridge
+  \passthrough{\lstinline!br-team-k!} sia attivo.
+\item
+  BlueAgent verifica che l\textquotesingle immagine richiesta sia
+  disponibile nel catalogo e pronta (\passthrough{\lstinline!ready!}).
+\item
+  BlueAgent avvia il container.
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 201 Created!} confermando il deploy del
+  singolo container.
+\end{enumerate}
+
+In caso di fallimento durante l\textquotesingle avvio, BlueAgent esegue
+il rollback eliminando l\textquotesingle istanza creata e risponde con
+un errore HTTP.
+
+\subsection{\texorpdfstring{\texttt{UC-05}: Dismissione e rilascio di un
+unico container per il team \(k\) {[}DA
+RIVEDERE{]}}{UC-05: Dismissione e rilascio di un unico container per il team k {[}DA RIVEDERE{]}}}\label{uc-05-dismissione-e-rilascio-di-un-unico-container-per-il-team-k-da-rivedere}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Arrestare ed eliminare un singolo container attivo
+  per il team \(k\).
+\item
+  \textbf{Precondizioni}: Il container specificato appartiene al team
+  \(k\) ed e\textquotesingle{} presente nel sistema.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!DELETE /teams/\{team\_k\}/machines/\{name\}!}
+  specificando il nome del container da eliminare.
+\item
+  BlueAgent individua l\textquotesingle istanza del container:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Arresta l\textquotesingle istanza del container.
+  \item
+    Elimina l\textquotesingle istanza, scollegandola dal bridge
+    \passthrough{\lstinline!br-team-k!} e rilasciando le risorse
+    allocate.
+  \item
+    Rimuove il record associato al container dal database.
+  \end{enumerate}
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 204 No Content!}.
+\end{enumerate}
+
+In caso di errore durante la rimozione del container, BlueAgent risponde
+con errore \passthrough{\lstinline!5XX!}.
+
+\subsection{\texorpdfstring{\texttt{UC-06}: Dismissione e rilascio di
+una challenge per il team
+\(k\)}{UC-06: Dismissione e rilascio di una challenge per il team k}}\label{uc-06-dismissione-e-rilascio-di-una-challenge-per-il-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Rimuovere tutti i container associati a una
+  determinata challenge per il team \(k\).
+\item
+  \textbf{Precondizioni}: I container associati alla challenge
+  specificata sono attivi per il team \(k\).
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!DELETE /teams/\{team\_k\}/machines!}
+  specificando nel payload la configurazione della challenge.
+\item
+  Per ciascun container specificato nella configurazione della
+  challenge:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Arresta l\textquotesingle istanza.
+  \item
+    Elimina l\textquotesingle istanza.
+  \item
+    Cancella il record del container dal database.
+  \end{enumerate}
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 204 No Content!}.
+\end{enumerate}
+
+In caso di problemi durante il teardown di uno o piu container,
+BlueAgent restituisce un errore HTTP con i dettagli
+dell\textquotesingle anomalia.
+
+\subsection{\texorpdfstring{\texttt{UC-07}: Dismissione e rilascio di un
+intero team
+\(k\)}{UC-07: Dismissione e rilascio di un intero team k}}\label{uc-07-dismissione-e-rilascio-di-un-intero-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Rimuovere completamente
+  l\textquotesingle infrastruttura e tutte le risorse associate al team
+  \(k\).
+\item
+  \textbf{Precondizioni}: Il team \(k\) e\textquotesingle{} registrato
+  nel sistema.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!DELETE /teams/\{team\_k\}!} specificando
+  l\textquotesingle identificativo \passthrough{\lstinline!team\_k!}.
+\item
+  BlueAgent esegue la procedura di dismissione completa:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Arresta ed elimina tutti i container ancora attivi per il team
+    \(k\).
+  \item
+    Esegue il teardown dell\textquotesingle interfaccia WireGuard
+    \passthrough{\lstinline!wg-k!} e le chiavi crittografiche associate
+    ai Peer.
+  \item
+    Elimina le regole di routing e rimuove il bridge
+    \passthrough{\lstinline!br-team-k!}.
+  \item
+    Cancella dal database il record del team \(k\) e tutti i record dei
+    relativi membri e peer WireGuard.
+  \end{enumerate}
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 204 No Content!}.
+\end{enumerate}
+
+Se il team non esiste o e\textquotesingle{} gia stato dismesso,
+l\textquotesingle operazione completa con successo senza sollevare
+errori non gestiti.
+
+\subsection{\texorpdfstring{\texttt{UC-08}: Compilazione e Import di
+un\textquotesingle immagine per
+container}{UC-08: Compilazione e Import di un\textquotesingle immagine per container}}\label{uc-08-compilazione-e-import-di-unimmagine-per-container}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Inviare la specifica di
+  un\textquotesingle immagine in formato YAML ed avviare la compilazione
+  e l\textquotesingle importazione nel catalogo delle immagini.
+\item
+  \textbf{Precondizione}: BlueAgent e\textquotesingle{} attivo.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia una richiesta
+  \passthrough{\lstinline!POST /images!} inviando una form multipart con
+  il file di definizione YAML.
+\item
+  BlueAgent valida la specifica YAML e ne calcola l\textquotesingle hash
+  crittografico.
+\item
+  BlueAgent verifica lo stato dell\textquotesingle immagine nel
+  database:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Se l\textquotesingle immagine con lo stesso alias o hash esiste gia,
+    risponde immediatamente con \passthrough{\lstinline!HTTP 200 OK!}.
+  \item
+    Altrimenti, registra un nuovo record nel database.
+  \end{enumerate}
+\item
+  BlueAgent avvia la compilazione tramite un worker asincrono:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Importa l\textquotesingle immagine generata nel catalogo dei
+    container.
+  \item
+    Assegna l\textquotesingle alias all\textquotesingle immagine
+    importata e aggiorna il record nel database.
+  \end{enumerate}
+\item
+  BlueAgent restituisce immediatamente al CTF Manager lo stato
+  \passthrough{\lstinline!HTTP 202 Accepted!}.
+\end{enumerate}
+
+\subsection{\texorpdfstring{\texttt{UC-09}: Dismissione di
+un\textquotesingle immagine per container {[}DA
+RIVEDERE{]}}{UC-09: Dismissione di un\textquotesingle immagine per container {[}DA RIVEDERE{]}}}\label{uc-09-dismissione-di-unimmagine-per-container-da-rivedere}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Rimuovere un\textquotesingle immagine non piu
+  necessaria dal catalogo di BlueAgent.
+\item
+  \textbf{Precondizioni}: L\textquotesingle immagine identificata
+  dall\textquotesingle alias esiste nel sistema e non
+  e\textquotesingle{} attualmente utilizzata da alcun container attivo.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!DELETE /images/\{alias\}!} specificando
+  l\textquotesingle alias dell\textquotesingle immagine da eliminare.
+\item
+  BlueAgent verifica lo stato e i vincoli nel database:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Verifica che l\textquotesingle immagine sia registrata a catalogo
+    (altrimenti risponde con
+    \passthrough{\lstinline!HTTP 404 Not Found!}).
+  \item
+    Verifica se vi siano container attivi che referenziano
+    l\textquotesingle immagine. Se l\textquotesingle immagine
+    e\textquotesingle{} in uso da container attivi, risponde con
+    \passthrough{\lstinline!HTTP 409 Conflict!}.
+  \end{enumerate}
+\item
+  Se l\textquotesingle immagine non e\textquotesingle{} utilizzata:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Elimina l\textquotesingle immagine dal runtime dei container.
+  \item
+    Elimina il record dell\textquotesingle immagine dal database.
+  \end{enumerate}
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 204 No Content!}.
+\end{enumerate}
+
+\subsection{\texorpdfstring{\texttt{UC-10}: Ispezione dei Peer
+WireGuard}{UC-10: Ispezione dei Peer WireGuard}}\label{uc-10-ispezione-dei-peer-wireguard}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Monitorare lo stato della connettività VPN, le
+  statistiche di traffico (byte ricevuti e trasmessi), gli handshake e
+  lo stato online dei membri/giocatori del team \(k\).
+\item
+  \textbf{Precondizioni}: Il team \(k\) e\textquotesingle{} registrato e
+  la relativa interfaccia WireGuard \passthrough{\lstinline!wg-k!}
+  e\textquotesingle{} attiva sul sistema.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!GET /teams/\{team\_k\}/peers!} specificando
+  l\textquotesingle id \(k\) del team.
+\item
+  BlueAgent interroga l\textquotesingle interfaccia di rete per estrarre
+  le statistiche live dei peer.
+\item
+  BlueAgent interroga il database per recuperare i record dei membri
+  registrati per il team \(k\).
+\item
+  BlueAgent risponde con stato \passthrough{\lstinline!HTTP 200 OK!}
+  restituendo le statistiche dei peer raccolte.
+\end{enumerate}
+
+\subsection{\texorpdfstring{\texttt{UC-11}: Ispezione delle macchine in
+esecuzione}{UC-11: Ispezione delle macchine in esecuzione}}\label{uc-11-ispezione-delle-macchine-in-esecuzione}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Ottenere l\textquotesingle elenco e lo stato di
+  tutti i container attualmente istanziati per il team \(k\).
+\item
+  \textbf{Precondizioni}: Il team \(k\) e\textquotesingle{} registrato
+  nel sistema.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!GET /teams/\{team\_k\}/machines!} specificando
+  l\textquotesingle id \(k\) del team.
+\item
+  BlueAgent interroga il database per recuperare i container registrati
+  per il team \(k\).
+\item
+  BlueAgent verifica lo stato effettivo di ciascuna istanza.
+\item
+  BlueAgent risponde con stato \passthrough{\lstinline!HTTP 200 OK!}
+  restituendo la lista dei container attivi.
+\end{enumerate}
+
+\subsection{\texorpdfstring{\texttt{UC-12}: Registrazione e
+configurazione WireGuard per un membro del team
+\(k\)}{UC-12: Registrazione e configurazione WireGuard per un membro del team k}}\label{uc-12-registrazione-e-configurazione-wireguard-per-un-membro-del-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Registrare un giocatore come membro del team
+  \(k\), allocare un indirizzo IP nella subnet VPN, generare le chiavi
+  crittografiche WireGuard e restituire il file di configurazione
+  \passthrough{\lstinline!.conf!}.
+\item
+  \textbf{Precondizioni}: BlueAgent e\textquotesingle{} attivo. Se
+  l\textquotesingle infrastruttura di rete del team \(k\) non
+  e\textquotesingle{} ancora attiva, viene allestita contestualmente.
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!POST /teams/\{team\_k\}/members!} fornendo
+  nome ed id dell\textquotesingle utente.
+\item
+  BlueAgent verifica se l\textquotesingle infrastruttura del team \(k\)
+  e\textquotesingle{} attiva; se assente, esegue
+  \passthrough{\lstinline!UC-01!}.
+\item
+  BlueAgent verifica se il membro e\textquotesingle{} gia registrato nel
+  database per il team \(k\):
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Se il membro esiste gia, BlueAgent fornisce la configurazione
+    rispondendo con \passthrough{\lstinline!HTTP 200 OK!}.
+  \item
+    Se il membro e\textquotesingle{} nuovo:
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      Alloca un indirizzo IP VPN libero per il team. Se lo spazio degli
+      indirizzi e\textquotesingle{} esaurito, risponde segnalando
+      l\textquotesingle esaurimento degli indirizzi.
+    \item
+      Se non fornita, genera una nuova coppia di chiavi asimmetriche.
+    \item
+      Registra il nuovo peer sull\textquotesingle interfaccia
+      \passthrough{\lstinline!wg-k!}.
+    \item
+      Salva il record del membro nel database.
+    \end{enumerate}
+  \end{enumerate}
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 201 Created!} restituendo la
+  configurazione WireGuard generata.
+\end{enumerate}
+
+\subsection{\texorpdfstring{\texttt{UC-13}: Revoca di un membro
+WireGuard per il team
+\(k\)}{UC-13: Revoca di un membro WireGuard per il team k}}\label{uc-13-revoca-di-un-membro-wireguard-per-il-team-k}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attore}: CTF Manager
+\item
+  \textbf{Obiettivo}: Rimuovere un membro registrato dal team \(k\),
+  eliminando il relativo peer dall\textquotesingle interfaccia WireGuard
+  \passthrough{\lstinline!wg-k!} e liberando l\textquotesingle indirizzo
+  IP VPN allocato per futuri riutilizzi.
+\item
+  \textbf{Precondizioni}: Il membro specificato e\textquotesingle{}
+  registrato nel team \(k\).
+\end{itemize}
+
+Flusso delle azioni:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!DELETE /teams/\{team\_k\}/members/\{member\_id\}!}
+  specificando l\textquotesingle identificativo del team e del membro.
+\item
+  BlueAgent individua il membro nel database:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Se non trovato, risponde con
+    \passthrough{\lstinline!HTTP 404 Not Found!}.
+  \end{enumerate}
+\item
+  BlueAgent rimuove il peer dall\textquotesingle interfaccia
+  \passthrough{\lstinline!wg-k!}.
+\item
+  BlueAgent elimina il record del membro dal database.
+\item
+  BlueAgent risponde con stato
+  \passthrough{\lstinline!HTTP 204 No Content!}.
+\end{enumerate}

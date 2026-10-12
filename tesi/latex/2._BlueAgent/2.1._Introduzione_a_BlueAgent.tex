@@ -1,15 +1,74 @@
 \section{2. Introduzione a BlueAgent}\label{2-introduzione-a-blueagent}
 
-Si vuole presentare dunque il nostro CyberRange: \textbf{BlueAgent}. Un
+Si vuole presentare dunque il nostro Cyber Range: \emph{BlueAgent}. Un
 servizio \emph{HTTP} che implementa delle \emph{API REST} per la
-gestione e la verifica delle macchine a partire da definizioni
-\emph{IaC} fornite dagli organizzato della CTF. Queste API REST potranno
-poi essere sfruttate ed implementate da un qualsias applicativo
-(denominato CTF Manager) per gestire le challenge, come per esempio, un
-plugin per CTFd\footnote{\label{fn:ref_14}\url{https://ctfd.io/}}.
+gestione e la verifica delle macchine a partire da file dichiarativi
+(\emph{IaC}) fornite dagli organizzatori della CTF. Queste API REST
+potranno poi essere sfruttate ed implementate da un qualsiasi
+applicativo (denominato CTF Manager) per gestire le challenge, come per
+esempio, un plugin per CTFd\footnote{\label{fn:ref_14}\url{https://ctfd.io/}}.
 
-\textbf{BlueAgent} e\textquotesingle{} basato \textbf{FastAPI}, per
-gestire in modo semplice ed efficiente le richieste HTTP.
+Il Cyber Range implementato da BlueAgent e\textquotesingle{} pensato per
+scenari di Patch Management da eseguire su hardware "leggero". Dunque si
+vuole offrire un\textquotesingle ambiente basato su container (invece di
+utilizzare delle macchine virtuali pesanti) che offra un meccanismo di
+verifica completamente nascosto ai giocatori. Tale meccanismo
+e\textquotesingle{} basato sulla clonazione sul momento
+dell\textquotesingle intera infrastruttura interessata, in una rete
+separata e inaccessibile ai giocatori, su cui verranno poi eseguiti i
+comandi dell\textquotesingle oracolo definito in fase di dichiarazione.
+
+I membri dei team, potranno connettersi alla rete dei container a loro
+assegnati utilizzando una VPN, implementata da WireGuard, tenendo
+presente che ogni membro avra associato in WireGuard il suo peer (una
+coppia di chiavi pubbliche e private).
+
+E\textquotesingle{} importante puntualizzare che:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Gli indirizzi IP dei container, nelle reti dei giocatori, saranno
+  statici e noti a priori (questo scenario si applica alla stragrande
+  maggioranza delle challenge)
+\item
+  La verifica dei container, sara implementata attraverso la
+  duplicazione della topologia dei container in una rete separata.
+  Questa duplicazione avverra sfruttando il meccanismo COW di ZFS.
+\item
+  BlueAgent non mantiene in memoria lo stato delle challenge (e quindi
+  per esempio i punteggi dei vari utenti). Questo software deve essere
+  inteso come un\textquotesingle orchestratore di container e non di
+  intere challenge. Blueagent si limita a prendere in input la
+  definzione di una challenge e di istanziare i container richiesti.
+\end{enumerate}
+
+A scopo d\textquotesingle esempio mostriamo un\textquotesingle esempio
+per chiarire come creare ed istanziare una challenge con BlueAgent:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Il creatore della challenge definisce in modo dichiarativo i
+  container.
+\item
+  Il creatore della challenge, inserisce nel CTF Manager la nuova
+  challenge tenendo in memoria tutte le informazioni necessarie a
+  BlueAgent (inclusi i file dichiarativi)
+\item
+  Il giocatore di un determinato team, accede alla challenge e tramite
+  il CTF Manager richiede la creazione dei container
+\item
+  Il CTF Manager invia a BlueAgent i file di configurazione della
+  challenge da istanziare
+\item
+  BlueAgent si occupa di istanziare i container per il team.
+\end{enumerate}
+
+BlueAgent e\textquotesingle{} basato su \emph{FastAPI}, per gestire in
+modo semplice ed efficiente le richieste HTTP.
 
 L\textquotesingle host che su cui viene eseguito BlueAgent deve mettere
 a disposizione dell\textquotesingle architettura le seguenti componenti:
@@ -20,12 +79,8 @@ a disposizione dell\textquotesingle architettura le seguenti componenti:
   \textbf{Debian 13 ed il Kernel Linux}: per la gestione delle
   interfacce di rete
 \item
-  \begin{itemize}
-  \tightlist
-  \item
-    \passthrough{\lstinline!nftables!}: per gestire le regole di inoltro
-    nel Kernel
-  \end{itemize}
+  \passthrough{\lstinline!nftables!}: per gestire le regole di inoltro
+  nel Kernel
 \item
   \textbf{Python 3}: per eseguire BlueAgent.
 \item
@@ -44,6 +99,5 @@ a disposizione dell\textquotesingle architettura le seguenti componenti:
   \textbf{Incus}: per la gestione dei container.
 \end{itemize}
 
-\emph{Per comprendere passo-passo cosa permette di fare il sistema e
-come lo fa sono elencati gli attori, gli use cases ed i requisiti di
-sistema.}
+Per comprendere passo-passo cosa permette di fare il sistema e come lo
+fa sono elencati gli attori, gli use cases ed i requisiti di sistema.

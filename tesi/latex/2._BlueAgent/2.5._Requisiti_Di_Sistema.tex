@@ -11,25 +11,26 @@ Infrastruttura}\label{piattaforma-host-e-infrastruttura}
 \tightlist
 \item
   \textbf{\passthrough{\lstinline!SR-HST-01!} (Sistema Operativo Host)}:
-  L\textquotesingle host deve eseguire Debian 13 con kernel Linux, IP
-  forwarding abilitat e fornir \passthrough{\lstinline!nftables!}.
+  L\textquotesingle host deve eseguire Debian 13 (e quindi un Kernel
+  Linux), con IP forwarding abilitato e fornire
+  \passthrough{\lstinline!nftables!}.
 \item
-  \textbf{\passthrough{\lstinline!SR-HST-02!} (Storage Pool CoW)}:
+  \textbf{\passthrough{\lstinline!SR-HST-02!} (ZFS)}:
   L\textquotesingle host deve disporre di uno storage pool ZFS con
   supporto nativo a snapshot e clonazione a livello di blocchi.
 \item
-  \textbf{\passthrough{\lstinline!SR-HST-03!} (Demoni SDN OVN)}:
+  \textbf{\passthrough{\lstinline!SR-HST-03!} (SDN)}:
   L\textquotesingle host deve eseguire i servizi Open vSwitch e OVN
   (\passthrough{\lstinline!ovs-vswitchd!},
   \passthrough{\lstinline!ovn-northd!},
   \passthrough{\lstinline!ovn-controller!}) per il provisioning di
   switch e router logici.
 \item
-  \textbf{\passthrough{\lstinline!SR-HST-04!} (Supporto Kernel
-  WireGuard)}: L\textquotesingle host deve disporre di WireGuard per la
-  gestione dei tunnel VPN.
+  \textbf{\passthrough{\lstinline!SR-HST-04!} (Supporto WireGuard)}:
+  L\textquotesingle host deve disporre di WireGuard per la gestione dei
+  tunnel VPN.
 \item
-  \textbf{\passthrough{\lstinline!SR-HST-05!}} (Distrobuilder):
+  \textbf{\passthrough{\lstinline!SR-HST-05!} (Distrobuilder)}:
   L\textquotesingle host deve disporre del compilatore
   \passthrough{\lstinline!distrobuilder!} per la generazione delle
   immagini.
@@ -41,16 +42,16 @@ Containerizzazione}\label{motore-di-containerizzazione}
 \begin{itemize}
 \tightlist
 \item
-  \textbf{\passthrough{\lstinline!SR-ENG-01!} (Astrazione Runtime)}:
+  \textbf{\passthrough{\lstinline!SR-ENG-01!} (Astrazione)}:
   Disaccoppiamento della logica di orchestrazione tramite interfaccia
   astratta \passthrough{\lstinline!ContainerEngine!} per garantire
   portabilita del runtime.
 \item
-  \textbf{\passthrough{\lstinline!SR-ENG-02!} (Client Asincrono UDS)}:
+  \textbf{\passthrough{\lstinline!SR-ENG-02!} (Client Asincrono)}:
   Comunicazione non bloccante con Incus via Unix Domain Socket mediante
   client HTTP asincrono.
 \item
-  \textbf{\passthrough{\lstinline!SR-ENG-03!} (Isolamento Cgroups v2)}:
+  \textbf{\passthrough{\lstinline!SR-ENG-03!} (Limitazione Risorse)}:
   Applicazione perentoria di quote hardware per container
   (\passthrough{\lstinline!limits.cpu!} e
   \passthrough{\lstinline!limits.memory!}) per impedire starvation delle
@@ -106,9 +107,10 @@ Sandbox}\label{motore-di-verifica-ovn-sandbox}
 \begin{itemize}
 \tightlist
 \item
-  \textbf{\passthrough{\lstinline!SR-VRF-01!} (Dark Switch OVN L2)}:
-  Creazione di uno switch logico OVN in fase di verifica, isolato e
-  senza gateway host, per prevenire sovrapposizioni di rotte.
+  \textbf{\passthrough{\lstinline!SR-VRF-01!} (Switch OVN) {[}RIVEDI
+  DEFINIZIONE{]}}: Creazione di una rete OVN in fase di verifica,
+  isolata e senza esporre il gateway host della rete interna, per
+  prevenire sovrapposizioni di rotte.
 \item
   \textbf{\passthrough{\lstinline!SR-VRF-02!} (Fedelta Topologica)}: I
   cloni nella sandbox di verifica preservano
@@ -136,7 +138,7 @@ Persistenza}\label{control-plane-concorrenza-e-persistenza}
 \begin{itemize}
 \tightlist
 \item
-  \textbf{\passthrough{\lstinline!SR-CON-01!} (Two-Tier Locking)}:
+  \textbf{\passthrough{\lstinline!SR-CON-01!} (Two-Tier Lock)}:
   Meccanismo di lock a due livelli per prevenire mutazioni concorrenti
   sulla stessa risorsa.
 \item
@@ -163,6 +165,13 @@ Persistenza}\label{control-plane-concorrenza-e-persistenza}
   \textbf{\passthrough{\lstinline!SR-CON-06!} (Idempotenza Operativa)}:
   Le richieste di provisioning per risorse gia allocate non alterano lo
   stato del sistema.
+\item
+  \textbf{\passthrough{\lstinline!SR-CON-07!} (Autenticazione)}:
+  L\textquotesingle accesso alle API deve essere validato tramite un
+  token di accesso configurato dall\textquotesingle amministratore. Si
+  vuole evitare che altre entita oltre al CTF Manager, e
+  l\textquotesingle admin possano usare l\textquotesingle interfaccia di
+  BlueAgent.
 \end{itemize}
 
 \subsection{Pipeline Immagini
@@ -176,9 +185,11 @@ Distrobuilder}\label{pipeline-immagini-distrobuilder}
   sistema a partire da file di definizione YAML.
 \item
   \textbf{\passthrough{\lstinline!SR-IMG-02!} (Deduplicazione
-  Crittografica e Caching)}: Calcolo dell\textquotesingle hash
-  crittografico della specifica YAML per prevenire compilazioni
-  ridondanti di immagini identiche già presenti a catalogo.
+  Crittografica e Caching) {[}DA RIVEDERE, BASTA USARE
+  L\textquotesingle ALSIAS COME CHIAVE O SERVE
+  L\textquotesingle HASH??{]}}: Calcolo dell\textquotesingle hash
+  crittografico della specifica YAML per identificare immagini gia
+  compilate e presenti nell pool di incus.
 \item
   \textbf{\passthrough{\lstinline!SR-IMG-04!} (Compilazione Asincrona)}:
   Esecuzione delle fasi di build in background tramite worker asincrono.

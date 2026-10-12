@@ -1,0 +1,171 @@
+\section{VPN WireGuard e OVN}\label{vpn-wireguard-e-ovn}
+
+\textbf{fonte}: \url{https://www.wireguard.com/papers/wireguard.pdf}
+\textbf{vpn}: \url{https://ieeexplore.ieee.org/document/4756450}
+
+\textbf{VPN}: e\textquotesingle{} un modo per comunicare in modo sicuro
+tra membri di un gruppo attraverso l\textquotesingle uso di una
+infrastruttura di comunicazione pubblica, grazie all\textquotesingle uso
+di un protocollo di tunneling.
+
+\textbf{Wireguard} e\textquotesingle{} un VPN che utilizza il concetto
+di \textbf{cryptokey routing}: viene mantenuta in memoria una tabella
+dove ad ogni chiave pubblica di un peer, viene associata una lista di
+indirizzi ip identificati come allowed. Fornisce
+un\textquotesingle interfaccia \textbf{stateless} per utilizzare il
+\textbf{tunnel VPN}, ossia un\textquotesingle interfaccia di rete
+virtuale, che potrebbe essere per esempio \passthrough{\lstinline!wg0!}.
+
+\begin{quote}
+per stateless, si intende il fatto che l\textquotesingle amministratore
+non si deve occupare di gestire lo scambio delle chiavi, connessioni,
+disconnessioni, poi che viene tutto gestito dietro le quinte.
+\end{quote}
+
+Rispetto ad OpenVPN, Wireguard e\textquotesingle{} percepito come più
+sicuro ed efficiente:
+
+\begin{itemize}
+\tightlist
+\item
+  OpenVPN utilizza TLS ed espone molte delle sue funzionalità,
+  aumentando la superficie di attacco sulla VPN.
+\item
+  OpenVPN utilizza interfacce TUN/TAP: agiscono in user space ma al
+  costo di penalizzare di molto le performance, infatti i pacchetti
+  devono essere copiati piu volte nel passagio da user space a kernel
+  space.
+\end{itemize}
+
+\textbf{Scambio di chiavi}: Wireguard non utilizza un meccanismo
+specifico per scambiare le chiavi. Infatti Wireguard non include un
+protocollo interno per la distribuzione delle chiavi, si delega lo
+scambio a meccanismi esterni e preesistenti (come SSH)
+
+\textbf{Cosa vuol dire in pratica}? Lo scambio delle chiavi si fa per
+esempio manualmente, si copia e incollano manualmente le chiavi
+pubbliche nel file di configurazione di wireguard oppure si usano tool
+automatizzati.
+
+vediamo un esempio di \emph{cryptokey routing table}: !{[}{]}(Pasted
+image 20261001214515.png) questa decide in pratica quali coppie
+\((\text{Peer Public Key, Allowed Source IP})\) possono instradare
+nell\textquotesingle interfaccia wireguard.
+
+opzionalmente e\textquotesingle{} possibile specificare verso quale
+endpoint inoltrare il pacchetto, ma almeno un peer, ad esempio il
+client, deve conoscere l\textquotesingle endpoint a cui inviare i
+datagrammi UDP crittografati.
+
+\begin{quote}
+l\textquotesingle{}\textbf{endpoint} identifica
+l\textquotesingle indirizzo ip e la porta UDP su cui il demone WireGuard
+e\textquotesingle{} in ascolto.
+\end{quote}
+
+Brevemente il flusso dei dati e\textquotesingle{} il seguente:
+l\textquotesingle interfaccia \passthrough{\lstinline!wg0!} riceve un
+pacchetto
+
+\begin{itemize}
+\tightlist
+\item
+  il client incapsula il pacchetto all\textquotesingle interno di una
+  datagramma UPD il cui payload viene crittografato utilizzando
+  \passthrough{\lstinline!ChaCha20Poly1305!}
+\item
+  il client invia il datagramma all\textquotesingle endpoint
+  specificato, oppure imparato dal Wireguard in precedenza.
+\item
+  il server riceve il dataramma, verifica la correttezza nella
+  \emph{cryptokey routing table}
+\item
+  il server autentica e decripta il messaggio ed estrae il pacchetto
+  originario
+\item
+  il pacchetto originario viene inserito in una coda
+  nell\textquotesingle interfaccia \(\text{wg}0\)
+\end{itemize}
+
+\section{SDN}\label{sdn}
+
+\url{https://networklessons.com/network-automation/introduction-to-sdn-software-defined-networking}
+\url{https://ridhanegara.staff.telkomuniversity.ac.id/files/2017/04/Thomas-D.-Nadeau-Ken-Gray-SDN-Software-Defined-Networks-O_039_Reilly-Media-2013.pdf}
+
+una SDN opera su tre differenti piani:
+
+\begin{itemize}
+\tightlist
+\item
+  piano di controllo
+\item
+  paino dei dati
+\item
+  piano di management
+\end{itemize}
+
+Il \textbf{piano di controllo} e\textquotesingle{} responsabile per lo
+scambio di informazioni sul routing, le tabelle ARP, il routing BGP,
+OSPF, ed eseguire l\textquotesingle arlgoritmo STP per creare una
+topologia senza cicli.
+
+Il \textbf{piano dei dati} e\textquotesingle{} responsabile di
+instradare il traffico, ossia di effettuare il forward dei pacchi, e lo
+fa applicando le informazioni in possesso dal piano di controllo.
+Dunque, tra le verie operazioni puo: incapsulare e decapsulre i
+pacchetti, fare il match guardando MAC o indirizzi o IP, applicare le
+regole NAT e oppure fare il drop dei pacchetti.
+
+Il piano di management viene usato per accedere e gestire i device di
+rete: si accede al device usando telnet, SSH, o altri servizi.
+!{[}{]}(Pasted image 20261002154936.png)
+
+Nella SDN utilizziamo un controller centrale per applicare il piano di
+controllo. Il controller potrebbe essere su un host fisico oppure su una
+macchina virtuale.
+
+Cio\textquotesingle{} implica che il contorller decide come saranno
+fatte le tabelle di inoltre, e gli switch ed i router si limitano ad
+eseguirle. Si toglie di mezzo la complessità dovuta al setup di migliaia
+di interfacce, dato che ora la gestione e\textquotesingle{}
+centralizzata. Tuttavia il controller SDN e\textquotesingle{} incaricato
+di fornire i dati necessari all\textquotesingle inoltro a tutti i
+device. !{[}{]}(Pasted image 20261002155254.png)
+
+Per implementare questo meccanismo ci sono due interfacce:
+
+\begin{itemize}
+\tightlist
+\item
+  northbound
+\item
+  southbound !{[}{]}(Pasted image 20261002155542.png)
+\end{itemize}
+
+\textbf{southbound}: Il controller SDN deve poter comunicare con i
+device di rete in moda da programmare il piano dei dati. La southbound
+interface permette la comunicazione. E\textquotesingle{}
+un\textquotesingle interfaccia software che puo\textquotesingle{} essere
+implementata in vari modi.
+
+\textbf{northbound}: e\textquotesingle{} l\textquotesingle interfaccia
+usata per accedere al controller SDN. Permette di applicare modifiche e
+di accedere ad informazioni sul sistema
+
+\begin{itemize}
+\tightlist
+\item
+  Ottenere una lista di tutti i device di rete preenti
+\item
+  Aggiungere una nuova VLAN agli switch
+\item
+  Mostrare la topologia della rete
+\item
+  Configurare gli indirizzi ip !{[}{]}(Pasted image 20261002155846.png)
+\end{itemize}
+
+\begin{quote}
+abbiamo accenato prima ad Open vSwitch. Riprendendo il discorso, il
+controler SDN non fa altro che comandare gli switch gestiti da Open
+vSwitch.
+\end{quote}

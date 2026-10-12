@@ -1,0 +1,69 @@
+\section{Benchmark e Difesa dell\textquotesingle Architettura (AI
+GENERATO)}\label{benchmark-e-difesa-dellarchitettura-ai-generato}
+
+Spunti:
+
+\begin{itemize}
+\tightlist
+\item
+  perche\textquotesingle{} Debian 13?
+\item
+  perche\textquotesingle{} ZFS?
+\item
+  perche\textquotesingle{} OVN in verifica?
+\item
+  perche\textquotesingle{} Birdge L2 in produzione?
+\item
+  perche\textquotesingle{} Incus?
+\end{itemize}
+
+Codice:
+
+\begin{itemize}
+\tightlist
+\item
+  Motivazione per Async Context Manager
+\item
+  perche disaccoppiare la creazione dei comandi?
+\item
+  perche gestire le API in modo asincorno?
+\item
+  percher usare httpx.AsyncClient per IncusEngine?
+\item
+  perche BlueAgent gestisce i container e non mantiene lo stato delle
+  challenge?
+\item
+  motivare le API rests
+\item
+  perche SQLite
+\end{itemize}
+
+\section{Critica e Limiti
+Architetturali}\label{critica-e-limiti-architetturali}
+
+Nonostante i vantaggi, l\textquotesingle architettura presenta
+compromessi e vincoli strutturali:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UDP Path MTU Blackhole:} La combinazione di tunnel WireGuard
+  (\(\text{MTU } 1420\)) e Geneve OVN (\(\text{MTU } 1442\),
+  all\textquotesingle interno della \textbf{rete di verifica}) impone
+  riduzioni di MTU. Mentre il TCP beneficia del MSS clamping via
+  \passthrough{\lstinline!nftables!}, i pacchetti UDP di grandi
+  dimensioni con flag \emph{Don\textquotesingle t Fragment}, potrebbero
+  essere scartati dal kernel.
+\item
+  \textbf{Limite scalabilità a 254 team:}
+  L\textquotesingle indirizzamento deterministico
+  \passthrough{\lstinline!10.k.x.x!} vincola \(k\) a un singolo byte
+  (\(0 \le k \le 254\)), quindi ad un massimo di \(\text{255}\) team
+\item
+  \textbf{Concorrenza e blocco multi-nodo:} Il meccanismo
+  \passthrough{\lstinline!TwoTierLock!}
+  (\passthrough{\lstinline!asyncio.Lock!} combinato con
+  \passthrough{\lstinline!flock!}) è confinato al singolo nodo. Per
+  scalare l\textquotesingle architettura su piu nodi bisogna introdurre
+  l\textquotesingle uso di un gestore di lock distribuito come Redis.
+\end{itemize}

@@ -1,0 +1,168 @@
+\section{Comandi per l\textquotesingle Architettura di
+Rete}\label{comandi-per-larchitettura-di-rete}
+
+Per andare a fondo nei dettagli implementativi e spiegare meglio alcuni
+concetti, sono riportati alcuni passaggi fondamentali nella
+configurazione dell\textquotesingle host che esegue BlueAgent.
+
+\subsection{configurare OVN}\label{configurare-ovn}
+
+Qui riporto la configurazione per implementare la SDN. Il \textbf{piano
+dei dati} e\textquotesingle{} implementato da Open vSwitch
+(\textbf{OVS}) e deve esser configurato in modo che possa comunicare con
+Incus.
+
+\begin{quote}
+\passthrough{\lstinline!SDN (Software Defined Networking)!}: Paradigma
+architetturale che separa il \textbf{Control Plane} (logica decisionale
+centralizzata) dal \textbf{Data Plane} (inoltro fisico dei pacchetti),
+consentendo di gestire e programmare l\textquotesingle infrastruttura di
+rete interamente via software.
+
+\passthrough{\lstinline!Open vSwitch (OVS)!}: Switch virtuale operante
+nel kernel Linux come Data Plane. Sostituisce il classico bridge Linux
+eseguendo l\textquotesingle inoltro dei frame ad alte prestazioni
+basandosi su tabelle di flussi (\emph{flow tables}).
+
+\passthrough{\lstinline!OpenFlow!}: Protocollo standard che permette al
+controller SDN di comunicare con lo switch e programmare le regole di
+matching e le azioni direttamente all\textquotesingle interno delle
+pipeline di Open vSwitch.
+
+\passthrough{\lstinline!OVN (Open Virtual Network)!}: Sistema SDN che
+opera come Control Plane per Open vSwitch. Traduce topologie logiche
+(Logical Switch, Logical Router, NAT e ACL) in flussi OpenFlow
+distribuiti, istruendo Open vSwitch su come instradare il traffico senza
+creare molteplici interfacce o bridge dedicati nel kernel host.
+\end{quote}
+
+\textbf{Configurazione di open vSwitch}:
+
+\begin{lstlisting}[language=bash]
+sudo ovs-vsctl set open_vswitch . \ 
+external_ids:ovn-remote=unix:/run/ovn/ovnsb_db.sock \ external_ids:ovn-encap-type=geneve \ 
+external_ids:ovn-encap-ip=127.0.0.1
+\end{lstlisting}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\passthrough{\lstinline!ovn-encap-type=geneve!}}:
+  specifichiamo geneve come protocollo da utilizzare per il tunneling.
+\item
+  \textbf{\passthrough{\lstinline!ovn-encap-ip=127.0.0.1!}}: imposta la
+  terminazione del tunnel nel localhost.
+\end{itemize}
+
+\begin{quote}
+\textbf{Open vSwitch}: e\textquotesingle{} uno switch virtuale,
+software-definied. Agisce per la maggior parte in user space e comunica
+con il kernel per riceve i pacchetti ed inoltrarli.
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!ovs-vswitchd!}: e\textquotesingle{} il demone
+  in user space. Ispeziona i pacchetti catturati dal kernel.
+\item
+  \passthrough{\lstinline!ovsdb-server!}: e\textquotesingle{} un
+  database che memorizza la configurazione degli switch
+\item
+  \passthrough{\lstinline!ovs-vsctl!}: utility da riga di comando per la
+  gestione dell\textquotesingle infrastruttura.
+\end{itemize}
+\end{quote}
+
+\textbf{Collegare l\textquotesingle interfaccia Northbound di OV ad
+Incus}:
+
+\begin{lstlisting}[language=bash]
+ovn-nbctl set-connection ptcp:6641:127.0.0.1
+incus config set network.ovn.northbound_connection tcp:127.0.0.1:6641
+\end{lstlisting}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{OVN Northbound}: e\textquotesingle{}
+  l\textquotesingle interfaccia dove dichiaro le reti che voglio creare
+  e le loro proprietà che devono rispettare.
+\item
+  \textbf{\passthrough{\lstinline!ovn-northd!}}: il demone che traduce
+  la topologia dichiarata tramite l\textquotesingle interfaccia north
+  bound in stati logici.
+\item
+  \textbf{OVN Southbound (SB) DB:}~Memorizza le tabelle di flussi logici
+  compilate e le associazioni di chassis (host fisici)
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\passthrough{\lstinline!ovn-controller!}:}~Un agente in
+  esecuzione sull\textquotesingle host che legge il Southbound DB e
+  programma direttamente Open vSwitch locale.
+\end{itemize}
+\end{quote}
+
+\subsection{\texorpdfstring{\(\text{production-}k\) Routing e
+Connettività dei Peer (WireGuard e
+nftables)}{\textbackslash text\{production-\}k Routing e Connettività dei Peer (WireGuard e nftables)}}\label{textproduction-k-routing-e-connettivituxe0-dei-peer-wireguard-e-nftables}
+
+L\textquotesingle accesso dei partecipanti ai container rete
+\(\text{production-}k\) richiede l\textquotesingle applicazione di
+regole di inoltro esplicite tra \passthrough{\lstinline!wg-k!} ed
+\passthrough{\lstinline!br-team-k!}, da applicare nel kernel Linux
+mediante \passthrough{\lstinline!nftables!}.
+
+\subsubsection{\texorpdfstring{Inoltro Kernel e Controllo di Flusso
+(\texttt{nftables})}{Inoltro Kernel e Controllo di Flusso (nftables)}}\label{inoltro-kernel-e-controllo-di-flusso-nftables}
+
+Le regole per il traffico vengono definite dentro la tabella
+\passthrough{\lstinline!inet blueagent!}:
+
+\begin{lstlisting}[language=bash]
+sudo nft add table inet blueagent
+sudo nft add set inet blueagent team_links '{ type ifname . ifname; flags interval; }'
+
+sudo nft add element inet blueagent team_links { "wg-$k" . "br-team-$k", "br-team-$k" . "wg-$k" }
+\end{lstlisting}
+
+All\textquotesingle interno della catena
+\passthrough{\lstinline!forward!}, il traffico viene validato
+verificando l\textquotesingle appartenenza al set
+\passthrough{\lstinline!@team\_links!} e scartando esplicitamente le
+comunicazioni incrociate tra team diversi. Vengono inserite
+esplicitamente per ogni \passthrough{\lstinline!k!} le coppie di
+interfacce per cui autorizzare il traffico.
+
+A priori, si vuole impedire l\textquotesingle inoltro dei pacchetti
+applicando l\textquotesingle azione \passthrough{\lstinline!drop!} tra
+le interfacce \passthrough{\lstinline!wg!} e
+\passthrough{\lstinline!br-team!}, in modo da impedire rotte che non
+sono state esplicitamente accettate nella tabella:
+
+\begin{lstlisting}[language=bash]
+sudo nft add rule inet blueagent forward iifname "wg-*" oifname "br-team-*" drop
+sudo nft add rule inet blueagent forward iifname "br-team-*" oifname "wg-*" drop
+sudo nft add rule inet blueagent forward iifname "br-team-*" oifname "br-team-*" drop
+sudo nft add rule inet blueagent forward iifname "wg-*" oifname "wg-*" drop
+\end{lstlisting}
+
+\subsubsection{Connettività Egress
+(Masquerading)}\label{connettivituxe0-egress-masquerading}
+
+Per consentire l\textquotesingle accesso a Internet ai container e ai
+peer, viene applicato il mascheramento dell\textquotesingle indirizzo
+sorgente verso l\textquotesingle esterno dell\textquotesingle envelope.
+Si abilita il \passthrough{\lstinline!nat!} (dunque, il meccanismo di
+traduzione degli indirizzi) poco prima che il frame esca e venga immesso
+fisicamente sulla porta. Poi specifichiamo che si applica il nat
+dinamico (\passthrough{\lstinline!masquerade!}) per gli indirizzi che
+provengono dalla rete dei container verso l\textquotesingle esterno.
+
+\begin{lstlisting}[language=bash]
+sudo nft add chain inet blueagent postrouting '{ type nat hook postrouting priority srcnat; policy accept; }'
+sudo nft add rule inet blueagent postrouting ip saddr 10.0.0.0/8 ip daddr != 10.0.0.0/8 masquerade
+\end{lstlisting}

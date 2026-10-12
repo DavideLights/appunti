@@ -1,5 +1,44 @@
 \section{Use Cases per CTF Manager}\label{use-cases-per-ctf-manager}
 
+Per rendere completa l\textquotesingle esposizione, sono elencati di
+seguito gli Use Case per il CTF Manager, arricchito con alcuni dettagli
+implementativi per comprendere al meglio l\textquotesingle architettura
+del software.
+
+Di seguito e\textquotesingle{} riportato un breve glossario:
+
+\begin{quote}
+\passthrough{\lstinline!br-team-k!}: e\textquotesingle{} il bridge di
+rete che fornisce una rete locale per i container del team \(k\). Ogni
+\passthrough{\lstinline!br-team-k!} e\textquotesingle{} logicamente
+separato dagli altri \passthrough{\lstinline!br-team-k!}.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!wg-k!}: e\textquotesingle{}
+l\textquotesingle interfaccia WireGuard che offre la connettivita VPN
+per il team \(k\) verso \passthrough{\lstinline!br-team-k!}.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!eth0!}: in questo documento, spesso identifica
+il nome dell\textquotesingle interfaccia che fornisce la connettivita
+alla LAN per un container.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!verify-k!}: e\textquotesingle{} il bridge di
+rete (gestito tramite SDN) utilizzato per implementare la rete di
+verifica per il team \passthrough{\lstinline!k!}. Questa rete
+e\textquotesingle{} completamente scollegata da
+\passthrough{\lstinline!br-team-k!} e da \passthrough{\lstinline!wg-k!}.
+\end{quote}
+
+\begin{quote}
+\passthrough{\lstinline!database!}: e\textquotesingle{} il database SQL,
+usato da BlueAgent per tenere traccia delle risorse allocate.
+\end{quote}
+
 \subsection{\texorpdfstring{\texttt{UC-01}: Deploy
 dell\textquotesingle infrastruttura di rete per il team
 \(k\)}{UC-01: Deploy dell\textquotesingle infrastruttura di rete per il team k}}\label{uc-01-deploy-dellinfrastruttura-di-rete-per-il-team-k}

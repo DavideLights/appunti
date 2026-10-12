@@ -2,14 +2,18 @@
 import os
 import re
 import subprocess
+import shutil
 import sys
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 LATEX_DIR = BASE_DIR / "latex"
-PANDOC_BIN = BASE_DIR / "pandoc-3.1.11.1" / "bin" / "pandoc"
-if not PANDOC_BIN.exists():
-    PANDOC_BIN = "pandoc"
+candidate_pandocs = [
+    BASE_DIR / "pandoc-3.1.11.1" / "bin" / "pandoc",
+    Path.home() / ".local" / "bin" / "pandoc",
+    Path.home() / ".gemini" / "antigravity-ide" / "bin" / "pandoc",
+]
+PANDOC_BIN = next((str(p) for p in candidate_pandocs if p.exists()), shutil.which("pandoc") or "pandoc")
 
 # Directories to strictly ignore as thesis chapters
 IGNORED_DIRS = {"bozza", "context", "latex", ".git", ".vscode", ".obsidian", "src"}
@@ -188,11 +192,11 @@ def preprocess_markdown(text: str, file_stem: str = "doc") -> str:
     # 4. Clean and map section headers:
     lines = []
     for line in text.splitlines():
-        header_match = re.match(r'^(#+)\s*(\d+(?:\.\d+)+)\s*(.*)$', line)
+        header_match = re.match(r'^(#+)\s*(\d+(?:[\._]\d+)*)\.?\s*(.*)$', line)
         if header_match:
             hashes, num_str, title = header_match.groups()
             dots = num_str.count('.')
-            new_level = max(1, min(dots, 4))
+            new_level = max(1, min(dots, 4)) if dots > 0 else 1
             new_hashes = "#" * new_level
             title = title.strip()
             if not title:
@@ -273,8 +277,10 @@ def format_images(tex: str) -> str:
             "\\end{figure}\n"
         )
 
-    pattern = r'\\includegraphics(?:\[.*?\])?\{([^}]+)\}'
-    return re.sub(pattern, repl_img, tex)
+    pattern = r'(?:\\pandocbounded\{)?\\includegraphics(?:\[.*?\])?\{([^}]+)\}(?:\})?'
+    tex = re.sub(pattern, repl_img, tex)
+    tex = re.sub(r'\\pandocbounded\{\s*\}', '', tex)
+    return tex
 
 def convert_md_file(md_path: Path, target_dir: Path, global_fn_map: dict) -> Path:
     target_dir.mkdir(parents=True, exist_ok=True)
@@ -360,7 +366,9 @@ def main():
 
     # Ensure Bibliography.bib exists in LATEX_DIR
     bib_file = LATEX_DIR / "Bibliography.bib"
-    if not bib_file.exists():
+    if (BASE_DIR / "Bibliography.bib").exists():
+        shutil.copy2(BASE_DIR / "Bibliography.bib", bib_file)
+    elif not bib_file.exists():
         with open(bib_file, "w", encoding="utf-8") as f:
             f.write("% Bibliografia della tesi\n")
 
@@ -389,6 +397,7 @@ def main():
 \setlength{\headheight}{15pt}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
 \newcommand{\passthrough}[1]{#1}
 
 % Search images in parent root as well

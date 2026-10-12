@@ -1,0 +1,39 @@
+\section{NsJail}\label{nsjail}
+
+Nsjail e\textquotesingle{} una sandbox sicura che esegue un server TCP.
+Ad ogni connessione viene fatto il fork e dell\textquotesingle ambiente
+e rilasciato all\textquotesingle utente per l\textquotesingle utilizzo.
+L\textquotesingle ambiente separato rende impossibile agli utenti di
+interferire tra di loro sebbene operino nello stesso sistema.
+
+Nsjail e\textquotesingle{} un tool che deve essere configurato per ogni
+challenge, specificando quali file dovrebbero essere esposti nel nuovo
+ambiente, e quali limiti applicare.
+
+Nsjail riesce a isolare i processi utilizzando namespaces, resource
+limits ed filtri seccomp.
+
+\subsubsection{namespaces}\label{namespaces}
+
+\subsubsection{seccomp bpf}\label{seccomp-bpf}
+
+Permette ad un processo di specificare un filtro da applicare alle
+chiamate di sistema in uscita, specificando un comportamento (es:
+uccidere il processo) quando chiamate filtrate vengono richieste dal
+processo.
+
+\begin{lstlisting}[language=C]
+scmp_filter_ctx ctx;
+seccomp_rule_add(ctx, ...);
+seccomp_load(ctx, ...);
+\end{lstlisting}
+
+\subsubsection{cgroups}\label{cgroups}
+
+e\textquotesingle{} un meccanismo per aggregare o partizionare i task in
+gruppi gerarchici. i task sono racchiusi in sottosistemi, dove un
+sottostistema si occupa di schedulare le risorse sottostando alle
+limitazioni.
+
+\passthrough{\lstinline!cgroups!} vengono utilizzati per applicare
+limitazioni e fare accountig su gruppi di task.
