@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.9)  12 OCT 2026 15:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  13 OCT 2026 00:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -585,7 +585,7 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count352
 ) (./main.aux
 (./Introduzione.aux) (./BlueAgent.aux) (./Architettura_BlueAgent.aux)
-(./Architetture_Alternative.aux) (./Appendice.aux))
+(./Architetture_Alternative.aux) (./Appendice.aux) (./Ringraziamenti.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 133.
@@ -690,25 +690,13 @@ LaTeX Font Info:    Trying to load font information for U+lasy on input line 2.
 (/usr/share/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Overfull \hbox (14.15793pt too wide) in paragraph at lines 27--27
- [][] [][]\T1/cmtt/m/n/12 UC-04\T1/cmr/m/n/12 : De-ploy di un uni-co con-tain-e
-r per il team $\OML/cmm/m/it/12 k$ \T1/cmr/m/n/12 [DA RIVEDERE][] []  
- []
-
-[1{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Overfull \hbox (15.01857pt too wide) in paragraph at lines 32--32
- [][] [][]\T1/cmtt/m/n/12 UC-09\T1/cmr/m/n/12 : Dis-mis-sione di un\TS1/cmr/m/n
-/12 '\T1/cmr/m/n/12 immagine per con-tain-er [DA RIVEDERE][] []  
- []
-
-
-Overfull \hbox (3.08266pt too wide) in paragraph at lines 35--35
+Overfull \hbox (3.08266pt too wide) in paragraph at lines 29--29
  [][] [][]\T1/cmtt/m/n/12 UC-12\T1/cmr/m/n/12 : Reg-is-trazione e con-fig-u-raz
 ione Wire-Guard per un mem- 
  []
 
-
-Overfull \hbox (20.62135pt too wide) in paragraph at lines 50--50
+[1{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+Overfull \hbox (20.62135pt too wide) in paragraph at lines 43--43
  [][] [][]\T1/cmr/m/n/12 Ciclo di Vi-ta del-la Sand-box: Async Con-text Man-ag-
 er (\T1/cmtt/m/n/12 OVNVerifier\T1/cmr/m/n/12 )[] []  
  []
@@ -717,7 +705,7 @@ er (\T1/cmtt/m/n/12 OVNVerifier\T1/cmr/m/n/12 )[] []
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [3] [4]
+ [3]
 \openout2 = `Introduzione.aux'.
 
  (./Introduzione.tex
@@ -740,7 +728,7 @@ l.14   p
 ]
 [2] [3]) (./1._Introduzione/1.3_Cyber_Range_Lo_Stato_Dell_Arte.tex)
 (./1._Introduzione/1.3.1_CR_Alternativi_kctf.tex [4]
-<src/images/kctf-architecture.png, id=607, 722.7pt x 542.025pt>
+<src/images/kctf-architecture.png, id=587, 722.7pt x 542.025pt>
 File: src/images/kctf-architecture.png Graphic file (type png)
 <use src/images/kctf-architecture.png>
 Package pdftex.def Info: src/images/kctf-architecture.png  used on input line 2
@@ -754,7 +742,7 @@ secuzione
  []
 
 ) (./1._Introduzione/1.3.2_CR_Alternativi_CTFBox.tex [7]
-<src/images/ctfbox-architecture.png, id=664, 713.66624pt x 510.90875pt>
+<src/images/ctfbox-architecture.png, id=644, 713.66624pt x 510.90875pt>
 File: src/images/ctfbox-architecture.png Graphic file (type png)
 <use src/images/ctfbox-architecture.png>
 Package pdftex.def Info: src/images/ctfbox-architecture.png  used on input line
@@ -762,7 +750,7 @@ Package pdftex.def Info: src/images/ctfbox-architecture.png  used on input line
 (pdftex.def)             Requested size: 392.64832pt x 281.09422pt.
  [8 <./src/images/ctfbox-architecture.png>]) (./1._Introduzione/1.3.3_CR_Altern
 ativi_CyTrONE.tex
-<src/images/cytrone-architecture.png, id=675, 648.4225pt x 227.85126pt>
+<src/images/cytrone-architecture.png, id=654, 648.4225pt x 227.85126pt>
 File: src/images/cytrone-architecture.png Graphic file (type png)
 <use src/images/cytrone-architecture.png>
 Package pdftex.def Info: src/images/cytrone-architecture.png  used on input lin
@@ -770,33 +758,33 @@ e 11.
 (pdftex.def)             Requested size: 392.64806pt x 137.97385pt.
 
 [9]
-<src/images/cytrone-training.png, id=688, 2057.6875pt x 4006.97pt>
+<src/images/cytrone-training.png, id=668, 2057.6875pt x 4006.97pt>
 File: src/images/cytrone-training.png Graphic file (type png)
 <use src/images/cytrone-training.png>
 Package pdftex.def Info: src/images/cytrone-training.png  used on input line 89
 .
 (pdftex.def)             Requested size: 242.39056pt x 472.0113pt.
-<src/images/cytrone-cyberrange.png, id=689, 387.4475pt x 806.01125pt>
+<src/images/cytrone-cyberrange.png, id=669, 387.4475pt x 806.01125pt>
 File: src/images/cytrone-cyberrange.png Graphic file (type png)
 <use src/images/cytrone-cyberrange.png>
 Package pdftex.def Info: src/images/cytrone-cyberrange.png  used on input line 
-100.
+99.
 (pdftex.def)             Requested size: 226.90121pt x 472.02509pt.
  [10 <./src/images/cytrone-architecture.png>] [11 <./src/images/cytrone-trainin
 g.png>] [12 <./src/images/cytrone-cyberrange.png>] [13]
-<src/images/cytrone-performance.png, id=726, 359.3425pt x 295.1025pt>
+<src/images/cytrone-performance.png, id=706, 359.3425pt x 295.1025pt>
 File: src/images/cytrone-performance.png Graphic file (type png)
 <use src/images/cytrone-performance.png>
 Package pdftex.def Info: src/images/cytrone-performance.png  used on input line
- 199.
+ 198.
 (pdftex.def)             Requested size: 392.67897pt x 322.47935pt.
  [14 <./src/images/cytrone-performance.png>]
-<src/images/cytrone-largescaleperformance.png, id=737, 359.3425pt x 292.09125pt
+<src/images/cytrone-largescaleperformance.png, id=716, 359.3425pt x 292.09125pt
 >
 File: src/images/cytrone-largescaleperformance.png Graphic file (type png)
 <use src/images/cytrone-largescaleperformance.png>
 Package pdftex.def Info: src/images/cytrone-largescaleperformance.png  used on 
-input line 230.
+input line 229.
 (pdftex.def)             Requested size: 392.67897pt x 319.18875pt.
 ) (./1._Introduzione/1.3.4_CR_CyberRangeCZ.tex [15 <./src/images/cytrone-larges
 caleperformance.png>]
@@ -805,14 +793,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 43--43
 c-[]concepts / terminology /
  []
 
-<src/images/KYPO-basic-elements-sandboxes.png, id=747, 501.875pt x 521.95pt>
+<src/images/KYPO-basic-elements-sandboxes.png, id=727, 501.875pt x 521.95pt>
 File: src/images/KYPO-basic-elements-sandboxes.png Graphic file (type png)
 <use src/images/KYPO-basic-elements-sandboxes.png>
 Package pdftex.def Info: src/images/KYPO-basic-elements-sandboxes.png  used on 
 input line 60.
 (pdftex.def)             Requested size: 392.66322pt x 408.36975pt.
 [16] [17 <./src/images/KYPO-basic-elements-sandboxes.png>]
-<src/images/KYPO-topology-instance.png, id=760, 799.98875pt x 1406.25375pt>
+<src/images/KYPO-topology-instance.png, id=740, 799.98875pt x 1406.25375pt>
 File: src/images/KYPO-topology-instance.png Graphic file (type png)
 <use src/images/KYPO-topology-instance.png>
 Package pdftex.def Info: src/images/KYPO-topology-instance.png  used on input l
@@ -854,38 +842,7 @@ S1/cmr/m/n/12 ' \T1/cmr/m/n/12 sta-to es-e-gui-to con suc-ces-so il de-ploy del
 l\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 infrastruttura
  []
 
-[24]
-Overfull \hbox (12.21053pt too wide) in paragraph at lines 251--256
-[]\T1/cmr/bx/n/12 Precondizioni\T1/cmr/m/n/12 : [][][][][][]. E\TS1/cmr/m/n/12 
-' \T1/cmr/m/n/12 sta-to es-e-gui-to con suc-ces-so il de-ploy dell\TS1/cmr/m/n/
-12 '\T1/cmr/m/n/12 infrastruttura
- []
-
-[25]
-Overfull \hbox (2.99669pt too wide) in paragraph at lines 308--312
-[]\T1/cmr/m/n/12 Il CTF Man-ag-er in-via la richi-es-ta [][][][][][][][][][][][
-][][][][][][][][][][][][] speci-
- []
-
-[26]
-Overfull \hbox (27.02545pt too wide) in paragraph at lines 405--409
-[]\T1/cmr/m/n/12 Il CTF Man-ag-er in-via la richi-es-ta [][][][][][][][][][][][
-][][][][] speci-f-i-can-do l\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 identificativo
- []
-
-
-Overfull \hbox (5.40761pt too wide) in paragraph at lines 418--422
-[]\T1/cmr/m/n/12 Esegue il tear-down dell\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 interf
-accia Wire-Guard [][][][][][][][] e le chi-avi crit-tografiche
- []
-
-[27]
-Overfull \hbox (18.23593pt too wide) in paragraph at lines 505--508
-[]\T1/cmr/bx/n/12 Obiettivo\T1/cmr/m/n/12 : Rimuo-vere un\TS1/cmr/m/n/12 '\T1/c
-mr/m/n/12 immagine non piu nec-es-saria dal cat-a-l-o-go di BlueAgent. 
- []
-
-[28] [29]) (./2._BlueAgent/2.4_Requisiti_Di_Sistema.tex [30]
+[24] [25] [26]) (./2._BlueAgent/2.4_Requisiti_Di_Sistema.tex
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 13.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
@@ -902,18 +859,18 @@ Overfull \hbox (14.07855pt too wide) in paragraph at lines 45--50
 -pi-a-men-to del-la log-i-ca di or-ches-trazione tramite
  []
 
-[31]
+[27]
 Overfull \hbox (2.08969pt too wide) in paragraph at lines 93--98
 [][][][][][][][][][][] \T1/cmr/bx/n/12 (TCP MSS Clamp-ing)\T1/cmr/m/n/12 : Ap-p
 li-cazione di re-gole [][][][] per forzare
  []
 
-[32])) [33]
+[28])) [29]
 \openout2 = `Architettura_BlueAgent.aux'.
 
  (./Architettura_BlueAgent.tex
 \bbl@ensure@italian {Capitolo} 3.
-(./3._Architettura_BlueAgent/3.1_Architettura_Rete.tex [34
+(./3._Architettura_BlueAgent/3.1_Architettura_Rete.tex [30
 
 
 
@@ -924,7 +881,7 @@ Overfull \hbox (5.88568pt too wide) in paragraph at lines 84--91
 /cmr/m/n/12 '\T1/cmr/m/n/12 implementazione
  []
 
-<src/images/mermaid_311_rete_production_k_fc40fab722.png, id=946, 759.83875pt x
+<src/images/mermaid_311_rete_production_k_fc40fab722.png, id=869, 759.83875pt x
  1798.72pt>
 File: src/images/mermaid_311_rete_production_k_fc40fab722.png Graphic file (typ
 e png)
@@ -932,19 +889,19 @@ e png)
 Package pdftex.def Info: src/images/mermaid_311_rete_production_k_fc40fab722.pn
 g  used on input line 103.
 (pdftex.def)             Requested size: 199.39688pt x 472.02013pt.
-[35] [36 <./src/images/mermaid_311_rete_production_k_fc40fab722.png>]
+[31] [32 <./src/images/mermaid_311_rete_production_k_fc40fab722.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 187--187
 [][][][]\T1/cmr/m/n/10 Documentazione Net-fil-ter, TCP MSS Clamp-ing: []$\T1/cm
 tt/m/n/10 https : / / wiki . nftables . org /
  []
 
-[37] [38]
+[33] [34]
 Overfull \hbox (3.47847pt too wide) in paragraph at lines 300--304
 [][][][][][][][][][][][][][][][][]\T1/cmr/m/n/12 : Vari-ante del NAT ap-pli-ca-
 ta al traf-fi-co us-cente (\T1/cmr/bx/n/12 egress\T1/cmr/m/n/12 ,
  []
 
-<src/images/mermaid_312_rete_verify_k_d80ab1c21b.png, id=990, 629.35126pt x 136
+<src/images/mermaid_312_rete_verify_k_d80ab1c21b.png, id=912, 629.35126pt x 136
 5.1pt>
 File: src/images/mermaid_312_rete_verify_k_d80ab1c21b.png Graphic file (type pn
 g)
@@ -952,7 +909,7 @@ g)
 Package pdftex.def Info: src/images/mermaid_312_rete_verify_k_d80ab1c21b.png  u
 sed on input line 316.
 (pdftex.def)             Requested size: 217.61617pt x 472.02232pt.
-) (./3._Architettura_BlueAgent/3.2_Architettura_Codice.tex [39] [40 <./src/imag
+) (./3._Architettura_BlueAgent/3.2_Architettura_Codice.tex [35] [36 <./src/imag
 es/mermaid_312_rete_verify_k_d80ab1c21b.png>]
 Overfull \hbox (8.45369pt too wide) in paragraph at lines 45--50
 []\T1/cmr/m/n/12 L\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 implementazione conc-re-ta []
@@ -971,56 +928,40 @@ Overfull \hbox (13.38127pt too wide) in paragraph at lines 81--88
  \T1/cmr/m/n/12 L\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 allocazione
  []
 
-[41]
+[37]
 Overfull \hbox (8.44946pt too wide) in paragraph at lines 156--159
 []\T1/cmr/m/n/12 BlueAgent im-ple-men-ta un mec-ca-n-is-mo di sin-croniz-zazion
 e a due liv-el-li ([]
  []
 
-[42]
-Overfull \hbox (43.9284pt too wide) in paragraph at lines 233--238
-\T1/cmr/m/n/12 ver-so il ker-nel Lin-ux ([][][][], [][][][][][][][], Wire-Guard
-) sfrut-tano [][][][][]
- []
-
-
+[38]
 Overfull \hbox (18.10675pt too wide) in paragraph at lines 246--246
 |[]\T1/cmr/bx/n/14.4 Resilienza e Ri-c-on-cil-i-azione del-lo Sta-to (\T1/cmtt/
 m/n/14.4 LifecycleManager\T1/cmr/bx/n/14.4 )| 
  []
 
-[43]) (./3._Architettura_BlueAgent/3.3_Comandi_Architettura_Rete.tex
-Overfull \hbox (30.90366pt too wide) in paragraph at lines 16--21
-\T1/cmr/m/n/12 oltro fisi-co dei pac-chet-ti), con-sen-ten-do di ge-stire e pro
--gram-mare l\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 infrastruttura
- []
-
+[39]) (./3._Architettura_BlueAgent/3.3_Comandi_Architettura_Rete.tex
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [44]
-Overfull \hbox (14.51775pt too wide) in paragraph at lines 71--73
-[][][][][][][][][]\T1/cmr/m/n/12 : util-i-ty da riga di co-man-do per la ges-ti
-one dell\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 infrastruttura. 
- []
-
-[45]
-Overfull \hbox (7.00258pt too wide) in paragraph at lines 132--139
+) [40]
+Overfull \hbox (7.00258pt too wide) in paragraph at lines 79--86
 []\T1/cmr/m/n/12 All\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 interno del-la cate-na [][]
 [][], il traf-fi-co viene val-ida-to ver-i-f-i-can-do l\TS1/cmr/m/n/12 '\T1/cmr
 /m/n/12 appartenenza
  []
 
-) (./3._Architettura_BlueAgent/3.5_CTFd.tex)
-(./3._Architettura_BlueAgent/3.6_Benchmark_Difesa_Architettura.tex [46]
-Overfull \hbox (27.32924pt too wide) in paragraph at lines 50--58
+) (./3._Architettura_BlueAgent/3.5_CTFd.tex [41])
+(./3._Architettura_BlueAgent/3.6_Benchmark_Difesa_Architettura.tex [42]
+[43]
+Overfull \hbox (27.32924pt too wide) in paragraph at lines 171--179
 []\T1/cmr/bx/n/12 UDP Path MTU Black-hole: \T1/cmr/m/n/12 La com-bi-nazione di 
 tun-nel Wire-Guard ($[]\OT1/cmr/m/n/12 1420$\T1/cmr/m/n/12 )
  []
 
-)) [47]
+)) [44]
 \openout2 = `Architetture_Alternative.aux'.
 
  (./Architetture_Alternative.tex
@@ -1033,24 +974,24 @@ Overfull \hbox (11.44868pt too wide) in paragraph at lines 22--25
 cia-re trac-ce dell\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 exploit
  []
 
-[48
+[45
 
 
 
 
 ]) (./4._Architetture_Alternative/4.4_AA_NetworkNamespace_separato.tex
-[49]
+[46]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 51.
 
-) (./4._Architetture_Alternative/4.5_AA_EsecuzioneInMemory.tex [50])) [51]
+) (./4._Architetture_Alternative/4.5_AA_EsecuzioneInMemory.tex [47])) [48]
 \openout2 = `Appendice.aux'.
 
 
 (./Appendice.tex
 \bbl@ensure@italian {Capitolo} 5.
-(./5._Appendice/5.1_LinuxNetworking.tex [52
+(./5._Appendice/5.1_LinuxNetworking.tex [49
 
 
 
@@ -1068,26 +1009,26 @@ talocean . com / community / tutorials / a-[]deep-[]dive-[]into-[]iptables-[]an
 d-[]netfilter-[]architecture$[]
  []
 
-[53]
+[50]
 Overfull \hbox (9.3604pt too wide) in paragraph at lines 152--157
 \T1/cmr/m/n/12 nisce un\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 interfaccia per ag-giun-
 gere, elim-inare, re-gole net-fil-ter, ag-giun-gere tabelle,
  []
 
-[54] [55] [56] [57]) (./5._Appendice/5.2_VPN_e_OVN.tex
+[51] [52] [53] [54]) (./5._Appendice/5.2_VPN_e_OVN.tex
 Overfull \hbox (44.28108pt too wide) in paragraph at lines 3--5
 \T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : []$\T1/cmtt/m/n/12 https : / / www . wire
 guard . com / papers / wireguard . pdf$[] \T1/cmr/bx/n/12 vpn\T1/cmr/m/n/12 : [
 ]$\T1/cmtt/m/n/12 https : / / ieeexplore .
  []
 
-[58]
+[55]
 Overfull \hbox (23.14037pt too wide) in paragraph at lines 50--54
 []\T1/cmr/m/n/12 vediamo un es-em-pio di \T1/cmr/m/it/12 cryp-tokey rout-ing ta
 -ble\T1/cmr/m/n/12 : ![](Past-ed im-age 20261001214515.png)
  []
 
-[59]
+[56]
 Overfull \hbox (150.34344pt too wide) in paragraph at lines 92--94
 []$\T1/cmtt/m/n/12 https : / / networklessons . com / network-[]automation / in
 troduction-[]to-[]sdn-[]software-[]defined-[]networking$[]
@@ -1111,7 +1052,7 @@ Overfull \hbox (11.94681pt too wide) in paragraph at lines 119--122
 t-ed im-age 20261002154936.png) 
  []
 
-[60]) (./5._Appendice/5.3_ZFS.tex
+[57]) (./5._Appendice/5.3_ZFS.tex
 Overfull \hbox (69.89151pt too wide) in paragraph at lines 3--6
 \T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : [][]$\T1/cmtt/m/n/12 https : / / openzfs 
 . org / wiki / System _ Administration$[][] []$https : / / blog . victormendonc
@@ -1124,40 +1065,40 @@ Overfull \hbox (2.69673pt too wide) in paragraph at lines 13--16
 to in una nuo-va porzione
  []
 
-[61] [62]
-<src/images/mermaid_vdev_bb98e6738a.png, id=1200, 1027.84pt x 627.34375pt>
+[58] [59]
+<src/images/mermaid_vdev_bb98e6738a.png, id=1128, 1027.84pt x 627.34375pt>
 File: src/images/mermaid_vdev_bb98e6738a.png Graphic file (type png)
 <use src/images/mermaid_vdev_bb98e6738a.png>
 Package pdftex.def Info: src/images/mermaid_vdev_bb98e6738a.png  used on input 
 line 158.
 (pdftex.def)             Requested size: 392.65349pt x 239.65666pt.
- [63] [64 <./src/images/mermaid_vdev_bb98e6738a.png>])
+ [60] [61 <./src/images/mermaid_vdev_bb98e6738a.png>])
 (./5._Appendice/5.4_NsJail.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 16.
 
-[65])) [66] (./main.lof)
+[62])) [63] (./main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [67
+ [64
 
 
 ] (./main.lol)
 \tf@lol=\write7
 \openout7 = `main.lol'.
 
- [68
+ [65
 
 ] (./main.loa)
 \tf@loa=\write8
 \openout8 = `main.loa'.
 
  (./main.bbl
-[69
+[66
 
-] [70
+] [67
 
 ]
 Underfull \hbox (badness 2564) in paragraph at lines 91--94
@@ -1183,7 +1124,7 @@ Underfull \hbox (badness 2435) in paragraph at lines 118--122
 d-dress Trans-la-
  []
 
-[71]
+[68]
 Underfull \hbox (badness 10000) in paragraph at lines 148--151
 []\T1/cmr/m/n/12 J. Elling-wood, ``A Deep Dive in-to Ipt-a-bles and Net-fil-ter
  Ar-
@@ -1207,46 +1148,54 @@ Underfull \hbox (badness 1910) in paragraph at lines 153--155
 k for
  []
 
-) [72] (./main.aux (./Introduzione.aux) (./BlueAgent.aux)
-(./Architettura_BlueAgent.aux) (./Architetture_Alternative.aux)
-(./Appendice.aux))
+) [69]
+\openout2 = `Ringraziamenti.aux'.
+
+ (./Ringraziamenti.tex) [70
+
+
+] (./main.aux (./Introduzione.aux)
+(./BlueAgent.aux) (./Architettura_BlueAgent.aux)
+(./Architetture_Alternative.aux) (./Appendice.aux) (./Ringraziamenti.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E433EBAE7BE9F99A200120BD1BFA2F55;22141.
+(rerunfilecheck)             Checksum: 1A7D4193441D8E2564F3DFFEC1D7E414;20355.
  ) 
 Here is how much of TeX's memory you used:
- 17976 strings out of 469515
- 278033 string characters out of 5470807
- 1024433 words of memory out of 5000000
- 45728 multiletter control sequences out of 15000+600000
- 652193 words of font info for 105 fonts, out of 8000000 for 9000
+ 17964 strings out of 469515
+ 278174 string characters out of 5470807
+ 1028094 words of memory out of 5000000
+ 45748 multiletter control sequences out of 15000+600000
+ 655707 words of font info for 110 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,88p,542b,2137s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,88p,541b,2058s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/sh
 are/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/
-fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sf
-bx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></us
-r/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></usr/share/texmf-d
-ist/fonts/type1/public/cm-super/sfit1000.pfb></usr/share/texmf-dist/fonts/type1
-/public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-supe
-r/sfrm0700.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb>
-</usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/tex
-mf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/cm-super/sfti1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-
-super/sftt1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.
-pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb>
-Output written on main.pdf (77 pages, 2675757 bytes).
+fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/pub
+lic/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sf
+bx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></us
+r/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf-d
+ist/fonts/type1/public/cm-super/sfcc1440.pfb></usr/share/texmf-dist/fonts/type1
+/public/cm-super/sfit1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-supe
+r/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb>
+</usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-
+super/sfsl1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.
+pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/share
+/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/share/texmf-dist/fon
+ts/type1/public/cm-super/sftt1440.pfb>
+Output written on main.pdf (74 pages, 2713430 bytes).
 PDF statistics:
- 1549 PDF objects out of 1728 (max. 8388607)
- 1383 compressed objects within 14 object streams
- 488 named destinations out of 1000 (max. 500000)
- 893 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1484 PDF objects out of 1728 (max. 8388607)
+ 1317 compressed objects within 14 object streams
+ 444 named destinations out of 1000 (max. 500000)
+ 869 words of extra memory for PDF output out of 10000 (max. 10000000)
 

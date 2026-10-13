@@ -15,21 +15,21 @@ La topologia e\textquotesingle{} suddivisa logicamente in due reti:
   \(\text{team-}k\)
 \end{itemize}
 
-Dunque schema di indirizzamento prevede una netta separazione tra lo
+Dunque lo schema di indirizzamento prevede una netta separazione tra lo
 spazio di gioco del team \(k\), la rete WireGuard e la rete di Incus:
 
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!10.k.0.0/24!}: sottorete WireGuard per i
-  membri del team \(k\).
+  \passthrough{\lstinline!10.k.0.0/24!}: e\textquotesingle{} la
+  sottorete WireGuard per i membri del team \(k\).
 \item
-  \passthrough{\lstinline!10.k.1.0/24!}: sottorete LAN per i container
-  di produzione e per i cloni di verifica.
+  \passthrough{\lstinline!10.k.1.0/24!}: e\textquotesingle{} la
+  sottorete LAN per i container di produzione e per i cloni di verifica.
 \item
-  \passthrough{\lstinline!172.16.0.0/24!}: sottorete gestita da
-  \(\text{incusbr0}\) per fornire la connettività esterna e le reti OVN
-  tramite NAT.
+  \passthrough{\lstinline!172.16.0.0/24!}: e\textquotesingle{} la
+  sottorete gestita da \(\text{incusbr0}\) per fornire la connettività
+  esterna e le reti OVN tramite NAT.
 \end{itemize}
 
 \subsection{\texorpdfstring{Rete
@@ -92,10 +92,10 @@ prestazioni. \footnote{\label{fn:ref_15}\url{https://dev.to/godofgeeks/virtual-e
 
 Tramite regole di routing, il traffico dell\textquotesingle interfaccia
 \(\text{wg-}k\) viene instradato verso \(\text{br-team-}k\) e viceversa.
-Il routing viene applicato aggiungendo al sistema, dentro al set
-\passthrough{\lstinline!team\_links!} la coppia di interfacce. Le regole
-ed i comandi usati per implementare l\textquotesingle inoltro verranno
-esposti piu avanti.
+Questa regola viene applicata aggiungendo dentro al set
+\passthrough{\lstinline!team\_links!} (una struttura dati
+all\textquotesingle interno del kernel) la coppia di interfacce
+interessate.
 
 
 \begin{figure}[htbp]
@@ -124,9 +124,9 @@ La rete \(\text{verify-}k\) e\textquotesingle{} fatta cosi, contiene:
   kernel, ma una topologia virtuale isolata composta da uno switch e un
   router con gateway: \passthrough{\lstinline!10.k.1.1/24!}.
 \item
-  \(\text{incusbr0}\): bridge di rete di Incus sull\textquotesingle host
-  con gateway \passthrough{\lstinline!172.16.0.1/24!}. Svolge il ruolo
-  di interfaccia per l\textquotesingle instradamento verso
+  \(\text{incusbr0}\): bridge di rete di Incus con gateway
+  \passthrough{\lstinline!172.16.0.1/24!}. Svolge il ruolo di
+  interfaccia per l\textquotesingle instradamento verso
   l\textquotesingle esterno della rete OVN.
 \item
   \(\text{eth0}\): sono le interfacce di rete dei container clonati
@@ -188,9 +188,9 @@ dimensione eccedente hanno il flag \emph{Don\textquotesingle t Fragment}
 mentre il traffico UDP deve rimanere entro i limiti imposti
 dall\textquotesingle MTU minima della catena.
 
-Questo approccio \emph{garantisce l\textquotesingle assenza di conflitti
-di routing} grazie a una netta separazione tra \textbf{spazio utente} e
-\textbf{spazio kernel} \footnote{\label{fn:ref_19}Documentazione Open vSwitch,
+L\textquotesingle uso di una SDN garantisce l\textquotesingle assenza di
+conflitti di routing grazie a una netta separazione tra \textbf{spazio
+utente} e \textbf{spazio kernel} \footnote{\label{fn:ref_19}Documentazione Open vSwitch,
   architettura Datapath Kernel vs Userspace:
   \url{https://docs.openvswitch.org/en/latest/intro/what-is-ovs/}}:
 
@@ -202,7 +202,7 @@ di routing} grazie a una netta separazione tra \textbf{spazio utente} e
   \passthrough{\lstinline!ovn-northd!}) e di Open vSwitch
   (\passthrough{\lstinline!ovs-vswitchd!}) elaborano la topologia logica
   e la traducono in flussi OpenFlow. Il router OVN esiste puramente a
-  questo livello logico fino ad ora esiste solo logicamente.
+  livello logico.
 \item
   \textbf{Spazio Kernel (Data Plane):} l\textquotesingle effettivo
   inoltro dei frame avviene ad alte prestazioni tramite il modulo kernel

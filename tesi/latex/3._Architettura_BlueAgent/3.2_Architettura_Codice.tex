@@ -192,7 +192,7 @@ Come si avviano piu\textquotesingle{} worker?
 \begin{quote}
 \passthrough{\lstinline!uvicorn!}: e\textquotesingle il web server su
 cui si basa FastAPI, dunque e\textquotesingle{} uvicorn che decide come
-gestire le richieste, e a quali task e processi assegnarli. Da solo
+gestire le richieste, e a quali task e worker assegnarli. Da solo
 FastAPI non funziona, non implementa il server di rete.
 \end{quote}
 
@@ -231,10 +231,10 @@ modo da adattarsi al metodo \passthrough{\lstinline!wait!} di Incus:
 \end{itemize}
 
 Inoltre l\textquotesingle esecuzione dei comandi sulla macchina host
-avviene tramite: le chiamate verso il kernel Linux
-(\passthrough{\lstinline!nftables!}, \passthrough{\lstinline!ip link!},
-WireGuard) sfruttano
-\passthrough{\lstinline!asyncio.create\_subprocess\_exec!}.
+avviene tramite:
+\passthrough{\lstinline!asyncio.create\_subprocess\_exec!} per evitare
+chiamate bloccanti su comandi IO intensive. (CONTROLLA SE HO DETTO UNA
+MINCHIATA)
 
 Questo approccio consente a un singolo processo BlueAgent di servire le
 richieste di telemetria utilizzando piu task e senza rimanere in attessa
@@ -266,10 +266,7 @@ include il demone in background
   risorsa la cui creazione risalga a meno di 90 secondi. Questa finestra
   temporale risolve una race condition fondamentale: durante
   l\textquotesingle avvio di una verifica, la rete OVN viene creata
-  prima che i container cloni vi siano collegati. Senza il periodo di
-  grazia, il ciclo di bonifica interpreterebbe la rete appena creata
-  come una risorsa "vuota e orfana", distruggendola mentre la richiesta
-  legittima ne sta ancora completando la configurazione.
+  prima che i container cloni vi siano collegati.
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

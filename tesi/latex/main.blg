@@ -7,6 +7,7 @@ A level-1 auxiliary file: Architettura_BlueAgent.aux
 A level-1 auxiliary file: Architetture_Alternative.aux
 A level-1 auxiliary file: Appendice.aux
 The style file: IEEEtran.bst
+A level-1 auxiliary file: Ringraziamenti.aux
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
@@ -20,7 +21,7 @@ Database file #1: Bibliography.bib
 Done.
 You've used 33 entries,
             4087 wiz_defined-function locations,
-            984 strings with 12538 characters,
+            985 strings with 12556 characters,
 and the built_in function-call counts, 15866 in all, are:
 = -- 1340
 > -- 263
