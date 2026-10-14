@@ -1,0 +1,37 @@
+\section{Network Namespace Separato per la
+Verifica}\label{network-namespace-separato-per-la-verifica}
+
+In BlueAgent, abbiamo introdotto OVN per semplificare la gestione di due
+reti con stesso gateway.
+
+Per evitare di aggiungere la complessita computazionale di OVN, si puo'
+pensare di creare un network namespace separato al momento della
+verifica.
+
+All'interno di questo nuovo namespace, chiamato \(\text{verify-}k\) si
+crea la rete di verifica composta dal solo bridge L2 e si assegna a
+questo bridge il gateway originale.
+
+I container duplicati dovranno poi essere collegati al nuovo bridge.
+
+Per consentire l'accesso alla rete WAN bisogna usare una coppia di
+\passthrough{\lstinline!veth!}, per collegare il namespace
+\(\text{verify-}k\) al namespace root.
+
+In questo modo i due bridge con stesso ip gateway possono coesistere
+poiche riesiedono in namespace differenti, ci pensa il kernel ad
+effettuare il routing dei pacchetti verso le giuste interfacce nei
+differenti namespace.
+
+Tutta via l'implementazione non e' immediata e l'uso di Incus non si
+sposa bene con la creazione di network namespace separati dato che non
+sa come tracciarene l'esistenza. Dunque bisogna gestire manualmente le
+interfacce di rete, aggiungendo una notevole complessita. Questo perche'
+il motore di Incus esegue sul namespace root, e non e' progettato per
+gestire interfacce dentro altri namespace. Bisogna dunque raggirare
+Incus, ed istanziare e gestire in BlueAgent coppie di \emph{veth} che
+gestiscano questo disallineamento.
+
+Dal lato del codice aumenta dunque la complessita: invece di fare
+richieste verso l'API di Incus per gestire le interfacce, bisogna usare
+vari comandi e tracciare il ciclo di vita delle interfacce usate.

@@ -1,0 +1,11 @@
+Nel lavoro di tesi vogliamo gestire una competizione CTF (Capture The Flag).
+
+Di solito in una competizione CTF, uno o piu' utenti (eventualmente organizzati in team) si sfidano per risolvere un'insieme di challenge, ossia recuperare una **flag**: una stringa del tipo `{hai_trovato_la_flag}`.
+
+Ci concentreremo nel lavoro in un tipo di competizione CTF, basato sulla gestione di uno o piu sistemi vulnerabili da mitigare, dunque una competizione di Difesa dove la flag si ottiene unicamente difendendo il sistema, ossia *"patchando"* la vulnerabilita'.  Nel lavoro si tiene conto del fatto che il sistema vulnerabile spesso potrebbe essere costituito da uno o piu host/nodi che comunicano tra di loro. 
+
+Le CTF hanno lo scopo di migliorare la formazione degli specialisti del settore, tramite la simulazione di scenari realistici, complessi o quantomeno molto specifici. In particolare e' fondamentale formare studenti e le risorse aziendali, per la gestione e mitigazione di sistemi vulnerabili, in modo da prevenire perdite dovute ad attacchi informatici in scenari reali. La simulazione di questi scenari avviene all'interno di un ambiente denominato Cyber Range.
+
+Abbiamo dunque sviluppato *BlueAgent*, un'orchestratore di sistemi vulnerabili basato sulla tecnologia dei container che implementa il Cyber Range di cui abbiamo bisogno per gestire competizioni di Difesa. BlueAgent si occupa inoltre di verificare che le vulnerabilita presenti sui container siano state corrette, tramite un sistema di verifica che avviene completamente all'oscuro dei giocatori, ossia la colonazione dei container in un'ambiente separato.
+
+INSERIRE RISULTATI OTTENUTI e METODOLOGIA USATA

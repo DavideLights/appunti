@@ -1,0 +1,77 @@
+\section{Benchmark e Difesa
+dell'Architettura}\label{benchmark-e-difesa-dellarchitettura}
+
+Per concludere l'esposizione dell'architettura di BlueAgent, vengono
+motivate le principali scelte infrastrutturali e di codice rimaste
+aperte, difendendo la validità del progetto rispetto ai requisiti di un
+Cyber Range orientato al patch management.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Scelte di Piattaforma e
+Infrastruttura}\label{scelte-di-piattaforma-e-infrastruttura}
+
+\textbf{Perché Debian 13?} Offre un kernel moderno e stabile, garantendo
+un'ottima compatibilita con i vari pacchetti utilizzati (Incus, OVN,
+OVS, \ldots).
+
+\textbf{Perche' ZFS?}: e' un file system generalmente ritenuto stabile e
+affidabile che offre un sistema di CoW (Copy-on-Write) a basso costo,
+senza il bisogno di duplicare i dati finche non vengono scritti. E'
+stato scelto rispetto ad alternative come BTRFS poiche, ZFS e' ritenuto
+più maturo e stabile.
+
+\textbf{Perche' Incus?} A differenza di Docker, offre i container di
+sistema, ossia container con un init system completo (e quindi un
+proprio processo \passthrough{\lstinline!init!} con
+\passthrough{\lstinline!PID!} 0). Permette ai concorrenti di operare
+realisticamente, accedendo ai servizi di sistema ed utilizzare utility
+complicate come \passthrough{\lstinline!apt!}, seppur in ambiente
+containerizzato. Inoltre Incus supporta nativamente ZFS ed OVN.
+
+\subsection{Difesa dell'Architettura}\label{difesa-dellarchitettura}
+
+Il vantaggio piu grande che porta BlueAgent e' l'invisibilita totale
+dell'Oracolo (o dello script di verifica), ribadiamo dunque che e'
+impossibile per i partecipanti intercettare ed ascoltare traffico di
+rete, o l'esecuzione dei comandi di verifica. La clonazione tramite CoW
+in una sandbox OVN garantisce verifiche totalmente isolate, senza leak
+di informazioni né disservizi sull'ambiente di produzione, con un uso di
+risorse minimo.
+
+La duplicazione tramite container rappresenta il giusto compromesso tra
+l'uso di intere macchine virtuali e l'uso di namespace tramite NSJail
+come visto in kCTF.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Critica e Limiti
+Architetturali}\label{critica-e-limiti-architetturali}
+
+Nonostante i vantaggi, l'architettura presenta compromessi e vincoli
+strutturali.
+
+Combinare insieme il tunnel Geneve
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UDP Path MTU Blackhole:} La combinazione di tunnel WireGuard
+  (\(\text{MTU } 1420\)) e Geneve OVN (\(\text{MTU } 1442\), all'interno
+  della \textbf{rete di verifica}) impone riduzioni di MTU. Mentre il
+  TCP beneficia del MSS clamping via \passthrough{\lstinline!nftables!},
+  i pacchetti UDP di grandi dimensioni con flag \emph{Don't Fragment},
+  potrebbero essere scartati dal kernel.
+\item
+  \textbf{Limite scalabilità a 254 team:} L'indirizzamento
+  deterministico \passthrough{\lstinline!10.k.x.x!} vincola \(k\) a un
+  singolo byte (\(0 \le k \le 254\)), quindi ad un massimo di
+  \(\text{255}\) team.
+\item
+  \textbf{Concorrenza e blocco multi-nodo:} Il meccanismo
+  \passthrough{\lstinline!TwoTierLock!}
+  (\passthrough{\lstinline!asyncio.Lock!} combinato con
+  \passthrough{\lstinline!flock!}) è confinato al singolo nodo. Per
+  scalare l'architettura su più nodi bisogna introdurre l'uso di un
+  gestore di lock distribuito come Redis.
+\end{itemize}

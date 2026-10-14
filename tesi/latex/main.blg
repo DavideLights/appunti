@@ -2,9 +2,11 @@ This is BibTeX, Version 0.99e (TeX Live 2026/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 A level-1 auxiliary file: Introduzione.aux
+A level-1 auxiliary file: Contesto_e_Confronto_con_lo_Stato_dell_Arte.aux
 A level-1 auxiliary file: BlueAgent.aux
-A level-1 auxiliary file: Architettura_BlueAgent.aux
-A level-1 auxiliary file: Architetture_Alternative.aux
+A level-1 auxiliary file: Architettura_Rete_Alto_Livello.aux
+A level-1 auxiliary file: Architettura_Nel_Dettaglio_e_Validazione.aux
+A level-1 auxiliary file: Architetture_Rete__Alternative.aux
 A level-1 auxiliary file: Appendice.aux
 The style file: IEEEtran.bst
 A level-1 auxiliary file: Ringraziamenti.aux
@@ -21,7 +23,7 @@ Database file #1: Bibliography.bib
 Done.
 You've used 33 entries,
             4087 wiz_defined-function locations,
-            985 strings with 12556 characters,
+            987 strings with 12661 characters,
 and the built_in function-call counts, 15866 in all, are:
 = -- 1340
 > -- 263

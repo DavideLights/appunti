@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  13 OCT 2026 00:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  14 OCT 2026 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -564,48 +564,409 @@ Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
 \c@LT@chunks=\count348
 \LT@p@ftn=\toks38
 )
+\c@none=\count349
+
 (/usr/share/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
-\calc@Acount=\count349
-\calc@Bcount=\count350
+\calc@Acount=\count350
+\calc@Bcount=\count351
 \calc@Adimen=\dimen198
 \calc@Bdimen=\dimen199
 \calc@Askip=\skip118
 \calc@Bskip=\skip119
 LaTeX Info: Redefining \setlength on input line 86.
 LaTeX Info: Redefining \addtolength on input line 87.
-\calc@Ccount=\count351
+\calc@Ccount=\count352
 \calc@Cskip=\skip120
 )
 (/usr/share/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
 )
-(/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+(/usr/share/texmf-dist/tex/latex/inconsolata/inconsolata.sty
+Package: inconsolata 2019/05/17 v1.12
+
+`inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(/usr/share/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2025/11/04 v2.10 package option processing (HA)
+
+(/usr/share/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks39
+\XKV@tempa@toks=\toks40
+\XKV@tempb@toks=\toks41
+)
+\XKV@depth=\count353
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count354
+)
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2025/11/28 version 6.9.0 text color boxes
+
+(/usr/share/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks42
+\pgfutil@tempdima=\dimen256
+\pgfutil@tempdimb=\dimen257
+)
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box68
+)
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/usr/share/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/share/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks43
+\pgfkeys@temptoks=\toks44
+
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.te
+x
+\pgfkeys@tmptoks=\toks45
+))
+\pgf@x=\dimen258
+\pgf@y=\dimen259
+\pgf@xa=\dimen260
+\pgf@ya=\dimen261
+\pgf@xb=\dimen262
+\pgf@yb=\dimen263
+\pgf@xc=\dimen264
+\pgf@yc=\dimen265
+\pgf@xd=\dimen266
+\pgf@yd=\dimen267
+\w@pgf@writea=\write4
+\r@pgf@reada=\read4
+\c@pgf@counta=\count355
+\c@pgf@countb=\count356
+\c@pgf@countc=\count357
+\c@pgf@countd=\count358
+\t@pgf@toka=\toks46
+\t@pgf@tokb=\toks47
+\t@pgf@tokc=\toks48
+\pgf@sys@id@count=\count359
+ (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count360
+\pgfsyssoftpath@bigbuffer@items=\count361
+)
+(/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen268
+\pgfmath@count=\count362
+\pgfmath@box=\box69
+\pgfmath@toks=\toks49
+\pgfmath@stack@operand=\toks50
+\pgfmath@stack@operation=\toks51
+)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code
+.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.te
+x) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics
+.code.tex) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count363
+))
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen269
+\pgf@picmaxx=\dimen270
+\pgf@picminy=\dimen271
+\pgf@picmaxy=\dimen272
+\pgf@pathminx=\dimen273
+\pgf@pathmaxx=\dimen274
+\pgf@pathminy=\dimen275
+\pgf@pathmaxy=\dimen276
+\pgf@xx=\dimen277
+\pgf@xy=\dimen278
+\pgf@yx=\dimen279
+\pgf@yy=\dimen280
+\pgf@zx=\dimen281
+\pgf@zy=\dimen282
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen283
+\pgf@path@lasty=\dimen284
+) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen285
+\pgf@shorten@start@additional=\dimen286
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box70
+\pgf@hbox=\box71
+\pgf@layerbox@main=\box72
+\pgf@picture@serial@count=\count364
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen287
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.t
+ex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen288
+\pgf@pt@y=\dimen289
+\pgf@pt@temp=\dimen290
+) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.te
+x
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen291
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen292
+\pgf@sys@shading@range@num=\count365
+\pgf@shadingcount=\count366
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box73
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box74
+)
+(/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/share/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen293
+\pgf@nodesepend=\dimen294
+)
+(/usr/share/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/usr/share/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/share/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/share/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen295
+\pgffor@skip=\dimen296
+\pgffor@stack=\toks52
+\pgffor@toks=\toks53
+))
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.te
+x
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count367
+\pgfplotmarksize=\dimen297
+)
+\tikz@lastx=\dimen298
+\tikz@lasty=\dimen299
+\tikz@lastxsaved=\dimen300
+\tikz@lastysaved=\dimen301
+\tikz@lastmovetox=\dimen302
+\tikz@lastmovetoy=\dimen303
+\tikzleveldistance=\dimen304
+\tikzsiblingdistance=\dimen305
+\tikz@figbox=\box75
+\tikz@figbox@bg=\box76
+\tikz@tempbox=\box77
+\tikz@tempbox@bg=\box78
+\tikztreelevel=\count368
+\tikznumberofchildren=\count369
+\tikznumberofcurrentchild=\count370
+\tikz@fig@count=\count371
+ (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count372
+\pgfmatrixcurrentcolumn=\count373
+\pgf@matrix@numberofcolumns=\count374
+)
+\tikz@expandcount=\count375
+
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
+topaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (/usr/share/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks54
+\verbatim@line=\toks55
+\verbatim@in@stream=\read5
+)
+(/usr/share/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(/usr/share/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box79
+\tcb@upperbox=\box80
+\tcb@lowerbox=\box81
+\tcb@phantombox=\box82
+\c@tcbbreakpart=\count376
+\c@tcblayer=\count377
+\c@tcolorbox@number=\count378
+\l__tcobox_tmpa_box=\box83
+\l__tcobox_tmpa_dim=\dimen306
+\tcb@temp=\box84
+\tcb@temp=\box85
+\tcb@temp=\box86
+\tcb@temp=\box87
+
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcbraster.code.tex
+Library (tcolorbox): 'tcbraster.code.tex' version '6.9.0'
+\c@tcbrastercolumn=\count379
+\c@tcbrasterrow=\count380
+\c@tcbrasternum=\count381
+\c@tcbraster=\count382
+) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.9.0'
+(/usr/share/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
+Package: tikzfill.image 2023/08/08 v1.0.1 Image filling library for TikZ
+
+(/usr/share/texmf-dist/tex/latex/tikzfill/tikzfill-common.sty
+Package: tikzfill-common 2023/08/08 v1.0.1 Auxiliary code for tikzfill
+)
+(/usr/share/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.image.code.tex
+File: tikzlibraryfill.image.code.tex 2023/08/08 v1.0.1 Image filling library
+\l__tikzfill_img_box=\box88
+))
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.9.0'
+)) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcbbreakable.code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.9.0'
+(/usr/share/texmf-dist/tex/latex/pdfcol/pdfcol.sty
+Package: pdfcol 2022-09-21 v1.7 Handle new color stacks for pdfTeX (HO)
+)
+Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
+\tcb@testbox=\box89
+\tcb@totalupperbox=\box90
+\tcb@totallowerbox=\box91
+)
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcbhooks.code.tex
+Library (tcolorbox): 'tcbhooks.code.tex' version '6.9.0'
+) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcbtheorems.code.tex
+Library (tcolorbox): 'tcbtheorems.code.tex' version '6.9.0'
+) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcbfitting.code.tex
+Library (tcolorbox): 'tcbfitting.code.tex' version '6.9.0'
+\tcbfitdim=\dimen307
+\tcb@lowerfitdim=\dimen308
+\tcb@upperfitdim=\dimen309
+\tcb@cur@hbadness=\count383
+) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcblistingsutf8.code.tex
+Library (tcolorbox): 'tcblistingsutf8.code.tex' version '6.9.0'
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcblistings.code.tex
+Library (tcolorbox): 'tcblistings.code.tex' version '6.9.0'
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcblistingscore.code.tex
+Library (tcolorbox): 'tcblistingscore.code.tex' version '6.9.0'
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcbprocessing.code.tex
+Library (tcolorbox): 'tcbprocessing.code.tex' version '6.9.0'
+)
+\c@tcblisting=\count384
+)) (/usr/share/texmf-dist/tex/latex/listingsutf8/listingsutf8.sty
+Package: listingsutf8 2019-12-10 v1.5 Allow UTF-8 in listings input (HO)
+))
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcbexternal.code.tex
+Library (tcolorbox): 'tcbexternal.code.tex' version '6.9.0'
+) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcbmagazine.code.tex
+Library (tcolorbox): 'tcbmagazine.code.tex' version '6.9.0'
+) (/usr/share/texmf-dist/tex/latex/tcolorbox/tcbvignette.code.tex
+Library (tcolorbox): 'tcbvignette.code.tex' version '6.9.0'
+
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
+fadings.code.tex
+File: tikzlibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryfadings.code.tex
+File: pgflibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/usr/share/texmf-dist/tex/latex/tcolorbox/tcbposter.code.tex
+Library (tcolorbox): 'tcbposter.code.tex' version '6.9.0'
+)) (/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count352
-) (./main.aux
-(./Introduzione.aux) (./BlueAgent.aux) (./Architettura_BlueAgent.aux)
-(./Architetture_Alternative.aux) (./Appendice.aux) (./Ringraziamenti.aux))
+\l__color_backend_stack_int=\count385
+) (./main.aux (./Introduzione.aux) (./Contesto_e_Confronto_con_lo_Stato_dell_Ar
+te.aux)
+(./BlueAgent.aux) (./Architettura_Rete_Alto_Livello.aux)
+(./Architettura_Nel_Dettaglio_e_Validazione.aux)
+(./Architetture_Rete__Alternative.aux) (./Appendice.aux) (./Ringraziamenti.aux)
+)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -643,17 +1004,17 @@ LaTeX Font Info:    ... okay on input line 133.
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count353
-\scratchdimen=\dimen256
-\scratchbox=\box68
-\nofMPsegments=\count354
-\nofMParguments=\count355
-\everyMPshowfont=\toks39
-\MPscratchCnt=\count356
-\MPscratchDim=\dimen257
-\MPnumerator=\count357
-\makeMPintoPDFobject=\count358
-\everyMPtoPDFconversion=\toks40
+\scratchcounter=\count386
+\scratchdimen=\dimen310
+\scratchbox=\box92
+\nofMPsegments=\count387
+\nofMParguments=\count388
+\everyMPshowfont=\toks56
+\MPscratchCnt=\count389
+\MPscratchDim=\dimen311
+\MPnumerator=\count390
+\makeMPintoPDFobject=\count391
+\everyMPtoPDFconversion=\toks57
 ) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -663,20 +1024,27 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count359
-Package hyperref Info: Link coloring OFF on input line 133.
+\c@lstlisting=\count392
+Package hyperref Info: Link coloring OFF on input line 186.
  (./main.out)
 (./main.out)
-\@outlinefile=\write4
-\openout4 = `main.out'.
+\@outlinefile=\write5
+\openout5 = `main.out'.
 
- [1
+ (/usr/share/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+)
+(/usr/share/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks58
+\inpenc@posthook=\toks59
+) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf-dist/fonts
 /enc/dvips/cm-super/cm-super-t1.enc}] (./main.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
-
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
@@ -690,415 +1058,402 @@ LaTeX Font Info:    Trying to load font information for U+lasy on input line 2.
 (/usr/share/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Overfull \hbox (3.08266pt too wide) in paragraph at lines 29--29
- [][] [][]\T1/cmtt/m/n/12 UC-12\T1/cmr/m/n/12 : Reg-is-trazione e con-fig-u-raz
-ione Wire-Guard per un mem- 
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 17
+.
+
+(/usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.56006pt on input line 17.
+ [1{/usr/share/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]
+Overfull \hbox (10.79326pt too wide) in paragraph at lines 42--42
+ [][] [][]\T1/cmr/m/n/12 Ciclo di Vi-ta del-la Sand-box: Async Con-text Man-ag-
+er (\T1/zi4/m/n/12 OVNVerifier\T1/cmr/m/n/12 )[] []  
  []
 
-[1{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Overfull \hbox (20.62135pt too wide) in paragraph at lines 43--43
- [][] [][]\T1/cmr/m/n/12 Ciclo di Vi-ta del-la Sand-box: Async Con-text Man-ag-
-er (\T1/cmtt/m/n/12 OVNVerifier\T1/cmr/m/n/12 )[] []  
+
+Overfull \hbox (3.91814pt too wide) in paragraph at lines 46--46
+ [][] [][]\T1/cmr/m/n/12 Resilienza e Ri-c-on-cil-i-azione del-lo Sta-to (\T1/z
+i4/m/n/12 LifecycleManager\T1/cmr/m/n/12 ) [TO- 
  []
 
 [2])
-\tf@toc=\write5
-\openout5 = `main.toc'.
+\tf@toc=\write6
+\openout6 = `main.toc'.
 
  [3]
 \openout2 = `Introduzione.aux'.
 
  (./Introduzione.tex
 \bbl@ensure@italian {Capitolo} 1.
-(./1._Introduzione/1.1_Introduzione.tex
-Overfull \hbox (6.07597pt too wide) in paragraph at lines 28--33
-[]\T1/cmr/m/n/12 La flag si ot-tiene difend-en-do il sis-tema, os-sia \T1/cmr/m
-/it/12 "patchan-do" \T1/cmr/m/n/12 la vul-ner-a-bili-ta. Dunque
- []
-
-) (./1._Introduzione/1.2_Meccanismi_di_Verifica.tex
+(./1._Introduzione/1_Introduzione.tex
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 8.80005pt on input line 7.
+))
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.14   p
-        uo\textquotesingle{} leggere la memoria fisica di ogni nodo [1
+l.223 \include{Introduzione}
+                             [1
 
 
 ]
-[2] [3]) (./1._Introduzione/1.3_Cyber_Range_Lo_Stato_Dell_Arte.tex)
-(./1._Introduzione/1.3.1_CR_Alternativi_kctf.tex [4]
-<src/images/kctf-architecture.png, id=587, 722.7pt x 542.025pt>
+\openout2 = `Contesto_e_Confronto_con_lo_Stato_dell_Arte.aux'.
+
+
+(./Contesto_e_Confronto_con_lo_Stato_dell_Arte.tex
+\bbl@ensure@italian {Capitolo} 2.
+
+(./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2_Cyber_Range_Lo_Stato_Dell_A
+rte.tex)
+(./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.1_CR_Alternativi_kctf.tex
+<src/images/kctf-architecture.png, id=455, 722.7pt x 542.025pt>
 File: src/images/kctf-architecture.png Graphic file (type png)
 <use src/images/kctf-architecture.png>
 Package pdftex.def Info: src/images/kctf-architecture.png  used on input line 2
-5.
+2.
 (pdftex.def)             Requested size: 392.64516pt x 294.48386pt.
- [5 <./src/images/kctf-architecture.png>] [6]
-Overfull \hbox (8.8022pt too wide) in paragraph at lines 171--175
-[]\T1/cmr/m/n/12 L\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 uso di [][][][] per fil-trare
- le chia-mate di sis-tema potrebbe im-pedire l\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 e
-secuzione
- []
 
-) (./1._Introduzione/1.3.2_CR_Alternativi_CTFBox.tex [7]
-<src/images/ctfbox-architecture.png, id=644, 713.66624pt x 510.90875pt>
+[2
+
+
+
+
+] [3{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./src/im
+ages/kctf-architecture.png>] [4]
+ignored: Infinite glue shrinkage found in box being spli
+t [5])
+(./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.2_CR_Alternativi_CTFBox.tex
+<src/images/ctfbox-architecture.png, id=520, 713.66624pt x 510.90875pt>
 File: src/images/ctfbox-architecture.png Graphic file (type png)
 <use src/images/ctfbox-architecture.png>
 Package pdftex.def Info: src/images/ctfbox-architecture.png  used on input line
  19.
 (pdftex.def)             Requested size: 392.64832pt x 281.09422pt.
- [8 <./src/images/ctfbox-architecture.png>]) (./1._Introduzione/1.3.3_CR_Altern
-ativi_CyTrONE.tex
-<src/images/cytrone-architecture.png, id=654, 648.4225pt x 227.85126pt>
+[6 <./src/images/ctfbox-architecture.png>])
+(./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.3_CR_Alternativi_CyTrONE.te
+x [7]
+<src/images/cytrone-architecture.png, id=535, 648.4225pt x 227.85126pt>
 File: src/images/cytrone-architecture.png Graphic file (type png)
 <use src/images/cytrone-architecture.png>
 Package pdftex.def Info: src/images/cytrone-architecture.png  used on input lin
 e 11.
 (pdftex.def)             Requested size: 392.64806pt x 137.97385pt.
-
-[9]
-<src/images/cytrone-training.png, id=668, 2057.6875pt x 4006.97pt>
+ [8 <./src/images/cytrone-architecture.png>]
+<src/images/cytrone-training.png, id=548, 2057.6875pt x 4006.97pt>
 File: src/images/cytrone-training.png Graphic file (type png)
 <use src/images/cytrone-training.png>
-Package pdftex.def Info: src/images/cytrone-training.png  used on input line 89
+Package pdftex.def Info: src/images/cytrone-training.png  used on input line 87
 .
 (pdftex.def)             Requested size: 242.39056pt x 472.0113pt.
-<src/images/cytrone-cyberrange.png, id=669, 387.4475pt x 806.01125pt>
+<src/images/cytrone-cyberrange.png, id=549, 387.4475pt x 806.01125pt>
 File: src/images/cytrone-cyberrange.png Graphic file (type png)
 <use src/images/cytrone-cyberrange.png>
 Package pdftex.def Info: src/images/cytrone-cyberrange.png  used on input line 
-99.
+98.
 (pdftex.def)             Requested size: 226.90121pt x 472.02509pt.
- [10 <./src/images/cytrone-architecture.png>] [11 <./src/images/cytrone-trainin
-g.png>] [12 <./src/images/cytrone-cyberrange.png>] [13]
-<src/images/cytrone-performance.png, id=706, 359.3425pt x 295.1025pt>
+ [9] [10 <./src/images/cytrone-training.png>] [11 <./src/images/cytrone-cyberra
+nge.png>]
+<src/images/cytrone-performance.png, id=577, 359.3425pt x 295.1025pt>
 File: src/images/cytrone-performance.png Graphic file (type png)
 <use src/images/cytrone-performance.png>
 Package pdftex.def Info: src/images/cytrone-performance.png  used on input line
- 198.
+ 193.
 (pdftex.def)             Requested size: 392.67897pt x 322.47935pt.
- [14 <./src/images/cytrone-performance.png>]
-<src/images/cytrone-largescaleperformance.png, id=716, 359.3425pt x 292.09125pt
+<src/images/cytrone-largescaleperformance.png, id=578, 359.3425pt x 292.09125pt
 >
 File: src/images/cytrone-largescaleperformance.png Graphic file (type png)
 <use src/images/cytrone-largescaleperformance.png>
 Package pdftex.def Info: src/images/cytrone-largescaleperformance.png  used on 
-input line 229.
+input line 222.
 (pdftex.def)             Requested size: 392.67897pt x 319.18875pt.
-) (./1._Introduzione/1.3.4_CR_CyberRangeCZ.tex [15 <./src/images/cytrone-larges
-caleperformance.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 43--43
-[][][][][]$\T1/cmtt/m/n/10 https : / / docs . platform . cyberrange . cz / basi
-c-[]concepts / terminology /
+ [12] [13 <./src/images/cytrone-performance.png>] [14 <./src/images/cytrone-lar
+gescaleperformance.png>]) (./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.4
+_CR_CyberRangeCZ.tex
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
+[][][][]\T1/cmr/m/n/10 https://docs.platform.cyberrange.cz/basic-concepts/termi
+nology/#emulated-virtual-
  []
 
-<src/images/KYPO-basic-elements-sandboxes.png, id=727, 501.875pt x 521.95pt>
+[15]
+<src/images/KYPO-basic-elements-sandboxes.png, id=608, 501.875pt x 521.95pt>
 File: src/images/KYPO-basic-elements-sandboxes.png Graphic file (type png)
 <use src/images/KYPO-basic-elements-sandboxes.png>
 Package pdftex.def Info: src/images/KYPO-basic-elements-sandboxes.png  used on 
-input line 60.
+input line 55.
 (pdftex.def)             Requested size: 392.66322pt x 408.36975pt.
-[16] [17 <./src/images/KYPO-basic-elements-sandboxes.png>]
-<src/images/KYPO-topology-instance.png, id=740, 799.98875pt x 1406.25375pt>
+ [16 <./src/images/KYPO-basic-elements-sandboxes.png>]
+<src/images/KYPO-topology-instance.png, id=616, 799.98875pt x 1406.25375pt>
 File: src/images/KYPO-topology-instance.png Graphic file (type png)
 <use src/images/KYPO-topology-instance.png>
 Package pdftex.def Info: src/images/KYPO-topology-instance.png  used on input l
-ine 98.
+ine 92.
 (pdftex.def)             Requested size: 268.52583pt x 472.02597pt.
- [18 <./src/images/KYPO-topology-instance.png>]) (./1._Introduzione/1.3.5_CR_Cy
-berPatrion.tex))
-[19]
+
+ignored: Infinite glue shrinkage found in box being split [17])
+(./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.5_CR_CyberPatrion.tex))
+[18] [19 <./src/images/KYPO-topology-instance.png>]
 \openout2 = `BlueAgent.aux'.
 
  (./BlueAgent.tex
-\bbl@ensure@italian {Capitolo} 2.
-(./2._BlueAgent/2.1_Introduzione_a_BlueAgent.tex [20
-
-
-
-
-]
-Overfull \hbox (27.75319pt too wide) in paragraph at lines 73--75
-[]\T1/cmr/m/n/12 L\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 host che su cui viene es-e-gu
-i-to BlueAgent deve met-tere a dis-po-sizione dell\TS1/cmr/m/n/12 '\T1/cmr/m/n/
-12 architettura
- []
-
-) (./2._BlueAgent/2.2_Attori.tex [21]) (./2._BlueAgent/2.3_Use_Cases.tex
-[22]
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 44.
-
-Overfull \hbox (8.7719pt too wide) in paragraph at lines 98--101
-[]\T1/cmr/m/n/12 BlueAgent risponde con sta-to [][][][][][][][][][][][] con-fer
--man-do l\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 avvenuta
- []
-
-[23]
-Overfull \hbox (46.99785pt too wide) in paragraph at lines 120--125
-[]\T1/cmr/bx/n/12 Precondizione\T1/cmr/m/n/12 : [][][][][][], [][][][][][]. E\T
-S1/cmr/m/n/12 ' \T1/cmr/m/n/12 sta-to es-e-gui-to con suc-ces-so il de-ploy del
-l\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 infrastruttura
- []
-
-[24] [25] [26]) (./2._BlueAgent/2.4_Requisiti_Di_Sistema.tex
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 13.
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 13.
-
-Overfull \hbox (2.63002pt too wide) in paragraph at lines 33--37
-[][][][][][][][][][][] \T1/cmr/bx/n/12 (Dis-trobuilder)\T1/cmr/m/n/12 : L\TS1/c
-mr/m/n/12 '\T1/cmr/m/n/12 host deve dis-porre del com-pi-la-tore []
- []
-
-
-Overfull \hbox (14.07855pt too wide) in paragraph at lines 45--50
-[][][][][][][][][][][] \T1/cmr/bx/n/12 (As-trazione)\T1/cmr/m/n/12 : Dis-ac-cop
--pi-a-men-to del-la log-i-ca di or-ches-trazione tramite
- []
-
-[27]
-Overfull \hbox (2.08969pt too wide) in paragraph at lines 93--98
-[][][][][][][][][][][] \T1/cmr/bx/n/12 (TCP MSS Clamp-ing)\T1/cmr/m/n/12 : Ap-p
-li-cazione di re-gole [][][][] per forzare
- []
-
-[28])) [29]
-\openout2 = `Architettura_BlueAgent.aux'.
-
- (./Architettura_BlueAgent.tex
 \bbl@ensure@italian {Capitolo} 3.
-(./3._Architettura_BlueAgent/3.1_Architettura_Rete.tex [30
+(./3._BlueAgent/3_Introduzione_a_BlueAgent.tex
+Overfull \hbox (19.36366pt too wide) in paragraph at lines 45--47
+[]\T1/cmr/m/n/12 A scopo d'e-sem-pio mos-tri-amo come creare ed is-tanziare una
+ chal-lenge con BlueAgent: 
+ []
+
+[20
+
+
+
+
+]) (./3._BlueAgent/3.1_Attori.tex [21]) (./3._BlueAgent/3.2_Use_Cases.tex
+[22]
+LaTeX Font Info:    Font shape `T1/zi4/b/n' will be
+(Font)              scaled to size 12.67206pt on input line 42.
+ [23] [24] [25]
+Overfull \hbox (5.50655pt too wide) in paragraph at lines 326--328
+[]\T1/cmr/m/n/12 BlueAgent resti-tu-isce im-me-di-ata-mente al CTF Man-ag-er lo
+ sta-to [][][][][][][][][][][]. 
+ []
+
+[26]
+Overfull \hbox (3.23088pt too wide) in paragraph at lines 391--394
+[]\T1/cmr/m/n/12 BlueAgent risponde con sta-to [][][][][][][][][][][] restituen
+-do la con-fig-u-razione Wire-
+ []
+
+) (./3._BlueAgent/3.3_Requisiti_Di_Sistema.tex
+LaTeX Font Info:    Font shape `T1/zi4/b/n' will be
+(Font)              scaled to size 10.56006pt on input line 13.
+LaTeX Font Info:    Font shape `T1/zi4/b/n' will be
+(Font)              scaled to size 8.80005pt on input line 13.
+
+Overfull \hbox (5.12344pt too wide) in paragraph at lines 20--28
+[][][][][][][][][] \T1/cmr/bx/n/12 (SDN)\T1/cmr/m/n/12 : L'host deve es-eguire 
+i servizi Open vSwitch e OVN ([][][][][][][],
+ []
+
+
+Overfull \hbox (6.4403pt too wide) in paragraph at lines 42--47
+[][][][][][][][][] \T1/cmr/bx/n/12 (As-trazione)\T1/cmr/m/n/12 : Dis-ac-cop-pi-
+a-men-to del-la log-i-ca di or-ches-trazione tramite
+ []
+
+[27] [28]) (./3._BlueAgent/3.4_Meccanismi_di_Verifica.tex [29] [30] [31]))
+[32]
+\openout2 = `Architettura_Rete_Alto_Livello.aux'.
+
+ (./Architettura_Rete_Alto_Livello.tex
+\bbl@ensure@italian {Capitolo} 4.
+(./4._Architettura_Rete_Alto_Livello/4_Architettura_Rete.tex [33
 
 
 
 
 ]
-Overfull \hbox (5.88568pt too wide) in paragraph at lines 84--91
-\T1/cmr/m/n/12 tain-er). Uti-liz-zano poca CPU e poca memo-ria, da-to che l\TS1
-/cmr/m/n/12 '\T1/cmr/m/n/12 implementazione
+<src/images/production-network.png, id=767, 1371.62437pt x 1375.38844pt>
+File: src/images/production-network.png Graphic file (type png)
+<use src/images/production-network.png>
+Package pdftex.def Info: src/images/production-network.png  used on input line 
+93.
+(pdftex.def)             Requested size: 392.65414pt x 393.73167pt.
+
+Overfull \hbox (131.0991pt too wide) in paragraph at lines 112--112
+[][][][]\T1/cmr/m/n/10 Documentazione uf-fi-ciale In-cus, OVN net-work driv-er:
+ https://linuxcontainers.org/incus/docs/main/reference/network_ovn/| 
  []
 
-<src/images/mermaid_311_rete_production_k_fc40fab722.png, id=869, 759.83875pt x
- 1798.72pt>
-File: src/images/mermaid_311_rete_production_k_fc40fab722.png Graphic file (typ
-e png)
-<use src/images/mermaid_311_rete_production_k_fc40fab722.png>
-Package pdftex.def Info: src/images/mermaid_311_rete_production_k_fc40fab722.pn
-g  used on input line 103.
-(pdftex.def)             Requested size: 199.39688pt x 472.02013pt.
-[31] [32 <./src/images/mermaid_311_rete_production_k_fc40fab722.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 187--187
-[][][][]\T1/cmr/m/n/10 Documentazione Net-fil-ter, TCP MSS Clamp-ing: []$\T1/cm
-tt/m/n/10 https : / / wiki . nftables . org /
- []
-
-[33] [34]
-Overfull \hbox (3.47847pt too wide) in paragraph at lines 300--304
-[][][][][][][][][][][][][][][][][]\T1/cmr/m/n/12 : Vari-ante del NAT ap-pli-ca-
-ta al traf-fi-co us-cente (\T1/cmr/bx/n/12 egress\T1/cmr/m/n/12 ,
- []
-
-<src/images/mermaid_312_rete_verify_k_d80ab1c21b.png, id=912, 629.35126pt x 136
-5.1pt>
-File: src/images/mermaid_312_rete_verify_k_d80ab1c21b.png Graphic file (type pn
-g)
-<use src/images/mermaid_312_rete_verify_k_d80ab1c21b.png>
-Package pdftex.def Info: src/images/mermaid_312_rete_verify_k_d80ab1c21b.png  u
-sed on input line 316.
-(pdftex.def)             Requested size: 217.61617pt x 472.02232pt.
-) (./3._Architettura_BlueAgent/3.2_Architettura_Codice.tex [35] [36 <./src/imag
-es/mermaid_312_rete_verify_k_d80ab1c21b.png>]
-Overfull \hbox (8.45369pt too wide) in paragraph at lines 45--50
-[]\T1/cmr/m/n/12 L\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 implementazione conc-re-ta []
-[][][] co-mu-ni-ca con il de-mone di sis-tema tramite
+[34] [35 <./src/images/production-network.png>]
+Overfull \hbox (30.39479pt too wide) in paragraph at lines 145--150
+[]\T1/cmr/m/n/12 un \T1/cmr/bx/n/12 Log-i-cal Router \T1/cmr/m/n/12 (de-nom-i-n
+a-to [][][][][][][][][][][] []): agisce come gate-way ([][][][][][][]),
  []
 
 
-Overfull \hbox (9.77965pt too wide) in paragraph at lines 75--79
-[]\T1/cmr/m/n/12 Per garan-tire ques-ta pro-pri-età, il ci-clo di vi-ta del-la 
-sand-box è in-cap-su-la-to all\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 interno
+Overfull \hbox (17.72401pt too wide) in paragraph at lines 156--156
+[][][][]\T1/cmr/m/n/10 Documentazione ar-chitet-turale OVN e Gen-eve: https://d
+ocs.ovn.org/en/latest/topics/geneve.html| 
  []
 
 
-Overfull \hbox (13.38127pt too wide) in paragraph at lines 81--88
-[]\T1/cmr/bx/n/12 Pattern RAII (Re-source Ac-qui-si-tion Is Ini-tial-iza-tion):
- \T1/cmr/m/n/12 L\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 allocazione
+Underfull \hbox (badness 10000) in paragraph at lines 168--168
+[][][][]\T1/cmr/m/n/10 Documentazione Net-fil-ter, TCP MSS Clamp-ing: https://w
+iki.nftables.org/wiki-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 182--182
+[][][][]\T1/cmr/m/n/10 Documentazione Open vSwitch, ar-chitet-tura Dat-a-p-ath 
+Ker-nel vs Userspace:
+ []
+
+
+Overfull \hbox (3.08424pt too wide) in paragraph at lines 187--194
+[]\T1/cmr/bx/n/12 Spazio Utente (Con-trol Plane): \T1/cmr/m/n/12 i de-moni di c
+on-trol-lo di OVN ([][][][][][][],
+ []
+
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 266--266
+[][][][]\T1/cmr/m/n/10 Documentazione Net-fil-ter, Net-work Ad-dress Trans-la-t
+ion (NAT):
+ []
+
+
+Overfull \hbox (23.73752pt too wide) in paragraph at lines 266--266
+\T1/cmr/m/n/10 https://wiki.nftables.org/wiki-nftables/index.php/Performing_Net
+work_Address_Translation_(NAT)| 
  []
 
 [37]
-Overfull \hbox (8.44946pt too wide) in paragraph at lines 156--159
+<src/images/verify-network.png, id=801, 746.03719pt x 761.09344pt>
+File: src/images/verify-network.png Graphic file (type png)
+<use src/images/verify-network.png>
+Package pdftex.def Info: src/images/verify-network.png  used on input line 287.
+
+(pdftex.def)             Requested size: 392.64299pt x 400.56718pt.
+) (./4._Architettura_Rete_Alto_Livello/4.3_Struttura_Challenge.tex))
+[38 <./src/images/verify-network.png>]
+\openout2 = `Architettura_Nel_Dettaglio_e_Validazione.aux'.
+
+
+(./Architettura_Nel_Dettaglio_e_Validazione.tex
+\bbl@ensure@italian {Capitolo} 5.
+(./5._Architettura_Nel_Dettaglio_e_Validazione/5.1_Architettura_Codice.tex
+[39
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 54--54
+[][][][]\T1/cmr/m/n/10 Linux man-u-al page, unix(7) - Sock-ets for lo-cal in-te
+r-pro-cess com-mu-ni-ca-tion:
+ []
+
+
+Overfull \hbox (6.2901pt too wide) in paragraph at lines 46--55
+[][][][][][][][][][][][][][][][][]\T1/cmr/m/n/12 : Mec-ca-n-is-mo di Inter-Proc
+ess Com-mu-ni-ca-tion (IPC)
+ []
+
+[40]
+Overfull \hbox (6.94524pt too wide) in paragraph at lines 143--146
 []\T1/cmr/m/n/12 BlueAgent im-ple-men-ta un mec-ca-n-is-mo di sin-croniz-zazion
-e a due liv-el-li ([]
+e a due liv-el-li ([][][][][]),
  []
 
-[38]
-Overfull \hbox (18.10675pt too wide) in paragraph at lines 246--246
-|[]\T1/cmr/bx/n/14.4 Resilienza e Ri-c-on-cil-i-azione del-lo Sta-to (\T1/cmtt/
-m/n/14.4 LifecycleManager\T1/cmr/bx/n/14.4 )| 
+
+Overfull \hbox (19.8711pt too wide) in paragraph at lines 154--157
+[]\T1/cmr/bx/n/12 Tier 2 (Inter-processo): \T1/cmr/m/n/12 ap-pli-ca un lock non
+ bloc-cante sul filesys-tem ([][][][][][][])
  []
 
-[39]) (./3._Architettura_BlueAgent/3.3_Comandi_Architettura_Rete.tex
-(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+[41]
+Overfull \hbox (72.50287pt too wide) in paragraph at lines 217--221
+[]\T1/cmr/m/n/12 Inoltre l'ese-cuzione dei co-man-di sul-la macchi-na host avvi
+ene tramite: [][][][][][][]
+ []
+
+
+Overfull \hbox (2.54938pt too wide) in paragraph at lines 234--234
+|[]\T1/cmr/bx/n/14.4 Resilienza e Ri-c-on-cil-i-azione del-lo Sta-to (\T1/zi4/b
+/n/14.4 LifecycleManager\T1/cmr/bx/n/14.4 )
+ []
+
+)
+(./5._Architettura_Nel_Dettaglio_e_Validazione/5.2_Comandi_Architettura_Rete.te
+x [42] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [40]
-Overfull \hbox (7.00258pt too wide) in paragraph at lines 79--86
-[]\T1/cmr/m/n/12 All\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 interno del-la cate-na [][]
-[][], il traf-fi-co viene val-ida-to ver-i-f-i-can-do l\TS1/cmr/m/n/12 '\T1/cmr
-/m/n/12 appartenenza
- []
+) [43])
+(./5._Architettura_Nel_Dettaglio_e_Validazione/5.3_CTFd.tex)
+(./5._Architettura_Nel_Dettaglio_e_Validazione/5.4_Validazione_E_Risultati.tex
+[44])) [45]
+\openout2 = `Architetture_Rete__Alternative.aux'.
 
-) (./3._Architettura_BlueAgent/3.5_CTFd.tex [41])
-(./3._Architettura_BlueAgent/3.6_Benchmark_Difesa_Architettura.tex [42]
-[43]
-Overfull \hbox (27.32924pt too wide) in paragraph at lines 171--179
-[]\T1/cmr/bx/n/12 UDP Path MTU Black-hole: \T1/cmr/m/n/12 La com-bi-nazione di 
-tun-nel Wire-Guard ($[]\OT1/cmr/m/n/12 1420$\T1/cmr/m/n/12 )
- []
-
-)) [44]
-\openout2 = `Architetture_Alternative.aux'.
-
- (./Architetture_Alternative.tex
-\bbl@ensure@italian {Capitolo} 4.
-(./4._Architetture_Alternative/4.1_AA_BridgeL2_Senza_Gateway.tex)
-(./4._Architetture_Alternative/4.2_AA_Interfaccia_wan1_Aggiuntiva.tex)
-(./4._Architetture_Alternative/4.3_AA_PID_Namespace_separato.tex
-Overfull \hbox (11.44868pt too wide) in paragraph at lines 22--25
-[]\T1/cmr/m/n/12 se un ex-ploit agisce su un servizio web, questo potrebbe las-
-cia-re trac-ce dell\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 exploit
- []
-
-[45
+ (./Architetture_Rete__Alternative.tex
+\bbl@ensure@italian {Capitolo} 6.
+(./6._Architetture_Rete__Alternative/6.1_AA_BridgeL2_Senza_Gateway.tex)
+(./6._Architetture_Rete__Alternative/6.2_AA_Interfaccia_wan1_Aggiuntiva.tex)
+(./6._Architetture_Rete__Alternative/6.3_AA_NetworkNamespace_separato.tex
+[46
 
 
 
 
-]) (./4._Architetture_Alternative/4.4_AA_NetworkNamespace_separato.tex
-[46]
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 51.
-
-) (./4._Architetture_Alternative/4.5_AA_EsecuzioneInMemory.tex [47])) [48]
+]) (./6._Architetture_Rete__Alternative/6.4_AA_RouterIntermedio.tex))
+[47]
 \openout2 = `Appendice.aux'.
 
-
-(./Appendice.tex
-\bbl@ensure@italian {Capitolo} 5.
-(./5._Appendice/5.1_LinuxNetworking.tex [49
-
+ (./Appendice.tex
+\bbl@ensure@italian {Capitolo} 7.
+(./7._Appendice/5.1_LinuxNetworking.tex [48
 
 
 
-]
+
+] [49]
+Overfull \hbox (9.3604pt too wide) in paragraph at lines 159--164
+\T1/cmr/m/n/12 nisce un'in-ter-fac-cia per ag-giun-gere, elim-inare, re-gole ne
+t-fil-ter, ag-giun-gere tabelle,
+ []
+
+) (./7._Appendice/5.2_VPN_e_OVN.tex
+Overfull \hbox (142.63676pt too wide) in paragraph at lines 3--5
+\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : https://www.wireguard.com/papers/wireguar
+d.pdf \T1/cmr/bx/n/12 vpn\T1/cmr/m/n/12 : https://ieeexplore.ieee.org/document/
+4756450 
+ []
+
+[50]
+<src/images/Pasted_image_20261001214515.png, id=898, 624.08156pt x 160.34906pt>
+
+File: src/images/Pasted_image_20261001214515.png Graphic file (type png)
+<use src/images/Pasted_image_20261001214515.png>
+Package pdftex.def Info: src/images/Pasted_image_20261001214515.png  used on in
+put line 49.
+(pdftex.def)             Requested size: 392.6497pt x 100.88586pt.
+ [51 <./src/images/Pasted_image_20261001214515.png>])
+(./7._Appendice/5.3_ZFS.tex
+Overfull \hbox (128.35602pt too wide) in paragraph at lines 3--6
+\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : []https://openzfs.org/wiki/System_Adminis
+tration[] https://blog.victormendonca.com/2020/11/03/zfs-
+ []
+
+[52]) (./7._Appendice/5.4_NsJail.tex [53]
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 (/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
-)
-Overfull \hbox (237.46532pt too wide) in paragraph at lines 103--108
-\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : []$\T1/cmtt/m/n/12 https : / / www . digi
-talocean . com / community / tutorials / a-[]deep-[]dive-[]into-[]iptables-[]an
-d-[]netfilter-[]architecture$[]
- []
-
-[50]
-Overfull \hbox (9.3604pt too wide) in paragraph at lines 152--157
-\T1/cmr/m/n/12 nisce un\TS1/cmr/m/n/12 '\T1/cmr/m/n/12 interfaccia per ag-giun-
-gere, elim-inare, re-gole net-fil-ter, ag-giun-gere tabelle,
- []
-
-[51] [52] [53] [54]) (./5._Appendice/5.2_VPN_e_OVN.tex
-Overfull \hbox (44.28108pt too wide) in paragraph at lines 3--5
-\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : []$\T1/cmtt/m/n/12 https : / / www . wire
-guard . com / papers / wireguard . pdf$[] \T1/cmr/bx/n/12 vpn\T1/cmr/m/n/12 : [
-]$\T1/cmtt/m/n/12 https : / / ieeexplore .
- []
-
-[55]
-Overfull \hbox (23.14037pt too wide) in paragraph at lines 50--54
-[]\T1/cmr/m/n/12 vediamo un es-em-pio di \T1/cmr/m/it/12 cryp-tokey rout-ing ta
--ble\T1/cmr/m/n/12 : ![](Past-ed im-age 20261001214515.png)
- []
-
-[56]
-Overfull \hbox (150.34344pt too wide) in paragraph at lines 92--94
-[]$\T1/cmtt/m/n/12 https : / / networklessons . com / network-[]automation / in
-troduction-[]to-[]sdn-[]software-[]defined-[]networking$[]
- []
+))) [54] (./main.lof)
+\tf@lof=\write7
+\openout7 = `main.lof'.
 
 
-Overfull \hbox (18.2001pt too wide) in paragraph at lines 92--94
-[]$\T1/cmtt/m/n/12 https : / / ridhanegara . staff . telkomuniversity . ac . id
- / files / 2017 / 04 / Thomas-[]D .
- []
-
-
-Overfull \hbox (16.52661pt too wide) in paragraph at lines 92--94
-\T1/cmtt/m/n/12 -[]Nadeau-[]Ken-[]Gray-[]SDN-[]Software-[]Defined-[]Networks-[]
-O _ 039 _ Reilly-[]Media-[]2013 .
- []
-
-
-Overfull \hbox (11.94681pt too wide) in paragraph at lines 119--122
-\T1/cmr/m/n/12 cede al de-vice us-an-do tel-net, SSH, o al-tri servizi. ![](Pas
-t-ed im-age 20261002154936.png) 
- []
-
-[57]) (./5._Appendice/5.3_ZFS.tex
-Overfull \hbox (69.89151pt too wide) in paragraph at lines 3--6
-\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : [][]$\T1/cmtt/m/n/12 https : / / openzfs 
-. org / wiki / System _ Administration$[][] []$https : / / blog . victormendonc
-a .
- []
-
-
-Overfull \hbox (2.69673pt too wide) in paragraph at lines 13--16
-[]\T1/cmr/m/n/12 Modificare dati vuol dire dunque scri-vere il nuo-vo con-tenu-
-to in una nuo-va porzione
- []
-
-[58] [59]
-<src/images/mermaid_vdev_bb98e6738a.png, id=1128, 1027.84pt x 627.34375pt>
-File: src/images/mermaid_vdev_bb98e6738a.png Graphic file (type png)
-<use src/images/mermaid_vdev_bb98e6738a.png>
-Package pdftex.def Info: src/images/mermaid_vdev_bb98e6738a.png  used on input 
-line 158.
-(pdftex.def)             Requested size: 392.65349pt x 239.65666pt.
- [60] [61 <./src/images/mermaid_vdev_bb98e6738a.png>])
-(./5._Appendice/5.4_NsJail.tex
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 16.
-
-[62])) [63] (./main.lof)
-\tf@lof=\write6
-\openout6 = `main.lof'.
-
- [64
+[55
 
 
 ] (./main.lol)
-\tf@lol=\write7
-\openout7 = `main.lol'.
+\tf@lol=\write8
+\openout8 = `main.lol'.
 
- [65
+ [56
 
 ] (./main.loa)
-\tf@loa=\write8
-\openout8 = `main.loa'.
+\tf@loa=\write9
+\openout9 = `main.loa'.
 
- (./main.bbl
-[66
+ (./main.bbl [57
 
-] [67
+] [58
 
 ]
 Underfull \hbox (badness 2564) in paragraph at lines 91--94
@@ -1124,7 +1479,7 @@ Underfull \hbox (badness 2435) in paragraph at lines 118--122
 d-dress Trans-la-
  []
 
-[68]
+[59]
 Underfull \hbox (badness 10000) in paragraph at lines 148--151
 []\T1/cmr/m/n/12 J. Elling-wood, ``A Deep Dive in-to Ipt-a-bles and Net-fil-ter
  Ar-
@@ -1148,54 +1503,58 @@ Underfull \hbox (badness 1910) in paragraph at lines 153--155
 k for
  []
 
-) [69]
+) [60]
 \openout2 = `Ringraziamenti.aux'.
 
- (./Ringraziamenti.tex) [70
+ (./Ringraziamenti.tex) [61
 
 
 ] (./main.aux (./Introduzione.aux)
-(./BlueAgent.aux) (./Architettura_BlueAgent.aux)
-(./Architetture_Alternative.aux) (./Appendice.aux) (./Ringraziamenti.aux))
+(./Contesto_e_Confronto_con_lo_Stato_dell_Arte.aux) (./BlueAgent.aux)
+(./Architettura_Rete_Alto_Livello.aux)
+(./Architettura_Nel_Dettaglio_e_Validazione.aux)
+(./Architetture_Rete__Alternative.aux) (./Appendice.aux) (./Ringraziamenti.aux)
+)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1A7D4193441D8E2564F3DFFEC1D7E414;20355.
+(rerunfilecheck)             Checksum: 6DC99DCC8D1CD00202835639C5C63851;16510.
  ) 
 Here is how much of TeX's memory you used:
- 17964 strings out of 469515
- 278174 string characters out of 5470807
- 1028094 words of memory out of 5000000
- 45748 multiletter control sequences out of 15000+600000
- 655707 words of font info for 110 fonts, out of 8000000 for 9000
+ 33257 strings out of 469515
+ 652715 string characters out of 5470807
+ 1304877 words of memory out of 5000000
+ 60823 multiletter control sequences out of 15000+600000
+ 655931 words of font info for 113 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,88p,541b,2058s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/
-fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sf
-bx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></us
-r/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf-d
-ist/fonts/type1/public/cm-super/sfcc1440.pfb></usr/share/texmf-dist/fonts/type1
-/public/cm-super/sfit1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-supe
-r/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb>
-</usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/tex
-mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-
-super/sfsl1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.
-pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/share
-/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/share/texmf-dist/fon
-ts/type1/public/cm-super/sftt1440.pfb>
-Output written on main.pdf (74 pages, 2713430 bytes).
+ 98i,12n,108p,541b,1572s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{Hfootnote.25} has been referenced but does not exis
+t, replaced by a fixed one
+
+</usr/share/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4b.pfb></us
+r/share/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/sh
+are/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></
+usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf
+-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-su
+per/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pf
+b></usr/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></usr/share/t
+exmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts
+/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf-dist/fonts/type1/public/c
+m-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm100
+0.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/cm-super/sfsl0900.pfb></usr/share/texmf-dist/f
+onts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (65 pages, 2905806 bytes).
 PDF statistics:
- 1484 PDF objects out of 1728 (max. 8388607)
- 1317 compressed objects within 14 object streams
- 444 named destinations out of 1000 (max. 500000)
- 869 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1202 PDF objects out of 1440 (max. 8388607)
+ 1035 compressed objects within 11 object streams
+ 346 named destinations out of 1000 (max. 500000)
+ 817 words of extra memory for PDF output out of 10000 (max. 10000000)
 

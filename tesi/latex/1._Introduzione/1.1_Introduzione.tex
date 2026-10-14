@@ -1,38 +1,32 @@
-\section{Introduzione al Problema}\label{introduzione-al-problema}
+Nel lavoro di tesi, vogliamo gestire una competizione CTF (Capture The
+Flag).
 
-Nel lavoro di tesi, vogliamo gestire una competizione CTF.
+Di solito, in una competizione CTF, uno o piu' utenti (eventualmente
+organizzati in team) si sfidano per risolvere un'insieme di challenge,
+ossia recuperare una \textbf{flag}: una stringa del tipo
+\passthrough{\lstinline!\{hai\_trovato\_la\_flag\}!}.
 
-Di solito, in una competizione CTF, uno o piu\textquotesingle{} utenti
-(eventualmente organizzati in team) si sfidano per risolvere
-un\textquotesingle insieme di challenge. Generalmente una challenge vuol
-dire: recuperare una \textbf{flag}.
+Ci concentreremo nel lavoro, in un tipo di competizione CTF basato sulla
+gestione di uno o piu sistemi vulnerabili da mitigare, dunque una
+competizione di Difesa, dove la flag si ottiene unicamente difendendo il
+sistema, ossia \emph{``patchando''} la vulnerabilita. Nel lavoro si
+tiene conto del fatto che il sistema vulnerabile, spesso, potrebbe
+essere costituito da uno o piu host/nodi che comunicano tra di loro.
 
-Ci sono vari tipi di competizioni CTF, tra cui:
+Le CTF hanno lo scopo di migliorare la formazione degli specialisti del
+settore, tramite la simulazione di scenari realistici, complessi o
+quantomeno molto specifici. In particolare e' fondamentale formare
+studenti e le risorse aziendali per la gestione e mitigazione di sistemi
+vulnerabili in modo da prevenire perdite dovute ad attacchi informatici
+in scenari reali. La simulazione di questi scenari, avviene all'interno
+di 1un ambiente denominato Cyber Range.
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Jeopardy}: gli utenti devono risolvere vari problemi, la cui
-  flag e\textquotesingle{} di solito una stringa del tipo
-  \passthrough{\lstinline!\{hai\_trovato\_la\_flag\}!}
-\item
-  \textbf{Attacco e Difesa}: e\textquotesingle{} un tipo di competizione
-  dove ogni team, deve recuperare una o piu flag attaccando i sistemi
-  dei team avversare, mentre ognuno si occupa di difendere il proprio
-  sistema.
-\end{itemize}
+Abbiamo dunque sviluppato \emph{BlueAgent}, un'orchestratore di sistemi
+vulnerabili basato sulla tecnologia dei container che implementa il
+Cyber Range di cui abbiamo bisogno per gestire competizioni di Difesa.
+BlueAgent si occupa inoltre di verificare che le vulnerabilita presenti
+sui container siano state corrette tramite un sistema di verifica che
+avviene completamente all'oscuro dei giocatori, ossia la colonazione dei
+container in un'ambiente separato.
 
-In particolare, con il nostro lavoro, vogliamo gestire uno o
-piu\textquotesingle{} sistemi vulnerabili ad un qualche tipo di attacco.
-
-La flag si ottiene difendendo il sistema, ossia \emph{"patchando"} la
-vulnerabilita. Dunque la flag non e\textquotesingle{} piu una stringa
-come nelle \textbf{Jeopardy}, ma piuttosto e\textquotesingle: uno stato
-che deve raggiungere il sistema target mediante il susseguirsi di azioni
-che il partecipante applica quest\textquotesingle ultimo.
-
-Nel lavoro si tiene conte del fatto che il sistema vulnerabile, spesso,
-potrebbe essere costituito da uno o piu host/nodi che comunicano tra di
-loro. Per esempio si condideri il seguente scenario: un server
-vulnerabile ha bisogno di comunicare con database in esecuzione su un
-nodo differente da quello del server.
+INSERIRE RISULTATI OTTENUTI e METODOLOGIA USATA

@@ -1,0 +1,36 @@
+\section{Bridge L2 Senza Gateway}\label{bridge-l2-senza-gateway}
+
+\subsection{shadow bridge}\label{shadow-bridge}
+
+La topologia prevede la creazione di un bridge L2, per istanziare una
+rete LAN virtuale a cui attaccare i container da verificare. I container
+duplicati mantengono la topologia di rete invariata, infatti possono
+mantenere gli stessi identici indirizzi IP rispetto alla rete di
+produzione.
+
+Questa topologia non prevede nessuna regola NAT e nemmeno che il bridge
+abbia un'indirizzo IP, dunque a livello L3 non puo' essere visto da
+nessuno.
+
+In questo modo e' impossibile assegnare un gateway per la sottorete dei
+container al bridge in quanto andrebbero in conflitto
+
+Questa architettura e':
+
+\begin{itemize}
+\tightlist
+\item
+  molto semplice da implementare
+\item
+  efficiente: fa uso solo di strutture dati primitive del kernel linux
+\end{itemize}
+
+Tutta via rende impossibile per i container l'instradamento verso
+l'esterno della rete. Dunque, dall'interno dei container di verifica,
+comandi come \passthrough{\lstinline!apt!}, e
+\passthrough{\lstinline!ping!} verso host esterni falliranno.
+
+Questa architettura e' perfetta per vulnerabilità e script di verifica
+che non hanno bisogno di accedere ad internet. Immaginando pero' che per
+qualsiasi motivo internet potesse essere fondamentale, anche in fase di
+verifica, ho scelto di scartare questa opzione.

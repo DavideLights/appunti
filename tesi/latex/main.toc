@@ -1,102 +1,76 @@
 \babel@toc {italian}{}\relax 
 \contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Introduzione al Problema}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Oracoli e Meccanismi di Verifica}{1}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Verifica Statica}{2}{subsection.1.2.1}%
-\contentsline {subsection}{\numberline {1.2.2}Verifica Dinamica tramite sistema esterno}{3}{subsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.2.3}Verifica Dinamica tramite injection dei comandi di verifica}{3}{subsection.1.2.3}%
-\contentsline {subsection}{\numberline {1.2.4}Clonazione del sistema in una rete separata}{4}{subsection.1.2.4}%
-\contentsline {section}{\numberline {1.3}Cyber-Range: lo stato dell\textquotesingle arte}{4}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}CR Alternativi: kCTF}{5}{subsection.1.3.1}%
-\contentsline {subsection}{\numberline {1.3.2}CR Alternativi: CTFBox}{8}{subsection.1.3.2}%
-\contentsline {subsection}{\numberline {1.3.3}CR Alternativi: CyTrONE}{9}{subsection.1.3.3}%
-\contentsline {subsubsection}{\numberline {1.3.3.1}Valutazione delle Performance di CyTrONE}{13}{subsubsection.1.3.3.1}%
-\contentsline {subsection}{\numberline {1.3.4}CR Alternativi: CyberRangeCZ}{16}{subsection.1.3.4}%
-\contentsline {subsection}{\numberline {1.3.5}CR Alternativi: CyberPatrion}{19}{subsection.1.3.5}%
-\contentsline {chapter}{\numberline {2}BlueAgent}{20}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Introduzione a BlueAgent}{20}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Attori}{21}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}CTF Manager (attore)}{22}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Giocatore (attore esterno per CTF Manager)}{22}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Autore della sfida (attore esterno per CTF Manager)}{22}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Amministratore della competizione (attore esterno per CTF Manager)}{22}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}Use Cases per CTF Manager}{23}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}\texttt {UC-01}: Deploy dell\textquotesingle infrastruttura di rete per il team \(k\)}{23}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}\texttt {UC-02}: Deploy della challenge per il team \(k\)}{24}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}\texttt {UC-03}: Verifica della challenge per il team \(k\)}{24}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}\texttt {UC-06}: Dismissione e rilascio di una challenge per il team \(k\)}{25}{subsection.2.3.4}%
-\contentsline {subsection}{\numberline {2.3.5}\texttt {UC-08}: Compilazione e Import di un\textquotesingle immagine per container}{26}{subsection.2.3.5}%
-\contentsline {subsection}{\numberline {2.3.6}\texttt {UC-12}: Registrazione e configurazione WireGuard per un membro del team \(k\)}{26}{subsection.2.3.6}%
-\contentsline {section}{\numberline {2.4}Requisiti di Sistema}{27}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Piattaforma Host e Infrastruttura}{27}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Motore di Containerizzazione}{27}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Rete Ibrida e Connettivita}{28}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}Motore di Verifica OVN Sandbox}{28}{subsection.2.4.4}%
-\contentsline {subsection}{\numberline {2.4.5}Control Plane, Concorrenza e Persistenza}{29}{subsection.2.4.5}%
-\contentsline {subsection}{\numberline {2.4.6}Pipeline Immagini Distrobuilder}{29}{subsection.2.4.6}%
-\contentsline {chapter}{\numberline {3}Architettura BlueAgent}{30}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Architettura di Rete}{30}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Rete \(\text {production-}k\)}{30}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Rete \(\text {verify-}k\)}{31}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Architettura del Codice}{35}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Astrazione del Runtime: \texttt {ContainerEngine}}{35}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Ciclo di Vita della Sandbox: Async Context Manager (\texttt {OVNVerifier})}{37}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Concorrenza e Two-Tier Locking}{38}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Pipeline Asincrona non Bloccante su Socket Unix}{39}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Resilienza e Riconciliazione dello Stato (\texttt {LifecycleManager})}{39}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Comandi per l\textquotesingle Architettura di Rete}{40}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}configurare OVN}{40}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}\(\text {production-}k\) Routing e Connettività dei Peer (WireGuard e nftables)}{41}{subsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.2.1}Inoltro Kernel e Controllo di Flusso (\texttt {nftables})}{41}{subsubsection.3.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.3.2.2}Connettività Egress (Masquerading)}{41}{subsubsection.3.3.2.2}%
-\contentsline {section}{\numberline {3.4}Plugin CTFd}{42}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Benchmark e Difesa dell\textquotesingle Architettura}{42}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Scelte di Piattaforma e Infrastruttura}{42}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Scelte di Design Software e Codice}{43}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Difesa dell\textquotesingle Architettura}{43}{subsection.3.5.3}%
-\contentsline {subsection}{\numberline {3.5.4}Critica e Limiti Architetturali}{44}{subsection.3.5.4}%
-\contentsline {chapter}{\numberline {4}Architetture Alternative}{45}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Bridge L2 Senza Gateway}{45}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Interfaccia wan1 Aggiuntiva}{45}{section.4.2}%
-\contentsline {section}{\numberline {4.3}PID Namespace Separato per la Verifica}{45}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Network Namespace Separato per la Verifica}{46}{section.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.0.1}Conclusione}{47}{subsubsection.4.4.0.1}%
-\contentsline {section}{\numberline {4.5}Esecuzione In-Memory con Mascheramento}{47}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Appendice}{49}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Linux Networking: net\_device e sk\_buff}{49}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}network device drivers}{49}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Socket Buffer}{50}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Netfilter}{50}{subsection.5.1.3}%
-\contentsline {subsection}{\numberline {5.1.4}Connection Tracking}{51}{subsection.5.1.4}%
-\contentsline {section}{\numberline {5.2}TODO: NAT e masquarade}{52}{section.5.2}%
-\contentsline {section}{\numberline {5.3}bridge}{52}{section.5.3}%
-\contentsline {section}{\numberline {5.4}linux bridge}{53}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}STP}{54}{subsection.5.4.1}%
-\contentsline {section}{\numberline {5.5}cosa approfondire}{54}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}shadow bridge}{54}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}dual nic}{54}{subsection.5.5.2}%
-\contentsline {subsection}{\numberline {5.5.3}PID namespace separato}{55}{subsection.5.5.3}%
-\contentsline {subsection}{\numberline {5.5.4}network namespace separato}{55}{subsection.5.5.4}%
-\contentsline {subsection}{\numberline {5.5.5}esecuzione in memoryu}{55}{subsection.5.5.5}%
-\contentsline {section}{\numberline {5.6}VPN WireGuard e OVN}{56}{section.5.6}%
-\contentsline {section}{\numberline {5.7}SDN}{57}{section.5.7}%
-\contentsline {section}{\numberline {5.8}ZFS}{58}{section.5.8}%
-\contentsline {subsection}{\numberline {5.8.1}pool}{58}{subsection.5.8.1}%
-\contentsline {subsection}{\numberline {5.8.2}transaction groups}{59}{subsection.5.8.2}%
-\contentsline {subsection}{\numberline {5.8.3}vantaggi di pool e transazioni}{59}{subsection.5.8.3}%
-\contentsline {subsection}{\numberline {5.8.4}quando ZFS costa in memoria?}{60}{subsection.5.8.4}%
-\contentsline {section}{\numberline {5.9}struttura di una pool}{60}{section.5.9}%
-\contentsline {subsection}{\numberline {5.9.1}\texttt {vdev}}{60}{subsection.5.9.1}%
-\contentsline {subsection}{\numberline {5.9.2}quindi a che serve un vdev?}{61}{subsection.5.9.2}%
-\contentsline {section}{\numberline {5.10}dataset}{61}{section.5.10}%
-\contentsline {section}{\numberline {5.11}snapshots}{62}{section.5.11}%
-\contentsline {subsection}{\numberline {5.11.1}clones}{62}{subsection.5.11.1}%
-\contentsline {section}{\numberline {5.12}NsJail}{62}{section.5.12}%
-\contentsline {subsubsection}{\numberline {5.12.0.1}namespaces}{62}{subsubsection.5.12.0.1}%
-\contentsline {subsubsection}{\numberline {5.12.0.2}seccomp bpf}{62}{subsubsection.5.12.0.2}%
-\contentsline {subsubsection}{\numberline {5.12.0.3}cgroups}{63}{subsubsection.5.12.0.3}%
-\contentsline {chapter}{Elenco delle figure}{64}{subsubsection.5.12.0.3}%
-\contentsline {chapter}{Elenco dei codici}{64}{subsubsection.5.12.0.3}%
-\contentsline {chapter}{Elenco degli algoritmi}{65}{chapter*.1}%
-\contentsline {chapter}{Bibliografia}{66}{chapter*.2}%
-\contentsline {chapter}{Ringraziamenti}{70}{chapter*.4}%
+\contentsline {chapter}{\numberline {2}Contesto e Confronto con lo Stato dell Arte}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}CR Alternativi: kCTF}{2}{section.2.1}%
+\contentsline {section}{\numberline {2.2}CR Alternativi: CTFBox}{6}{section.2.2}%
+\contentsline {section}{\numberline {2.3}CR Alternativi: CyTrONE}{8}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Valutazione delle Performance di CyTrONE}{9}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}CR Alternativi: CyberRangeCZ}{15}{section.2.4}%
+\contentsline {section}{\numberline {2.5}CR Alternativi: CyberPatrion}{18}{section.2.5}%
+\contentsline {chapter}{\numberline {3}BlueAgent}{20}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Attori}{21}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}CTF Manager (attore)}{21}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Giocatore (attore esterno per CTF Manager)}{22}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Autore della sfida (attore esterno per CTF Manager)}{22}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Amministratore della competizione (attore esterno per CTF Manager)}{22}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Use Cases per CTF Manager}{22}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}\texttt {UC-01}: Deploy dell'infrastruttura di rete per il team \(k\)}{23}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}\texttt {UC-02}: Deploy della challenge per il team \(k\)}{24}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}\texttt {UC-03}: Verifica della challenge per il team \(k\)}{24}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}\texttt {UC-06}: Dismissione e rilascio di una challenge per il team \(k\)}{25}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}\texttt {UC-08}: Compilazione e Import di un'immagine per container}{25}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}\texttt {UC-12}: Registrazione e configurazione WireGuard per un membro del team \(k\)}{26}{subsection.3.2.6}%
+\contentsline {section}{\numberline {3.3}Requisiti di Sistema}{27}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Piattaforma Host e Infrastruttura}{27}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Motore di Containerizzazione}{27}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Rete Ibrida e Connettivita}{27}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Motore di Verifica OVN Sandbox}{28}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Control Plane, Concorrenza e Persistenza}{28}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Pipeline Immagini Distrobuilder}{29}{subsection.3.3.6}%
+\contentsline {section}{\numberline {3.4}Oracoli e Meccanismi di Verifica}{29}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Verifica Statica}{30}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Verifica Dinamica tramite sistema esterno}{30}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Verifica Dinamica tramite injection dei comandi di verifica}{31}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Clonazione del sistema in una rete separata}{31}{subsection.3.4.4}%
+\contentsline {chapter}{\numberline {4}Architettura Rete Alto Livello}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Rete \(\text {production-}k\)}{33}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Rete \(\text {verify-}k\)}{34}{section.4.2}%
+\contentsline {section}{\numberline {4.3}4.3}{38}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Architettura Nel Dettaglio e Validazione}{39}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Architettura del Codice}{39}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Astrazione del Runtime: \texttt {ContainerEngine}}{39}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Ciclo di Vita della Sandbox: Async Context Manager (\texttt {OVNVerifier})}{40}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Concorrenza e Two-Tier Locking}{41}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Pipeline Asincrona non Bloccante su Socket Unix}{42}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Separazione tra Crazione dei comandi ed Esecuzione nel codice {[}TODO{]}}{42}{subsection.5.1.5}%
+\contentsline {subsection}{\numberline {5.1.6}Resilienza e Riconciliazione dello Stato (\texttt {LifecycleManager}) {[}TODO{]}}{42}{subsection.5.1.6}%
+\contentsline {section}{\numberline {5.2}Comandi per l'Architettura di Rete}{42}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}configurare OVN}{42}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}\(\text {production-}k\) Routing e Connettività dei Peer (WireGuard e nftables)}{43}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Plugin CTFd}{44}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Difesa e Validazione di BlueAgent}{44}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Scelte di Piattaforma e Infrastruttura}{44}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Difesa dell'Architettura}{45}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Critica e Limiti Architetturali}{45}{subsection.5.4.3}%
+\contentsline {chapter}{\numberline {6}Architetture Rete Alternative}{46}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Bridge L2 Senza Gateway}{46}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Interfaccia wan1 Aggiuntiva}{46}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Network Namespace Separato per la Verifica}{47}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Appendice}{48}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Linux Networking}{48}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Network Device Driver }{48}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Bridge }{49}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Netfilter (Capitolo 5 e 9 IPV4 routing) }{50}{subsection.7.1.3}%
+\contentsline {section}{\numberline {7.2}WireGuard}{51}{section.7.2}%
+\contentsline {section}{\numberline {7.3}ZFS}{52}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Vantaggi di Pool e transazioni}{53}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Quando ZFS diventa costoso?}{53}{subsection.7.3.2}%
+\contentsline {section}{\numberline {7.4}NsJail}{53}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}namespaces}{54}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}seccomp bpf}{54}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}cgroups}{54}{subsection.7.4.3}%
+\contentsline {chapter}{Elenco delle figure}{55}{subsection.7.4.3}%
+\contentsline {chapter}{Elenco dei codici}{55}{subsection.7.4.3}%
+\contentsline {chapter}{Elenco degli algoritmi}{56}{chapter*.1}%
+\contentsline {chapter}{Bibliografia}{57}{chapter*.2}%
+\contentsline {chapter}{Ringraziamenti}{61}{chapter*.4}%

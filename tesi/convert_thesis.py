@@ -162,9 +162,113 @@ def process_mermaid_blocks(text: str, fallback_slug: str = "diagram") -> str:
 
     return "\n".join(new_lines)
 
+def ensure_table_blank_lines(text: str) -> str:
+    lines = text.splitlines()
+    new_lines = []
+    in_code_block = False
+    
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            new_lines.append(line)
+            continue
+            
+        if not in_code_block:
+            is_table_row = stripped.startswith("|") and stripped.endswith("|")
+            
+            # Start of a table: preceding line is non-empty, not code, not table
+            if is_table_row and i > 0:
+                prev_line = lines[i-1].strip()
+                prev_is_table = prev_line.startswith("|") and prev_line.endswith("|")
+                if prev_line and not prev_is_table and not prev_line.startswith("```"):
+                    if (i + 1 < len(lines) and re.match(r'^\s*\|?\s*:?-+:?\s*\|', lines[i+1])) or re.match(r'^\s*\|?\s*:?-+:?\s*\|', line):
+                        new_lines.append("")
+                        
+            # End of a table: current line is text, preceding line was table row
+            if not is_table_row and stripped and i > 0:
+                prev_line = lines[i-1].strip()
+                prev_is_table = prev_line.startswith("|") and prev_line.endswith("|")
+                if prev_is_table and not stripped.startswith(":") and not prev_line.startswith("```"):
+                    new_lines.append("")
+                    
+        new_lines.append(line)
+        
+    return "\n".join(new_lines)
+
+def ensure_list_blank_lines(text: str) -> str:
+    lines = text.splitlines()
+    new_lines = []
+    in_code_block = False
+    list_item_pattern = re.compile(r'^(\*|-|\+|\d+\.)\s+')
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            new_lines.append(line)
+            continue
+
+        if not in_code_block and i > 0:
+            is_list = bool(list_item_pattern.match(stripped))
+            prev_line = lines[i-1].strip()
+            prev_is_list = bool(list_item_pattern.match(prev_line))
+
+            # 1. Start of list: previous line is non-empty text, not header, not quote, not code
+            if is_list and prev_line and not prev_is_list and not prev_line.startswith("#") and not prev_line.startswith(">"):
+                new_lines.append("")
+
+            # 2. End of list: current line is non-empty text (not list item, not indented sub-item), previous line was list item
+            if not is_list and stripped and prev_is_list and not line.startswith("  ") and not line.startswith("\t"):
+                new_lines.append("")
+
+        new_lines.append(line)
+
+    return "\n".join(new_lines)
+
+def ensure_quote_blank_lines(text: str) -> str:
+    lines = text.splitlines()
+    new_lines = []
+    in_code_block = False
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            new_lines.append(line)
+            continue
+
+        if not in_code_block and i > 0:
+            is_quote = stripped.startswith(">")
+            prev_line = lines[i-1].strip()
+            prev_is_quote = prev_line.startswith(">")
+
+            # 1. Start of quote: previous line is non-empty text, not header, not quote, not code
+            if is_quote and prev_line and not prev_is_quote and not prev_line.startswith("#"):
+                if new_lines and new_lines[-1].strip() != "":
+                    new_lines.append("")
+
+            # 2. End of quote: current line is non-empty text, not quote, previous line was quote
+            if not is_quote and stripped and prev_is_quote:
+                if new_lines and new_lines[-1].strip() != "":
+                    new_lines.append("")
+
+        new_lines.append(line)
+
+    return "\n".join(new_lines)
+
 def preprocess_markdown(text: str, file_stem: str = "doc") -> str:
     # 0. Render Mermaid diagrams into embedded images
     text = process_mermaid_blocks(text, fallback_slug=file_stem)
+
+    # 0a. Ensure blank lines before and after blockquotes (>) for proper pandoc quote parsing
+    text = ensure_quote_blank_lines(text)
+
+    # 0b. Ensure blank lines before and after tables for proper pandoc parsing
+    text = ensure_table_blank_lines(text)
+
+    # 0c. Ensure blank lines before and after lists for proper pandoc parsing
+    text = ensure_list_blank_lines(text)
 
     # 1. Clean box-drawing characters for LaTeX listings compatibility
     box_map = {
@@ -176,12 +280,33 @@ def preprocess_markdown(text: str, file_stem: str = "doc") -> str:
         text = text.replace(char, replacement)
 
     # 2. Transform Obsidian image embeds: ![[src/images/pic.png]] or ![[pic.png|400]] -> ![](...)
+    external_img_dirs = [
+        BASE_DIR / "src" / "images",
+        BASE_DIR.parent / "immagini",
+        Path.home() / "appunti" / "immagini",
+    ]
+
     def replace_image(match):
         img_target = match.group(1).strip()
         if "|" in img_target:
             img_target = img_target.split("|")[0].strip()
-        if not img_target.startswith("src/") and (BASE_DIR / "src" / "images" / img_target).exists():
-            img_target = f"src/images/{img_target}"
+
+        safe_name = img_target.replace(" ", "_")
+        dest_file = BASE_DIR / "src" / "images" / safe_name
+
+        if dest_file.exists():
+            return f"![](src/images/{safe_name})"
+
+        for edir in external_img_dirs:
+            candidate = edir / img_target
+            if candidate.exists() and candidate.is_file():
+                dest_file.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(candidate, dest_file)
+                return f"![](src/images/{safe_name})"
+
+        if (BASE_DIR / img_target).exists():
+            return f"![]({img_target})"
+
         return f"![]({img_target})"
 
     text = re.sub(r'!\[\[(.*?)\]\]', replace_image, text)
@@ -299,7 +424,7 @@ def convert_md_file(md_path: Path, target_dir: Path, global_fn_map: dict) -> Pat
 
     cmd = [
         str(PANDOC_BIN),
-        "-f", "gfm+footnotes",
+        "-f", "markdown+footnotes",
         "-t", "latex",
         "--listings"
     ]
@@ -392,8 +517,11 @@ def main():
 \usepackage[plainpages=false,pdfpagelabels]{hyperref}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{array}
+\newcounter{none}
 \usepackage{calc}
 \usepackage{textcomp}
+\renewcommand{\arraystretch}{1.25}
 \setlength{\headheight}{15pt}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -410,16 +538,66 @@ def main():
 \makeatother
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
+% Modern typography for code blocks & inline snippets
+\usepackage[scaled=0.88]{inconsolata}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+
+% Curated Modern Color Palette (GitHub / VS Code Light inspired)
+\definecolor{codebg}{RGB}{248, 250, 252}        % Sfondo soft slate-50
+\definecolor{codeframe}{RGB}{226, 232, 240}     % Bordo delicato slate-200
+\definecolor{codenumbers}{RGB}{148, 163, 184}   % Numeri di riga muted slate-400
+\definecolor{codekeyword}{RGB}{9, 105, 218}     % Parole chiave blu moderno
+\definecolor{codestring}{RGB}{26, 127, 55}      % Stringhe verde smeraldo
+\definecolor{codecomment}{RGB}{100, 116, 139}   % Commenti ardesia corsivo
+\definecolor{codeidentifier}{RGB}{15, 23, 42}   % Testo codice ardesia scuro
+\definecolor{macred}{RGB}{239, 68, 68}          % Pallino rosso terminale
+\definecolor{macyellow}{RGB}{245, 158, 11}      % Pallino giallo terminale
+\definecolor{macgreen}{RGB}{16, 185, 129}       % Pallino verde terminale
+
+% Container tcolorbox per lstlisting in stile Modern Terminal Card
+\tcolorboxenvironment{lstlisting}{
+    enhanced,
+    breakable,
+    colback=codebg,
+    colframe=codeframe,
+    boxrule=0.7pt,
+    arc=5pt,
+    left=6pt,
+    right=8pt,
+    top=14pt,
+    bottom=7pt,
+    before skip=12pt,
+    after skip=12pt,
+    overlay unbroken and first={
+        \fill[macred] ([xshift=12pt,yshift=-7pt]frame.north west) circle (2.5pt);
+        \fill[macyellow] ([xshift=20pt,yshift=-7pt]frame.north west) circle (2.5pt);
+        \fill[macgreen] ([xshift=28pt,yshift=-7pt]frame.north west) circle (2.5pt);
+    }
+}
+
 \lstset{
-    basicstyle=\ttfamily\footnotesize,
+    basicstyle=\ttfamily\footnotesize\color{codeidentifier},
     breaklines=true,
+    breakatwhitespace=true,
     numbers=left,
-    numberstyle=\tiny\color{gray},
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{olive}\itshape,
-    stringstyle=\color{teal},
+    xleftmargin=16pt,
+    numbersep=8pt,
+    numberstyle=\tiny\color{codenumbers},
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
     showstringspaces=false,
-    frame=lines
+    showspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=none,
+    backgroundcolor={},
+    aboveskip=0pt,
+    belowskip=0pt,
+    lineskip=1.5pt,
+    columns=flexible,
+    keepspaces=true
 }
 
 \begin{document}

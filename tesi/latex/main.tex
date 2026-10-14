@@ -100,8 +100,11 @@
 \usepackage[plainpages=false,pdfpagelabels]{hyperref}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{array}
+\newcounter{none}
 \usepackage{calc}
 \usepackage{textcomp}
+\renewcommand{\arraystretch}{1.25}
 \setlength{\headheight}{15pt}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -118,16 +121,66 @@
 \makeatother
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
+% Modern typography for code blocks & inline snippets
+\usepackage[scaled=0.88]{inconsolata}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+
+% Curated Modern Color Palette (GitHub / VS Code Light inspired)
+\definecolor{codebg}{RGB}{248, 250, 252}        % Sfondo soft slate-50
+\definecolor{codeframe}{RGB}{226, 232, 240}     % Bordo delicato slate-200
+\definecolor{codenumbers}{RGB}{148, 163, 184}   % Numeri di riga muted slate-400
+\definecolor{codekeyword}{RGB}{9, 105, 218}     % Parole chiave blu moderno
+\definecolor{codestring}{RGB}{26, 127, 55}      % Stringhe verde smeraldo
+\definecolor{codecomment}{RGB}{100, 116, 139}   % Commenti ardesia corsivo
+\definecolor{codeidentifier}{RGB}{15, 23, 42}   % Testo codice ardesia scuro
+\definecolor{macred}{RGB}{239, 68, 68}          % Pallino rosso terminale
+\definecolor{macyellow}{RGB}{245, 158, 11}      % Pallino giallo terminale
+\definecolor{macgreen}{RGB}{16, 185, 129}       % Pallino verde terminale
+
+% Container tcolorbox per lstlisting in stile Modern Terminal Card
+\tcolorboxenvironment{lstlisting}{
+    enhanced,
+    breakable,
+    colback=codebg,
+    colframe=codeframe,
+    boxrule=0.7pt,
+    arc=5pt,
+    left=6pt,
+    right=8pt,
+    top=14pt,
+    bottom=7pt,
+    before skip=12pt,
+    after skip=12pt,
+    overlay unbroken and first={
+        \fill[macred] ([xshift=12pt,yshift=-7pt]frame.north west) circle (2.5pt);
+        \fill[macyellow] ([xshift=20pt,yshift=-7pt]frame.north west) circle (2.5pt);
+        \fill[macgreen] ([xshift=28pt,yshift=-7pt]frame.north west) circle (2.5pt);
+    }
+}
+
 \lstset{
-    basicstyle=\ttfamily\footnotesize,
+    basicstyle=\ttfamily\footnotesize\color{codeidentifier},
     breaklines=true,
+    breakatwhitespace=true,
     numbers=left,
-    numberstyle=\tiny\color{gray},
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{olive}\itshape,
-    stringstyle=\color{teal},
+    xleftmargin=16pt,
+    numbersep=8pt,
+    numberstyle=\tiny\color{codenumbers},
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
     showstringspaces=false,
-    frame=lines
+    showspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=none,
+    backgroundcolor={},
+    aboveskip=0pt,
+    belowskip=0pt,
+    lineskip=1.5pt,
+    columns=flexible,
+    keepspaces=true
 }
 
 \begin{document}
@@ -169,14 +222,20 @@
 \fancyhead[R]{Introduzione} \fancyfoot[L]{Introduzione}
 \include{Introduzione}
 
+\fancyhead[R]{Contesto e Confronto con lo Stato dell Arte} \fancyfoot[L]{Contesto e Confronto con lo Stato dell Arte}
+\include{Contesto_e_Confronto_con_lo_Stato_dell_Arte}
+
 \fancyhead[R]{BlueAgent} \fancyfoot[L]{BlueAgent}
 \include{BlueAgent}
 
-\fancyhead[R]{Architettura BlueAgent} \fancyfoot[L]{Architettura BlueAgent}
-\include{Architettura_BlueAgent}
+\fancyhead[R]{Architettura Rete Alto Livello} \fancyfoot[L]{Architettura Rete Alto Livello}
+\include{Architettura_Rete_Alto_Livello}
 
-\fancyhead[R]{Architetture Alternative} \fancyfoot[L]{Architetture Alternative}
-\include{Architetture_Alternative}
+\fancyhead[R]{Architettura Nel Dettaglio e Validazione} \fancyfoot[L]{Architettura Nel Dettaglio e Validazione}
+\include{Architettura_Nel_Dettaglio_e_Validazione}
+
+\fancyhead[R]{Architetture Rete  Alternative} \fancyfoot[L]{Architetture Rete  Alternative}
+\include{Architetture_Rete__Alternative}
 
 \fancyhead[R]{Appendice} \fancyfoot[L]{Appendice}
 \include{Appendice}
