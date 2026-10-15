@@ -58,7 +58,9 @@ Nonostante i vantaggi, l'architettura presenta dei compromessi.
   gestore di lock distribuito come Redis.
 \item
   \textbf{Overhead in fase di Verifica}: gestire i cloni raddopia
-  potenzialmente il consumo di CPU e di RAM per un singolo team. Al caso
-  peggiore tutti i team potrebbero richiedere contemporaneamente la
-  verifica dei loro container penalizzando le prestazioni dell'host.
+  potenzialmente il consumo di CPU e di RAM per un singolo team anche se
+  ZFS riduce sensibilmente il tempo richiesto per il deploy delle
+  duplicazioni. Al caso peggiore tutti i team potrebbero richiedere
+  contemporaneamente la verifica dei loro container penalizzando le
+  prestazioni dell'host.
 \end{itemize}

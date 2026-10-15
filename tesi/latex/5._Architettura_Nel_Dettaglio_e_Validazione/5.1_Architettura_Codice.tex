@@ -111,23 +111,17 @@ fasi:
   \textbf{Rilascio e Teardown
   (\passthrough{\lstinline!\_\_aexit\_\_!}):}
 
-  \begin{itemize}
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
   \tightlist
   \item
-    Smantellamento delle risorse:
-
-    \begin{enumerate}
-    \def\labelenumii{\arabic{enumii}.}
-    \tightlist
-    \item
-      Arresto ed eliminazione del container
-      \passthrough{\lstinline!verify-runner!};
-    \item
-      Arresto forzato ed eliminazione di tutti i container cloni;
-    \item
-      Eliminazione della rete virtuale OVN.
-    \end{enumerate}
-  \end{itemize}
+    Arresto ed eliminazione del container
+    \passthrough{\lstinline!verify-runner!};
+  \item
+    Arresto forzato ed eliminazione di tutti i container cloni;
+  \item
+    Eliminazione della rete virtuale OVN.
+  \end{enumerate}
 \end{enumerate}
 
 L'uso dell'\textbf{Async Context Manager} fornisce dunque un metodo
@@ -194,9 +188,9 @@ quel team.
 \subsection{Pipeline Asincrona non Bloccante su Socket
 Unix}\label{pipeline-asincrona-non-bloccante-su-socket-unix}
 
-Le operazioni di su container possono comportare latenze nell'ordine di
-decine o centinaia di millisecondi. L'adozione di un modello sincrono
-sarebbe totalmente inefficiente.
+Le operazioni di incus su container possono comportare latenze
+nell'ordine di decine o centinaia di millisecondi. L'adozione di un
+modello sincrono sarebbe totalmente inefficiente.
 
 BlueAgent è progettato secondo un paradigma completamente asincrono in
 modo da adattarsi al metodo \passthrough{\lstinline!wait!} di Incus:
@@ -222,12 +216,6 @@ MINCHIATA)
 Questo approccio consente a un singolo processo BlueAgent di servire le
 richieste di telemetria utilizzando piu task e senza rimanere in attesa
 su una singola richiesta evitando di servire le altre richieste.
-
-\subsection{Separazione tra Crazione dei comandi ed Esecuzione nel
-codice
-{[}TODO{]}}\label{separazione-tra-crazione-dei-comandi-ed-esecuzione-nel-codice-todo}
-
-Per migliorare la leggibilita del codice si e' deciso di separare..
 
 \subsection{\texorpdfstring{Resilienza e Riconciliazione dello Stato
 (\texttt{LifecycleManager})

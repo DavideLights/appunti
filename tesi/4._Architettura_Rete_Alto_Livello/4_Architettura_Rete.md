@@ -51,21 +51,19 @@ L'uso di una SDN garantisce l'assenza di conflitti di routing grazie a una netta
 * **Spazio Utente (Control Plane):** i demoni di controllo di OVN (`ovn-controller`, `ovn-northd`) e di Open vSwitch (`ovs-vswitchd`) elaborano la topologia logica e la traducono in flussi OpenFlow. Il router OVN esiste puramente a livello logico.
 * **Spazio Kernel (Data Plane):** qui viene applicato l'inoltro dei frame ad alte prestazioni tramite il modulo kernel di Open vSwitch. 
 
-Il collegamento tra i container e la rete OVN sfrutta sempre una coppia `veth pair`: un'estremità risiede all'interno del container come `eth0`, mentre l'altra estremità sull'host viene agganciata direttamente al bridge di Open vSwitch.
+Il collegamento tra i container e la rete OVN sfrutta sempre una coppia `veth`: un'estremità risiede all'interno del container e si attacca ad `eth0`, mentre l'altra estremità sull'host viene agganciata direttamente al bridge di Open vSwitch.
 
 > `SDN (Software Defined Networking)`: Paradigma architetturale che separa il **piano di controllo** dal **piano dei dati**, consentendo di gestire e programmare l'infrastruttura di rete interamente via software.
->
-> `Open vSwitch (OVS)`: Switch virtuale operante nel kernel Linux come Data Plane. Sostituisce il classico bridge Linux eseguendo l'inoltro dei frame ad alte prestazioni basandosi su tabelle di flussi (*flow tables*).
->
-> `OpenFlow`: Protocollo standard che permette al controller SDN di comunicare con lo switch e programmare le regole di matching e le azioni direttamente all'interno delle pipeline di Open vSwitch.
->
-> `OVN (Open Virtual Network)`: Sistema SDN che opera come Control Plane per Open vSwitch. Traduce topologie logiche (Logical Switch, Logical Router, NAT e ACL) in flussi OpenFlow distribuiti, istruendo Open vSwitch su come instradare il traffico senza creare molteplici interfacce o bridge dedicati nel kernel host. E' costituito da due interfacce:
-> * **OVN Northbound**: e' l'interfaccia dove dichiaro le reti che voglio creare e le loro proprietà che devono rispettare.
-> * **OVN Southbound (SB) DB:** Memorizza le tabelle di flussi logici compilate e le associazioni di chassis (host fisici) 
 
-La comunicazione verso l'esterno avviene collegando il Logical Router OVN al bridge parent $\text{incusbr0}$, da cui ottiene un indirizzo IP da utilizzare. L'accesso a Internet per i container sfrutta un meccanismo di NAT a due stadi:
+> `OpenFlow`: Protocollo standard che permette al controller SDN di comunicare con lo switch e programmare le regole di matching e le azioni direttamente all'interno delle pipeline di Open vSwitch.
+
+> `OVN (Open Virtual Network)`: Sistema SDN che opera come Control Plane per Open vSwitch. Traduce topologie logiche (Logical Switch, Logical Router, NAT e ACL) in flussi OpenFlow distribuiti, istruendo Open vSwitch su come instradare il traffico senza creare molteplici interfacce o bridge dedicati nel kernel host. E' costituito da due interfacce:
+> **OVN Northbound**: e' l'interfaccia dove dichiaro le reti che voglio creare e le loro proprietà che devono rispettare.
+> **OVN Southbound DB:** Memorizza le tabelle di flussi logici compilate e le associazioni di chassis (host fisici) 
+
+La comunicazione verso l'esterno avviene collegando il Logical Router OVN al bridge parent $\text{incusbr0}$, da cui ottiene un indirizzo IP da utilizzare. L'accesso a Internet per i container di verifica sfrutta un meccanismo di NAT a due stadi:
 * **SNAT in OVN**: quando un container (`10.k.1.x`) invia traffico all'esterno, il Logical Router riscrive l'indirizzo sorgente sostituendolo con l'IP uplink assegnato su `incusbr0`. Se non fosse applicato, i pacchetti in uscita manterrebbero l'indirizzo sorgente `10.k.1.x` e le risposte dall'esterno verrebbero erroneamente instradate verso l'ambiente di produzione.
-* **SNAT sull'host**: una volta raggiunto `incusbr0`, le regole `nftables` dell'host applicano la regola di **masquerade** verso l'interfaccia fisica per uscire su Internet.
+* **SNAT su `incusbr0`**: una volta raggiunto `incusbr0`, le regole `nftables` dell'host applicano la regola di **masquerade** verso l'interfaccia fisica per uscire su Internet.
 
 Il NAT a due stadi e' necessario per evitare collisioni di routing sull'host: il primo stadio "nasconde" gli indirizzi duplicati `10.k.1.x` traducendoli in un IP univoco sull'infrastruttura `172.16.0.0/24`, mentre il secondo stadio permette la navigazione esterna condividendo l'IP dell'host.
 

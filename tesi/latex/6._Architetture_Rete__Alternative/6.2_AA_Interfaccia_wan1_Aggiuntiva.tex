@@ -6,10 +6,10 @@ bridge, e' possibile aggiungere ad ogni container duplicato, una
 interfaccia \passthrough{\lstinline!wan1!} per l'inoltro verso
 \passthrough{\lstinline!incusbr0!}.
 
-Il problema di questa soluzione e' che altera le regole di routing dei
-container, interferendo con il modo in cui il sistema nel container
-instrada i pacchetti, eventualmente compromettendo la verifica
-dell'exploit, oppure l'exploit stesso.
+Il problema di questa soluzione e' che necessita di alterare le regole
+di routing dei container, interferendo con le tabelle del Kernel ed
+eventualmente compromettendo la verifica dell'exploit, in caso questo si
+aspetti delle determinate regole di routing.
 
 Inoltre e' una soluzione poco efficiente: richiede di duplicare
 manualmente il numero di interfacce previste (tenendo a mente che ogni

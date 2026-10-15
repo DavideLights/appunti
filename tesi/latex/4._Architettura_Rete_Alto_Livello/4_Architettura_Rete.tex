@@ -196,8 +196,8 @@ kernel} \footnote{\label{fn:ref_19}Documentazione Open vSwitch, architettura Dat
 \end{itemize}
 
 Il collegamento tra i container e la rete OVN sfrutta sempre una coppia
-\passthrough{\lstinline!veth pair!}: un'estremità risiede all'interno
-del container come \passthrough{\lstinline!eth0!}, mentre l'altra
+\passthrough{\lstinline!veth!}: un'estremità risiede all'interno del
+container e si attacca ad \passthrough{\lstinline!eth0!}, mentre l'altra
 estremità sull'host viene agganciata direttamente al bridge di Open
 vSwitch.
 
@@ -206,33 +206,31 @@ vSwitch.
 architetturale che separa il \textbf{piano di controllo} dal
 \textbf{piano dei dati}, consentendo di gestire e programmare
 l'infrastruttura di rete interamente via software.
+\end{quote}
 
-\passthrough{\lstinline!Open vSwitch (OVS)!}: Switch virtuale operante
-nel kernel Linux come Data Plane. Sostituisce il classico bridge Linux
-eseguendo l'inoltro dei frame ad alte prestazioni basandosi su tabelle
-di flussi (\emph{flow tables}).
-
+\begin{quote}
 \passthrough{\lstinline!OpenFlow!}: Protocollo standard che permette al
 controller SDN di comunicare con lo switch e programmare le regole di
 matching e le azioni direttamente all'interno delle pipeline di Open
 vSwitch.
+\end{quote}
 
+\begin{quote}
 \passthrough{\lstinline!OVN (Open Virtual Network)!}: Sistema SDN che
 opera come Control Plane per Open vSwitch. Traduce topologie logiche
 (Logical Switch, Logical Router, NAT e ACL) in flussi OpenFlow
 distribuiti, istruendo Open vSwitch su come instradare il traffico senza
 creare molteplici interfacce o bridge dedicati nel kernel host. E'
-costituito da due interfacce: * \textbf{OVN Northbound}: e'
-l'interfaccia dove dichiaro le reti che voglio creare e le loro
-proprietà che devono rispettare. * \textbf{OVN Southbound (SB)
-DB:}~Memorizza le tabelle di flussi logici compilate e le associazioni
-di chassis (host fisici)
+costituito da due interfacce: \textbf{OVN Northbound}: e' l'interfaccia
+dove dichiaro le reti che voglio creare e le loro proprietà che devono
+rispettare. \textbf{OVN Southbound DB:}~Memorizza le tabelle di flussi
+logici compilate e le associazioni di chassis (host fisici)
 \end{quote}
 
 La comunicazione verso l'esterno avviene collegando il Logical Router
 OVN al bridge parent \(\text{incusbr0}\), da cui ottiene un indirizzo IP
-da utilizzare. L'accesso a Internet per i container sfrutta un
-meccanismo di NAT a due stadi:
+da utilizzare. L'accesso a Internet per i container di verifica sfrutta
+un meccanismo di NAT a due stadi:
 
 \begin{itemize}
 \tightlist
@@ -245,8 +243,8 @@ meccanismo di NAT a due stadi:
   \passthrough{\lstinline!10.k.1.x!} e le risposte dall'esterno
   verrebbero erroneamente instradate verso l'ambiente di produzione.
 \item
-  \textbf{SNAT sull'host}: una volta raggiunto
-  \passthrough{\lstinline!incusbr0!}, le regole
+  \textbf{SNAT su \passthrough{\lstinline!incusbr0!}}: una volta
+  raggiunto \passthrough{\lstinline!incusbr0!}, le regole
   \passthrough{\lstinline!nftables!} dell'host applicano la regola di
   \textbf{masquerade} verso l'interfaccia fisica per uscire su Internet.
 \end{itemize}

@@ -1,11 +1,10 @@
-\section{WireGuard}\label{wireguard}
+\section[WireGuard ]{\texorpdfstring{WireGuard
+\footnote{\label{fn:ref_27}https://www.wireguard.com/papers/wireguard.pdf}}{WireGuard }}\label{wireguard-2}
 
-\textbf{fonte}: https://www.wireguard.com/papers/wireguard.pdf
-\textbf{vpn}: https://ieeexplore.ieee.org/document/4756450
-
-\textbf{VPN}: e' un modo per comunicare in modo sicuro tra membri di un
-gruppo attraverso l'uso di una infrastruttura di comunicazione pubblica,
-grazie all'uso di un protocollo di tunneling.
+La \textbf{VPN} e' un servizio usato per comunicare in modo sicuro tra
+membri di un gruppo attraverso l'uso di una infrastruttura di
+comunicazione pubblica su cui il traffico viene incapsulato dentro ad un
+tunnel cifrato. \footnote{\label{fn:ref_28}https://ieeexplore.ieee.org/document/4756450}
 
 \textbf{Wireguard} e' una VPN che utilizza il concetto di
 \textbf{cryptokey routing}: viene mantenuta in memoria una tabella dove
@@ -17,7 +16,8 @@ potrebbe essere per esempio \passthrough{\lstinline!wg0!}.
 \begin{quote}
 Per \textbf{stateless}, si intende il fatto che l'amministratore non si
 deve occupare di gestire lo scambio delle chiavi, connessioni,
-disconnessioni, poi che viene tutto gestito dietro le quinte.
+disconnessioni, poiche' viene tutto gestito dietro le quinte da
+WireGuard.
 \end{quote}
 
 Rispetto ad OpenVPN, Wireguard e' percepito come più sicuro ed
@@ -31,7 +31,7 @@ efficiente:
 \item
   OpenVPN utilizza interfacce TUN/TAP: agiscono in user space ma al
   costo di penalizzare di molto le performance, infatti i pacchetti
-  devono essere copiati piu volte nel passagio da user space a kernel
+  devono essere copiati piu volte nel passagio da user spa ce a kernel
   space.
 \end{itemize}
 
@@ -51,7 +51,7 @@ Una cryptorouting table appare cosi:
   \label{fig:Pasted_image_20261001214515}
 \end{figure}
 
-Decide in quali coppie \((\text{Peer Public Key, Allowed Source IP})\)
+Decide quali coppie \((\text{Peer Public Key, Allowed Source IP})\)
 possono instradare nell'interfaccia wireguard.
 
 Opzionalmente e' possibile specificare verso quale endpoint inoltrare il

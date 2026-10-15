@@ -1,1 +1,38 @@
-ciao
+\section{Router Intermedio}\label{router-intermedio}
+
+Un'altra possibile alternativa consiste nell'introdurre un router
+intermedio dedicato (ad esempio un container Linux minimale o un'istanza
+virtuale di routing) interposto tra il bridge di verifica e
+l'interfaccia uplink \passthrough{\lstinline!incusbr0!}.
+
+In questa architettura, i container duplicati vengono collegati a un
+bridge L2 isolato. Il router intermedio si attesta su questo bridge
+assumendo l'indirizzo IP del gateway originale
+(\passthrough{\lstinline!10.k.1.1/24!}), permettendo ai container di
+verifica di preservare inalterata la propria topologia, la
+configurazione IP e le tabelle di routing. Verso l'esterno, il router
+dispone di una seconda interfaccia attestata su
+\passthrough{\lstinline!incusbr0!} (con un indirizzo nella subnet
+\passthrough{\lstinline!172.16.0.0/24!}), su cui applica regole di SNAT
+per mascherare il traffico uscente. In questo modo la topologia interna
+della rete di verifica viene completamente nascosta all'host e
+all'esterno, scongiurando conflitti di instradamento con la rete di
+produzione e garantendo al contempo l'accesso a Internet.
+
+L'architettura è concettualmente valida e pienamente fattibile, offrendo
+un isolamento efficace e un'elevata fedeltà dell'ambiente replicato.
+Tuttavia, sul piano operativo risulta leggermente più complessa rispetto
+alla soluzione adottata in BlueAgent con OVN.
+
+Mentre con OVN la creazione dello switch, del router logico e delle
+regole di NAT è gestita in modo nativo e dichiarativo da Incus tramite
+API, l'uso di un router intermedio impone a BlueAgent di gestire
+manualmente l'intero ciclo di vita di un container ausiliario aggiuntivo
+per ogni sessione di verifica. È necessario infatti orchestrare il
+provisioning del router, configurare e agganciare le coppie di
+interfacce di rete (lato LAN e lato WAN) e impostare dinamicamente le
+regole di forwarding e \passthrough{\lstinline!nftables!} al suo
+interno. Questo comporta una maggiore complessità nel codice di
+orchestrazione, un footprint di memoria leggermente superiore e una
+latenza di avvio della verifica più alta rispetto alla soluzione SDN
+nativa.

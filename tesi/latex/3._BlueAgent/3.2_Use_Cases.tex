@@ -209,7 +209,7 @@ Flusso delle azioni:
     Se specificato nella configurazione, avvia un container di verifica.
   \end{enumerate}
 \item
-  Esecuzione dei controlli di verifica: viene eseguito un ciclo di
+  Esecuzione dei controlli di readiness: viene eseguito un ciclo di
   tentativi finche' il comando non ha successo, oppure fino allo scadere
   del timeout.
 \item
@@ -221,8 +221,9 @@ Flusso delle azioni:
   comunicando l'esito della verifica.
 \end{enumerate}
 
-Se si verifica un errore le risorse utilizzate vengono rilasciate e
-viene comunicato l'errore.
+Se si verifica un errore, oppure i comandi di readiness non hanno
+successo, allora le risorse utilizzate vengono rilasciate e viene
+comunicato l'errore.
 
 \subsection{\texorpdfstring{\texttt{UC-06}: Dismissione e rilascio di
 una challenge per il team

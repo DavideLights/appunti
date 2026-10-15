@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  14 OCT 2026 18:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  15 OCT 2026 00:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1073,7 +1073,7 @@ er (\T1/zi4/m/n/12 OVNVerifier\T1/cmr/m/n/12 )[] []
  []
 
 
-Overfull \hbox (3.91814pt too wide) in paragraph at lines 46--46
+Overfull \hbox (3.91814pt too wide) in paragraph at lines 45--45
  [][] [][]\T1/cmr/m/n/12 Resilienza e Ri-c-on-cil-i-azione del-lo Sta-to (\T1/z
 i4/m/n/12 LifecycleManager\T1/cmr/m/n/12 ) [TO- 
  []
@@ -1109,7 +1109,7 @@ l.223 \include{Introduzione}
 (./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2_Cyber_Range_Lo_Stato_Dell_A
 rte.tex)
 (./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.1_CR_Alternativi_kctf.tex
-<src/images/kctf-architecture.png, id=455, 722.7pt x 542.025pt>
+<src/images/kctf-architecture.png, id=454, 722.7pt x 542.025pt>
 File: src/images/kctf-architecture.png Graphic file (type png)
 <use src/images/kctf-architecture.png>
 Package pdftex.def Info: src/images/kctf-architecture.png  used on input line 2
@@ -1126,7 +1126,7 @@ ages/kctf-architecture.png>] [4]
 ignored: Infinite glue shrinkage found in box being spli
 t [5])
 (./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.2_CR_Alternativi_CTFBox.tex
-<src/images/ctfbox-architecture.png, id=520, 713.66624pt x 510.90875pt>
+<src/images/ctfbox-architecture.png, id=519, 713.66624pt x 510.90875pt>
 File: src/images/ctfbox-architecture.png Graphic file (type png)
 <use src/images/ctfbox-architecture.png>
 Package pdftex.def Info: src/images/ctfbox-architecture.png  used on input line
@@ -1135,20 +1135,20 @@ Package pdftex.def Info: src/images/ctfbox-architecture.png  used on input line
 [6 <./src/images/ctfbox-architecture.png>])
 (./2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2.3_CR_Alternativi_CyTrONE.te
 x [7]
-<src/images/cytrone-architecture.png, id=535, 648.4225pt x 227.85126pt>
+<src/images/cytrone-architecture.png, id=534, 648.4225pt x 227.85126pt>
 File: src/images/cytrone-architecture.png Graphic file (type png)
 <use src/images/cytrone-architecture.png>
 Package pdftex.def Info: src/images/cytrone-architecture.png  used on input lin
 e 11.
 (pdftex.def)             Requested size: 392.64806pt x 137.97385pt.
  [8 <./src/images/cytrone-architecture.png>]
-<src/images/cytrone-training.png, id=548, 2057.6875pt x 4006.97pt>
+<src/images/cytrone-training.png, id=547, 2057.6875pt x 4006.97pt>
 File: src/images/cytrone-training.png Graphic file (type png)
 <use src/images/cytrone-training.png>
 Package pdftex.def Info: src/images/cytrone-training.png  used on input line 87
 .
 (pdftex.def)             Requested size: 242.39056pt x 472.0113pt.
-<src/images/cytrone-cyberrange.png, id=549, 387.4475pt x 806.01125pt>
+<src/images/cytrone-cyberrange.png, id=548, 387.4475pt x 806.01125pt>
 File: src/images/cytrone-cyberrange.png Graphic file (type png)
 <use src/images/cytrone-cyberrange.png>
 Package pdftex.def Info: src/images/cytrone-cyberrange.png  used on input line 
@@ -1156,13 +1156,13 @@ Package pdftex.def Info: src/images/cytrone-cyberrange.png  used on input line
 (pdftex.def)             Requested size: 226.90121pt x 472.02509pt.
  [9] [10 <./src/images/cytrone-training.png>] [11 <./src/images/cytrone-cyberra
 nge.png>]
-<src/images/cytrone-performance.png, id=577, 359.3425pt x 295.1025pt>
+<src/images/cytrone-performance.png, id=576, 359.3425pt x 295.1025pt>
 File: src/images/cytrone-performance.png Graphic file (type png)
 <use src/images/cytrone-performance.png>
 Package pdftex.def Info: src/images/cytrone-performance.png  used on input line
  193.
 (pdftex.def)             Requested size: 392.67897pt x 322.47935pt.
-<src/images/cytrone-largescaleperformance.png, id=578, 359.3425pt x 292.09125pt
+<src/images/cytrone-largescaleperformance.png, id=577, 359.3425pt x 292.09125pt
 >
 File: src/images/cytrone-largescaleperformance.png Graphic file (type png)
 <use src/images/cytrone-largescaleperformance.png>
@@ -1178,14 +1178,14 @@ nology/#emulated-virtual-
  []
 
 [15]
-<src/images/KYPO-basic-elements-sandboxes.png, id=608, 501.875pt x 521.95pt>
+<src/images/KYPO-basic-elements-sandboxes.png, id=607, 501.875pt x 521.95pt>
 File: src/images/KYPO-basic-elements-sandboxes.png Graphic file (type png)
 <use src/images/KYPO-basic-elements-sandboxes.png>
 Package pdftex.def Info: src/images/KYPO-basic-elements-sandboxes.png  used on 
 input line 55.
 (pdftex.def)             Requested size: 392.66322pt x 408.36975pt.
  [16 <./src/images/KYPO-basic-elements-sandboxes.png>]
-<src/images/KYPO-topology-instance.png, id=616, 799.98875pt x 1406.25375pt>
+<src/images/KYPO-topology-instance.png, id=615, 799.98875pt x 1406.25375pt>
 File: src/images/KYPO-topology-instance.png Graphic file (type png)
 <use src/images/KYPO-topology-instance.png>
 Package pdftex.def Info: src/images/KYPO-topology-instance.png  used on input l
@@ -1215,13 +1215,13 @@ Overfull \hbox (19.36366pt too wide) in paragraph at lines 45--47
 LaTeX Font Info:    Font shape `T1/zi4/b/n' will be
 (Font)              scaled to size 12.67206pt on input line 42.
  [23] [24] [25]
-Overfull \hbox (5.50655pt too wide) in paragraph at lines 326--328
+Overfull \hbox (5.50655pt too wide) in paragraph at lines 327--329
 []\T1/cmr/m/n/12 BlueAgent resti-tu-isce im-me-di-ata-mente al CTF Man-ag-er lo
  sta-to [][][][][][][][][][][]. 
  []
 
 [26]
-Overfull \hbox (3.23088pt too wide) in paragraph at lines 391--394
+Overfull \hbox (3.23088pt too wide) in paragraph at lines 392--395
 []\T1/cmr/m/n/12 BlueAgent risponde con sta-to [][][][][][][][][][][] restituen
 -do la con-fig-u-razione Wire-
  []
@@ -1255,7 +1255,7 @@ a-men-to del-la log-i-ca di or-ches-trazione tramite
 
 
 ]
-<src/images/production-network.png, id=767, 1371.62437pt x 1375.38844pt>
+<src/images/production-network.png, id=766, 1371.62437pt x 1375.38844pt>
 File: src/images/production-network.png Graphic file (type png)
 <use src/images/production-network.png>
 Package pdftex.def Info: src/images/production-network.png  used on input line 
@@ -1298,22 +1298,22 @@ on-trol-lo di OVN ([][][][][][][],
  []
 
 [36]
-Underfull \hbox (badness 10000) in paragraph at lines 266--266
+Underfull \hbox (badness 10000) in paragraph at lines 264--264
 [][][][]\T1/cmr/m/n/10 Documentazione Net-fil-ter, Net-work Ad-dress Trans-la-t
 ion (NAT):
  []
 
 
-Overfull \hbox (23.73752pt too wide) in paragraph at lines 266--266
+Overfull \hbox (23.73752pt too wide) in paragraph at lines 264--264
 \T1/cmr/m/n/10 https://wiki.nftables.org/wiki-nftables/index.php/Performing_Net
 work_Address_Translation_(NAT)| 
  []
 
 [37]
-<src/images/verify-network.png, id=801, 746.03719pt x 761.09344pt>
+<src/images/verify-network.png, id=800, 746.03719pt x 761.09344pt>
 File: src/images/verify-network.png Graphic file (type png)
 <use src/images/verify-network.png>
-Package pdftex.def Info: src/images/verify-network.png  used on input line 287.
+Package pdftex.def Info: src/images/verify-network.png  used on input line 285.
 
 (pdftex.def)             Requested size: 392.64299pt x 400.56718pt.
 ) (./4._Architettura_Rete_Alto_Livello/4.3_Struttura_Challenge.tex))
@@ -1342,38 +1342,43 @@ ess Com-mu-ni-ca-tion (IPC)
  []
 
 [40]
-Overfull \hbox (6.94524pt too wide) in paragraph at lines 143--146
+Overfull \hbox (6.94524pt too wide) in paragraph at lines 137--140
 []\T1/cmr/m/n/12 BlueAgent im-ple-men-ta un mec-ca-n-is-mo di sin-croniz-zazion
 e a due liv-el-li ([][][][][]),
  []
 
 
-Overfull \hbox (19.8711pt too wide) in paragraph at lines 154--157
+Overfull \hbox (19.8711pt too wide) in paragraph at lines 148--151
 []\T1/cmr/bx/n/12 Tier 2 (Inter-processo): \T1/cmr/m/n/12 ap-pli-ca un lock non
  bloc-cante sul filesys-tem ([][][][][][][])
  []
 
 [41]
-Overfull \hbox (72.50287pt too wide) in paragraph at lines 217--221
+Overfull \hbox (72.50287pt too wide) in paragraph at lines 211--215
 []\T1/cmr/m/n/12 Inoltre l'ese-cuzione dei co-man-di sul-la macchi-na host avvi
 ene tramite: [][][][][][][]
  []
 
 
-Overfull \hbox (2.54938pt too wide) in paragraph at lines 234--234
+Overfull \hbox (2.54938pt too wide) in paragraph at lines 222--222
 |[]\T1/cmr/bx/n/14.4 Resilienza e Ri-c-on-cil-i-azione del-lo Sta-to (\T1/zi4/b
 /n/14.4 LifecycleManager\T1/cmr/bx/n/14.4 )
  []
 
 )
 (./5._Architettura_Nel_Dettaglio_e_Validazione/5.2_Comandi_Architettura_Rete.te
-x [42] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+x (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [43])
-(./5._Architettura_Nel_Dettaglio_e_Validazione/5.3_CTFd.tex)
+) [42]
+Overfull \hbox (11.66063pt too wide) in paragraph at lines 45--49
+\T1/cmr/m/n/12 creare e le pro-pri-età che de-vono rispettare. \T1/cmr/bx/n/12 
+OVN South-bound DB: \T1/cmr/m/n/12 mem-
+ []
+
+[43]) (./5._Architettura_Nel_Dettaglio_e_Validazione/5.3_CTFd.tex)
 (./5._Architettura_Nel_Dettaglio_e_Validazione/5.4_Validazione_E_Risultati.tex
 [44])) [45]
 \openout2 = `Architetture_Rete__Alternative.aux'.
@@ -1388,72 +1393,53 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 
 
 
-]) (./6._Architetture_Rete__Alternative/6.4_AA_RouterIntermedio.tex))
-[47]
+]) (./6._Architetture_Rete__Alternative/6.4_AA_RouterIntermedio.tex [47]))
+[48]
 \openout2 = `Appendice.aux'.
 
  (./Appendice.tex
 \bbl@ensure@italian {Capitolo} 7.
-(./7._Appendice/5.1_LinuxNetworking.tex [48
+(./7._Appendice/5.1_LinuxNetworking.tex [49
 
 
 
 
-] [49]
+] [50]
 Overfull \hbox (9.3604pt too wide) in paragraph at lines 159--164
 \T1/cmr/m/n/12 nisce un'in-ter-fac-cia per ag-giun-gere, elim-inare, re-gole ne
 t-fil-ter, ag-giun-gere tabelle,
  []
 
-) (./7._Appendice/5.2_VPN_e_OVN.tex
-Overfull \hbox (142.63676pt too wide) in paragraph at lines 3--5
-\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : https://www.wireguard.com/papers/wireguar
-d.pdf \T1/cmr/bx/n/12 vpn\T1/cmr/m/n/12 : https://ieeexplore.ieee.org/document/
-4756450 
- []
-
-[50]
-<src/images/Pasted_image_20261001214515.png, id=898, 624.08156pt x 160.34906pt>
+) (./7._Appendice/5.2_VPN_e_OVN.tex [51]
+<src/images/Pasted_image_20261001214515.png, id=904, 624.08156pt x 160.34906pt>
 
 File: src/images/Pasted_image_20261001214515.png Graphic file (type png)
 <use src/images/Pasted_image_20261001214515.png>
 Package pdftex.def Info: src/images/Pasted_image_20261001214515.png  used on in
 put line 49.
 (pdftex.def)             Requested size: 392.6497pt x 100.88586pt.
- [51 <./src/images/Pasted_image_20261001214515.png>])
-(./7._Appendice/5.3_ZFS.tex
-Overfull \hbox (128.35602pt too wide) in paragraph at lines 3--6
-\T1/cmr/bx/n/12 fonte\T1/cmr/m/n/12 : []https://openzfs.org/wiki/System_Adminis
-tration[] https://blog.victormendonca.com/2020/11/03/zfs-
- []
-
-[52]) (./7._Appendice/5.4_NsJail.tex [53]
-(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2025/11/14 1.11b listings language file
-)
-(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
-))) [54] (./main.lof)
+ [52 <./src/images/Pasted_image_20261001214515.png>]) (./7._Appendice/5.3_ZFS.t
+ex [53]) (./7._Appendice/5.4_NsJail.tex [54] [55])) [56] (./main.lof)
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
-
-[55
+ [57
 
 
 ] (./main.lol)
 \tf@lol=\write8
 \openout8 = `main.lol'.
 
- [56
+ [58
 
 ] (./main.loa)
 \tf@loa=\write9
 \openout9 = `main.loa'.
 
- (./main.bbl [57
+ (./main.bbl
+[59
 
-] [58
+] [60
 
 ]
 Underfull \hbox (badness 2564) in paragraph at lines 91--94
@@ -1479,7 +1465,7 @@ Underfull \hbox (badness 2435) in paragraph at lines 118--122
 d-dress Trans-la-
  []
 
-[59]
+[61]
 Underfull \hbox (badness 10000) in paragraph at lines 148--151
 []\T1/cmr/m/n/12 J. Elling-wood, ``A Deep Dive in-to Ipt-a-bles and Net-fil-ter
  Ar-
@@ -1503,10 +1489,10 @@ Underfull \hbox (badness 1910) in paragraph at lines 153--155
 k for
  []
 
-) [60]
+) [62]
 \openout2 = `Ringraziamenti.aux'.
 
- (./Ringraziamenti.tex) [61
+ (./Ringraziamenti.tex) [63
 
 
 ] (./main.aux (./Introduzione.aux)
@@ -1520,13 +1506,13 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6DC99DCC8D1CD00202835639C5C63851;16510.
+(rerunfilecheck)             Checksum: 7F3E25026FAAE320E29072173FDC3E88;16439.
  ) 
 Here is how much of TeX's memory you used:
- 33257 strings out of 469515
- 652715 string characters out of 5470807
- 1304877 words of memory out of 5000000
- 60823 multiletter control sequences out of 15000+600000
+ 33205 strings out of 469515
+ 651818 string characters out of 5470807
+ 1309885 words of memory out of 5000000
+ 60769 multiletter control sequences out of 15000+600000
  655931 words of font info for 113 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  98i,12n,108p,541b,1572s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1551,10 +1537,10 @@ m-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm100
 0.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/sha
 re/texmf-dist/fonts/type1/public/cm-super/sfsl0900.pfb></usr/share/texmf-dist/f
 onts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (65 pages, 2905806 bytes).
+Output written on main.pdf (67 pages, 2910599 bytes).
 PDF statistics:
- 1202 PDF objects out of 1440 (max. 8388607)
- 1035 compressed objects within 11 object streams
- 346 named destinations out of 1000 (max. 500000)
+ 1222 PDF objects out of 1440 (max. 8388607)
+ 1053 compressed objects within 11 object streams
+ 352 named destinations out of 1000 (max. 500000)
  817 words of extra memory for PDF output out of 10000 (max. 10000000)
 

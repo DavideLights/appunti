@@ -35,42 +35,42 @@
 \contentsline {chapter}{\numberline {4}Architettura Rete Alto Livello}{33}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Rete \(\text {production-}k\)}{33}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Rete \(\text {verify-}k\)}{34}{section.4.2}%
-\contentsline {section}{\numberline {4.3}4.3}{38}{section.4.3}%
+\contentsline {section}{\numberline {4.3}Struttura di una Challenge}{38}{section.4.3}%
 \contentsline {chapter}{\numberline {5}Architettura Nel Dettaglio e Validazione}{39}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Architettura del Codice}{39}{section.5.1}%
 \contentsline {subsection}{\numberline {5.1.1}Astrazione del Runtime: \texttt {ContainerEngine}}{39}{subsection.5.1.1}%
 \contentsline {subsection}{\numberline {5.1.2}Ciclo di Vita della Sandbox: Async Context Manager (\texttt {OVNVerifier})}{40}{subsection.5.1.2}%
 \contentsline {subsection}{\numberline {5.1.3}Concorrenza e Two-Tier Locking}{41}{subsection.5.1.3}%
 \contentsline {subsection}{\numberline {5.1.4}Pipeline Asincrona non Bloccante su Socket Unix}{42}{subsection.5.1.4}%
-\contentsline {subsection}{\numberline {5.1.5}Separazione tra Crazione dei comandi ed Esecuzione nel codice {[}TODO{]}}{42}{subsection.5.1.5}%
-\contentsline {subsection}{\numberline {5.1.6}Resilienza e Riconciliazione dello Stato (\texttt {LifecycleManager}) {[}TODO{]}}{42}{subsection.5.1.6}%
+\contentsline {subsection}{\numberline {5.1.5}Resilienza e Riconciliazione dello Stato (\texttt {LifecycleManager}) {[}TODO{]}}{42}{subsection.5.1.5}%
 \contentsline {section}{\numberline {5.2}Comandi per l'Architettura di Rete}{42}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}configurare OVN}{42}{subsection.5.2.1}%
 \contentsline {subsection}{\numberline {5.2.2}\(\text {production-}k\) Routing e Connettività dei Peer (WireGuard e nftables)}{43}{subsection.5.2.2}%
 \contentsline {section}{\numberline {5.3}Plugin CTFd}{44}{section.5.3}%
 \contentsline {section}{\numberline {5.4}Difesa e Validazione di BlueAgent}{44}{section.5.4}%
 \contentsline {subsection}{\numberline {5.4.1}Scelte di Piattaforma e Infrastruttura}{44}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Difesa dell'Architettura}{45}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.2}Difesa dell'Architettura}{44}{subsection.5.4.2}%
 \contentsline {subsection}{\numberline {5.4.3}Critica e Limiti Architetturali}{45}{subsection.5.4.3}%
 \contentsline {chapter}{\numberline {6}Architetture Rete Alternative}{46}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Bridge L2 Senza Gateway}{46}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Interfaccia wan1 Aggiuntiva}{46}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Network Namespace Separato per la Verifica}{47}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Appendice}{48}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Linux Networking}{48}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Network Device Driver }{48}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Bridge }{49}{subsection.7.1.2}%
-\contentsline {subsection}{\numberline {7.1.3}Netfilter (Capitolo 5 e 9 IPV4 routing) }{50}{subsection.7.1.3}%
-\contentsline {section}{\numberline {7.2}WireGuard}{51}{section.7.2}%
-\contentsline {section}{\numberline {7.3}ZFS}{52}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}Vantaggi di Pool e transazioni}{53}{subsection.7.3.1}%
-\contentsline {subsection}{\numberline {7.3.2}Quando ZFS diventa costoso?}{53}{subsection.7.3.2}%
-\contentsline {section}{\numberline {7.4}NsJail}{53}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}namespaces}{54}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}seccomp bpf}{54}{subsection.7.4.2}%
-\contentsline {subsection}{\numberline {7.4.3}cgroups}{54}{subsection.7.4.3}%
-\contentsline {chapter}{Elenco delle figure}{55}{subsection.7.4.3}%
-\contentsline {chapter}{Elenco dei codici}{55}{subsection.7.4.3}%
-\contentsline {chapter}{Elenco degli algoritmi}{56}{chapter*.1}%
-\contentsline {chapter}{Bibliografia}{57}{chapter*.2}%
-\contentsline {chapter}{Ringraziamenti}{61}{chapter*.4}%
+\contentsline {section}{\numberline {6.4}Router Intermedio}{47}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Appendice}{49}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Linux Networking}{49}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Network Device Driver }{49}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Bridge }{50}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Netfilter (Capitolo 5 e 9 IPV4 routing) }{51}{subsection.7.1.3}%
+\contentsline {section}{\numberline {7.2}WireGuard }{52}{section.7.2}%
+\contentsline {section}{\numberline {7.3}ZFS }{53}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Vantaggi di Pool e transazioni}{54}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Quando ZFS diventa costoso?}{54}{subsection.7.3.2}%
+\contentsline {section}{\numberline {7.4}NsJail e Container }{54}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Namespaces }{55}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Seccomp }{55}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}cgroups }{56}{subsection.7.4.3}%
+\contentsline {chapter}{Elenco delle figure}{57}{subsection.7.4.3}%
+\contentsline {chapter}{Elenco dei codici}{57}{subsection.7.4.3}%
+\contentsline {chapter}{Elenco degli algoritmi}{58}{chapter*.1}%
+\contentsline {chapter}{Bibliografia}{59}{chapter*.2}%
+\contentsline {chapter}{Ringraziamenti}{63}{chapter*.4}%

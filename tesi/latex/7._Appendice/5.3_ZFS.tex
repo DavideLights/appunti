@@ -1,8 +1,4 @@
-\section{ZFS}\label{zfs}
-
-\textbf{fonte}:
-\href{https://openzfs.github.io/openzfs-docs/Basic\%20Concepts/Copy-on-write.html}{https://openzfs.org/wiki/System\_Administration}
-https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/
+\section[ZFS ]{\texorpdfstring{ZFS \footnote{\label{fn:ref_29}https://openzfs.org/wiki/System\_Administration}}{ZFS }}\label{zfs-1}
 
 In ZFS si segue questo principio base: \emph{Un blocco in uso non viene
 mai sovrascritto.}
@@ -14,7 +10,7 @@ puntare a questa nuova area.
 Questo principio, permette di implementare e gestire facilmente feature
 avanzate come snapshots ed il self-healing dei dati.
 
-In ZFS lo storage e' organizzato all'interno di pool, ossia una
+In ZFS lo storage e' organizzato all'interno di una pool, ossia una
 struttura ad albero:
 
 \begin{itemize}
@@ -35,10 +31,10 @@ modificare dati nel filesystem vuol dire ricalcolare le checksum e
 ricostruire la catena dei padri a partire dalla foglia, aggiornando le
 informazioni.
 
-Dopo aver applicato la catena di modifiche a partire dalla foglia fino
-alla radice, otteniamo un nuovo \(\text{uberblock'}\), ossia il nuovo
-albero che descrive il filesystem con i nuovi dati e le checksum
-aggiornate. L'intera operazione descritta e' \textbf{atomica}.
+Dopo aver applicato la catena di modifiche a partire dalla foglia, si
+ottiene un nuovo \(\text{uberblock'}\), ossia il nuovo albero che
+descrive il filesystem con i nuovi dati e le checksum aggiornate.
+L'intera operazione descritta fino ad ora e' \textbf{atomica}.
 
 Il costo per una modifica nella pool e' proporzionale alla profondita
 dell'albero, che non e' necessariamente legato alla grandezza in byte
@@ -46,7 +42,7 @@ della pool. Questo approccio permette di tenere in memoria sia
 \(\text{uberblock'}\) che la vecchia radice \(\text{uberblock}\).
 
 ZFS segue un modello transazionale: le operazioni sono organizzate in
-gruppi di transazioni chiamti \passthrough{\lstinline!txg!}. L'intero
+gruppi di transazioni chiamti \passthrough{\lstinline!txg!} ed l'intero
 gruppo viene eseguito atomicamente.
 
 \subsection{Vantaggi di Pool e
@@ -73,10 +69,10 @@ automaticamente ripristinarne il contenuto.
 \subsection{Quando ZFS diventa
 costoso?}\label{quando-zfs-diventa-costoso}
 
-Modificare un file vuol dire allocare qua e la nella pool nuovi blocchi.
-Rompendo dunque la sequenzialità dei blocchi nel file system. Ne
-consegue che le performance di ZFS in fase di allocazione dipendono da
-quanto e' grande la pool.
+Modificare un file vuol dire allocare qua e la nella pool nuovi blocchi,
+rompendo la sequenzialità dei blocchi nel file system. Ne consegue che
+le performance di ZFS in fase di allocazione dipendono da quanto e'
+grande la pool e da quanto e' frammentata la memoria libera.
 
 \begin{quote}
 Se la pool e' vuota allora trovare spazio contiguo e' facile. Altrimenti
