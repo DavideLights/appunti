@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/distributed cocks/lez. 5.md",
+                "file": "old-tesi/OLD documento-finale/2. alternative.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 5"
+              "title": "2. alternative"
             }
           }
         ]
@@ -216,8 +216,13 @@
   },
   "active": "f6c859846c67f74f",
   "lastOpenFiles": [
-    "1o anno M/distributed cocks/lez. 5 ex.md",
+    "old-tesi/OLD documento-finale/1. introduzione.md",
+    "1o anno M/stacocks/hm2.md",
+    "containerlab.md",
+    "1o anno M/stacocks/hm1.md",
     "1o anno M/distributed cocks/lez. 5.md",
+    "1o anno M/stacocks",
+    "1o anno M/distributed cocks/lez. 5 ex.md",
     "1o anno M/distributed cocks/lez. 3.md",
     "1o anno M/distributed cocks/lez. 1.md",
     "1o anno M/distributed cocks/lez. 2.md",
@@ -244,16 +249,11 @@
     "tesi/latex/5._Appendice/5.4_NsJail.tex",
     "tesi/latex/5._Appendice/5.3_ZFS.tex",
     "tesi/latex/5._Appendice/5.2_VPN_e_OVN.tex",
-    "tesi/latex/5._Appendice/5.1_LinuxNetworking.tex",
     "tesi/src/images/mermaid_312_rete_verify_k_d80ab1c21b.png",
     "tesi/src/images/mermaid_311_rete_production_k_fc40fab722.png",
     "tesi/5._Appendice/5.4_NsJail.md",
     "tesi/5._Appendice/5.3_ZFS.md",
     "tesi/5._Appendice/5.2_VPN_e_OVN.md",
-    "tesi/5._Appendice/5.1_LinuxNetworking.md",
-    "tesi/4._Architetture_Alternative/4.5_AA_EsecuzioneInMemory.md",
-    "tesi/4._Architetture_Alternative/4.4_AA_NetworkNamespace_separato.md",
-    "tesi/4._Architetture_Alternative/4.3_AA_PID_Namespace_separato.md",
     "tesi/src/images/mermaid_2631_astrazione_del_runtime_containerengine_7fc8c9cdfd.png",
     "tesi/src/images/mermaid_vdev_bb98e6738a.png",
     "tesi/src/images/mermaid_vista_integrata_merge_produzione_e_verifica_8073cbc52d.png",
