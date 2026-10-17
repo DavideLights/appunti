@@ -4,7 +4,7 @@ BlueAgent}\label{difesa-e-validazione-di-blueagent}
 Come Sistema Operativo su cui basare lo sviluppo e' stato scelto
 \textbf{Debian 13}, in quanto offre un kernel stabile ed un'ottima
 compatibilita tra i vari pacchetti e le componenti utilizzate da
-BlueAgent.
+BlueAgent, facilitando la configurazione di OVN, ZFS ed Incus.
 
 Su questo sistema operativo si e' scelto di utilizzare ZFS per creare la
 pool per le immagini dei container. ZFS offre il meccanismo CoW a basso
@@ -15,9 +15,9 @@ l'immagine deve essere prelevata dalla pool ed per il provisioning
 instantaneo.
 
 L'adozione di Incus e' dovuto alla necessita di dover offrire ai
-giocatori delle macchine realistiche attraverso i system containers, che
+giocatori delle macchine realistiche attraverso i system containers (che
 offrono un proprio init system ed un processo
-\passthrough{\lstinline!init!} con \passthrough{\lstinline!PID!} 0.
+\passthrough{\lstinline!init!} con \passthrough{\lstinline!PID!} 0).
 Permette dunque ai giocatori di operare realisticamente accedendo a
 varie utility di sistema e di installare pacchetti. Incus gestisce
 nativamente pool \passthrough{\lstinline!ZFS!} e le reti OVN

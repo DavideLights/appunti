@@ -1,1 +1,184 @@
 \section{Struttura di una Challenge}\label{struttura-di-una-challenge}
+
+In BlueAgent, la definizione di un esercizio o servizio di gara adotta
+il paradigma \emph{Infrastructure-as-Code} (IaC): l'intera topologia di
+una challenge viene descritta mediante un file di specifica dichiarativo
+in formato YAML.
+
+Questo file specifica i container che compongono l'ambiente del team, le
+risorse hardware assegnate a ciascuno di essi e la logica di test
+necessaria per convalidarne il corretto funzionamento.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Struttura del File di Configurazione della
+Challenge}\label{struttura-del-file-di-configurazione-della-challenge}
+
+La struttura della specifica è articolata nelle seguenti sezioni
+principali:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Metadati e Identificazione:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \passthrough{\lstinline!challenge\_id!}: Identificativo univoco
+    della challenge.
+  \item
+    \passthrough{\lstinline!team\_k!}: Indice numerico del team
+    proprietario dell'infrastruttura (\(0 \le k \le 254\)).
+  \item
+    \passthrough{\lstinline!verify\_internet\_access!}: Flag booleano
+    che determina se la sandbox effimera di verifica deve avere accesso
+    a Internet (tramite NAT instradato su \(\text{incusbr0}\)) o
+    rimanere confinata in una rete scura priva di uscite esterne.
+  \end{itemize}
+\item
+  \textbf{Topologia dei Container
+  (\passthrough{\lstinline!containers!}):} Rappresenta la lista delle
+  macchine che compongono la sfida (ad esempio un'applicazione web e il
+  rispettivo database). Per ciascun container vengono dichiarati:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \passthrough{\lstinline!name!}: Nome logico dell'istanza all'interno
+    della challenge.
+  \item
+    \passthrough{\lstinline!image!}: Alias dell'immagine Incus da
+    istanziare (ad esempio \passthrough{\lstinline!ubuntu-heavy!} o
+    \passthrough{\lstinline!alpine!}).
+  \item
+    \passthrough{\lstinline!ip\_suffix!}: Ultimo ottetto dell'indirizzo
+    IP statico assegnato al container
+    (\passthrough{\lstinline!10.k.1.X!}), dove l'indirizzo
+    \passthrough{\lstinline!10.k.1.1!} è riservato al gateway di
+    produzione (\passthrough{\lstinline!br-team-k!}) o di verifica
+    (router OVN).
+  \item
+    \passthrough{\lstinline!limits\_cpu!} e
+    \passthrough{\lstinline!limits\_memory!}: Vincoli hardware imposti
+    tramite cgroup (ad esempio \passthrough{\lstinline!1!} vCPU e
+    \passthrough{\lstinline!256MB!} di memoria RAM).
+  \end{itemize}
+\item
+  \textbf{Runner di Verifica Effimero
+  (\passthrough{\lstinline!verifier!}, opzionale):} Definisce un
+  container di test dedicato, istanziato esclusivamente durante la fase
+  di verifica all'interno della rete scura OVN. Possiede una propria
+  immagine (dotata di strumenti di probing o test, come Python o cURL),
+  un IP dedicato (\passthrough{\lstinline!10.k.1.250!}) e vincoli di
+  risorse isolati.
+\item
+  \textbf{Comandi di Readiness
+  (\passthrough{\lstinline!readiness\_commands!}):} Serie di controlli
+  preliminari eseguiti all'avvio della sandbox per accertarsi che i
+  servizi interni abbiano completato la fase di bootstrap (ad esempio
+  attendere che un database risponda a un comando di ping o che un
+  socket TCP sia in ascolto) prima di invocare i test veri e propri.
+  Ciascun comando include intervalli di retry e policy di timeout.
+\item
+  \textbf{Comandi di Verifica
+  (\passthrough{\lstinline!verify\_commands!}):} Rappresentano la suite
+  di convalida che certifica se il servizio è funzionante e se le
+  condizioni di sicurezza sono soddisfatte. BlueAgent supporta due
+  modalità operative distinte:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{In-Container
+    (\passthrough{\lstinline!target: "container"!}):} Il comando viene
+    eseguito direttamente dentro il container di produzione clonato
+    tramite l'interfaccia di esecuzione di Incus
+    (\passthrough{\lstinline!incus exec!}), permettendo di verificare
+    file di sistema, permessi o integrità di processi locali (approccio
+    \emph{white-box}).
+  \item
+    \textbf{Verifier Runner
+    (\passthrough{\lstinline!target: "verifier"!}):} Il comando viene
+    eseguito dall'interno del container
+    \passthrough{\lstinline!verifier!} affacciato sulla rete logica OVN.
+    Da questa postazione, il runner interroga i container del team
+    tramite il loro indirizzo IP (\passthrough{\lstinline!10.k.1.x!}),
+    simulando le richieste di un utente legittimo o le interazioni di un
+    attaccante esterno (approccio \emph{black-box}).
+  \end{itemize}
+\end{enumerate}
+
+\begin{quote}
+\passthrough{\lstinline!Verifica Black-Box vs White-Box!}: La modalità
+\emph{In-Container} opera dall'interno del filesystem per verificare che
+i processi e le configurazioni non siano stati alterati in modo
+distruttivo. La modalità \emph{Verifier Runner} opera invece a livello
+di rete attraverso lo switch logico OVN, accertando che il servizio
+eroghi correttamente le sue funzionalità e risponda ai controlli di
+integrità del gioco.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Configurazione delle Immagini con
+Distrobuilder}\label{configurazione-delle-immagini-con-distrobuilder}
+
+Per garantire che le challenge siano riproducibili e sicure, BlueAgent
+non utilizza immagini generiche o preconfezionate, ma gestisce la
+compilazione di immagini container su misura tramite
+\textbf{Distrobuilder}.
+
+\begin{quote}
+\passthrough{\lstinline!Distrobuilder!}: È lo strumento open source
+ufficiale del progetto Linux Containers utilizzato per creare immagini
+di sistema per Incus ed LXC a partire da alberi di pacchetti e
+distribuzioni upstream ufficiali (quali Ubuntu, Debian, Alpine o Arch
+Linux).
+\end{quote}
+
+La configurazione di un'immagine in Distrobuilder avviene mediante un
+file dichiarativo concettualmente suddiviso in tre elementi
+fondamentali:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Sorgente e Distribuzione (\passthrough{\lstinline!image!} e
+  \passthrough{\lstinline!source!}):} Indica quale distribuzione Linux
+  utilizzare come base, la release target (ad esempio Ubuntu 22.04 o
+  Alpine 3.21) e l'architettura hardware di riferimento
+  (\passthrough{\lstinline!x86\_64!}). Distrobuilder scarica i pacchetti
+  minimi certificati direttamente dai mirror ufficiali della
+  distribuzione.
+\item
+  \textbf{Gestione dei Pacchetti (\passthrough{\lstinline!packages!}):}
+  Definisce l'elenco dei software da installare all'interno del rootfs
+  per preparare l'ambiente di gioco (ad esempio server web come Nginx o
+  Apache, database server come PostgreSQL o SQLite, runtime interpretati
+  come Python, e relativi moduli). È possibile inoltre rimuovere
+  pacchetti superflui o demoni di telemetria per minimizzare l'impronta
+  su disco.
+\item
+  \textbf{Fasi di Hook e Predisposizione Rete
+  (\passthrough{\lstinline!actions!}):} Consente di eseguire script
+  durante le fasi intermedie di generazione del filesystem
+  (\passthrough{\lstinline!post-unpack!},
+  \passthrough{\lstinline!post-packages!},
+  \passthrough{\lstinline!post-files!}). In BlueAgent questo passaggio è
+  essenziale per predisporre le directory dei demoni di rete
+  (\passthrough{\lstinline!/etc/systemd/network!} per distribuzioni
+  basate su \passthrough{\lstinline!systemd!} e
+  \passthrough{\lstinline!/etc/network!} per distribuzioni con
+  OpenRC/ifupdown). In questo modo il container è immediatamente
+  compatibile con l'iniezione statica delle configurazioni IP eseguita
+  da BlueAgent al momento del deploy.
+\end{enumerate}
+
+All'interno dell'architettura di BlueAgent, il sottosistema
+\passthrough{\lstinline!ImageService!} invoca Distrobuilder generando un
+archivio compresso unificato (\passthrough{\lstinline!--type=unified!}).
+Il tarball generato viene importato nello storage pool ZFS, registrato
+con un alias univoco nel database locale e marcato come pronto,
+consentendo l'istanziazione immediata dei container durante le fasi di
+gara.

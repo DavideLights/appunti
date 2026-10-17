@@ -16,7 +16,7 @@ candidate_pandocs = [
 PANDOC_BIN = next((str(p) for p in candidate_pandocs if p.exists()), shutil.which("pandoc") or "pandoc")
 
 # Directories to strictly ignore as thesis chapters
-IGNORED_DIRS = {"bozza", "context", "latex", ".git", ".vscode", ".obsidian", "src"}
+IGNORED_DIRS = {"bozza", "context", "latex", ".git", ".vscode", ".obsidian", "src", "antigravity"}
 
 def section_sort_key(p: Path):
     """
