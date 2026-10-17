@@ -1,18 +1,18 @@
 \section{Interfaccia wan1 Aggiuntiva}\label{interfaccia-wan1-aggiuntiva}
 
 Riprendendo l'architettura descritta in 6.1, per provare ad aggiungere
-la connettività ad internet senza assegnare un'indirizzo gateway L3 al
-bridge, e' possibile aggiungere ad ogni container duplicato, una
+la connettività ad internet senza assegnare un indirizzo gateway L3 al
+bridge, è possibile aggiungere ad ogni container duplicato, una
 interfaccia \passthrough{\lstinline!wan1!} per l'inoltro verso
 \passthrough{\lstinline!incusbr0!}.
 
-Il problema di questa soluzione e' che necessita di alterare le regole
-di routing dei container, interferendo con le tabelle del Kernel ed
+Il problema di questa soluzione è che necessita di alterare le regole di
+routing dei container, interferendo con le tabelle del Kernel ed
 eventualmente compromettendo la verifica dell'exploit, in caso questo si
 aspetti delle determinate regole di routing.
 
-Inoltre e' una soluzione poco efficiente: richiede di duplicare
+Inoltre è una soluzione poco efficiente: richiede di duplicare
 manualmente il numero di interfacce previste (tenendo a mente che ogni
 coppia di interfacce richiede una coppia di veth per la comunicazione
 con \passthrough{\lstinline!incusbr0!}). La soluzione sembra essere
-abbastanza macchinosa da implementare per cui e' stata scartata.
+abbastanza macchinosa da implementare per cui è stata scartata.

@@ -1,20 +1,19 @@
 \section{Difesa e Validazione di
 BlueAgent}\label{difesa-e-validazione-di-blueagent}
 
-Come Sistema Operativo su cui basare lo sviluppo e' stato scelto
+Come Sistema Operativo su cui basare lo sviluppo è stato scelto
 \textbf{Debian 13}, in quanto offre un kernel stabile ed un'ottima
-compatibilita tra i vari pacchetti e le componenti utilizzate da
+compatibilità tra i vari pacchetti e le componenti utilizzate da
 BlueAgent, facilitando la configurazione di OVN, ZFS ed Incus.
 
-Su questo sistema operativo si e' scelto di utilizzare ZFS per creare la
+Su questo sistema operativo si è scelto di utilizzare ZFS per creare la
 pool per le immagini dei container. ZFS offre il meccanismo CoW a basso
-costo, ed e' stato scelto rispetto ad alternative come BTRFS poiche, ZFS
-e' ritenuto più maturo e stabile. Si benefica da CoW in 2 scenari,
-quando si effettua il deploy della challenge per un team e quindi
-l'immagine deve essere prelevata dalla pool ed per il provisioning
-instantaneo.
+costo, ed è stato scelto rispetto ad alternative come BTRFS poiché ZFS è
+ritenuto più maturo e stabile. Si beneficia di CoW in 2 scenari, quando
+si effettua il deploy della challenge per un team e quindi l'immagine
+deve essere prelevata dalla pool e per il provisioning istantaneo.
 
-L'adozione di Incus e' dovuto alla necessita di dover offrire ai
+L'adozione di Incus è dovuta alla necessità di dover offrire ai
 giocatori delle macchine realistiche attraverso i system containers (che
 offrono un proprio init system ed un processo
 \passthrough{\lstinline!init!} con \passthrough{\lstinline!PID!} 0).
@@ -23,16 +22,16 @@ varie utility di sistema e di installare pacchetti. Incus gestisce
 nativamente pool \passthrough{\lstinline!ZFS!} e le reti OVN
 semplificando il codice di BlueAgent.
 
-Il vantaggio piu grande che porta BlueAgent e' l'invisibilita totale dei
-giocatori rispetto all'Oracolo, ribadiamo dunque che e' impossibile per
-i partecipanti intercettare ed ascoltare traffico di rete poiche
+Il vantaggio più grande che porta BlueAgent è l'invisibilità totale dei
+giocatori rispetto all'Oracolo, ribadiamo dunque che è impossibile per i
+partecipanti intercettare ed ascoltare traffico di rete poiché
 l'interfaccia \passthrough{\lstinline!verify-ovn-k!} esiste solo
 logicamente ed instrada verso \passthrough{\lstinline!incusbr0!}. In
 \passthrough{\lstinline!nftables!} invece le rotte autorizzate
-permettono l'instradamento solo tra \passthrough{\lstinline!wg-k!} ed
-\passthrough{\lstinline!br-team-k!}
+permettono l'instradamento solo tra \(\text{wg-}k\) e
+\(\text{br-team-}k\).
 
-Inoltre usare il meccanismo CoW riduce notevoilmente il tempo iniziale
+Inoltre usare il meccanismo CoW riduce notevolmente il tempo iniziale
 richiesto per eseguire il setup dei container mentre l'uso di OVN
 facilita la configurazione di rete.
 
@@ -55,15 +54,15 @@ Nonostante i vantaggi, l'architettura presenta dei compromessi:
   \textbf{Concorrenza e blocco multi-nodo:} Il meccanismo
   \passthrough{\lstinline!TwoTierLock!}
   (\passthrough{\lstinline!asyncio.Lock!} combinato con
-  \passthrough{\lstinline!flock!}) puo funzionare solo se BlueAgent e'
+  \passthrough{\lstinline!flock!}) può funzionare solo se BlueAgent è
   confinato al singolo nodo. Per scalare l'architettura ed avere istanze
   di BlueAgent su più nodi bisogna introdurre l'uso di un gestore di
   lock distribuito come Redis.
 \item
-  \textbf{Flessibilita'}: BlueAgent sceglie volontariamente di non
+  \textbf{Flessibilità}: BlueAgent sceglie volontariamente di non
   sfruttare Ansible e Kubernetes per mantenere l'infrastruttura leggera
   e per dipendere il meno possibile da software esterni. Tuttavia,
   l'assenza di questi software rende BlueAgent poco flessibile ed
   adattabile, rendendo necessario molto lavoro nel codice sorgente per
-  renderelo adattabile a seconda degli scenari da simulare.
+  renderlo adattabile a seconda degli scenari da simulare.
 \end{itemize}

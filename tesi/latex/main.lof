@@ -1,25 +1,22 @@
 \babel@toc {italian}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Kctf Architecture}}{3}{figure.2.1}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Ctfbox Architecture}}{6}{figure.2.2}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Cytrone Architecture}}{8}{figure.2.3}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Cytrone Training}}{10}{figure.2.4}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Cytrone Cyberrange}}{11}{figure.2.5}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Cytrone Performance}}{13}{figure.2.6}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Cytrone Largescaleperformance}}{14}{figure.2.7}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Kypo Basic Elements Sandboxes}}{16}{figure.2.8}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Kypo Topology Instance}}{19}{figure.2.9}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Architettura di kCTF}}{4}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Architettura di CTFBox}}{7}{figure.2.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Architettura generale di CyTrONE}}{9}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Tempi di provisioning in CyTrONE}}{13}{figure.2.4}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Scalabilità del deployment in CyTrONE}}{13}{figure.2.5}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Elementi delle sandbox in KYPO}}{15}{figure.2.6}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Istanziazione topologia in KYPO}}{16}{figure.2.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Production Network}}{35}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Verify Network}}{38}{figure.4.2}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Topologia della rete di produzione per il team k}}{33}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Topologia della rete di verifica sandbox per il team k}}{37}{figure.4.2}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Validazione Phases Comparison}}{50}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Graph1 Cow Vs Deploy}}{50}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Graph2 Microphase Breakdown}}{51}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Graph3 Memory Scaling}}{52}{figure.5.4}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Graph4 Lifecycle Timeline}}{53}{figure.5.5}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Confronto dei tempi delle macrofasi di benchmark}}{49}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Confronto tra clonazione CoW e deploy da catalogo}}{50}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Scomposizione temporale sottofasi di verifica}}{50}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Consumo di memoria RAM netta al crescere dei container}}{51}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Timeline del ciclo di vita e della concorrenza}}{51}{figure.5.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Pasted Image 20261001214515}}{61}{figure.7.1}%

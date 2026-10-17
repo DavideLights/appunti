@@ -59,7 +59,7 @@ Containerizzazione}\label{motore-di-containerizzazione}
 \end{itemize}
 
 \subsection{Rete Ibrida e
-Connettivita}\label{rete-ibrida-e-connettivita}
+Connettività}\label{rete-ibrida-e-connettivituxe0}
 
 \begin{itemize}
 \tightlist
@@ -73,7 +73,7 @@ Connettivita}\label{rete-ibrida-e-connettivita}
   team ha a disposizione un bridge L2
   \passthrough{\lstinline!br-team-k!}, con gateway
   \passthrough{\lstinline!10.k.1.1/24!} per garantire prestazioni di
-  inoltro alla velocita della RAM e che funzioni da punto d'aggancio per
+  inoltro alla velocità della RAM e che funzioni da punto d'aggancio per
   i container del team.
 \item
   \textbf{\passthrough{\lstinline!SR-NET-03!} (Indirizzamento e
@@ -107,7 +107,7 @@ Sandbox}\label{motore-di-verifica-ovn-sandbox}
   di una rete OVN in fase di verifica, isolata e senza esporre il
   gateway dello switch all'host per prevenire sovrapposizione di rotte.
 \item
-  \textbf{\passthrough{\lstinline!SR-VRF-02!} (Fedelta Topologica)}: I
+  \textbf{\passthrough{\lstinline!SR-VRF-02!} (Fedeltà Topologica)}: I
   cloni nell'ambiente di verifica preservano l'interfaccia
   \passthrough{\lstinline!eth0!} e la configurazione IP identica a
   quella di produzione.
@@ -158,12 +158,12 @@ Persistenza}\label{control-plane-concorrenza-e-persistenza}
   allocate.
 \item
   \textbf{\passthrough{\lstinline!SR-CON-06!} (Idempotenza Operativa)}:
-  Le richieste di provisioning per risorse gia allocate non alterano lo
+  Le richieste di provisioning per risorse già allocate non alterano lo
   stato del sistema e ne generano errori.
 \item
   \textbf{\passthrough{\lstinline!SR-CON-07!} (Autenticazione)}:
   L'accesso alle API deve essere validato tramite un token di accesso
-  configurato dall'amministratore. Si vuole evitare che altre entita
+  configurato dall'amministratore. Si vuole evitare che altre entità
   oltre al CTF Manager possano usare l'interfaccia di BlueAgent.
 \end{itemize}
 
@@ -180,7 +180,7 @@ Distrobuilder}\label{pipeline-immagini-distrobuilder}
   \textbf{\passthrough{\lstinline!SR-IMG-02!} (Identificazione e Caching
   Crittografico)}: Utilizzo dell'alias come chiave a catalogo e calcolo
   dell'hash crittografico della specifica YAML per identificare
-  modifiche e riutilizzare immagini gia compilate.
+  modifiche e riutilizzare immagini già compilate.
 \item
   \textbf{\passthrough{\lstinline!SR-IMG-03!} (Compilazione Asincrona)}:
   Esecuzione delle fasi di build in background tramite worker asincrono.

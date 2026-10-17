@@ -2,21 +2,21 @@
 Verifica}\label{oracoli-e-meccanismi-di-verifica}
 
 Per decidere se un team ha recuperato la \textbf{flag}, bisogna definire
-un'\textbf{\emph{oracolo}}, che determini lo stato in cui si trova il
+un \textbf{\emph{oracolo}}, che determini lo stato in cui si trova il
 sistema target.
 
-L'oracolo e' in grado di accedere al sistema e di fare due azioni: puo'
-leggere la memoria fisica di qualsiasi nodo e puo' eseguire comandi su
+L'oracolo è in grado di accedere al sistema e di fare due azioni: può
+leggere la memoria fisica di qualsiasi nodo e può eseguire comandi su
 qualsiasi nodo
 
 Per ogni tipo di azione eseguita, l'oracolo determina lo stato del
 sistema confrontando il risultato dell'azione con il valore che
 l'oracolo si aspettava (ossia i valori vengono validati). In BlueAgent,
-l'oracolo e' l'entita che esegue sui container clonati i comandi
+l'oracolo è l'entità che esegue sui container clonati i comandi
 specificati dall'Autore della sfida, ossia nel codice la classe
 \passthrough{\lstinline!OVNVerifier!}.
 
-Dunque all'iterno del processo di verifica, il sistema si puo' definire
+Dunque all'interno del processo di verifica, il sistema si può definire
 \emph{patchato} se e soltanto se tutte le azioni sono validate rispetto
 al valore che ci si aspettava in output.
 
@@ -30,7 +30,7 @@ La verifica statica prevede che l'oracolo possa accedere alla memoria
 fisica, comparando le patch applicate nei file in memoria, ad una patch
 considerata di riferimento per l'oracolo.
 
-Questo tipo di verifica puo' essere implementato in vari modi:
+Questo tipo di verifica può essere implementato in vari modi:
 
 \begin{itemize}
 \tightlist
@@ -42,11 +42,11 @@ Questo tipo di verifica puo' essere implementato in vari modi:
 \item
   \textbf{SAST}: Static Analysis Security Testing. Prevede l'accesso al
   codice sorgente non compilato in modo da analizzare pattern di codice
-  vulnerabili e fallace logiche.\footnote{\label{fn:ref_13}https://aetic.theiaer.org/archive/v4/v4n3/p1.html
+  vulnerabili e fallacie logiche.\footnote{\label{fn:ref_13}https://aetic.theiaer.org/archive/v4/v4n3/p1.html
     2. Currrent Status of SAST based on Checkmarx}
 \end{itemize}
 
-Tuttavia, SAST non e' un metodo di analisi efficace, sebbene efficiente:
+Tuttavia, SAST non è un metodo di analisi efficace, sebbene efficiente:
 
 \begin{itemize}
 \tightlist
@@ -57,11 +57,11 @@ Tuttavia, SAST non e' un metodo di analisi efficace, sebbene efficiente:
   non posso identificare staticamente tutti i tipi di errori di
   sicurezza \footref{fn:ref_13}
 \item
-  non posso identificare vulnerabilita all'interno dei binari
+  non posso identificare vulnerabilità all'interno dei binari
   compilati\footref{fn:ref_13}
 \end{itemize}
 
-Dunque l'analisi statica puo' in alcuni casi risultare inesetta, e non
+Dunque l'analisi statica può in alcuni casi risultare inesatta, e non
 coprire tutti i casi d'uso per quanto riguarda la gestione di
 competizioni CTF.
 
@@ -70,13 +70,13 @@ esterno}\label{verifica-dinamica-tramite-sistema-esterno}
 
 Questo meccanismo di verifica prevede l'uso di un \textbf{orchestratore
 esterno} alle macchine vulnerabili, ossia l'attaccante, che possa
-interagire con la vulnerabilita utilizzando la rete locale. L'attaccante
-orchestra l'esecuzione di uno o piu comandi, con l'obiettivo di inviare
+interagire con la vulnerabilità utilizzando la rete locale. L'attaccante
+orchestra l'esecuzione di uno o più comandi, con l'obiettivo di inviare
 il payload all'interno di un pacchetto di rete.
 
 Durante una competizione di questo tipo, tuttavia, i membri dei team
 sono legittimati ad accedere alla macchina vulnerabile come utente
-\passthrough{\lstinline!root!}: cosi da permettere l'applicazione delle
+\passthrough{\lstinline!root!}: così da permettere l'applicazione delle
 patch sui file di sistema. Questo implica che i partecipanti dei team
 siano in grado di eseguire tool come \passthrough{\lstinline!tcpdump!} e
 \passthrough{\lstinline!wireshark!} per intercettare il traffico di rete
@@ -84,14 +84,14 @@ e di conseguenza, di visualizzarne il payload, ottenendo un suggerimento
 per la soluzione della challenge.
 
 Inoltre, il payload inviato potrebbe essere tale da mandare in crash il
-servizio target, causando una penalita alla percentuale di \textbf{SLA}
+servizio target, causando una penalità alla percentuale di \textbf{SLA}
 \emph{(Service Level Agreement)}, ed interferendo potenzialmente con il
 lavoro del team sfidante (portando per esempio alla perdita di alcuni
 file). Si vuole dunque trovare un sistema di verifica che esegua
 completamente all'oscuro del team sfidante.
 
 Il sistema di verifica tramite sistema esterno non copre nemmeno tutte
-le vulnerabilita. Banalmente, non tutti i servizi vulnerabili sono
+le vulnerabilità. Banalmente, non tutti i servizi vulnerabili sono
 esposti in rete, ma sono accessibili solo in locale.
 
 Riassumendo quindi, abbiamo identificato alcuni spunti per ideare un
@@ -104,20 +104,20 @@ meccanismo di verifica migliore:
   fine di ottenere suggerimenti per la soluzione.
 \item
   Se l'exploit manda in crash il servizio, questo non dovrebbe
-  penalizzare il team, o piu in generale: il team sfidante non vede il
+  penalizzare il team, o più in generale: il team sfidante non vede il
   servizio distruggersi.
 \item
-  Dobbiamo gestire anche vulnerabilita non esposte in rete.
+  Dobbiamo gestire anche vulnerabilità non esposte in rete.
 \end{itemize}
 
 \subsection{Verifica Dinamica tramite injection dei comandi di
 verifica}\label{verifica-dinamica-tramite-injection-dei-comandi-di-verifica}
 
-Questo meccanismo di verifica prevede l'uso di un \textbf{orcehstratore
-esterno} al sistema vulnerabile, che ha la facolta di eseguire comandi
+Questo meccanismo di verifica prevede l'uso di un \textbf{orchestratore
+esterno} al sistema vulnerabile, che ha la facoltà di eseguire comandi
 all'interno delle macchine vulnerabili che compongono il sistema. Dunque
-l'orchestratore esegue uno o piu comandi con il fine di verificare che
-il sistema sia resistente alla vulnerabilita.
+l'orchestratore esegue uno o più comandi con il fine di verificare che
+il sistema sia resistente alla vulnerabilità.
 
 Considerando il caso in cui una macchina \passthrough{\lstinline!A!}
 contenga un file binario vulnerabile ad un \emph{buffer overflow},
@@ -125,7 +125,7 @@ l'orchestratore potrebbe eseguire ad esempio il comando
 \passthrough{\lstinline!/path/to/service\_logger payload!} e verificare
 l'esito dell'esecuzione.
 
-L'esecuzione di questi comandi e' possibile per esempio in ambienti
+L'esecuzione di questi comandi è possibile per esempio in ambienti
 containerizzati, sfruttando utility come
 \passthrough{\lstinline!docker exec!} o
 \passthrough{\lstinline!incus exec!}, che permettono di iniettare
@@ -137,14 +137,14 @@ system in \passthrough{\lstinline!/proc!}) possono intercettare
 l'esecuzione dei comandi dell'orchestratore e di mostrarli al team,
 suggerendo al team sfidante la soluzione. \footnote{\label{fn:ref_14}https://github.com/DominicBreuker/pspy}
 
-Dunque, dobbiamo ideare un meccanismo di verifica che deve sia
-completamente invisibile a questi meccanismi di intercettazione.
+Dunque, dobbiamo ideare un meccanismo di verifica che sia completamente
+invisibile a questi meccanismi di intercettazione.
 
 \subsection{Clonazione del sistema in una rete
 separata}\label{clonazione-del-sistema-in-una-rete-separata}
 
 Clonare i container all'interno di una rete separata ed inaccessibile ai
-giocatori e' una soluzione plausibile in quanto:
+giocatori è una soluzione plausibile in quanto:
 
 \begin{itemize}
 \tightlist
@@ -156,10 +156,10 @@ giocatori e' una soluzione plausibile in quanto:
   dunque non possono eseguire alcun tipo di comando.
 \end{itemize}
 
-Tutta via introduce un costo in termini di storage e di utilizzo della
+Tuttavia introduce un costo in termini di storage e di utilizzo della
 RAM dovuto alla duplicazione dei container, anche se questi esistono
 solo per il tempo necessario all'esecuzione dei comandi definiti dal
-creatore della sfida. Questo aspetto verra misurato piu avanti e sara
+creatore della sfida. Questo aspetto verrà misurato più avanti e sarà
 oggetto di analisi.
 
 Altri meccanismi di verifica ed architetture di rete possibili sono

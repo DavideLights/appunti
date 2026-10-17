@@ -35,11 +35,6 @@ Disaccoppiare l'interfaccia dall'implementazione permette ai servizi di
 non dover conoscere come avviene la gestione dei container, e di
 predisporre il codice per poter utilizzare altri gestori.
 
-\begin{quote}
-\textbf{ATTENZIONE: anche la generazione delle immagini dovrebbe
-avvenire tramite interfaccia}
-\end{quote}
-
 L'implementazione concreta \passthrough{\lstinline!IncusEngine!}
 comunica con il demone di sistema tramite Unix Domain Socket
 (\passthrough{\lstinline!/var/lib/incus/unix.socket!}), traducendo le
@@ -73,7 +68,7 @@ incapsulato all'interno della classe
 
 \begin{quote}
 \textbf{Pattern RAII (Resource Acquisition Is Initialization):}
-L'allocazione delle risorse è vincolato dall'acquisizione del contesto,
+L'allocazione delle risorse è vincolata dall'acquisizione del contesto,
 mentre il loro rilascio e smantellamento deterministico è garantito
 all'uscita dal blocco, gestendo automaticamente qualsiasi anomalia o
 interruzione. \footnote{\label{fn:ref_22}Bjarne Stroustrup, Resource Acquisition Is
@@ -134,7 +129,7 @@ sicuro per utilizzare l'oggetto \passthrough{\lstinline!OVNVerifier!}.
 Locking}\label{concorrenza-e-two-tier-locking}
 
 Incus non supporta operazioni concorrenti sul medesimo container.
-Inoltre per evitare problemi di accesso alle risorse e' opportuno
+Inoltre per evitare problemi di accesso alle risorse è opportuno
 implementare un sistema di lock.
 
 BlueAgent implementa un meccanismo di sincronizzazione a due livelli
@@ -149,7 +144,7 @@ richiede un tier dopo l'altro:
   risorse all'interno di un singolo processo.
 \item
   \textbf{Tier 2 (Inter-processo):} applica un lock non bloccante sul
-  filesystem (\passthrough{\lstinline!fcntl.flock!}) condiviso tra piu
+  filesystem (\passthrough{\lstinline!fcntl.flock!}) condiviso tra più
   processi
 \end{itemize}
 
@@ -159,23 +154,23 @@ Questo lock protegge l'accesso alle risorse in due casi:
 \tightlist
 \item
   BlueAgent esegue su un solo processo (worker), ma le richieste
-  potrebbero essere gestite da piu task contemporaneamente. Allora il
+  potrebbero essere gestite da più task contemporaneamente. Allora il
   lock Tier 1 protegge l'accesso alla stessa risorsa da parte di due
   task sullo stesso worker.
 \item
-  BlueAgent esegue su piu processi (worker), allora il lock Tier 2
+  BlueAgent esegue su più processi (worker), allora il lock Tier 2
   protegge l'accesso alla stessa risorsa da parte di due task su worker
   differenti.
 \end{itemize}
 
 \begin{quote}
-Come si avviano piu' worker?
+Come si avviano più worker?
 \passthrough{\lstinline!uvicorn main:app --workers 4!}
 \end{quote}
 
 \begin{quote}
-\passthrough{\lstinline!uvicorn!}: e'il web server su cui si basa
-FastAPI, dunque e' uvicorn che decide come gestire le richieste, e a
+\passthrough{\lstinline!uvicorn!}: è il web server su cui si basa
+FastAPI, dunque è uvicorn che decide come gestire le richieste, e a
 quali task e worker assegnarli. Da solo FastAPI non funziona, non
 implementa il server di rete.
 \end{quote}
@@ -184,14 +179,14 @@ Questa architettura protegge le risorse sia a livello di singolo
 processo sia in caso di server multi-worker, garantendo mutua esclusione
 sulle mutazioni su tutti i tipi di risorse.
 
-La risorsa principale su cui avviene la mutua esclusione nel codice e'
-il team. Qualsiasi operazione sul team \(k\) genera un lock a 2 tier per
+La risorsa principale su cui avviene la mutua esclusione nel codice è il
+team. Qualsiasi operazione sul team \(k\) genera un lock a 2 tier per
 quel team.
 
 \subsection{Pipeline Asincrona non Bloccante su Socket
 Unix}\label{pipeline-asincrona-non-bloccante-su-socket-unix}
 
-Le operazioni di incus su container possono comportare latenze
+Le operazioni di Incus su container possono comportare latenze
 nell'ordine di decine o centinaia di millisecondi. L'adozione di un
 modello sincrono sarebbe totalmente inefficiente.
 
@@ -217,7 +212,7 @@ del runner asincrono, evitando chiamate bloccanti sul loop principale ed
 esecuzione di shell non sicure.
 
 Questo approccio consente a un singolo processo BlueAgent di servire le
-richieste di telemetria utilizzando piu task e senza rimanere in attesa
+richieste di telemetria utilizzando più task e senza rimanere in attesa
 su una singola richiesta evitando di servire le altre richieste.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

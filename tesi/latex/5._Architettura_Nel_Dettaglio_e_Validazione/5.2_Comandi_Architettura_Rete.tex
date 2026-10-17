@@ -10,7 +10,7 @@ eseguiti direttamente da BlueAgent.
 vSwitch}\label{configurazione-ovn-e-open-vswitch}
 
 Qui riporto la configurazione per implementare la SDN. Il \textbf{piano
-dei dati} e' implementato da Open vSwitch (\textbf{OVS}) e deve esser
+dei dati} è implementato da Open vSwitch (\textbf{OVS}) e deve esser
 configurato in modo che possa comunicare con Incus tramite l'interfaccia
 di OVN
 
@@ -29,7 +29,7 @@ sudo ovs-vsctl set open_vswitch . \
 \item
   \textbf{\passthrough{\lstinline!ovn-encap-type=geneve!}}:
   Specifichiamo Geneve come protocollo da utilizzare per il tunneling.
-  Questo passaggio e' necessario anche se non utilizziamo mai Geneve
+  Questo passaggio è necessario anche se non utilizziamo mai Geneve
 \item
   \textbf{\passthrough{\lstinline!ovn-encap-ip=127.0.0.1!}}: Imposta la
   terminazione del tunnel nel localhost.
@@ -44,9 +44,9 @@ incus config set network.ovn.northbound_connection tcp:127.0.0.1:6641
 \end{lstlisting}
 
 \begin{quote}
-\textbf{OVN Northbound}: e' l'interfaccia dove dichiaro le reti che
+\textbf{OVN Northbound}: è l'interfaccia dove dichiaro le reti che
 voglio creare e le proprietà che devono rispettare. \textbf{OVN
-Southbound DB:}~memorizza le tabelle di inoltro e la logica da applicare
+Southbound DB:} memorizza le tabelle di inoltro e la logica da applicare
 sul piano dei dati.
 \end{quote}
 
@@ -54,11 +54,10 @@ sul piano dei dati.
 Connettività dei Peer (WireGuard e
 nftables)}{\textbackslash text\{production-\}k Routing e Connettività dei Peer (WireGuard e nftables)}}\label{textproduction-k-routing-e-connettivituxe0-dei-peer-wireguard-e-nftables}
 
-L'accesso dei partecipanti ai container rete \(\text{production-}k\)
-richiede l'applicazione di regole di inoltro esplicite tra
-\passthrough{\lstinline!wg-k!} ed \passthrough{\lstinline!br-team-k!},
-da applicare nel kernel Linux mediante
-\passthrough{\lstinline!nftables!}.
+L'accesso dei partecipanti ai container della rete
+\(\text{production-}k\) richiede l'applicazione di regole di inoltro
+esplicite tra \(\text{wg-}k\) e \(\text{br-team-}k\), da applicare nel
+kernel Linux mediante \passthrough{\lstinline!nftables!}.
 
 Le regole per il traffico vengono definite dentro la tabella
 \passthrough{\lstinline!inet blueagent!}:

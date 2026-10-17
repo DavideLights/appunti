@@ -1,26 +1,26 @@
 \section[WireGuard ]{\texorpdfstring{WireGuard
 \footnote{\label{fn:ref_27}https://www.wireguard.com/papers/wireguard.pdf}}{WireGuard }}\label{wireguard-2}
 
-La \textbf{VPN} e' un servizio usato per comunicare in modo sicuro tra
+La \textbf{VPN} è un servizio usato per comunicare in modo sicuro tra
 membri di un gruppo attraverso l'uso di una infrastruttura di
 comunicazione pubblica su cui il traffico viene incapsulato dentro ad un
 tunnel cifrato. \footnote{\label{fn:ref_28}https://ieeexplore.ieee.org/document/4756450}
 
-\textbf{Wireguard} e' una VPN che utilizza il concetto di
+\textbf{Wireguard} è una VPN che utilizza il concetto di
 \textbf{cryptokey routing}: viene mantenuta in memoria una tabella dove
 ad ogni chiave pubblica di un peer, viene associata una lista di
-indirizzi ip identificati come allowed. Fornisce un'interfaccia stateles
-per utilizzare il tunnel VPN, ossia un'interfaccia di rete virtuale, che
-potrebbe essere per esempio \passthrough{\lstinline!wg0!}.
+indirizzi ip identificati come allowed. Fornisce un'interfaccia
+stateless per utilizzare il tunnel VPN, ossia un'interfaccia di rete
+virtuale, che potrebbe essere per esempio \passthrough{\lstinline!wg0!}.
 
 \begin{quote}
 Per \textbf{stateless}, si intende il fatto che l'amministratore non si
 deve occupare di gestire lo scambio delle chiavi, connessioni,
-disconnessioni, poiche' viene tutto gestito dietro le quinte da
+disconnessioni, poiché viene tutto gestito dietro le quinte da
 WireGuard.
 \end{quote}
 
-Rispetto ad OpenVPN, Wireguard e' percepito come più sicuro ed
+Rispetto ad OpenVPN, Wireguard è percepito come più sicuro ed
 efficiente:
 
 \begin{itemize}
@@ -31,7 +31,7 @@ efficiente:
 \item
   OpenVPN utilizza interfacce TUN/TAP: agiscono in user space ma al
   costo di penalizzare di molto le performance, infatti i pacchetti
-  devono essere copiati piu volte nel passagio da user spa ce a kernel
+  devono essere copiati più volte nel passaggio da user space a kernel
   space.
 \end{itemize}
 
@@ -42,37 +42,69 @@ ad esempio SSH). In pratica lo scambio delle chiavi si fa per esempio
 manualmente, si copia e incollano le chiavi pubbliche nel file di
 configurazione di wireguard oppure si usano tool automatizzati.
 
-Una cryptorouting table appare cosi:
+\pagebreak
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/Pasted_image_20261001214515.png}
-  \caption{Pasted Image 20261001214515}
-  \label{fig:Pasted_image_20261001214515}
-\end{figure}
+La struttura concettuale di una \emph{cryptokey routing table} associa a
+ciascun peer autorizzato la relativa chiave pubblica crittografica e la
+lista di indirizzi IP sorgente consentiti:
 
-Decide quali coppie \((\text{Peer Public Key, Allowed Source IP})\)
-possono instradare nell'interfaccia wireguard.
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Peer Public Key
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Allowed Source IPs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Endpoint (Opzionale)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\passthrough{\lstinline!xTIB...p8Dg!} &
+\passthrough{\lstinline!10.k.0.2/32!} &
+\passthrough{\lstinline!198.51.100.1:51820!} & Giocatore 1 (Team
+\(k\)) \\
+\passthrough{\lstinline!TrMv...WXX0!} &
+\passthrough{\lstinline!10.k.0.3/32!} &
+\passthrough{\lstinline!203.0.113.2:51820!} & Giocatore 2 (Team
+\(k\)) \\
+\passthrough{\lstinline!gN65...z6EA!} &
+\passthrough{\lstinline!10.k.0.4/32!} &
+\passthrough{\lstinline!198.51.100.5:51820!} & Giocatore 3 (Team
+\(k\)) \\
+\end{longtable}
 
-Opzionalmente e' possibile specificare verso quale endpoint inoltrare il
+La tabella determina quali coppie
+\((\text{Peer Public Key, Allowed Source IP})\) abbiano facoltà di
+inviare e ricevere pacchetti attraverso l'interfaccia virtuale
+\passthrough{\lstinline!wg-k!}.
+
+Opzionalmente è possibile specificare verso quale endpoint inoltrare il
 pacchetto. L'\textbf{endpoint} identifica l'indirizzo ip e la porta UDP
-su cui il demone WireGuard e' in ascolto.
+su cui il demone WireGuard è in ascolto.
 
-Brevemente il flusso dei dati e' il seguente:
+Brevemente il flusso dei dati è il seguente:
 
 \begin{itemize}
 \tightlist
 \item
   l'interfaccia \passthrough{\lstinline!wg0!} riceve un pacchetto
 \item
-  il client incapsula il pacchetto all'interno di una datagramma UPD il
+  il client incapsula il pacchetto all'interno di un datagramma UDP il
   cui payload viene crittografato utilizzando
   \passthrough{\lstinline!ChaCha20Poly1305!}
 \item
   il client invia il datagramma all'endpoint specificato, oppure
   imparato dal Wireguard in precedenza.
 \item
-  il server riceve il dataramma, verifica la correttezza nella
+  il server riceve il datagramma, verifica la correttezza nella
   \emph{cryptokey routing table}
 \item
   il server autentica e decripta il messaggio ed estrae il pacchetto

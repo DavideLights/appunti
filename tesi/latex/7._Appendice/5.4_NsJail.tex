@@ -1,44 +1,44 @@
 \section[NsJail e Container ]{\texorpdfstring{NsJail e Container
 \footnote{\label{fn:ref_30}https://nsjail.dev/}}{NsJail e Container }}\label{nsjail-e-container-1}
 
-Si vuole in questo capitolo approfondire i meccansmi utilizzati da
+Si vuole in questo capitolo approfondire i meccanismi utilizzati da
 NsJail per l'isolamento delle risorse del kernel Linux. Tutti questi
 meccanismi utilizzati da NsJail sono utilizzati anche da Docker e Incus
-per implementare i container e verra' visto brevemente in che modo.
+per implementare i container e verrà visto brevemente in che modo.
 
 \subsection[Namespaces ]{\texorpdfstring{Namespaces
 \footnote{\label{fn:ref_31}https://man7.org/linux/man-pages/man7/namespaces.7.html}}{Namespaces }}\label{namespaces-2}
 
-Un namespace e' una feature del kernel Linux che permette di
-partizionare le risorse del kernel in modo che:
+Un namespace è una feature del kernel Linux che permette di partizionare
+le risorse del kernel in modo che:
 
 \begin{itemize}
 \tightlist
 \item
-  un insieme di processi e' in grado di vedere un certo insieme di
+  un insieme di processi è in grado di vedere un certo insieme di
   risorse
 \item
-  un'altro insieme di processi e' in grado di vedere un'altro insieme di
+  un altro insieme di processi è in grado di vedere un altro insieme di
   risorse.
 \end{itemize}
 
-Il kernel linux supporta diverso tipi di namespace: Cgroup, IPC,
+Il kernel linux supporta diversi tipi di namespace: Cgroup, IPC,
 Network, Mount, PID, Time, User ed UTS.
 
 Il \textbf{PID namespace} permette di partizionare gli ID dei processi
 in modo che per esempio, su 2 PID namespace differenti possano
 coesistere due processi con process ID identici. Inoltre un processo che
-esegue sul pid namespace \passthrough{\lstinline!A!} non puo' vedere
+esegue sul pid namespace \passthrough{\lstinline!A!} non può vedere
 quali processi sono in esecuzione sul pid namespace
 \passthrough{\lstinline!B!}.
 
-Il \textbf{Network namespace} invece offre l'isolazione delle risorse di
+Il \textbf{Network namespace} invece offre l'isolamento delle risorse di
 networking, come device, lo stack IPv4, le tabelle di routing, ecc. Un
-device fisico vive all'interno di un'unico network namespace, e le
+device fisico vive all'interno di un unico network namespace, e le
 connessioni tra namespace sono gestite dai device
 \passthrough{\lstinline!veth!}.\footnote{\label{fn:ref_32}https://man7.org/linux/man-pages/man7/network\_namespaces.7.html}
 
-Banalmente, i container usano i namespace per creare un'ambiente
+Banalmente, i container usano i namespace per creare un ambiente
 separato in cui istanziare i processi, il filesystem e le interfacce di
 rete.
 
@@ -46,7 +46,7 @@ rete.
 \footnote{\label{fn:ref_33}https://www.man7.org/linux/man-pages/man2/seccomp.2.html}}{Seccomp }}\label{seccomp-4}
 
 Seccomp permette ad un processo di specificare un filtro per le chiamate
-di sistema. Il filtro e' espresso come un programma
+di sistema. Il filtro è espresso come un programma
 \passthrough{\lstinline!eBPF!}, che opera sul numero della syscall ed i
 suoi argomenti. Fornisce un meccanismo per minimizzare l'esposizione del
 kernel.
@@ -66,7 +66,7 @@ prendendo ad esempio la specifica per il linguaggio
 \item
   Si caricano le regole con
   \passthrough{\lstinline!seccomp\_load(ctx, ...)!}. In questo modo, il
-  processo che esegue il codice sara soggetto alle limitazioni di
+  processo che esegue il codice sarà soggetto alle limitazioni di
   \passthrough{\lstinline!seccomp!}.
 \end{itemize}
 
@@ -87,16 +87,16 @@ definizioni:
 \tightlist
 \item
   \passthrough{\lstinline!cgroup!}: un cgroup associa un insieme di task
-  con un insieme di parametri per uno o piu sottosistemi.
+  con un insieme di parametri per uno o più sottosistemi.
 \item
-  \passthrough{\lstinline!sottosistema!}: un sottosistema e' un
+  \passthrough{\lstinline!sottosistema!}: un sottosistema è un
   ``resource controller'' che schedula una risorsa, oppure applica
   limitazioni alla risorsa ad un certo raggruppamento di task
 \end{itemize}
 
 Dunque con un \passthrough{\lstinline!cgroup!} posso schedulare la
 risorsa CPU all'interno di un gruppo definito di task. Viene utilizzato
-per effettaure il tracciamento dei job, accountig e limitazione delle
+per effettuare il tracciamento dei job, accounting e limitazione delle
 risorse.
 
 Nei container i \passthrough{\lstinline!cgroup!} sono utilizzati per

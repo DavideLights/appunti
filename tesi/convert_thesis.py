@@ -375,29 +375,129 @@ def deduplicate_footnotes(tex: str, global_fn_map: dict) -> str:
 
     return "".join(pieces)
 
+IMAGE_CONFIGS = {
+    "kctf-architecture": {
+        "title": "Architettura di kCTF basata su Kubernetes e NsJail",
+        "short_title": "Architettura di kCTF",
+        "size": "width=0.68\\linewidth,height=0.30\\textheight,keepaspectratio",
+    },
+    "ctfbox-architecture": {
+        "title": "Architettura modulare di CTFBox",
+        "short_title": "Architettura di CTFBox",
+        "size": "width=0.68\\linewidth,height=0.30\\textheight,keepaspectratio",
+    },
+    "cytrone-architecture": {
+        "title": "Architettura generale del framework CyTrONE",
+        "short_title": "Architettura generale di CyTrONE",
+        "size": "width=0.82\\linewidth,height=0.24\\textheight,keepaspectratio",
+    },
+    "cytrone-training": {
+        "title": "Flusso di addestramento e sessioni formative in CyTrONE",
+        "short_title": "Flusso di addestramento in CyTrONE",
+        "size": "width=0.46\\linewidth,height=0.36\\textheight,keepaspectratio",
+    },
+    "cytrone-cyberrange": {
+        "title": "Componenti del Cyber Range CyTrONE e gestione delle sandbox",
+        "short_title": "Componenti del Cyber Range CyTrONE",
+        "size": "width=0.44\\linewidth,height=0.36\\textheight,keepaspectratio",
+    },
+    "cytrone-performance": {
+        "title": "Valutazione dei tempi di provisioning in CyTrONE",
+        "short_title": "Tempi di provisioning in CyTrONE",
+        "size": "width=0.55\\linewidth,height=0.26\\textheight,keepaspectratio",
+    },
+    "cytrone-largescaleperformance": {
+        "title": "Scalabilità su larga scala del deployment in CyTrONE",
+        "short_title": "Scalabilità del deployment in CyTrONE",
+        "size": "width=0.55\\linewidth,height=0.26\\textheight,keepaspectratio",
+    },
+    "KYPO-basic-elements-sandboxes": {
+        "title": "Elementi fondamentali e isolamento delle sandbox in KYPO",
+        "short_title": "Elementi delle sandbox in KYPO",
+        "size": "width=0.54\\linewidth,height=0.28\\textheight,keepaspectratio",
+    },
+    "KYPO-topology-instance": {
+        "title": "Istanziazione della topologia di rete in KYPO",
+        "short_title": "Istanziazione topologia in KYPO",
+        "size": "width=0.46\\linewidth,height=0.36\\textheight,keepaspectratio",
+    },
+    "production-network": {
+        "title": "Topologia della rete di produzione (\\text{production-}k) per il team $k$",
+        "short_title": "Topologia della rete di produzione per il team k",
+        "size": "width=0.60\\linewidth,height=0.32\\textheight,keepaspectratio",
+    },
+    "verify-network": {
+        "title": "Topologia della rete di verifica sandbox (\\text{verify-}k) orchestrata con OVN",
+        "short_title": "Topologia della rete di verifica sandbox per il team k",
+        "size": "width=0.60\\linewidth,height=0.32\\textheight,keepaspectratio",
+    },
+    "validazione_phases_comparison": {
+        "title": "Confronto dei tempi di esecuzione delle macrofasi di benchmark",
+        "short_title": "Confronto dei tempi delle macrofasi di benchmark",
+        "size": "width=0.82\\linewidth,height=0.25\\textheight,keepaspectratio",
+    },
+    "graph1_cow_vs_deploy": {
+        "title": "Confronto dei tempi tra clonazione CoW (ZFS) e deploy da catalogo",
+        "short_title": "Confronto tra clonazione CoW e deploy da catalogo",
+        "size": "width=0.82\\linewidth,height=0.25\\textheight,keepaspectratio",
+    },
+    "graph2_microphase_breakdown": {
+        "title": "Scomposizione temporale delle sottofasi di verifica",
+        "short_title": "Scomposizione temporale sottofasi di verifica",
+        "size": "width=0.82\\linewidth,height=0.25\\textheight,keepaspectratio",
+    },
+    "graph3_memory_scaling": {
+        "title": "Andamento del consumo di memoria RAM netta al crescere dei container",
+        "short_title": "Consumo di memoria RAM netta al crescere dei container",
+        "size": "width=0.68\\linewidth,height=0.26\\textheight,keepaspectratio",
+    },
+    "graph4_lifecycle_timeline": {
+        "title": "Timeline dettagliata del ciclo di vita e della concorrenza",
+        "short_title": "Timeline del ciclo di vita e della concorrenza",
+        "size": "width=0.80\\linewidth,height=0.25\\textheight,keepaspectratio",
+    },
+    "Pasted_image_20261001214515": {
+        "title": "Esempio di tabella di cryptokey routing in WireGuard",
+        "short_title": "Tabella di cryptokey routing in WireGuard",
+        "size": "width=0.72\\linewidth,height=0.16\\textheight,keepaspectratio",
+    },
+}
+
 def format_images(tex: str) -> str:
     """
     Wraps standalone \\includegraphics in a properly centered figure environment
-    with max width bounded to \\linewidth to prevent overflowing A4 pages.
+    with tailored dimensions per image to ensure readable, elegant sizing
+    and avoid images occupying entire pages.
     """
     def repl_img(m):
         path = m.group(1).strip()
         base_name = os.path.splitext(os.path.basename(path))[0]
         
-        if base_name.lower().startswith("mermaid_"):
+        cfg = IMAGE_CONFIGS.get(base_name)
+        if cfg:
+            clean_title = cfg["title"]
+            short_title = cfg.get("short_title", clean_title)
+            size_opts = cfg["size"]
+        elif base_name.lower().startswith("mermaid_"):
             clean_name = re.sub(r'^mermaid_', '', base_name, flags=re.I)
             clean_name = re.sub(r'_[0-9a-f]{6,16}$', '', clean_name)
             clean_title = clean_name.replace('-', ' ').replace('_', ' ').strip().title()
             if not clean_title:
                 clean_title = "Diagramma Architetturale"
+            short_title = clean_title
+            size_opts = "width=0.70\\linewidth,height=0.30\\textheight,keepaspectratio"
         else:
             clean_title = base_name.replace('-', ' ').replace('_', ' ').strip().title()
+            short_title = clean_title
+            size_opts = "width=0.68\\linewidth,height=0.30\\textheight,keepaspectratio"
+
+        caption_tex = f"\\caption[{short_title}]{{{clean_title}}}" if short_title != clean_title else f"\\caption{{{clean_title}}}"
 
         return (
-            "\n\\begin{figure}[htbp]\n"
+            "\n\\begin{figure}[!htbp]\n"
             "  \\centering\n"
-            f"  \\includegraphics[width=0.92\\linewidth,height=0.7\\textheight,keepaspectratio]{{{path}}}\n"
-            f"  \\caption{{{clean_title}}}\n"
+            f"  \\includegraphics[{size_opts}]{{{path}}}\n"
+            f"  {caption_tex}\n"
             f"  \\label{{fig:{base_name}}}\n"
             "\\end{figure}\n"
         )
@@ -532,6 +632,7 @@ def main():
     pre_begin_doc = r"""
 % Support for pandoc-generated LaTeX & listings styling
 \usepackage[plainpages=false,pdfpagelabels]{hyperref}
+\usepackage{xurl}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -554,6 +655,12 @@ def main():
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 \makeatother
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Float placement parameters to avoid dedicated float pages and allow text sharing
+\renewcommand{\topfraction}{0.88}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.80}
 
 % Modern typography for code blocks & inline snippets
 \usepackage[scaled=0.88]{inconsolata}

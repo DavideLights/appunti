@@ -8,7 +8,7 @@ all'interno del kernel linux e quali sono gli oggetti fondamentali.
 Driver \footnote{\label{fn:ref_23}Linux Kernel Networking - Implementation and Theory}
 }{Network Device Driver  }}\label{network-device-driver-1}
 
-Un network device opera sempre livello 2 o 3 nello stack di rete, ed e'
+Un network device opera sempre livello 2 o 3 nello stack di rete, ed è
 rappresentato nel kernel dalla struttura
 \passthrough{\lstinline!net\_device!}. Questa struttura dati contiene
 varie informazioni:
@@ -39,7 +39,7 @@ Un device driver si occupa di:
   \textbf{Ricevere} i pacchetti destinati al local host, inoltrandoli al
   livello di rete, e successivamente al livello di trasporto.
 \item
-  \textbf{Trasmette} i pacchetti generati dal local host, o fa il
+  \textbf{Trasmettere} i pacchetti generati dal local host, o fa il
   forward dei pacchetti ricevuti verso un'altra interfaccia.
 \end{itemize}
 
@@ -70,49 +70,49 @@ quando il TTL viene diminuito e arriva a 0.
 
 La struttura \passthrough{\lstinline!sk\_buff!} (Socket Buffer)
 definisce come un pacchetto nel kernel Linux viene rappresentato e viene
-manipolato unicamante attraverso la SKB API.
+manipolato unicamente attraverso la SKB API.
 
 La Socket Buffer viene allocata dinamicamente quando il pacchetto viene
-ricevuto sul cavo, ed e' la struttura dati utilizzata per manipolare il
+ricevuto sul cavo, ed è la struttura dati utilizzata per manipolare il
 pacchetto nel kernel sui vari layer di rete.
 
 All'interno del kernel la struttura dati responsabile per il
-sottosistema di routing e' la \passthrough{\lstinline!fib\_table!},
-ossia la tabella che raccoglie le rotte per il traffico destinato ad una
-certa sottorete.
+sottosistema di routing è la \passthrough{\lstinline!fib\_table!}, ossia
+la tabella che raccoglie le rotte per il traffico destinato ad una certa
+sottorete.
 
 \subsection[Bridge ]{\texorpdfstring{Bridge
 \footnote{\label{fn:ref_24}Understanding Linux Networking Internals}}{Bridge }}\label{bridge-2}
 
-Un bridge e' un dispositivo L2 che capisce il protocollo del livello di
+Un bridge è un dispositivo L2 che capisce il protocollo del livello di
 collegamento, effettua l'inoltro dei dati copiandoli frame per frame.
 Per farlo deve mantenere nel suo buffer almeno un frame per volta.
 
-Un bridge assegna un'indirizzo al livello di collegamento ad ognuna
+Un bridge assegna un indirizzo al livello di collegamento ad ognuna
 delle sue interfacce ed effettua il forward verso di queste se il bridge
-non e' il destinatario del pacchetto. Opzionalmente puo' implementare il
-livello di rete (Layer 3) per offrire visibilita alle interfacce
-collegate e viene di solito utilizzato per unire due LAN diffrenti, o
+non è il destinatario del pacchetto. Opzionalmente può implementare il
+livello di rete (Layer 3) per offrire visibilità alle interfacce
+collegate e viene di solito utilizzato per unire due LAN differenti, o
 per creare una LAN.
 
-Un bridge nel kernel Linux e' un device virtuale, finché non viene
-collegato ad altri device non puo' ne ricevere e ne trasmettere frame.
-Usa il concetto di enslaving: ossia le vengono assegnate delle
-interfacce dette \textbf{enslaved} da controllare.
+Un bridge nel kernel Linux è un device virtuale, finché non viene
+collegato ad altri device non può né ricevere né trasmettere frame. Usa
+il concetto di enslaving: ossia le vengono assegnate delle interfacce
+dette \textbf{enslaved} da controllare.
 
 Quando si tenta di trasmettere su un bridge (es:
 \passthrough{\lstinline!br0!}), il device driver gestisce i device
 \textbf{enslaved} effettuando il forwarding dei frame.
 
-Posso eventualmente nell'host, assegnare un'indirizzo IP al bridge
+Posso eventualmente nell'host, assegnare un indirizzo IP al bridge
 facendolo comportare come gateway per le interfacce collegate alle sue
-porte. Dunque un brdige puo' essere esteso per partecipare al Layer 3.
+porte. Dunque un bridge può essere esteso per partecipare al Layer 3.
 
 \subsection[Netfilter (Capitolo 5 e 9 IPV4 routing)
 ]{\texorpdfstring{Netfilter (Capitolo 5 e 9 IPV4 routing) \footnote{\label{fn:ref_25}https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture}
 \footnote{\label{fn:ref_26}https://linuxhandbook.com/iptables-vs-nftables/}}{Netfilter (Capitolo 5 e 9 IPV4 routing)  }}\label{netfilter-capitolo-5-e-9-ipv4-routing-3-4}
 
-E' un sottosistema del kernel che fornisce le seguenti funzionalita
+È un sottosistema del kernel che fornisce le seguenti funzionalità
 all'interno del sottosistema di routing:
 
 \begin{itemize}
@@ -133,21 +133,21 @@ Per quanto riguarda il filtraggio dei pacchetti, abbiamo a disposizione
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!NF\_INET\_PRE\_ROUTING!}: e' chiamato nel
-  metodo \passthrough{\lstinline!ip\_rcv()!} del kernel, quinid ancora
+  \passthrough{\lstinline!NF\_INET\_PRE\_ROUTING!}: è chiamato nel
+  metodo \passthrough{\lstinline!ip\_rcv()!} del kernel, quindi ancora
   prima di entrare nel sottosistema di routing.
 \item
-  \passthrough{\lstinline!NF\_INET\_LOCAL\_IN!}: e' chiamato nel momento
-  in cui il pacchetto e' indirizzato al local host.
+  \passthrough{\lstinline!NF\_INET\_LOCAL\_IN!}: è chiamato nel momento
+  in cui il pacchetto è indirizzato al local host.
 \item
-  \passthrough{\lstinline!NF\_INET\_FORWARD!}: e' chiamato dopo che e'
+  \passthrough{\lstinline!NF\_INET\_FORWARD!}: è chiamato dopo che è
   stato effettuato il lookup nel sottosistema di routing.
 \item
-  \passthrough{\lstinline!NF\_INET\_POST\_ROUTING!}: e' chiamato per i
+  \passthrough{\lstinline!NF\_INET\_POST\_ROUTING!}: è chiamato per i
   pacchetti che devono essere inoltrati, pochi istanti prima che il
   pacchetto entri fisicamente nel cavo.
 \item
-  \passthrough{\lstinline!NF\_INET\_LOCAL\_OUT!}: e' chiamato per i
+  \passthrough{\lstinline!NF\_INET\_LOCAL\_OUT!}: è chiamato per i
   pacchetti creati nel local host, prima che escano.
 \end{itemize}
 
@@ -161,10 +161,10 @@ Molte utility, comunemente usate, si basano sul sottosistema netfilter:
   per aggiungere, eliminare, regole netfilter, aggiungere tabelle,
   ecc\ldots{}
 \item
-  \passthrough{\lstinline!nftables!}: e' sviluppato da
-  \textbf{netfilter} (l'organizzazione dietro al sottosistema
-  netfilter). E' un rimpiazzo per iptables che e' riconosciuto avere
-  problemi di scalabilita e performance.
+  \passthrough{\lstinline!nftables!}: è sviluppato da \textbf{netfilter}
+  (l'organizzazione dietro al sottosistema netfilter). È un rimpiazzo
+  per iptables che è riconosciuto avere problemi di scalabilità e
+  performance.
 \end{itemize}
 
 \textbf{iptables} utilizza le \textbf{tables} per organizzare i filtri
@@ -176,8 +176,8 @@ applicare il NAT.
 Spesso le connessioni a livello applicativo hanno una connessione
 mantenuta nel tempo ed una serie di eventi che determinano la storia
 della comunicazione. Il \textbf{Connection Tracking}
-(\passthrough{\lstinline!cpnntrack!}) Layer permette al kernel di tenere
-traccia delle sessioni create, e' la struttura dati fondamentale per
+(\passthrough{\lstinline!conntrack!}) Layer permette al kernel di tenere
+traccia delle sessioni create, è la struttura dati fondamentale per
 implementare il NAT. \passthrough{\lstinline!conntrack!} mantiene per
 ogni connessione che deve usufruire del NAT le traduzioni necessarie per
 gli indirizzi IP.

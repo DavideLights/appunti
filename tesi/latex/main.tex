@@ -98,6 +98,7 @@
 
 % Support for pandoc-generated LaTeX & listings styling
 \usepackage[plainpages=false,pdfpagelabels]{hyperref}
+\usepackage{xurl}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -120,6 +121,12 @@
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 \makeatother
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Float placement parameters to avoid dedicated float pages and allow text sharing
+\renewcommand{\topfraction}{0.88}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.80}
 
 % Modern typography for code blocks & inline snippets
 \usepackage[scaled=0.88]{inconsolata}

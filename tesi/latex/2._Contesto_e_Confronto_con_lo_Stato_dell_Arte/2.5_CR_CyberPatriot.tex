@@ -1,0 +1,47 @@
+\pagebreak
+
+\section{CR Alternativi:
+CyberPatriot}\label{cr-alternativi-cyberpatriot}
+
+È un programma di educazione nazionale per il K-12 creato dalla
+\emph{Air \& Space Forces Association}. I team assumono il ruolo di
+professionisti di cybersecurity che hanno l'obiettivo di proteggere vari
+sistemi entro un limite di tempo, analizzando le macchine virtuali,
+identificandone le vulnerabilità e mitigandole.
+
+Il CyberPatriot Scoring System (CSS) tiene traccia della progressione
+del team. Un demone locale esegue controlli periodici sulla macchina per
+determinarne lo stato, mentre un server centrale registra i punteggi
+comunicando con i demoni delle macchine.
+
+Questo sistema tuttavia è \textbf{closed-source} e solo l'\textbf{AFA}
+può utilizzarlo.
+
+Le differenze tra CyberPatriot e BlueAgent sono riassunte nella seguente
+tabella:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Caratteristica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+CyberPatriot
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+BlueAgent
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Virtualizzazione} & Macchine Virtuali complete (VMware /
+VirtualBox) & Container di sistema leggeri (Incus) \\
+\textbf{Consumo di Risorse} & Elevato (diversi GB di RAM per singola VM)
+& Minimo (\textasciitilde50 MB di RAM per container) \\
+\textbf{Ambiente di Rete} & Singola VM isolata & Topologia
+multi-container in LAN virtuale \\
+\textbf{Motore di Valutazione} & Demone locale (CSS) all'interno della
+VM & Oracolo esterno in sandbox di rete isolata (OVN) \\
+\end{longtable}

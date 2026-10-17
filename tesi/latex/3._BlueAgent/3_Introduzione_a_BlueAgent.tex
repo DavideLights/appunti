@@ -1,26 +1,26 @@
 Si vuole presentare dunque il nostro Cyber Range: \emph{BlueAgent}. Un
 servizio \emph{HTTP} che implementa delle \emph{API REST} per la
 gestione e la verifica delle macchine a partire da file dichiarativi
-(\emph{IaC}) fornite dagli organizzatori della CTF. Queste API REST
+(\emph{IaC}) forniti dagli organizzatori della CTF. Queste API REST
 potranno poi essere sfruttate ed implementate da un qualsiasi
 applicativo (denominato CTF Manager) per gestire le challenge, come per
 esempio, un plugin per CTFd\footnote{\label{fn:ref_12}https://ctfd.io/}.
 
-Il Cyber Range implementato da BlueAgent e' pensato per scenari di Patch
+Il Cyber Range implementato da BlueAgent è pensato per scenari di Patch
 Management da eseguire su un unico nodo con hardware ``leggero''. Dunque
-si vuole offrire un'ambiente basato su container (invece di utilizzare
+si vuole offrire un ambiente basato su container (invece di utilizzare
 delle macchine virtuali pesanti) che offra un meccanismo di verifica
-completamente nascosto ai giocatori. Tale meccanismo e' basato sulla
+completamente nascosto ai giocatori. Tale meccanismo è basato sulla
 clonazione sul momento dell'intera infrastruttura interessata, in una
 rete separata e inaccessibile ai giocatori, su cui verranno poi eseguiti
 i comandi dell'oracolo definito in fase di dichiarazione.
 
 I membri dei team, potranno connettersi alla rete dei container a loro
 assegnati utilizzando una VPN, implementata da WireGuard, tenendo
-presente che ogni membro avra' un peer associato (una coppia di chiavi
+presente che ogni membro avrà un peer associato (una coppia di chiavi
 pubbliche e private).
 
-E' importante puntualizzare che:
+È importante puntualizzare che:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -37,8 +37,8 @@ E' importante puntualizzare che:
 \item
   BlueAgent non mantiene in memoria lo stato delle challenge (per
   esempio i punteggi dei vari team). Questo software deve essere inteso
-  come un'orchestratore di container. Blueagent si limita a prendere in
-  input la definzione di una challenge e di istanziare i container
+  come un orchestratore di container. BlueAgent si limita a prendere in
+  input la definizione di una challenge e di istanziare i container
   richiesti.
 \end{enumerate}
 
@@ -65,7 +65,7 @@ BlueAgent:
   BlueAgent si occupa di istanziare i container per il team.
 \end{enumerate}
 
-BlueAgent e' basato su \emph{FastAPI}, per gestire in modo semplice ed
+BlueAgent è basato su \emph{FastAPI}, per gestire in modo semplice ed
 efficiente le richieste HTTP.
 
 L'host su cui viene eseguito BlueAgent deve mettere a disposizione
@@ -74,7 +74,7 @@ dell'architettura le seguenti componenti:
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Debian 13}: o un qualsiasi distribuzione Linux.
+  \textbf{Debian 13}: o una qualsiasi distribuzione Linux.
 \item
   \passthrough{\lstinline!nftables!}: per filtrare i pacchetti nel
   Kernel

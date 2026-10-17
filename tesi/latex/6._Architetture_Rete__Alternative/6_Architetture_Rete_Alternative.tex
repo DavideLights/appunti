@@ -1,0 +1,21 @@
+La replicazione dell'infrastruttura di una challenge per consentire la
+verifica della patch pone una sfida architetturale fondamentale: i
+container clonati devono preservare fedelmente la propria configurazione
+di rete (inclusi indirizzi IP statici, interfaccia
+\passthrough{\lstinline!eth0!} e default gateway), garantendo
+l'esecuzione trasparente degli exploit e dei controlli dell'Oracolo
+senza generare conflitti di instradamento o collisioni ARP sull'host con
+la rete di produzione già attiva. Al contempo, per supportare scenari
+realistici in cui i servizi o gli oracoli necessitano di scaricare
+dipendenze o contattare repository esterni, l'ambiente di sandbox deve
+poter offrire la connettività WAN verso l'esterno.
+
+Prima di convergere sulla soluzione adottata in BlueAgent --- basata su
+una Software-Defined Network orchestrata con Open Virtual Network (OVN)
+e un doppio stadio di NAT (illustrata nel Capitolo 4) --- sono state
+progettate, implementate e sperimentate quattro architetture di rete
+alternative.
+
+In questo capitolo vengono analizzate le caratteristiche tecniche, i
+vantaggi e i limiti operativi che hanno portato a scartare ciascuna di
+queste soluzioni preliminari.

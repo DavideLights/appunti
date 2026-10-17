@@ -4,7 +4,7 @@ Verifica}\label{network-namespace-separato-per-la-verifica}
 In BlueAgent, abbiamo introdotto OVN per semplificare la gestione di due
 reti con stesso gateway.
 
-Per evitare di aggiungere la complessita computazionale di OVN, si puo'
+Per evitare di aggiungere la complessità computazionale di OVN, si può
 pensare di creare un network namespace separato al momento della
 verifica.
 
@@ -19,19 +19,19 @@ Per consentire l'accesso alla rete WAN bisogna usare una coppia di
 \(\text{verify-}k\) al namespace root.
 
 In questo modo i due bridge con stesso ip gateway possono coesistere
-poiche riesiedono in namespace differenti, ci pensa il kernel ad
+poiché risiedono in namespace differenti, ci pensa il kernel ad
 effettuare il routing dei pacchetti verso le giuste interfacce nei
 differenti namespace.
 
-Tutta via l'implementazione non e' immediata e l'uso di Incus non si
-sposa bene con la creazione di network namespace separati dato che non
-sa come tracciarene l'esistenza. Dunque bisogna gestire manualmente le
-interfacce di rete, aggiungendo una notevole complessita. Questo perche'
-il motore di Incus esegue sul namespace root, e non e' progettato per
-gestire interfacce dentro altri namespace. Bisogna dunque raggirare
-Incus, ed istanziare e gestire in BlueAgent coppie di \emph{veth} che
-gestiscano questo disallineamento.
+Tuttavia l'implementazione non è immediata e l'uso di Incus non si sposa
+bene con la creazione di network namespace separati dato che non sa come
+tracciarne l'esistenza. Dunque bisogna gestire manualmente le interfacce
+di rete, aggiungendo una notevole complessità. Questo perché il motore
+di Incus esegue sul namespace root, e non è progettato per gestire
+interfacce dentro altri namespace. Bisogna dunque raggirare Incus, ed
+istanziare e gestire in BlueAgent coppie di \emph{veth} che gestiscano
+questo disallineamento.
 
-Dal lato del codice aumenta dunque la complessita: invece di fare
+Dal lato del codice aumenta dunque la complessità: invece di fare
 richieste verso l'API di Incus per gestire le interfacce, bisogna usare
 vari comandi e tracciare il ciclo di vita delle interfacce usate.

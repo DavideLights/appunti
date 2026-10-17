@@ -1,15 +1,16 @@
 \section{CR Alternativi: CyTrONE}\label{cr-alternativi-cytrone}
 
-\textbf{CyTrONE}\footnote{\label{fn:ref_8}https://github.com/crond-jaist/cytrone} e' un
+\textbf{CyTrONE}\footnote{\label{fn:ref_8}https://github.com/crond-jaist/cytrone} è un
 framework incentrato sul training che integra contemporaneamente sia una
 piattaforma educativa che un Cyber Range.
 
-La seguente immagine mostra i componenti di CyTrONE:
+La seguente immagine (Figura \ref{fig:cytrone-architecture}) mostra i
+componenti di CyTrONE:
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-architecture.png}
-  \caption{Cytrone Architecture}
+  \includegraphics[width=0.82\linewidth,height=0.24\textheight,keepaspectratio]{src/images/cytrone-architecture.png}
+  \caption[Architettura generale di CyTrONE]{Architettura generale del framework CyTrONE}
   \label{fig:cytrone-architecture}
 \end{figure}
 
@@ -17,7 +18,7 @@ La seguente immagine mostra i componenti di CyTrONE:
 \begin{itemize}
 \tightlist
 \item
-  \textbf{CyLMS}: si occupa d icaricare il contenuto per il training su
+  \textbf{CyLMS}: si occupa di caricare il contenuto per il training su
   un Learning Management System come \textbf{Moodle}
 \item
   \textbf{CyRIS} (Cyber Range Instantiation System): si occupa di
@@ -34,13 +35,13 @@ CyTrONE gestisce tre tipi di training\footnote{\label{fn:ref_9}https://www.scien
 \tightlist
 \item
   Training \emph{Attack-oriented}: si basa sul capire come riprodurre
-  attacchi a vulnerabilita note.
+  attacchi a vulnerabilità note.
 \item
   Training \emph{Analysis-oriented}: si concentra sull'analisi
   dell'attacco, per capire come funziona e le sue conseguenze.
 \item
-  Training \textbf{Defense-oriented}: si conentra sulle tecniche di
-  patching delle vulnerabilita, al fine di proteggere il sistema.
+  Training \textbf{Defense-oriented}: si concentra sulle tecniche di
+  patching delle vulnerabilità, al fine di proteggere il sistema.
 \end{itemize}
 
 Quindi l'esperienza utente si concentra sul fatto che gli studenti
@@ -73,57 +74,73 @@ CyTrONE si applica bene facendo le seguenti assunzioni:
 \end{enumerate}
 \end{quote}
 
-L'architettura di CyTrONE e' supportata da un \emph{Training Database},
+L'architettura di CyTrONE è supportata da un \emph{Training Database},
 che si occupa di tenere in memoria le informazioni per i vari training,
 che vengono caricate su CyTrONE da una figura identificata come
-\emph{Training Coordinator}.Le informazioni mantenute nel database sono
+\emph{Training Coordinator}. Le informazioni mantenute nel database sono
 per esempio: il training content, file e programmi, macchine virtuali,
 ecc\ldots{} \footref{fn:ref_9}
 
-CyTrONE utilizza un file YAML per definire il contenuto di un training:
+\pagebreak
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-training.png}
-  \caption{Cytrone Training}
-  \label{fig:cytrone-training}
-\end{figure}
+CyTrONE utilizza un file YAML per definire il contenuto didattico di un
+training:
 
+\begin{lstlisting}
+training:
+  - id: "L1-EN"
+    title: "Analisi di Sicurezza su Host Desktop"
+    overview: "Scenario di indagine su potenziale intrusione nel sistema aziendale."
+    level: 1
+    questions:
+      - id: "Q-001"
+        body: "Individuare la versione esatta del kernel Linux in esecuzione."
+        answer: "3.10.0-514.21.1.el7.x86_64"
+        hints:
+          - "Ispezionare /proc/version oppure eseguire 'uname -r'."
+\end{lstlisting}
 
-E similmente, si usa un file YAML per definire la specifica del Cyber
-Range:
+E similmente, si usa un file YAML per definire la specifica
+dell'infrastruttura Cyber Range:
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-cyberrange.png}
-  \caption{Cytrone Cyberrange}
-  \label{fig:cytrone-cyberrange}
-\end{figure}
+\begin{lstlisting}
+host_settings:
+  - id: "host_1"
+    virbr_addr: "192.168.122.1/24"
 
+guest_settings:
+  - id: "desktop"
+    basevm_type: "kvm"
+    tasks:
+      - add_account: { account: "analyst", passwd: "analyst_password" }
+      - install_package: { manager: "yum", name: "wireshark" }
+      - emulate_attack: { type: "ssh_bruteforce", target: "analyst" }
+      - emulate_malware: { name: "miner_daemon", cpu_utilization: 40 }
+\end{lstlisting}
 
 A partire dalla configurazione YAML del Cyber Range, il sotto-sistema
 CyRIS si occupa di istanziarlo. Successivamente, in caso di un training
 \textbf{Defense-oriented} l'utente richiede l'attacco associato alla
-vulnearbilita all'interno del sistema e ne viene registrato l'esisto.
+vulnerabilità all'interno del sistema e ne viene registrato l'esito.
 
-Tutta via, sebbene il sistema sia ben ingegnerizzato soffre di alcuni
+Tuttavia, sebbene il sistema sia ben ingegnerizzato soffre di alcuni
 problemi:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Il deploy delle vulnerabilita avviene su macchine virtuali, che
+  Il deploy delle vulnerabilità avviene su macchine virtuali, che
   possono costituire un alto overhead in termini di risorse, ed tempi di
   approvvigionamento lunghi per l'infrastruttura.
 \item
   Il payload viene inviato remotamente dal
   \passthrough{\lstinline!cyberattack controller!} (che non fa altro che
-  eseguire \passthrough{\lstinline!Metasploit!}). Tutta via il traffico
-  di rete puo' essere intercettato dallo studente, ottenendo cosi
+  eseguire \passthrough{\lstinline!Metasploit!}). Tuttavia il traffico
+  di rete può essere intercettato dallo studente, ottenendo così
   suggerimenti per la soluzione.
 \item
-  L'esecuzione del payload puo scatenare la produzione di file log
+  L'esecuzione del payload può scatenare la produzione di file log
   accessibili allo studente.
 \item
   L'esecuzione del payload potrebbe mandare in crash il sistema del
@@ -149,10 +166,10 @@ Sono stati valutati 2 scenari:
 \item
   \emph{Level 1}: un training base che include tra gli argomenti: log,
   configurazioni di sistema, sniffing della rete e scansione delle
-  vulnerabilita. Richiede un'unica macchina Virtuale per fare il deploy
+  vulnerabilità. Richiede un'unica macchina Virtuale per fare il deploy
   dello scenario
 \item
-  \emph{Level 2}: un training di difficolta media su topic come il
+  \emph{Level 2}: un training di difficoltà media su topic come il
   network discovery, penetration testing e password cracking. Richiede
   due macchine virtuali per il deploy dello scenario.
 \end{itemize}
@@ -169,7 +186,7 @@ CyTrONE avviene in 3 fasi distinte:
   virtuale. \(T_p\) descrive il suo tempo di esecuzione
 \item
   \textbf{Installazione}: Sulla macchina nel nodo master, vengono
-  installati contenuti aggiuntivi necessari per il traninig, sulla
+  installati contenuti aggiuntivi necessari per il training, sulla
   macchina virtuale target. \(T_i\) descrive il suo tempo di esecuzione.
 \item
   \textbf{Clonazione}: Copia tramite
@@ -180,18 +197,19 @@ CyTrONE avviene in 3 fasi distinte:
 \end{enumerate}
 
 \begin{quote}
-E' dunque importante notare che per il \emph{Level 1}, bisogna clonare
+È dunque importante notare che per il \emph{Level 1}, bisogna clonare
 con \passthrough{\lstinline!parallel-scp!} una sola immagine per nodo,
 mentre per il \emph{Level 2} bisogna clonare 2 immagini per nodo.
 \end{quote}
 
-Sia \(T = T_p + T_i + T_c\), il grafico descrive come si comporta \(T\)
-al variare del numero di host su cui fare il deploy delle macchine.
+Sia \(T = T_p + T_i + T_c\), il grafico (Figura
+\ref{fig:cytrone-performance}) descrive come si comporta \(T\) al
+variare del numero di host su cui fare il deploy delle macchine.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-performance.png}
-  \caption{Cytrone Performance}
+  \includegraphics[width=0.55\linewidth,height=0.26\textheight,keepaspectratio]{src/images/cytrone-performance.png}
+  \caption[Tempi di provisioning in CyTrONE]{Valutazione dei tempi di provisioning in CyTrONE}
   \label{fig:cytrone-performance}
 \end{figure}
 
@@ -199,33 +217,34 @@ al variare del numero di host su cui fare il deploy delle macchine.
 \begin{itemize}
 \tightlist
 \item
-  Nei casi dove abbiamo solo 1 host, allora non c'e' bisogno di clonare
+  Nei casi dove abbiamo solo 1 host, allora non c'è bisogno di clonare
   l'immagine, basta solo un host che esegue le 20 macchine virtuali,
-  ossia il master. Dunque il tempo di clonazione e' sotto i \emph{due
+  ossia il master. Dunque il tempo di clonazione è sotto i \emph{due
   minuti}, mentre \(T\) per lo scenario \emph{Level 2} si attesta sotto
   gli 8 minuti.
 \item
   All'aumentare del numero \(n\) degli host, con il bisogno di clonare
-  le macchine su piu nodi, il tempo di approvvigionamento totale tende a
-  peggiorare, poiche bisogna trasferire l'immagine su piu nodi, sebbene
+  le macchine su più nodi, il tempo di approvvigionamento totale tende a
+  peggiorare, poiché bisogna trasferire l'immagine su più nodi, sebbene
   ogni nodo gestisca solo \(20/n\) macchine virtuali.
 \end{itemize}
 
 Invece, per gli esperimenti su larga scala dove si vuole effettuare il
 deploy di 20 macchine per ogni host su centinaia di host il tempo \(T\)
-peggiora esponenzialmente. Nella figura sborgz viene analizzato al
-variare di del numero di host fino a 600 cosa succede se ogni nodo deve
-eseguire 20 macchine, con 20 immagini differenti.
+peggiora esponenzialmente. Nella Figura
+\ref{fig:cytrone-largescaleperformance} viene analizzato al variare del
+numero di host fino a 600 cosa succede se ogni nodo deve eseguire 20
+macchine, con 20 immagini differenti.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.92\linewidth,height=0.7\textheight,keepaspectratio]{src/images/cytrone-largescaleperformance.png}
-  \caption{Cytrone Largescaleperformance}
+  \includegraphics[width=0.55\linewidth,height=0.26\textheight,keepaspectratio]{src/images/cytrone-largescaleperformance.png}
+  \caption[Scalabilità del deployment in CyTrONE]{Scalabilità su larga scala del deployment in CyTrONE}
   \label{fig:cytrone-largescaleperformance}
 \end{figure}
 
 
-Le differenze tra CyTrONE e Blueagent sono elencate nella seguente
+Le differenze tra CyTrONE e BlueAgent sono elencate nella seguente
 tabella:
 
 \begin{longtable}[]{@{}
