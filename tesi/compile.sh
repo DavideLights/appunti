@@ -9,7 +9,11 @@ echo "[1/4] Converting Markdown files to LaTeX in latex/ directory..."
 python3 convert_thesis.py
 
 echo "[2/4] Compiling LaTeX (first pass)..."
-(cd latex && pdflatex -interaction=nonstopmode main.tex > /dev/null)
+(cd latex && pdflatex -interaction=nonstopmode main.tex > /dev/null) || {
+    echo "ERROR: LaTeX compilation failed in first pass! Showing last 35 lines of latex/main.log:" >&2
+    tail -n 35 latex/main.log >&2
+    exit 1
+}
 
 echo "[3/4] Generating Bibliography with BibTeX..."
 (cd latex && bibtex main)

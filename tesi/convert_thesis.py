@@ -407,6 +407,22 @@ def format_images(tex: str) -> str:
     tex = re.sub(r'\\pandocbounded\{\s*\}', '', tex)
     return tex
 
+def fix_math_text_underscores(tex: str) -> str:
+    """
+    In LaTeX, \\text{...} inside math mode does not escape underscores,
+    causing '! Missing $ inserted' errors during compilation.
+    This replaces unescaped underscores inside \\text{...} with \\_.
+    """
+    def repl(m):
+        inner = m.group(1)
+        fixed = re.sub(r'(?<!\\)_', r'\\_', inner)
+        return f"\\text{{{fixed}}}"
+
+    pattern = re.compile(r'\\text\{([^{}]*(?<!\\)_[^{}]*)\}')
+    while pattern.search(tex):
+        tex = pattern.sub(repl, tex)
+    return tex
+
 def convert_md_file(md_path: Path, target_dir: Path, global_fn_map: dict) -> Path:
     target_dir.mkdir(parents=True, exist_ok=True)
     tex_path = target_dir / (md_path.stem + ".tex")
@@ -436,6 +452,7 @@ def convert_md_file(md_path: Path, target_dir: Path, global_fn_map: dict) -> Pat
 
     out = deduplicate_footnotes(out, global_fn_map)
     out = format_images(out)
+    out = fix_math_text_underscores(out)
 
     with open(tex_path, "w", encoding="utf-8") as f:
         f.write(out)

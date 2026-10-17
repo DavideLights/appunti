@@ -26,8 +26,8 @@ container.
 \end{quote}
 
 \begin{quote}
-\passthrough{\lstinline!verify-k!}: e' il bridge di rete (gestito
-tramite SDN) utilizzato per implementare la rete di verifica per il team
+\passthrough{\lstinline!verify-k!}: e' lo switch logico (gestito tramite
+OVN SDN) utilizzato per implementare la rete di verifica per il team
 \passthrough{\lstinline!k!}. Questa rete e' completamente scollegata da
 \passthrough{\lstinline!br-team-k!} e da \passthrough{\lstinline!wg-k!}.
 \end{quote}
@@ -61,8 +61,8 @@ Flusso delle azioni:
 \tightlist
 \item
   Il CTF Manager invia la richiesta
-  \passthrough{\lstinline!POST /teams!}, specificando l'identificativo
-  \(k\) del team ed il relativo nome.
+  \passthrough{\lstinline!PUT /teams/\{team\_k\}!}, specificando
+  l'identificativo \(k\) nel path ed il relativo nome nel payload.
 \item
   BlueAgent verifica se l'infrastruttura per il team \(k\) esiste gia:
 
@@ -70,8 +70,8 @@ Flusso delle azioni:
   \def\labelenumii{\arabic{enumii}.}
   \tightlist
   \item
-    Se il team e' gia registrato, risponde
-    \passthrough{\lstinline!HTTP 200 OK!}.
+    Se il team e' gia registrato, ne sincronizza la configurazione e
+    risponde \passthrough{\lstinline!HTTP 200 OK!}.
   \item
     Altrimenti, l'infrastruttura di rete viene creata da zero:
 
@@ -115,7 +115,8 @@ il team
   \textbf{Precondizione}: \passthrough{\lstinline!UC-01!},
   \passthrough{\lstinline!UC-08!}. E' stato eseguito con successo il
   deploy dell'infrastruttura di rete per il team \(k\) e le immagini dei
-  container richieste sono presenti nel sistema.
+  container richieste sono presenti nel catalogo in stato
+  \passthrough{\lstinline!ready!}.
 \end{itemize}
 
 Flusso delle azioni:
@@ -126,7 +127,7 @@ Flusso delle azioni:
 \item
   Il CTF Manager invia la richiesta
   \passthrough{\lstinline!POST /teams/\{team\_k\}/machines!}
-  specificando \passthrough{\lstinline!team\_k!}.
+  specificando la configurazione della challenge.
 \item
   BlueAgent valida le precondizioni.
 \item
@@ -193,29 +194,32 @@ Flusso delle azioni:
   \def\labelenumii{\arabic{enumii}.}
   \tightlist
   \item
-    Crea uno switch virtuale denominato
+    Crea uno switch logico OVN denominato
     \passthrough{\lstinline!verify-k!}.
   \item
-    Esegue la clonazione di tutti i container della challenge del team
-    \(k\).
+    Esegue la clonazione CoW (ZFS) di tutti i container della challenge
+    del team \(k\).
   \item
     Riconfigura l'interfaccia \passthrough{\lstinline!eth0!} dei cloni
-    agganciandola allo switch di verifica.
+    agganciandola allo switch OVN di verifica.
   \item
     Avvia i cloni sandbox e configura al loro interno lo stesso
     indirizzo IP statico di produzione
     \passthrough{\lstinline!10.k.1.\{ip\_suffix\}/24!}.
   \item
-    Se specificato nella configurazione, avvia un container di verifica.
+    Se specificato nella configurazione, avvia un container di verifica
+    runner.
   \end{enumerate}
 \item
   Esecuzione dei controlli di readiness: viene eseguito un ciclo di
   tentativi finche' il comando non ha successo, oppure fino allo scadere
   del timeout.
 \item
-  Esegue i comandi di verifica all'interno del container specificato.
+  Esegue i comandi di verifica all'interno dei container clonati o dal
+  container runner.
 \item
-  Dealloca le risorse sandbox create per il controllo.
+  Dealloca in ordine inverso (LIFO) le risorse sandbox create per il
+  controllo.
 \item
   BlueAgent risponde con stato \passthrough{\lstinline!HTTP 200 OK!}
   comunicando l'esito della verifica.
@@ -294,9 +298,9 @@ Flusso delle azioni:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Il CTF Manager invia una richiesta
-  \passthrough{\lstinline!POST /images!} inviando una form multipart con
-  il file di definizione YAML.
+  Il CTF Manager invia la richiesta
+  \passthrough{\lstinline!PUT /images/\{alias\}!} inviando una form
+  multipart con il file di definizione YAML o l'archivio di contesto.
 \item
   BlueAgent valida la specifica YAML e ne calcola l'hash crittografico.
 \item
@@ -306,10 +310,12 @@ Flusso delle azioni:
   \def\labelenumii{\arabic{enumii}.}
   \tightlist
   \item
-    Se l'immagine con lo stesso alias o hash esiste gia, risponde
-    immediatamente con \passthrough{\lstinline!HTTP 200 OK!}.
+    Se l'immagine con lo stesso hash esiste gia ed e' in stato
+    \passthrough{\lstinline!ready!}, risponde immediatamente con
+    \passthrough{\lstinline!HTTP 200 OK!}.
   \item
-    Altrimenti, registra un nuovo record nel database.
+    Altrimenti, registra un nuovo record nel database in stato
+    \passthrough{\lstinline!building!}.
   \end{enumerate}
 \item
   BlueAgent avvia la compilazione tramite un worker asincrono:
@@ -318,14 +324,16 @@ Flusso delle azioni:
   \def\labelenumii{\arabic{enumii}.}
   \tightlist
   \item
-    Importa l'immagine generata nel catalogo dei container.
+    Esegue Distrobuilder ed importa l'immagine generata nel catalogo dei
+    container Incus.
   \item
-    Assegna l'alias all'immagine importata e aggiorna il record nel
-    database.
+    Assegna l'alias all'immagine importata e aggiorna il record a
+    \passthrough{\lstinline!ready!} nel database.
   \end{enumerate}
 \item
   BlueAgent restituisce immediatamente al CTF Manager lo stato
-  \passthrough{\lstinline!HTTP 202 Accepted!}.
+  \passthrough{\lstinline!HTTP 202 Accepted!} se la compilazione e'
+  stata avviata.
 \end{enumerate}
 
 \subsection{\texorpdfstring{\texttt{UC-12}: Registrazione e
@@ -342,9 +350,8 @@ configurazione WireGuard per un membro del team
   crittografiche WireGuard e restituire il file di configurazione
   \passthrough{\lstinline!.conf!}.
 \item
-  \textbf{Precondizioni}: BlueAgent e' attivo. Se l'infrastruttura di
-  rete del team \(k\) non e' ancora attiva, viene allestita
-  contestualmente.
+  \textbf{Precondizioni}: \passthrough{\lstinline!UC-01!}.
+  L'infrastruttura di rete per il team \(k\) e' attiva sul sistema.
 \end{itemize}
 
 Flusso delle azioni:
@@ -354,11 +361,12 @@ Flusso delle azioni:
 \tightlist
 \item
   Il CTF Manager invia la richiesta
-  \passthrough{\lstinline!POST /teams/\{team\_k\}/members!} fornendo
-  nome ed id dell'utente.
+  \passthrough{\lstinline!PUT /teams/\{team\_k\}/members/\{user\_id\}!}
+  fornendo il nome dell'utente ed opzionalmente la chiave pubblica
+  WireGuard.
 \item
-  BlueAgent verifica se l'infrastruttura del team \(k\) e' attiva; se
-  assente, esegue \passthrough{\lstinline!UC-01!}.
+  BlueAgent verifica se il team \(k\) e' registrato; se assente,
+  risponde con \passthrough{\lstinline!HTTP 404 Not Found!}.
 \item
   BlueAgent verifica se il membro e' gia registrato nel database per il
   team \(k\):
@@ -367,7 +375,7 @@ Flusso delle azioni:
   \def\labelenumii{\arabic{enumii}.}
   \tightlist
   \item
-    Se il membro esiste gia, BlueAgent fornisce la configurazione
+    Se il membro esiste gia, BlueAgent aggiorna la configurazione
     rispondendo con \passthrough{\lstinline!HTTP 200 OK!}.
   \item
     Se il membro e' nuovo:
@@ -376,9 +384,11 @@ Flusso delle azioni:
     \def\labelenumiii{\arabic{enumiii}.}
     \tightlist
     \item
-      Alloca un indirizzo IP VPN libero per il team. Se lo spazio degli
-      indirizzi e' esaurito, risponde segnalando l'esaurimento degli
-      indirizzi.
+      Alloca un indirizzo IP VPN libero per il team
+      (\passthrough{\lstinline!10.k.0.2!} -
+      \passthrough{\lstinline!10.k.0.254!}). Se lo spazio degli
+      indirizzi e' esaurito, risponde con
+      \passthrough{\lstinline!HTTP 409 Conflict!}.
     \item
       Se non fornita, genera una nuova coppia di chiavi asimmetriche.
     \item
@@ -390,6 +400,6 @@ Flusso delle azioni:
   \end{enumerate}
 \item
   BlueAgent risponde con stato
-  \passthrough{\lstinline!HTTP 201 Created!} restituendo la
-  configurazione WireGuard generata.
+  \passthrough{\lstinline!HTTP 201 Created!} restituendo i dati del
+  membro e la configurazione WireGuard generata.
 \end{enumerate}

@@ -5,7 +5,10 @@ disaccoppiando l'API in \passthrough{\lstinline!/api!} dalla gestione a
 basso livello dei container e delle componenti di rete, gestita ad alto
 livello dai servizi in \passthrough{\lstinline!/services!}, che contiene
 la logica di business, mentre le complessità operative sono delegate a
-moduli e driver specializzati (\textbf{aggiungi cartelle}).
+moduli e driver specializzati (come \passthrough{\lstinline!/engine!},
+\passthrough{\lstinline!/network!}, \passthrough{\lstinline!/verifier!},
+\passthrough{\lstinline!/images!} e
+\passthrough{\lstinline!/lifecycle!}).
 
 \subsection{\texorpdfstring{Astrazione del Runtime:
 \texttt{ContainerEngine}}{Astrazione del Runtime: ContainerEngine}}\label{astrazione-del-runtime-containerengine}
@@ -125,7 +128,7 @@ fasi:
 \end{enumerate}
 
 L'uso dell'\textbf{Async Context Manager} fornisce dunque un metodo
-sicuro per utilizzare l'oggetto \passthrough{\lstinline!OVNVerifier!}
+sicuro per utilizzare l'oggetto \passthrough{\lstinline!OVNVerifier!}.
 
 \subsection{Concorrenza e Two-Tier
 Locking}\label{concorrenza-e-two-tier-locking}
@@ -208,17 +211,13 @@ modo da adattarsi al metodo \passthrough{\lstinline!wait!} di Incus:
   quando l'operazione viene rilasciata.
 \end{itemize}
 
-Inoltre l'esecuzione dei comandi sulla macchina host avviene tramite:
-\passthrough{\lstinline!asyncio.create\_subprocess\_exec!} per evitare
-chiamate bloccanti su comandi IO intensive. (CONTROLLA SE HO DETTO UNA
-MINCHIATA)
+Inoltre, l'esecuzione dei comandi sulla macchina host avviene tramite
+\passthrough{\lstinline!asyncio.create\_subprocess\_exec!} all'interno
+del runner asincrono, evitando chiamate bloccanti sul loop principale ed
+esecuzione di shell non sicure.
 
 Questo approccio consente a un singolo processo BlueAgent di servire le
 richieste di telemetria utilizzando piu task e senza rimanere in attesa
 su una singola richiesta evitando di servire le altre richieste.
-
-\subsection{\texorpdfstring{Resilienza e Riconciliazione dello Stato
-(\texttt{LifecycleManager})
-{[}TODO{]}}{Resilienza e Riconciliazione dello Stato (LifecycleManager) {[}TODO{]}}}\label{resilienza-e-riconciliazione-dello-stato-lifecyclemanager-todo}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
