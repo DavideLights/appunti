@@ -1,0 +1,8 @@
+
+The command exited with code 0.
+Output:
+NAME            SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+blueagent-zfs  9.88G   688K  9.87G        -         -     1%     0%  1.00x    ONLINE  -
+NAME            USED  AVAIL  REFER  MOUNTPOINT
+blueagent-zfs   648K  9.57G    24K  legacy
+

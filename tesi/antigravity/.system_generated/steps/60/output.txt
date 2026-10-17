@@ -1,0 +1,23 @@
+
+The command exited with code 0.
+Output:
+CPU(s):                                  8
+Model name:                              AMD Ryzen 7 7700X 8-Core Processor
+NUMA node0 CPU(s):                       0-7
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       599Mi        14Gi       692Ki       611Mi        15Gi
+Swap:          2.0Gi          0B       2.0Gi
+Filesystem                     Size  Used Avail Use% Mounted on
+/dev/mapper/debian13--vg-root   33G  2.5G   29G   8% /
+/dev/mapper/debian13--vg-var    13G  674M   12G   6% /var
+NAME            SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+blueagent-zfs  1.88G   644K  1.87G        -         -     7%     0%  1.00x    ONLINE  -
++---------------+--------+-------------+---------+---------+
+|     NAME      | DRIVER | DESCRIPTION | USED BY |  STATE  |
++---------------+--------+-------------+---------+---------+
+| blueagent-zfs | zfs    |             | 0       | CREATED |
++---------------+--------+-------------+---------+---------+
++-------+-------------+--------+-------------+--------------+------+------+-------------+
+| ALIAS | FINGERPRINT | PUBLIC | DESCRIPTION | ARCHITECTURE | TYPE | SIZE | UPLOAD DATE |
++-------+-------------+--------+-------------+--------------+------+------+-------------+
+

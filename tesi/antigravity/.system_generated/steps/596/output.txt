@@ -1,0 +1,20 @@
+
+The command exited with code 0.
+Output:
+
+                t_cl = time.perf_counter()
+                await self.engine.clone_instance(source_name, clone_name)
+                clone_sec = time.perf_counter() - t_cl
+
+                t_conn = time.perf_counter()
+                await self.engine.connect_network(clone_name, self.net_name)
+                conn_sec = time.perf_counter() - t_conn
+
+                t_st = time.perf_counter()
+                await self.engine.start_instance(clone_name)
+                start_sec = time.perf_counter() - t_st
+                self.clones.append(clone_name)
+
+                # Ensure runtime IP and route are active
+                t_net = time.perf_counter()
+

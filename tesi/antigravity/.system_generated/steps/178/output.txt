@@ -1,0 +1,7 @@
+
+The command exited with code 0.
+Output:
+time="2026-10-16T10:45:30-05:00" level=warning msg="Instance type not operational" driver=qemu err="KVM support is missing (no /dev/kvm)" type=virtual-machine
+time="2026-10-16T10:48:01-05:00" level=warning msg="Instance type not operational" driver=qemu err="KVM support is missing (no /dev/kvm)" type=virtual-machine
+time="2026-10-16T11:26:12-05:00" level=warning msg="Instance type not operational" driver=qemu err="KVM support is missing (no /dev/kvm)" type=virtual-machine
+

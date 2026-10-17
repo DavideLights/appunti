@@ -1,0 +1,3 @@
+A1: (Recommended) Run in 4 separate short stages (Stage 1: Test 1 Baseline [~30s] -> Stage 2: Small Grid M=2,5 & N=2,5 [~2m] -> Stage 3: Medium Grid M=10 & N=2,5,7,10 [~5m] -> Stage 4: High Stress M=15 [~8m]), flushing CSV/Markdown after every single tier
+A2: (Recommended) Deduplicate: Use the N=2 slice of the (M, N) matrix as Test 3 so we don't run M in {2, 5, 10, 15} with N=2 twice
+A3: (Recommended) Record the failure in the metrics (Pass Ratio < 100%) AND auto-clean orphaned verify-* clones/networks between tiers so the benchmark continues cleanly

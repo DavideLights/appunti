@@ -1,0 +1,87 @@
+
+The command exited with code 0.
+Output:
+<truncated 67 lines>
+13:17:31 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/5 "HTTP/1.1 201 Created"
+13:17:41 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/5/machines "HTTP/1.1 201 Created"
+13:17:43 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:17:44 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/3/machines "HTTP/1.1 201 Created"
+13:17:45 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/4/machines "HTTP/1.1 201 Created"
+13:17:47 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 201 Created"
+13:18:01 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/4/verificator "HTTP/1.1 200 OK"
+13:18:01 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/5/verificator "HTTP/1.1 200 OK"
+13:18:02 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:18:02 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/3/verificator "HTTP/1.1 200 OK"
+13:18:03 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/2/verificator "HTTP/1.1 200 OK"
+13:18:07 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:18:07 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5/machines "HTTP/1.1 204 No Content"
+13:18:07 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4/machines "HTTP/1.1 204 No Content"
+13:18:07 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 204 No Content"
+13:18:07 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3/machines "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] [+] Exported Summary CSV (4 rows) to /home/debian/bluectfd/blueagent/tests/thesis_stress_test_results.csv
+13:18:08 [INFO] [+] Exported Raw Samples CSV (19 rows) to /home/debian/bluectfd/blueagent/tests/thesis_raw_team_samples.csv
+13:18:08 [INFO] [+] Exported Markdown Report to /home/debian/bluectfd/blueagent/tests/thesis_stress_test_report.md
+13:18:08 [INFO] [+] Completed Tier M=5 N=2 (Pass=5/5): ProvWall=0.613s, DeployWall=17.603s, VerifyWall=14.570s (p95=14.477s), TeardownWall=5.485s, RAM=2236MB
+13:18:08 [INFO] >>> STARTING TIER: M=5 teams, N=5 containers/team (Peak Instances: 50) <<<
+13:18:08 [INFO] Performing parallel pre-flight cleanup for teams: [1, 2, 3, 4, 5]
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4/machines "HTTP/1.1 404 Not Found"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5/machines "HTTP/1.1 404 Not Found"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 404 Not Found"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3/machines "HTTP/1.1 404 Not Found"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 404 Not Found"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4 "HTTP/1.1 204 No Content"
+13:18:08 [INFO] HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+13:18:08 [INFO] HTTP Request: GET http://localhost/1.0/networks "HTTP/1.1 200 OK"
+13:18:09 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:18:09 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/4 "HTTP/1.1 201 Created"
+13:18:09 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/3 "HTTP/1.1 201 Created"
+13:18:09 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/5 "HTTP/1.1 201 Created"
+13:18:09 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/2 "HTTP/1.1 201 Created"
+13:18:44 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/5/machines "HTTP/1.1 201 Created"
+13:18:46 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/4/machines "HTTP/1.1 201 Created"
+13:18:46 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 201 Created"
+13:18:48 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/3/machines "HTTP/1.1 201 Created"
+13:18:51 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:19:24 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/3/verificator "HTTP/1.1 200 OK"
+13:19:25 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/2/verificator "HTTP/1.1 200 OK"
+13:19:26 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/5/verificator "HTTP/1.1 200 OK"
+13:19:29 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/4/verificator "HTTP/1.1 200 OK"
+13:19:29 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:19:37 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5/machines "HTTP/1.1 204 No Content"
+13:19:38 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:19:38 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 204 No Content"
+13:19:38 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3/machines "HTTP/1.1 204 No Content"
+13:19:38 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4/machines "HTTP/1.1 204 No Content"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3 "HTTP/1.1 204 No Content"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2 "HTTP/1.1 204 No Content"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5 "HTTP/1.1 204 No Content"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4 "HTTP/1.1 204 No Content"
+13:19:39 [INFO] [+] Exported Summary CSV (5 rows) to /home/debian/bluectfd/blueagent/tests/thesis_stress_test_results.csv
+13:19:39 [INFO] [+] Exported Raw Samples CSV (24 rows) to /home/debian/bluectfd/blueagent/tests/thesis_raw_team_samples.csv
+13:19:39 [INFO] [+] Exported Markdown Report to /home/debian/bluectfd/blueagent/tests/thesis_stress_test_report.md
+13:19:39 [INFO] [+] Completed Tier M=5 N=5 (Pass=5/5): ProvWall=0.721s, DeployWall=44.502s, VerifyWall=38.628s (p95=38.543s), TeardownWall=10.072s, RAM=2511MB
+13:19:39 [INFO] Performing parallel pre-flight cleanup for teams: [1, 2, 3, 4, 5]
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5/machines "HTTP/1.1 404 Not Found"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4/machines "HTTP/1.1 404 Not Found"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 404 Not Found"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 404 Not Found"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3/machines "HTTP/1.1 404 Not Found"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:19:39 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/4 "HTTP/1.1 204 No Content"
+13:19:40 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/5 "HTTP/1.1 204 No Content"
+13:19:40 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2 "HTTP/1.1 204 No Content"
+13:19:40 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/3 "HTTP/1.1 204 No Content"
+13:19:40 [INFO] HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+13:19:40 [INFO] HTTP Request: GET http://localhost/1.0/networks "HTTP/1.1 200 OK"
+13:19:40 [INFO] [*] Stage Finished in 201.85 seconds (3.36 minutes)
+

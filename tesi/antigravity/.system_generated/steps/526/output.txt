@@ -1,0 +1,7 @@
+
+The command exited with code 0.
+Output:
+challenges.py                                   0%    0     0.0KB/s   --:-- ETAchallenges.py                                 100%   15KB  26.7MB/s   00:00    
+challenges.py                                   0%    0     0.0KB/s   --:-- ETAchallenges.py                                 100% 4964    10.5MB/s   00:00    
+client.py                                       0%    0     0.0KB/s   --:-- ETAclient.py                                     100% 7234    13.0MB/s   00:00    
+

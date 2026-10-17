@@ -1,0 +1,25 @@
+
+The command exited with code 0.
+Output:
+56-    client_ip TEXT NOT NULL,
+57-    public_key TEXT NOT NULL,
+58-    private_key TEXT,
+59-    preshared_key TEXT,
+60-    config_path TEXT,
+61-    created_at TEXT NOT NULL,
+62-    FOREIGN KEY (team_k) REFERENCES teams(team_k) ON DELETE CASCADE,
+63-    UNIQUE(team_k, client_ip)
+64-);
+65-
+66:CREATE TABLE IF NOT EXISTS images (
+67-    alias TEXT PRIMARY KEY,
+68-    yaml_sha256 TEXT NOT NULL,
+69-    yaml_text TEXT NOT NULL,
+70-    status TEXT NOT NULL CHECK (status IN ('building', 'ready', 'failed')),
+71-    fingerprint TEXT,
+72-    error TEXT,
+73-    created_at TEXT NOT NULL,
+74-    updated_at TEXT NOT NULL
+75-);
+76-
+

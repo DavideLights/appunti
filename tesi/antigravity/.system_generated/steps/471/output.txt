@@ -1,0 +1,6 @@
+
+The command exited with code 0.
+Output:
+debian   1123428  0.0  0.0   7076  3528 ?        Ss   13:50   0:00 bash -c ps aux | grep benchmark
+debian   1123430  0.0  0.0   6520  2316 ?        S    13:50   0:00 grep benchmark
+

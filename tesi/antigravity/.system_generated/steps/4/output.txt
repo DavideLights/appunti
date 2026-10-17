@@ -1,0 +1,9 @@
+
+The command exited with code 0.
+Output:
+totale 8
+drwx------  1 davidel davidel   52  2 ott 23.57 .
+drwx--x---+ 1 davidel davidel 3958 16 ott 18.17 ..
+-rw-------  1 davidel davidel 1878 16 ott 17.25 known_hosts
+-rw-------  1 davidel davidel 1041  2 ott 23.57 known_hosts.old
+

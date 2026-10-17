@@ -1,0 +1,1 @@
+A1: (Recommended) Both: measure across the 5 macro barriers (Provision, Deploy, Verify, Teardown Machines, Teardown Teams) AND slice Verify into its 3 internal phases (CoW Clone/Setup, Verify Execution, Cleanup) so we capture exact peak RAM before clones are deleted

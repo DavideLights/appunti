@@ -1,0 +1,30 @@
+
+The command exited with code 0.
+Output:
+25:    def __init__(
+41:    async def aclose(self) -> None:
+45:    async def _wait_incus_op(
+109:    async def create_instance(
+142:    async def _ensure_parent_dirs(self, name: str, file_path: str) -> None:
+165:    async def push_file(
+200:    async def image_alias_exists(self, alias: str) -> bool:
+210:    async def import_image(self, tarball_path: str) -> str:
+212:        async def file_stream():
+241:    async def create_image_alias(self, alias: str, fingerprint: str) -> None:
+260:    async def delete_image_alias(self, alias: str) -> None:
+267:    async def delete_image(self, fingerprint: str) -> None:
+277:    async def start_instance(self, name: str) -> None:
+291:    async def stop_instance(self, name: str, force: bool = False) -> None:
+316:    async def delete_instance(self, name: str, force: bool = False) -> None:
+345:    async def clone_instance(self, source: str, target: str) -> str:
+363:    async def connect_network(
+391:    async def disconnect_network(self, instance_name: str, network_name: str) -> None:
+407:    async def exec_command(
+476:    async def get_instance_status(self, name: str) -> str:
+484:    async def get_instance_metadata(self, name: str) -> Optional[Dict[str, Any]]:
+492:    async def instance_exists(self, name: str) -> bool:
+497:    async def list_instances(self, prefix: Optional[str] = None) -> List[str]:
+507:    async def create_network(self, name: str, config: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+521:    async def delete_network(self, name: str) -> None:
+525:    async def list_networks(self, prefix: Optional[str] = None) -> List[str]:
+

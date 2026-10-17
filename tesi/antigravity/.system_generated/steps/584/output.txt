@@ -1,0 +1,11 @@
+
+The command exited with code 0.
+Output:
+test_name,image_alias,teams_m,containers_n,cycle,step_name,duration_sec,cpu_avg_pct,cpu_p95_pct,cpu_max_pct,iowait_avg_pct,iowait_max_pct,ram_avg_mb,ram_peak_mb,zfs_arc_avg_mb,net_ram_avg_mb,net_ram_peak_mb,net_ram_delta_mb
+Test 1 Baseline (alpine),alpine,1,1,1,provision_teams,0.1195,10.39,10.39,10.39,5.19,5.19,3376.0,3376,1135.0,2241.0,2241,0.0
+Test 1 Baseline (alpine),alpine,1,1,1,deploy_challenges,1.4212,7.8457,15.7705,18.52,14.36,27.16,3397.7143,3439,1135.6429,2262.0714,2301,47
+Test 1 Baseline (alpine),alpine,1,1,1,verify_setup,1.811,7.01,16.2805,20.25,9.9194,26.25,3445.1111,3467,1139.7778,2305.3333,2327,73
+Test 1 Baseline (alpine),alpine,1,1,1,verify_cleanup,1.4602,3.3136,10.065,10.13,8.9264,31.65,3446.4545,3460,1141.9091,2304.5455,2317,63
+Test 1 Baseline (alpine),alpine,1,1,1,teardown_machines,1.6711,2.7127,6.995,8.86,11.6982,45.0,3440.6364,3461,1137.5455,2303.0909,2322,68
+Test 1 Baseline (alpine),alpine,1,1,1,teardown_teams,0.4474,2.1275,4.52,4.88,5.165,19.51,3415.0,3416,1135.0,2280.0,2281,27
+

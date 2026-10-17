@@ -1,0 +1,5 @@
+
+The command exited with code 0.
+Output:
+resource_sampler.py                             0%    0     0.0KB/s   --:-- ETAresource_sampler.py                           100% 3329    13.9MB/s   00:00    
+

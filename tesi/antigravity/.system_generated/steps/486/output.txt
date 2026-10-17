@@ -1,0 +1,1 @@
+A1: (Recommended) Tier 3 + Test 1 Baseline (M=1,N=1) + the two N=5 bridge points (M=2,N=5 and M=5,N=5) so we can also plot smooth curves across M={2,5,10} and N={5,7,10}

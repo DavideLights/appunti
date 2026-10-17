@@ -1,0 +1,1 @@
+A1: we do not need to measure verify execution, we want to know ho much it takes to setup the infrastructure and how much it takes to start the verify

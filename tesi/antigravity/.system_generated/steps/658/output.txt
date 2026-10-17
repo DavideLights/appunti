@@ -1,0 +1,8 @@
+
+The command exited with code 0.
+Output:
+graph1_cow_vs_deploy.pdf                        0%    0     0.0KB/s   --:-- ETAgraph1_cow_vs_deploy.pdf                      100%   38KB  49.0MB/s   00:00    
+graph1_cow_vs_deploy.png                        0%    0     0.0KB/s   --:-- ETAgraph1_cow_vs_deploy.png                      100%  359KB 133.7MB/s   00:00    
+graph2_microphase_breakdown.pdf                 0%    0     0.0KB/s   --:-- ETAgraph2_microphase_breakdown.pdf               100%   40KB 128.9MB/s   00:00    
+graph2_microphase_breakdown.png                 0%    0     0.0KB/s   --:-- ETAgraph2_microphase_breakdown.png               100%  401KB 269.6MB/s   00:00    
+

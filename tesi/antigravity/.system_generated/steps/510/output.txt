@@ -1,0 +1,15 @@
+
+The command exited with code 0.
+Output:
+● blueagent.service - [systemd-run] /home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000
+     Loaded: loaded (/run/systemd/transient/blueagent.service; transient)
+  Transient: yes
+     Active: active (running) since Fri 2026-10-16 13:14:37 CDT; 54min ago
+ Invocation: 2d79f669c4b3410f8cb600f9890e642e
+   Main PID: 802697 (uvicorn)
+      Tasks: 16 (limit: 19127)
+     Memory: 57.5M (peak: 75.2M)
+        CPU: 40.143s
+     CGroup: /system.slice/blueagent.service
+             └─802697 /home/debian/bluectfd/blueagent/.venv/bin/python3 /home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000
+

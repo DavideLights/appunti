@@ -1,0 +1,5 @@
+
+The command exited with code 0.
+Output:
+Registered: alias='alpine' yaml_sha256='sha256-alpine' yaml_text='' status='ready' fingerprint='f17d529e9e66' error=None created_at=datetime.datetime(2026, 10, 16, 17, 12, 40, 499794, tzinfo=datetime.timezone.utc) updated_at=datetime.datetime(2026, 10, 16, 17, 12, 40, 499794, tzinfo=datetime.timezone.utc)
+

@@ -1,0 +1,5 @@
+
+The command exited with code 0.
+Output:
+461:                INSERT INTO images (alias, yaml_sha256, yaml_text, status, fingerprint, error, created_at, updated_at)
+

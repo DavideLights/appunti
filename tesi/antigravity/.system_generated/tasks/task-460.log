@@ -1,0 +1,40 @@
+13:50:05 [INFO] HTTP Request: GET http://127.0.0.1:8000/health "HTTP/1.1 200 OK"
+13:50:05 [INFO] ===============================================================
+13:50:05 [INFO] TEST 1: SINGLE-TEAM BASELINE (Image=ubuntu-heavy, M=1, N=1, 10 cycles)
+13:50:05 [INFO] ===============================================================
+13:50:05 [INFO] Performing parallel pre-flight cleanup for teams: [1]
+13:50:05 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 404 Not Found"
+13:50:05 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:50:05 [INFO] HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+13:50:05 [INFO] HTTP Request: GET http://localhost/1.0/networks "HTTP/1.1 200 OK"
+13:50:05 [INFO] [Test 1] Cycle 1/10 starting...
+13:50:05 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:50:07 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:50:13 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:50:15 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:50:16 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:50:16 [INFO] [Test 1] Cycle 1/10 finished: Prov=0.129s, Deploy=2.541s, Verify=4.076s, Teardown=3.190s
+13:50:16 [INFO] [Test 1] Cycle 2/10 starting...
+13:50:16 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:50:19 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:50:22 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:50:23 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:50:24 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:50:24 [INFO] [Test 1] Cycle 2/10 finished: Prov=0.122s, Deploy=2.709s, Verify=3.443s, Teardown=1.849s
+13:50:24 [INFO] [Test 1] Cycle 3/10 starting...
+13:50:24 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:50:28 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:50:32 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:50:34 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:50:35 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:50:35 [INFO] [Test 1] Cycle 3/10 finished: Prov=0.125s, Deploy=3.890s, Verify=3.425s, Teardown=2.409s
+13:50:35 [INFO] [Test 1] Cycle 4/10 starting...
+13:50:35 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:50:38 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:50:43 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:50:44 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:50:44 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:50:44 [INFO] [Test 1] Cycle 4/10 finished: Prov=0.136s, Deploy=2.684s, Verify=4.192s, Teardown=1.708s
+13:50:44 [INFO] [Test 1] Cycle 5/10 starting...
+13:50:45 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:50:46 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"

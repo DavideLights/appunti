@@ -1,0 +1,33 @@
+
+The command exited with code 1.
+Output:
+[*] Checking server health...
+[+] Server ready: True
+[*] Creating team 1...
+Create team status: 200 {"team_k":1,"name":"Smoke Team","bridge_name":"br-team-1","wg_interface":"wg-1","created_at":"2026-1
+[*] Deploying challenge...
+Deploy status: 201 in 0.020s
+Deploy step timings: {'validation_sec': 0.0098, 'total_create_sec': 0, 'total_push_sec': 0, 'total_start_sec': 0, 'total_runtime_net_sec': 0, 'total_db_record_sec': 0, 'total_deploy_sec': 0.0115, 'container_details': []}
+[*] Verifying challenge...
+Verify status: 200 in 4.470s
+Passed: True
+Verify step timings: {'sandbox_setup': {'ovn_network_create_sec': 1.8886, 'total_clone_time_sec': 0.3043, 'total_connect_time_sec': 0.1038, 'total_start_time_sec': 0.6159, 'total_runtime_net_sec': 0.1493, 'verifier_runner_sec': 0.0, 'total_setup_sec': 3.0621, 'clone_details': [{'clone': 'verify-1-web', 'clone_sec': 0.3043, 'connect_sec': 0.1038, 'start_sec': 0.6159, 'runtime_net_sec': 0.1493, 'total_clone_sec': 1.1735}]}, 'readiness_sec': 0.0, 'verify_commands_sec': 0.0328, 'cleanup': {'clones_teardown_sec': 1.2875, 'ovn_network_delete_sec': 0.0763, 'total_cleanup_sec': 1.3638}, 'total_verify_lifecycle_sec': 4.4589}
+[*] Cleaning up...
+Traceback (most recent call last):
+  File "/home/debian/bluectfd/blueagent/smoke_test.py", line 68, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/debian/bluectfd/blueagent/smoke_test.py", line 63, in main
+    await client.teardown_challenge(team_k=team_k, config_payload=payload)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BlueAgentTestClient.teardown_challenge() got an unexpected keyword argument 'config_payload'
+

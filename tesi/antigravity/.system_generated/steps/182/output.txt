@@ -1,0 +1,8 @@
+
+The command exited with code 0.
+Output:
+debian      3224  0.0  0.0   7076  3492 ?        Ss   12:19   0:00 bash -c incus launch alpine test-probe && incus list && incus delete -f test-probe
+debian      3225  0.0  0.1 5810152 18372 ?       Sl   12:19   0:00 incus launch alpine test-probe
+debian      3288  0.0  0.0   7076  3508 ?        Ss   12:20   0:00 bash -c ps aux | grep -E 'incus launch|test-probe'
+debian      3290  0.0  0.0   6652  2300 ?        S    12:20   0:00 grep -E incus launch|test-probe
+

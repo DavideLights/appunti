@@ -1,0 +1,10 @@
+
+The command exited with code 0.
+Output:
+[<0>] pipe_read+0x3f2/0x480
+[<0>] vfs_read+0x338/0x370
+[<0>] ksys_read+0xb9/0xf0
+[<0>] do_syscall_64+0x87/0x1b0
+[<0>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
+sudo: strace: command not found
+

@@ -1,0 +1,21 @@
+
+The command exited with code 0.
+Output:
+test_name,test_type,teams_m,containers_per_team_n,cycles,live_containers,peak_verify_containers,passed_count,failed_count,pass_rate_pct,provision_wall_sec,provision_team_avg_sec,provision_team_p50_sec,provision_team_p95_sec,provision_team_min_sec,provision_team_max_sec,provision_team_std_sec,deploy_wall_sec,deploy_total_avg_sec,deploy_total_p50_sec,deploy_total_p95_sec,deploy_total_min_sec,deploy_total_max_sec,deploy_total_std_sec,deploy_validation_avg_sec,deploy_create_avg_sec,deploy_create_p50_sec,deploy_create_p95_sec,deploy_push_avg_sec,deploy_push_p50_sec,deploy_push_p95_sec,deploy_start_avg_sec,deploy_start_p50_sec,deploy_start_p95_sec,deploy_runtime_net_avg_sec,deploy_runtime_net_p50_sec,deploy_runtime_net_p95_sec,deploy_db_record_avg_sec,verify_wall_sec,verify_total_avg_sec,verify_total_p50_sec,verify_total_p95_sec,verify_total_min_sec,verify_total_max_sec,verify_total_std_sec,verify_setup_total_avg_sec,verify_setup_total_p50_sec,verify_setup_total_p95_sec,verify_ovn_create_avg_sec,verify_ovn_create_p50_sec,verify_ovn_create_p95_sec,verify_cow_clone_avg_sec,verify_cow_clone_p50_sec,verify_cow_clone_p95_sec,verify_clone_connect_avg_sec,verify_clone_connect_p50_sec,verify_clone_connect_p95_sec,verify_clone_start_avg_sec,verify_clone_start_p50_sec,verify_clone_start_p95_sec,verify_clone_runtime_net_avg_sec,verify_clone_runtime_net_p50_sec,verify_clone_runtime_net_p95_sec,verify_runner_avg_sec,verify_readiness_avg_sec,verify_cmds_avg_sec,verify_cmds_p50_sec,verify_cmds_p95_sec,verify_cleanup_clones_avg_sec,verify_cleanup_ovn_net_avg_sec,verify_cleanup_total_avg_sec,verify_cleanup_total_p50_sec,verify_cleanup_total_p95_sec,teardown_machines_wall_sec,teardown_teams_wall_sec,teardown_wall_sec,teardown_machines_avg_sec,teardown_machines_p95_sec,teardown_team_avg_sec,teardown_team_p95_sec,teardown_total_avg_sec,teardown_total_p95_sec,ram_baseline_mb,ram_after_deploy_mb,ram_after_verify_mb,ram_after_teardown_mb
+"Test 1 (Baseline M=1, N=1)",test_1_baseline,1,1,10,1,2,10,0,100.0,0.1058,0.1058,0.1041,0.1177,0.0999,0.1254,0.0071,1.8169,1.8074,1.9743,2.6005,0.9954,2.8752,0.5821,0.0115,0.482,0.4343,0.7007,0.0694,0.068,0.0814,1.0169,1.2919,1.4059,0.2004,0.1634,0.3758,0.0251,2.8752,2.8647,2.7708,3.3116,2.3299,3.3138,0.3095,1.5735,1.414,2.1323,0.1973,0.1794,0.2553,0.3951,0.3427,0.6213,0.1372,0.1164,0.2264,0.6773,0.5935,1.1156,0.1666,0.1635,0.1905,0.0,0.0,0.0337,0.0315,0.0405,1.0514,0.2059,1.2572,1.245,1.5866,1.3518,0.9373,2.2891,1.3518,1.8938,0.9373,1.9799,2.2891,3.1952,2040,2068,2065,2047
+# BlueAgent System Stress & Scalability Benchmark Report
+
+*Generated on:* `2026-10-16 18:16:04 UTC` on AMD Ryzen 7 7700X (8 Cores), 15 GiB RAM
+
+## 1. Macro Sub-Stage Timings (Provision, Deploy, Verify, Teardown)
+
+| Scenario | M | N | Peak Cts | Pass | Prov Wall (s) | Deploy Wall (s) | Deploy p95 (s) | Verify Wall (s) | Verify p95 (s) | Teardown Wall (s) | RAM Verify (MB) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Test 1 (Baseline M=1, N=1) | 1 | 1 | 2 | 10/10 | 0.1058 | 1.8169 | 2.6005 | 2.8752 | 3.3116 | 2.2891 | 2065 |
+
+## 2. Micro-Phase Breakdown (Averages per Team in Seconds)
+
+| Scenario | Dep Create | Dep Push | Dep Start | Dep Net | OVN Create | CoW Clone | Clone Connect | Clone Start | Clone Net | Verify Cmds | Cleanup |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Test 1 (Baseline M=1, N=1) | 0.482 | 0.0694 | 1.0169 | 0.2004 | 0.1973 | 0.3951 | 0.1372 | 0.6773 | 0.1666 | 0.0337 | 1.2572 |
+

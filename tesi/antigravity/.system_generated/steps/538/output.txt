@@ -1,0 +1,31 @@
+The following changes were made by the replace_file_content tool to: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/client.py. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -155,10 +155,22 @@
+         async with self._client() as c:
+             return await c.request("DELETE", url, headers=self.headers, json=payload_copy)
+ 
+-    async def verify_challenge(self, team_k: int, config_payload: Dict[str, Any]) -> httpx.Response:
++    async def verify_challenge(self, team_k: int, config_payload: Dict[str, Any], skip_cleanup: bool = False) -> httpx.Response:
+         """Runs automated verification in dark OVN sandbox clones for team k."""
+         payload_copy = dict(config_payload)
+         payload_copy.pop("team_k", None)
+-        async with self._client() as c:
+-            return await c.post(f"/teams/{team_k}/verificator", headers=self.headers, json=payload_copy)
++        url = f"/teams/{team_k}/verificator"
++        if skip_cleanup:
++            url += "?skip_cleanup=true"
++        async with self._client() as c:
++            return await c.post(url, headers=self.headers, json=payload_copy)
++
++    async def cleanup_verify(self, team_k: int, config_payload: Optional[Dict[str, Any]] = None) -> httpx.Response:
++        """Cleans up ephemeral verify sandbox clones and OVN network for team k."""
++        payload_copy = dict(config_payload) if config_payload else None
++        if payload_copy:
++            payload_copy.pop("team_k", None)
++        async with self._client() as c:
++            return await c.request("DELETE", f"/teams/{team_k}/verificator", headers=self.headers, json=payload_copy)
++
+ 
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

@@ -1,0 +1,15 @@
+
+The command exited with code 0.
+Output:
+['Test 1 Baseline (ubuntu-heavy)' 'Tier M=2 N=5' 'Tier M=2 N=7'
+ 'Tier M=2 N=10' 'Tier M=5 N=5' 'Tier M=5 N=7' 'Tier M=5 N=10'
+ 'Tier M=10 N=2' 'Tier M=10 N=5']
+          test_name   image_alias  teams_m  ...  ram_used_mb  zfs_arc_mb net_ram_mb
+8648  Tier M=10 N=5  ubuntu-heavy       10  ...         3504         498       3006
+8649  Tier M=10 N=5  ubuntu-heavy       10  ...         3497         498       2999
+8650  Tier M=10 N=5  ubuntu-heavy       10  ...         3497         498       2999
+8651  Tier M=10 N=5  ubuntu-heavy       10  ...         3492         498       2994
+8652  Tier M=10 N=5  ubuntu-heavy       10  ...         3494         498       2996
+
+[5 rows x 12 columns]
+

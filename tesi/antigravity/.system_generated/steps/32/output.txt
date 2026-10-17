@@ -1,0 +1,19 @@
+
+The command exited with code 0.
+Output:
+total 148
+drwxrwxr-x 3 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 7 debian debian  4096 Oct 16 11:20 ..
+-rw-rw-r-- 1 debian debian  2816 Oct 16 11:20 test_api.py
+-rw-rw-r-- 1 debian debian 22788 Oct 16 11:20 test_challenges_api.py
+-rw-rw-r-- 1 debian debian  6908 Oct 16 11:20 test_database.py
+-rw-rw-r-- 1 debian debian 15440 Oct 16 11:20 test_engine.py
+-rw-rw-r-- 1 debian debian 10439 Oct 16 11:20 test_images_api.py
+-rw-rw-r-- 1 debian debian  3711 Oct 16 11:20 test_lifecycle.py
+-rw-rw-r-- 1 debian debian  4088 Oct 16 11:20 test_locks.py
+-rw-rw-r-- 1 debian debian  3114 Oct 16 11:20 test_models.py
+-rw-rw-r-- 1 debian debian 25703 Oct 16 11:20 test_network.py
+-rw-rw-r-- 1 debian debian 14026 Oct 16 11:20 test_services.py
+-rw-rw-r-- 1 debian debian 16171 Oct 16 11:20 test_teams_api.py
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 usability
+

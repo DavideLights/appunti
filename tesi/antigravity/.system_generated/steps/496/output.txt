@@ -1,0 +1,1 @@
+A1: (Recommended) Yes! Synchronize/separate Verify Sandbox Setup (OVN + CoW clone + start) from Verify Cleanup so all M sandboxes finish starting before any cleanup begins — giving pure 'time to start verify' AND true RAM/CPU with all 2*M*N containers running

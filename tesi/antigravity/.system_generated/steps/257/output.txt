@@ -1,0 +1,92 @@
+
+The command exited with code 0.
+Output:
+<truncated 115 lines>
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-3       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-4       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-5       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-6       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-7       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-8       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-9       | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-10      | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-11      | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-12      | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-13      | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-14      | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+| wg-15      | unknown  | NO      |               |                           |             | 0       |         |
++------------+----------+---------+---------------+---------------------------+-------------+---------+---------+
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp0s3           UP             08:00:27:c8:97:73 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+ovs-system       DOWN           3e:5c:9d:2d:8e:53 <BROADCAST,MULTICAST> 
+br-int           DOWN           06:88:8b:85:40:1a <BROADCAST,MULTICAST> 
+incusbr0         UP             10:66:6a:ee:37:01 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+incusovn1b@incusovn1a UP             8a:f0:5b:9c:9f:e8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+incusovn1a@incusovn1b UP             b2:d8:f8:d7:57:4e <BROADCAST,MULTICAST,UP,LOWER_UP> 
+incusovn1        DOWN           66:15:cf:a3:29:49 <BROADCAST,MULTICAST> 
+br-team-7        UP             ba:02:9f:47:82:d5 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-1        UP             0e:4e:1f:fe:ae:34 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-2        UP             92:3e:9a:9b:f0:4a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-9        UP             1e:05:ec:48:3e:79 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-4        DOWN           c2:cc:28:e8:82:9a <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br-team-15       UP             66:cf:a6:be:84:df <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-6        UP             76:8d:8c:94:85:9a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-12       UP             e6:37:15:87:17:40 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-11       UP             7a:fa:71:0b:67:6a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-14       UP             4e:7d:5a:a1:bc:e8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-13       UP             2a:f5:83:fb:f8:4e <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-8        UP             02:ce:30:1c:8b:1a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-10       UP             7a:08:d2:53:43:aa <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-3        UP             66:13:3f:44:bc:d8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-team-5        UP             82:e2:21:da:9f:c3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+wg-7             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-1             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-2             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-9             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-4             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-15            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-6             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-12            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-11            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-14            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-13            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-8             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-10            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-3             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+wg-5             UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+veth86dc0d83@if2786 UP             46:62:fd:f0:ca:c8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethc1d655b3@if2788 UP             8e:0a:6b:c1:d5:c1 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethbb40ca72@if2790 UP             3e:3e:e3:39:3d:5e <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethb192c15c@if2792 UP             f6:bb:b9:c1:f5:7f <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth6d8ee0bb@if2794 UP             1e:29:98:08:ff:42 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth9495d74e@if2796 UP             d2:1c:94:cf:0f:cc <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth6ec92cc4@if2798 UP             92:ee:b6:ea:64:e2 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethee0ea356@if2800 UP             e2:40:17:1a:46:e7 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth9e560a43@if2802 UP             b2:54:84:7b:7a:52 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth000661e7@if2804 UP             92:e8:a4:7c:1d:29 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethe94a96da@if2806 UP             9e:2b:39:62:8f:78 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethc5107ab2@if2808 UP             62:03:ac:56:19:ac <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth4620026b@if2810 UP             ca:09:5e:3e:d5:1c <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth7d7fd291@if2812 UP             3a:c4:0d:a7:bc:b6 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth705938e1@if2814 UP             42:53:52:8c:38:84 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth1badda30@if2816 UP             72:64:0d:d6:c3:84 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth2b37b06e@if2818 UP             9a:59:de:1b:e6:e7 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth1580dd05@if2820 UP             6a:55:ef:de:c3:d0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth7efc3a89@if2822 UP             ea:e8:a2:b5:41:0b <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth08af608a@if2824 UP             76:59:50:7a:37:ac <BROADCAST,MULTICAST,UP,LOWER_UP> 
+root        4264  3.3  0.5 3203304 89344 ?       Ssl  12:20   1:05 /home/debian/bluectfd/blueagent/.venv/bin/python3 /home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000
+debian     11630  0.3  0.8 146356 137096 ?       Ss   12:24   0:06 python3 benchmark_suite.py --test all --cycles 10
+

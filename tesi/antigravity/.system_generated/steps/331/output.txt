@@ -1,0 +1,14 @@
+The following changes were made by the replace_file_content tool to: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/benchmark_suite.py. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -11,6 +11,8 @@
+ from pathlib import Path
+ from typing import Any, Dict, List, Optional, Tuple
+ 
++import httpx
++
+ # Ensure blueagent and tests are importable
+ sys.path.insert(0, '/home/debian/bluectfd/blueagent/src')
+ sys.path.insert(0, '/home/debian/bluectfd/blueagent')
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

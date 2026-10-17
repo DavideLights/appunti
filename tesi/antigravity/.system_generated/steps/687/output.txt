@@ -1,0 +1,11 @@
+
+The command exited with code 0.
+Output:
+             step_name  cpu_avg_pct  cpu_max_pct  iowait_avg_pct
+102    provision_teams      15.0291        36.14          3.2436
+103  deploy_challenges      17.2067        54.76         28.3669
+104       verify_setup      13.7901        54.05         36.3648
+105     verify_cleanup      11.7540        54.05         35.8135
+106  teardown_machines       7.9604        34.62         40.8326
+107     teardown_teams       7.5333        23.08         18.2883
+

@@ -1,0 +1,88 @@
+
+The command exited with code 0.
+Output:
+# Hybrid Lifecycle & OVN Sandbox Workflow
+
+## 1. End-to-End Operational Lifecycle
+
+| Phase | Endpoint / Trigger | Operations Performed | Output State |
+| :--- | :--- | :--- | :--- |
+| **1. Team Provisioning** | `PUT /teams/{team_k}` | Allocates `wg-k` (`10.k.0.0/24`), creates `br-team-k` (`10.k.1.1/24`), sets nftables NAT/MSS rules. | Team VPN & network ready. |
+| **2. Container Deployment** | `POST /teams/{team_k}/machines` | Launches system containers from Distrobuilder images, binds `eth0` to `br-team-k`, sets static IPs (`10.k.1.x`), records in DB. Readiness checks deferred to verification. | Live container services active. |
+| **3. Automated Verification** | `POST /teams/{team_k}/verificator` | Executes non-destructive tests inside ephemeral OVN sandbox (see sequence below). | JSON verification report (`VerifyResultResp`). |
+| **4. Teardown / Cleanup** | `DELETE /teams/{team_k}/machines` or `DELETE /teams/{team_k}` | Stops/deletes containers, tears down bridges, removes WireGuard peers. | Resources released. |
+
+---
+
+## 2. Verification Execution Sequence (`OVNVerifier`)
+
+1. **Allocate Dark OVN L2 Switch:**
+   - Network name is strictly capped to 11 characters by Incus: `verify-{session_id[:4]}`.
+   - Configured as isolated dark L2 switch (`type: ovn`, `ipv4.address: none`, without uplink `network` parameter).
+   - Prevents `External subnet overlaps with another network or NIC` conflict with live `br-team-k` (`10.k.1.1/24`).
+2. **CoW Snapshot (~100 ms):** Clones all live challenge containers using block-level storage (ZFS/Btrfs).
+3. **Re-bind `eth0`:** Overrides clone NIC device to target `verify-{session_id[:4]}` without setting `ipv4.address` in device config (avoiding Incus DHCP-disabled errors).
+4. **Boot Sandbox Clones & Apply Static IP:** Clones boot into the isolated OVN switch without network collisions with live production. Static IP is preserved/applied directly inside container namespace.
+5. **Optional Verifier Container:** If `verifier` is defined in config, spawns `verify-runner-{session_id[:4]}` on the same dark OVN broadcast domain for black-box network checks.
+6. **Run Checkers/Exploits:**
+   - *In-Container Checks:* Executed via hypervisor inside target clones (`check.target == "container"`).
+   - *Black-Box Checks:* Executed from verifier runner (`check.target == "verifier"`).
+   - *Timeout Handling:* Incus operation timeouts are caught and reported as `VerifyResultResp(success=False, passed=False, message="Command timed out...")`.
+7. **Atomic Reverse LIFO Teardown:**
+   - Stop and delete verifier container.
+   - Stop and delete target clones.
+   - Delete `verify-{session_id[:4]}` network once all ports are freed.
+
+---
+
+## 3. Key Operational Rules & Fixes
+
+1. **Host Configuration Safety:** Never inject directly into Incus SQLite DB. Use standard CLI/API: `incus config set network.ovn.northbound_connection tcp:127.0.0.1:6641`.
+2. **Reliable Async Polling:** Avoid infinite sleep loops and base URL stripping. Always use Incus native long-polling `/operations/{uuid}/wait` with explicit timeouts and status validation.
+3. **Dark OVN L2 Switch vs Uplink Routing:** Live bridge `br-team-k` holds `10.k.1.1/24` in the host kernel routing table. Attaching an OVN network with an overlapping subnet to `incusbr0` causes routing rejection. Creating an isolated dark L2 switch (`ipv4.address: none`) bypasses host route table collisions completely.
+4. **Incus Network Name Limit:** Incus limits OVN network names to 11 characters max. Verifier session IDs must use at most 4 hex characters (`verify-{session_id[:4]}`).
+5. **Concurrency Control:** Concurrent verification requests for the same team are rejected with `HTTP 409 Conflict` using `locks.acquire("verify", str(team_k), timeout=0.01)`.
+6. **Dual Verification Support:** Support both in-container execution and out-of-band network checks via ephemeral runner containers.
+7. **Universal Engine Interface:** Decouple logic through `ContainerEngine` so both Incus (system containers) and Docker (app containers) can be targeted.
+8. **Reconciliation Grace Period:** `LifecycleManager` enforces a 600-second grace period (`resource_grace_period_seconds = 600`) before pruning empty OVN networks or unattached instances to avoid race conditions during provisioning.--- TODO.md ---
+# Stato Gestione Immagini Distrobuilder (`/images`) - RISOLTO ✅
+
+Tutte le **6 criticità architetturali e operative** individuate in questo documento sono state implementate e testate con successo:
+1. **Streaming Upload Tarball (IncusEngine.import_image)**: Implementato streaming a chunk di 1 MB con generatore asincrono in `src/blueagent/engine/incus.py` eliminando il caricamento in RAM.
+2. **Supporto File Locali e Build Context**: Supportati archivi `.tar.gz` e `.zip` contenenti `definition.yaml` + file di challenge (`files/`, `overlay/`), estratti automaticamente in `src/blueagent/images/distrobuilder.py`.
+3. **Validazione Immagine Verifier**: Aggiunta validazione anticipata in `src/blueagent/services/challenges.py` durante `deploy_challenge` per verificare che `config.verifier.image` esista e sia in stato `ready`.
+4. **Endpoint Idempotente `PUT /images/{alias}` & Rebuild**: Sostituito `POST /images` con `PUT /images/{alias}` (query: `force=true`), CAS su SQLite senza constraint UNIQUE per `yaml_sha256`, eliminazione del fingerprint precedente al termine del rebuild.
+5. **Riconciliazione Reboot & Endpoint Log `GET /images/{alias}/logs`**: Riconciliazione stati orfani `building -> failed` in `DatabaseManager.reconcile_startup_states()`, streaming real-time dei log del processo `distrobuilder` nel file `{image_build_dir}/{alias}.log` accessibile via `GET /images/{alias}/logs` (`text/plain`).
+6. **Pre-baking Directory di Rete**: Iniezione automatica delle directory `/etc/systemd/network` e `/etc/network` nelle azioni post-files della definizione YAML durante il build in `ImageBuilder`.
+
+---
+
+### I 6 Problemi Attuali nella Gestione delle Immagini
+
+#### 1. Caricamento dell'intero Tarball in RAM (`IncusEngine.import_image`)
+
+Guarda le righe 185-192 di `src/blueagent/engine/incus.py`:
+
+```python
+async def import_image(self, tarball_path: str) -> str:
+    with open(tarball_path, "rb") as f:
+        content = f.read()
+    ...
+    res = await self.client.post("images", content=content, headers=headers, timeout=300.0)
+
+```
+
+* **Il problema:** Un'immagine di sistema unificata (es. Ubuntu con MySQL o Python/Flask) pesa facilmente **dai 200 MB a oltre 1 GB**. Fare `f.read()` sincrono dentro una coroutine `async def` blocca l'event loop di FastAPI durante la lettura da disco e alloca centinaia di MB (o GB) in un singolo oggetto `bytes` nella RAM del processo Python! Se compili 2 o 3 immagini in parallelo, mandi il server in Out-Of-Memory (OOM).
+
+
+* **Come migliorarlo:** Usa un generatore asincrono (streaming upload) con `aiofiles` o passando uno stream a `httpx`, così il consumo di RAM durante l'importazione scende da ~500 MB a **pochi KB costanti**:
+```python
+async def _file_stream(path: str, chunk_size: int = 1024 * 1024):
+    with open(path, "rb") as f:
+        while chunk := f.read(chunk_size):
+            yield chunk
+
+```
+
+
+

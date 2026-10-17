@@ -1,0 +1,116 @@
+
+The command exited with code 0.
+Output:
+# BlueAgent System Stress & Scalability Benchmark Report
+
+*Generated on:* `2026-10-16 17:25:08 UTC` on AMD Ryzen 7 7700X (8 Cores), 15 GiB RAM
+
+## 1. Summary of Benchmark Results
+
+| Scenario | Teams (M) | Containers (N) | Peak Instances | Deploy Wall (s) | Deploy p95 (s) | Verify Wall (s) | Verify p95 (s) | CoW Clone (s) | OVN Create (s) | RAM (MB) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Test 1 (Baseline M=1, N=1) | 1 | 1 | 2 | - | 1.921 | - | 3.4706 | 0.3222 | 0.1682 | - |
+
+## 2. Raw JSON Dataset
+
+```json
+[
+  {
+    "test_name": "Test 1 (Baseline M=1, N=1)",
+    "teams_count": 1,
+    "containers_per_team": 1,
+    "cycles": 5,
+    "deploy_stats": {
+      "avg": 1.3347,
+      "p50": 1.0288,
+      "p95": 1.921,
+      "min": 0.8385,
+      "max": 1.9273,
+      "std": 0.4753
+    },
+    "verify_stats": {
+      "avg": 2.9178,
+      "p50": 2.764,
+      "p95": 3.4706,
+      "min": 2.2847,
+      "max": 3.4956,
+      "std": 0.4523
+    },
+    "phase_stats": {
+      "create_sec": {
+        "avg": 0.4065,
+        "p50": 0.4012,
+        "p95": 0.4515,
+        "min": 0.3601,
+        "max": 0.4577,
+        "std": 0.0334
+      },
+      "push_sec": {
+        "avg": 0.0636,
+        "p50": 0.0601,
+        "p95": 0.0762,
+        "min": 0.0581,
+        "max": 0.0799,
+        "std": 0.0082
+      },
+      "start_sec": {
+        "avg": 0.6813,
+        "p50": 0.3803,
+        "p95": 1.2662,
+        "min": 0.2384,
+        "max": 1.2662,
+        "std": 0.48
+      },
+      "runtime_net_sec": {
+        "avg": 0.1466,
+        "p50": 0.1475,
+        "p95": 0.1615,
+        "min": 0.1271,
+        "max": 0.1639,
+        "std": 0.012
+      },
+      "ovn_create_sec": {
+        "avg": 0.1682,
+        "p50": 0.1621,
+        "p95": 0.1877,
+        "min": 0.16,
+        "max": 0.1937,
+        "std": 0.0128
+      },
+      "cow_clone_sec": {
+        "avg": 0.3222,
+        "p50": 0.3064,
+        "p95": 0.3901,
+        "min": 0.2841,
+        "max": 0.4075,
+        "std": 0.0444
+      },
+      "clone_start_sec": {
+        "avg": 0.768,
+        "p50": 0.7605,
+        "p95": 1.1654,
+        "min": 0.4983,
+        "max": 1.2541,
+        "std": 0.2736
+      },
+      "verify_cmds_sec": {
+        "avg": 0.0329,
+        "p50": 0.0306,
+        "p95": 0.0437,
+        "min": 0.0263,
+        "max": 0.0467,
+        "std": 0.0071
+      },
+      "cleanup_sec": {
+        "avg": 1.352,
+        "p50": 1.3844,
+        "p95": 1.7387,
+        "min": 0.9807,
+        "max": 1.8138,
+        "std": 0.2841
+      }
+    }
+  }
+]
+```
+

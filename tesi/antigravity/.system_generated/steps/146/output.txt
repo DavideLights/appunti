@@ -1,0 +1,26 @@
+
+The command exited with code 0.
+Output:
+16:    def __init__(self, base_url: str = DEFAULT_BASE_URL, token: str = DEFAULT_TOKEN, timeout: float = 600.0):
+22:    def _client(self) -> httpx.AsyncClient:
+25:    async def wait_server_ready(self, max_seconds: float = 15.0) -> bool:
+40:    async def create_team(self, team_k: int, name: str = "Test Team", ctfd_team_id: Optional[int] = None) -> httpx.Response:
+47:    async def get_team(self, team_k: int) -> httpx.Response:
+51:    async def list_teams(self) -> httpx.Response:
+55:    async def delete_team(self, team_k: int) -> httpx.Response:
+59:    async def add_member(
+75:    async def get_member(self, team_k: int, member_id: Any) -> httpx.Response:
+79:    async def get_member_config(self, team_k: int, member_id: str) -> httpx.Response:
+83:    async def delete_member(self, team_k: int, member_id: Any) -> httpx.Response:
+87:    async def get_peers(self, team_k: int) -> httpx.Response:
+92:    async def create_image(self, alias: str, yaml_path: Path, force: bool = False) -> httpx.Response:
+99:    async def get_image(self, alias: str) -> httpx.Response:
+103:    async def get_image_logs(self, alias: str) -> httpx.Response:
+107:    async def list_images(self) -> httpx.Response:
+111:    async def delete_image(self, alias: str) -> httpx.Response:
+115:    async def wait_for_image_ready(self, alias: str, timeout: float = 300.0, poll_interval: float = 3.0) -> Dict[str, Any]:
+130:    async def deploy_challenge(self, payload: Dict[str, Any], team_k: Optional[int] = None) -> httpx.Response:
+139:    async def get_active_containers(self, team_k: int) -> httpx.Response:
+144:    async def teardown_challenge(
+158:    async def verify_challenge(self, team_k: int, config_payload: Dict[str, Any]) -> httpx.Response:
+

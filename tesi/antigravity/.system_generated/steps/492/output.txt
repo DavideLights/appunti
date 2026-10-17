@@ -1,0 +1,1 @@
+A1: (Recommended) Export all three: (1) add per-step CPU/RAM columns to *_results.csv, (2) export a clean long-format *_step_resources.csv (1 row per scenario × step, ideal for bar/line plots), and (3) export the raw 100ms *_timeseries.csv for continuous timeline plots

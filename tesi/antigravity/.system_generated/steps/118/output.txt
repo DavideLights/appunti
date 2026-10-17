@@ -1,0 +1,5 @@
+
+The command exited with code 1.
+Output:
+Error: Failed getting image: The requested image couldn't be found
+

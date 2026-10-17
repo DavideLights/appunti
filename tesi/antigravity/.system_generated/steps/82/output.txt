@@ -1,0 +1,74 @@
+
+The command exited with code 0.
+Output:
+sudo incus config set network.ovn.northbound_connection tcp:127.0.0.1:6641
+
+# ------------------------------------------------------------------------------
+# 3. Incus Initialization, ZFS Pool, and Underlay Bridge (incusbr0)
+# ------------------------------------------------------------------------------
+echo "[3/8] Initializing Incus and configuring storage pool..."
+if ! sudo incus storage show blueagent-zfs &>/dev/null; then
+    sudo incus storage create blueagent-zfs zfs
+fi
+
+sudo incus admin init --auto
+
+echo "[+] Setting up incusbr0 with DHCP and OVN IP pools..."
+sudo incus network set incusbr0 ipv4.address=172.16.0.1/24 ipv4.nat=true
+sudo incus network set incusbr0 ipv4.dhcp.ranges=172.16.0.2-172.16.0.99 ipv4.ovn.ranges=172.16.0.100-172.16.0.199
+
+# ------------------------------------------------------------------------------
+# 4. Team 0 Production L2 Bridge
+# ------------------------------------------------------------------------------
+echo "[4/8] Creating Team 0 production L2 bridge (br-team-0)..."
+if ! ip link show dev br-team-0 &>/dev/null; then
+    sudo ip link add name br-team-0 type bridge
+    sudo ip addr add 10.0.1.1/24 dev br-team-0
+    sudo ip link set dev br-team-0 up
+fi
+
+# ------------------------------------------------------------------------------
+# 5. WireGuard L3 Point-to-Point Tunnel (wg-0)
+# ------------------------------------------------------------------------------
+echo "[5/8] Generating keys and establishing WireGuard interface (wg-0)..."
+wg genkey | tee wg-0-private.key | wg pubkey > wg-0-public.key
+wg genkey | tee client-0-private.key | wg pubkey > client-0-public.key
+
+if ! ip link show dev wg-0 &>/dev/null; then
+    sudo ip link add dev wg-0 type wireguard
+    sudo ip addr add 10.0.0.1/30 dev wg-0
+    sudo wg set wg-0 listen-port 51820 private-key wg-0-private.key
+    sudo wg set wg-0 peer "$(cat client-0-public.key)" allowed-ips 10.0.0.2/32
+    sudo ip link set dev wg-0 up
+fi
+
+# ------------------------------------------------------------------------------
+# 6. nftables Firewall: Forwarding, TCP MSS Clamping & NAT Masquerade
+# ------------------------------------------------------------------------------
+echo "[6/8] Configuring nftables filtering and traffic engineering..."
+sudo nft flush table inet blueagent 2>/dev/null || true
+sudo nft add table inet blueagent
+sudo nft add chain inet blueagent forward '{ type filter hook forward priority filter; policy accept; }'
+sudo nft add rule inet blueagent forward tcp flags syn / syn,rst tcp option maxseg size set rt mtu
+sudo nft add rule inet blueagent forward iifname "br-team-0" accept
+sudo nft add rule inet blueagent forward oifname "br-team-0" accept
+sudo nft add rule inet blueagent forward iifname "wg-0" accept
+sudo nft add rule inet blueagent forward oifname "wg-0" accept
+sudo nft add chain inet blueagent postrouting '{ type nat hook postrouting priority srcnat; policy accept; }'
+sudo nft add rule inet blueagent postrouting ip saddr 10.0.1.0/24 ip daddr != 10.0.1.0/24 masquerade
+sudo nft add rule inet blueagent postrouting ip saddr 10.0.0.0/30 ip daddr != 10.0.0.0/30 masquerade
+
+# ------------------------------------------------------------------------------
+# 7. Team 0 Profile, Container Launch & systemd-networkd Static IP
+# ------------------------------------------------------------------------------
+echo "[7/8] Launching production container (c0-web) and configuring networking..."
+sudo incus profile create team-0-profile 2>/dev/null || true
+sudo incus profile device add team-0-profile eth0 nic nictype=bridged parent=br-team-0 name=eth0 2>/dev/null || true
+
+if ! sudo incus info c0-web &>/dev/null; then
+    sudo incus launch ubuntu:22.04 c0-web --profile default --profile team-0-profile --storage blueagent-zfs
+fi
+
+# Inject static IP configuration via systemd-networkd (independent of netplan/cloud-init)
+sudo incus exec c0-web -- bash -c 'cat << "EOF" > /etc/systemd/network/10-eth0.network
+

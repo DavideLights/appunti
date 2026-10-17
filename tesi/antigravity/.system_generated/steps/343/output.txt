@@ -1,0 +1,19 @@
+Task: 335ea41a-df46-4ffa-bb4c-eefc5a5248cd/task-341
+Status: RUNNING
+Log: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/.system_generated/tasks/task-341.log
+Log output:
+<truncated 7 lines>
+LETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:14:45 [INFO] HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+13:14:45 [INFO] HTTP Request: GET http://localhost/1.0/networks "HTTP/1.1 200 OK"
+13:14:45 [INFO] [Test 1] Cycle 1/10 starting...
+13:14:45 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+13:14:46 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+13:14:50 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+13:14:51 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+13:14:52 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:14:52 [INFO] [Test 1] Cycle 1/10 finished: Prov=0.103s, Deploy=1.029s, Verify=3.048s, Teardown=1.685s
+13:14:52 [INFO] [Test 1] Cycle 2/10 starting...
+13:14:52 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+
+Last progress: 0s ago

@@ -1,0 +1,95 @@
+
+The command exited with code 0.
+Output:
+# Network Architecture: Hybrid Production & OVN Sandbox
+
+## 1. Architectural Model
+BlueAgent splits networking into two isolated domains:
+1. **Production (Live):** Native Linux kernel primitives (WireGuard + Bridge) for zero-overhead, bare-metal throughput and simple `tcpdump` monitoring.
+2. **Verification (Sandbox):** Ephemeral Incus + OVN SDN overlay for sub-second, isolated testing without host IP overlap.
+
+---
+
+## 2. Production Domain (Live Kernel)
+
+| Component | Interface / Resource | Addressing | Description |
+| :--- | :--- | :--- | :--- |
+| **L3 VPN** | `wg-k` (WireGuard) | `10.k.0.0/24` | Gateway: `10.k.0.1`. Client IPs: `10.k.0.2`–`10.k.0.254` (cap 253 members, hole-filling). Cryptokey Routing binds `/32` to peer public keys. `0 <= team_k <= 254`. Port: `51820 + team_k`. |
+| **L2 Bridge** | `br-team-k` (Linux Bridge) | `10.k.1.1/24` | Dedicated per-team L2 switch acting as default gateway for team containers (`0 <= team_k <= 254`). |
+| **Containers**| `eth0` (veth pair) | `10.k.1.x/24` | Attached to `br-team-k`. Deterministic IPs: `.2` Web, `.3` DB, etc. |
+| **Inspection**| `tcpdump -i br-team-k` | N/A | Direct packet capture of team traffic without side-channel interference. |
+
+### Container Static IP Injection (`systemd-networkd`)
+Because `br-team-k` is unmanaged (no DHCP daemon) and minimal container images omit `cloud-init`/`netplan`, static IPs (`10.k.1.x`) are configured inside containers via `systemd-networkd`:
+```ini
+# /etc/systemd/network/10-eth0.network
+[Match]
+Name=eth0
+[Network]
+Address=10.k.1.x/24
+Gateway=10.k.1.1
+DNS=1.1.1.1
+DNS=8.8.8.8
+```
+*Advantage:* Stored directly in the container rootfs. When duplicated via ZFS CoW snapshots, clones instantly assume the identical IP on the OVN switch without cloud-init latency or reconfiguration agents.
+
+---
+
+## 3. Traffic Engineering & Path MTU / MSS Clamping
+
+Encapsulation (WireGuard L3 tunnels and OVN Geneve overlays) adds packet headers that reduce path MTU:
+- **WireGuard Interface MTU:** `1420`
+- **OVN Geneve Encapsulation:** `1442` (host MTU - 58)
+
+To eliminate TCP connection freezes (such as during TLS handshakes or large payload transfers) caused by Path MTU blackholes, BlueAgent enforces TCP MSS Clamping in `nftables` **before** terminal `accept` rules:
+
+```bash
+table inet blueagent {
+    set team_links {
+        type ifname . ifname
+        flags interval
+    }
+    chain forward {
+        type filter hook forward priority filter; policy accept;
+--- 4 ---
+# Container Engine, Concurrency & Asynchronous Management
+
+## 1. Abstract Container Engine Layer (OOP Contract)
+
+To decouple orchestration logic from specific runtimes (system containers vs. application containers), BlueAgent defines the `ContainerEngine` ABC:
+
+```python
+from abc import ABC, abstractmethod
+from typing import Optional, Dict, List
+from pydantic import BaseModel
+
+class ExecResult(BaseModel):
+    exit_code: int
+    stdout: str
+    stderr: str
+
+class ContainerEngine(ABC):
+    @abstractmethod
+    async def create_instance(self, spec: Any) -> str: ...
+    @abstractmethod
+    async def start_instance(self, name: str) -> None: ...
+    @abstractmethod
+    async def stop_instance(self, name: str, force: bool = False) -> None: ...
+    @abstractmethod
+    async def delete_instance(self, name: str) -> None: ...
+    @abstractmethod
+    async def clone_instance(self, source: str, target: str) -> str: ...
+    @abstractmethod
+    async def connect_network(self, instance: str, network: str, ip: Optional[str] = None) -> None: ...
+    @abstractmethod
+    async def disconnect_network(self, instance: str, network: str) -> None: ...
+    @abstractmethod
+    async def exec_command(self, name: str, cmd: List[str], env: Optional[Dict[str, str]] = None, timeout: int = 15) -> ExecResult: ...
+    @abstractmethod
+    async def get_instance_status(self, name: str) -> str: ...
+```
+
+### Runtime Adaptation: Incus vs. Docker
+
+| Operation | Incus Implementation (UDS) | Docker Implementation |
+

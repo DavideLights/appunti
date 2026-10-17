@@ -1,0 +1,45 @@
+
+The command exited with code 0.
+Output:
+            detail=str(lock_err),
+        )
+    except TeardownError as td_err:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(td_err),
+        )
+
+
+@router.get("/{team_k}/machines", response_model=List[RunningContainerRecord])
+async def get_active_containers(
+    team_k: int,
+    service: ChallengeService = Depends(get_challenge_service),
+):
+    """Retrieves running containers for a team."""
+    try:
+        return await service.get_active_containers(team_k)
+    except TeamNotFoundError as err:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(err),
+        )
+
+
+@router.post("/{team_k}/verificator", response_model=VerifyResultResp)
+async def verify_challenge(
+    team_k: int,
+    config: ChallengeConfig,
+    service: ChallengeService = Depends(get_challenge_service),
+):
+    """Executes verification against dark OVN sandbox clones with readiness checks."""
+    try:
+        return await service.verify_challenge(team_k=team_k, config=config)
+    except TeamNotFoundError as err:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(err),
+        )
+    except (VerificationLockedError, LockTimeoutError):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+

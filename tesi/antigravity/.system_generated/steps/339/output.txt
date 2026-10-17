@@ -1,0 +1,6 @@
+
+The command exited with code 0.
+Output:
+Running as unit: blueagent.service; invocation ID: 2d79f669c4b3410f8cb600f9890e642e
+{"status":"ok"}
+

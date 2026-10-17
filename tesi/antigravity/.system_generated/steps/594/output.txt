@@ -1,0 +1,30 @@
+
+The command exited with code 0.
+Output:
+    async def connect_network(
+        self,
+        instance_name: str,
+        network_name: str,
+        ip_address: Optional[str] = None,
+    ) -> None:
+        """Attaches the instance's eth0 NIC to an OVN or bridge network."""
+        eth0_config: Dict[str, str] = {
+            "type": "nic",
+            "network": network_name,
+            "parent": "",  # Clear prior host bridge binding when transitioning to OVN
+        }
+        if ip_address:
+            eth0_config["ipv4.address"] = ip_address
+
+        device_patch = {
+            "devices": {
+                "eth0": eth0_config,
+            }
+        }
+        res = await self.client.patch(f"instances/{instance_name}", json=device_patch)
+        if res.status_code >= 400:
+            raise RuntimeError(f"Failed to connect instance '{instance_name}' to network '{network_name}' ({res.status_code}): {res.text}")
+
+        op = res.json().get("operation")
+        if op:
+

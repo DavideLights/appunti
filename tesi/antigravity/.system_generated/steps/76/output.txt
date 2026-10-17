@@ -1,0 +1,19 @@
+
+The command exited with code 0.
+Output:
+total 32
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 6 debian debian  4096 Oct 16 11:27 ..
+-rw-rw-r-- 1 debian debian 15851 Oct 16 11:20 alpine-3.20.yaml
+-rw-rw-r-- 1 debian debian  6046 Oct 16 11:20 ubuntu.yaml
+total 60
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 7 debian debian  4096 Oct 16 11:20 ..
+-rw-rw-r-- 1 debian debian  3596 Oct 16 11:20 commands.sh
+-rwxrwxr-x 1 debian debian  5961 Oct 16 11:20 destroy.sh
+lrwxrwxrwx 1 debian debian     8 Oct 16 11:20 host_setup.sh -> setup.sh
+-rwxrwxr-x 1 debian debian  6359 Oct 16 11:20 inverse-commands.sh
+-rw-rw-r-- 1 debian debian   644 Oct 16 11:20 register_apache_image.py
+-rw-rw-r-- 1 debian debian 16852 Oct 16 11:20 setup.md
+-rwxrwxr-x 1 debian debian  6913 Oct 16 11:20 setup.sh
+

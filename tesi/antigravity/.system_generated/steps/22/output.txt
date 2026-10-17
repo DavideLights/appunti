@@ -1,0 +1,104 @@
+
+The command exited with code 0.
+Output:
+│   ├── challenges.py      # ChallengeService (deploy, rollback, teardown, verify)
+│   ├── images.py          # ImageService (YAML parsing, build orchestration, catalog)
+│   └── teams.py           # TeamService (bridges, WireGuard, member keys, stats)
+├── verifier/
+│   └── ovn.py             # OVNVerifier async context manager (RAII verification)
+├── lifecycle/
+│   └── manager.py         # LifecycleManager (reconciliation loop, 90s grace period)
+└── api/
+    ├── __init__.py
+    ├── health.py          # /health liveness probe
+    ├── teams.py           # /teams endpoints (delegates to TeamService)
+    ├── challenges.py      # /teams/{team_k}/machines & /teams/{team_k}/verificator (delegates to ChallengeService)
+    └── images.py          # /images endpoints (delegates to ImageService)
+
+tests/
+├── test_api.py            # Basic API route sanity tests
+├── test_challenges_api.py # Challenges & containers REST API unit tests
+├── test_database.py       # SQLite database queries & state transition tests
+├── test_engine.py         # Incus container engine client unit tests
+├── test_images_api.py     # Image catalog and build unit tests
+├── test_lifecycle.py      # Resource reconciliation and cleanup tests
+├── test_locks.py          # Two-tier locking and reentrancy tests
+├── test_models.py         # Pydantic schemas validation tests
+├── test_network.py        # Network planning and WireGuard unit tests
+├── test_teams_api.py      # Teams and WireGuard peers API tests
+├── test_services.py       # Service layer direct unit tests (ChallengeService, ImageService, TeamService)
+├── test_performance.py    # Performance & resource usage profiling (ResourceMonitor)
+├── test_thesis.py         # Modular thesis benchmark harness (K challenges x M teams)
+└── usability/             # Live integration tests against real Incus & Linux kernel
+```
+
+---
+
+## 3. Comprehensive REST API Reference
+
+All protected endpoints require authentication via CTFd token (`Authorization: Bearer <token>` or `X-CTFd-Token: <token>`).
+
+### 3.1 Health & Liveness (`src/blueagent/api/health.py`)
+- `GET /health`
+  - **Auth**: Public
+  - **Description**: Probes service liveness and runtime health.
+  - **Response**: `{"status": "ok"}`
+
+### 3.2 Teams & WireGuard VPN Management (`src/blueagent/api/teams.py`)
+- `POST /teams`
+  - **Payload**: `TeamCreateReq(team_k: int, name: str)` (`0 <= team_k <= 254`)
+  - **Description**: Provisions dedicated Linux bridge `br-team-k` (`10.k.1.1/24`), WireGuard interface `wg-k` (port `51820 + team_k`), and adds interface to nftables `@team_links`. Idempotent.
+- `GET /teams`
+  - **Description**: Lists all provisioned teams.
+- `GET /teams/{team_k}`
+  - **Description**: Retrieves single team metadata and network parameters.
+- `DELETE /teams/{team_k}`
+  - **Description**: Tears down team containers, WireGuard interface, host bridge, and deletes team from database.
+- `POST /teams/{team_k}/members`
+  - **Payload**: `TeamMemberCreateReq(name: str, ctfd_user_id: int, public_key: Optional[str], team_name: Optional[str])`
+  - **Description**: Registers a team member, allocates VPN IP (`10.k.0.2` - `10.k.0.254` with hole-filling), generates Curve25519 keypair if not provided, sets PSK, and updates WireGuard peers. Returns `TeamMemberWG` including rendered configuration.
+- `GET /teams/{team_k}/members`
+  - **Description**: Lists registered peers for team `team_k` (cryptographic private keys and PSKs masked).
+- `GET /teams/{team_k}/members/{member_id}`
+  - **Description**: Retrieves specific member record.
+- `GET /teams/{team_k}/members/{member_id}/config`
+  - **Description**: Returns raw WireGuard `.conf` configuration file in `text/plain` format.
+- `DELETE /teams/{team_k}/members/{member_id}`
+  - **Description**: Removes member from WireGuard peer list and frees allocated VPN IP.
+- `GET /teams/{team_k}/peers`
+  - **Description**: Telemetry endpoint correlating database member records with live `wg show dump` transfer and handshake statistics.
+
+### 3.3 Container Management & Dark Verification (`src/blueagent/api/challenges.py`)
+- `POST /teams/{team_k}/machines`
+  - **Payload**: `ChallengeConfig` (`challenge_id: str`, `team_k: int`, `containers: List[ContainerSpec]`, `readiness_commands: List[CommandSpec]`, `verify_commands: List[CommandSpec]`, `verifier: Optional[VerifierSpec]`, `verify_internet_access: bool`)
+  - **Description**: Deploys a multi-container challenge to `br-team-k`. Injects static IP configuration (`10.k.1.{suffix}`) via `systemd-networkd` and `/etc/network/interfaces`, starts containers, applies runtime static IPs, and records containers in SQLite. Readiness checks are deferred to verification. Performs atomic rollback on failure.
+- `GET /teams/{team_k}/machines`
+  - **Description**: Retrieves list of running containers (`RunningContainerRecord`) for team `team_k`.
+- `DELETE /teams/{team_k}/machines`
+  - **Payload**: Optional `ChallengeConfig`
+  - **Description**: Tears down containers for team `team_k`. If config container list is supplied, only tears down specified containers.
+- `POST /teams/{team_k}/verificator`
+  - **Payload**: `ChallengeConfig`
+  - **Description**: Executes non-destructive automated verification against dark OVN sandbox clones. Clones containers with ZFS CoW, attaches them to isolated dark switch `verify-{session_id}`, runs readiness checks until healthy, then executes verification commands, and cleans up via RAII.
+
+### 3.4 Distrobuilder Image Catalog & Build Pipeline (`src/blueagent/api/images.py`)
+- `POST /images`
+  - **Form Data**: `definition` (Multipart File: Distrobuilder YAML), `alias` (Optional string)
+  - **Description**: Submits Distrobuilder YAML. Uses write-ahead CAS in database. If image is new, triggers background asynchronous compilation via `ImageBuilder.build_image()` and returns `202 Accepted`. If already building or ready, returns current record idempotently.
+- `GET /images`
+  - **Description**: Lists all registered container images, build statuses (`building`, `ready`, `failed`), and fingerprints.
+- `GET /images/{alias}`
+  - **Description**: Retrieves status and build metadata for a specific image alias.
+- `DELETE /images/{alias}`
+  - **Description**: Deletes image alias and deletes Incus image if not in use by active challenge containers (enforces SQLite foreign key constraints). Rejects with `409 Conflict` if in use.
+
+---
+
+## 4. Subsystems & Services
+
+### 4.1 Service Layer (`src/blueagent/services/`)
+- **`ChallengeService`**:
+  - Handles container provisioning, static IP injection, atomic rollbacks on failure, container teardowns, and dark OVN sandbox verification.
+  - Domain exceptions: `TeamNotFoundError`, `BridgeNotActiveError`, `ImageNotReadyError`, `DeploymentRollbackError`, `DeploymentFailedError`, `VerificationLockedError`, `TeardownError`.
+- **`ImageService`**:
+

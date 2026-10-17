@@ -1,0 +1,22 @@
+
+The command exited with code 0.
+Output:
+total 40
+drwxrwxr-x 4 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 7 debian debian  4096 Oct 16 11:20 ..
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 blueagent_documentation
+-rw-rw-r-- 1 debian debian 21836 Oct 16 11:20 context.md
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 rest-api-doc
+total 88
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 4 debian debian  4096 Oct 16 11:20 ..
+-rw-rw-r-- 1 debian debian  4556 Oct 16 11:20 1_problem_introduction.md
+-rw-rw-r-- 1 debian debian  3047 Oct 16 11:20 2_alternatives.md
+-rw-rw-r-- 1 debian debian  5191 Oct 16 11:20 3_network_architecture.md
+-rw-rw-r-- 1 debian debian 12218 Oct 16 11:20 4_asynch_management.md
+-rw-rw-r-- 1 debian debian  4282 Oct 16 11:20 5_ovn_sandbox_creation.md
+-rw-rw-r-- 1 debian debian  6844 Oct 16 11:20 6_yaml_configuration.md
+-rw-rw-r-- 1 debian debian  5873 Oct 16 11:20 7_team_and_wireguard_api.md
+-rw-rw-r-- 1 debian debian 11404 Oct 16 11:20 8_ctfd_integration.md
+-rw-rw-r-- 1 debian debian 11109 Oct 16 11:20 ctfd_plugin_tutorial.md
+

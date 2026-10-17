@@ -1,0 +1,31 @@
+
+The command exited with code 0.
+Output:
+root        1874  6.0  4.6 19199900 763692 ?     Ssl  11:22   5:44 /usr/libexec/incus/incusd --group incus-admin --logfile=/var/log/incus/incus.log
+nobody      4989  0.0  0.0  13412  4952 ?        Ss   12:21   0:00 dnsmasq --keep-in-foreground --strict-order --bind-interfaces --except-interface=lo --pid-file= --no-ping --interface=incusbr0 --dhcp-rapid-commit --no-negcache --quiet-dhcp --quiet-dhcp6 --quiet-ra --listen-address=172.16.0.1 --dhcp-no-override --dhcp-authoritative --dhcp-leasefile=/var/lib/incus/networks/incusbr0/dnsmasq.leases --dhcp-hostsfile=/var/lib/incus/networks/incusbr0/dnsmasq.hosts --dhcp-range 172.16.0.2,172.16.0.99,1h --listen-address=fd42:c431:14d3:2f72::1 --enable-ra --dhcp-range ::,constructor:incusbr0,ra-stateless,ra-names -s incus --interface-name _gateway.incus,incusbr0 -S /incus/ --conf-file=/var/lib/incus/networks/incusbr0/dnsmasq.raw -u nobody -g incus
+root      749366  0.0  0.1 5927512 17008 ?       Ss   12:52   0:00 [lxc monitor] /var/lib/incus/containers c-15-app2
+root      754412  0.0  0.1 5927512 16976 ?       Ss   12:53   0:00 [lxc monitor] /var/lib/incus/containers c-15-app3
+root      771106  0.0  0.1 5853524 17896 ?       Ss   12:53   0:00 [lxc monitor] /var/lib/incus/containers c-15-app4
+root      775532  0.0  0.1 5927512 17132 ?       Ss   12:53   0:00 [lxc monitor] /var/lib/incus/containers c-15-app5
+root      782334  0.0  0.1 5927512 17240 ?       Ss   12:54   0:00 [lxc monitor] /var/lib/incus/containers c-15-app6
+root      786775  0.0  0.1 5927512 16948 ?       Ss   12:54   0:00 [lxc monitor] /var/lib/incus/containers c-15-app7
+debian    796038  0.0  0.0  18844 11328 ?        Ss   12:54   0:00 python3 -c  import subprocess out = subprocess.check_output(["incus", "list", "--format", "csv", "-c", "n"], text=True) containers = [line.strip() for line in out.strip().splitlines() if line.strip()] print(f"Found {len(containers)} containers to delete: {containers}") for c in containers:     subprocess.run(["incus", "delete", "-f", c], check=False) print("Containers deletion complete.") 
+debian    801793  0.0  0.1 5958452 23416 ?       Sl   12:57   0:00 incus delete -f c-15-app1
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+|                  ID                  | TYPE |    DESCRIPTION    |  STATE  | CANCELABLE |       CREATED        |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| 0d29d564-0302-4524-94dd-fef994baa2ac | TASK | Deleting instance | SUCCESS | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| 2ac9cbae-f3fa-4f83-a490-36cc7d9a4b2b | TASK | Stopping instance | SUCCESS | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| 5c90f8ed-f992-4dc1-bf3d-22ceb418de91 | TASK | Deleting instance | RUNNING | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| 7138dce2-0da5-446f-9a72-eb91076a2f31 | TASK | Deleting instance | SUCCESS | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| db05a480-ce20-494a-ad7f-2bc821456b27 | TASK | Deleting instance | SUCCESS | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| fb244960-6c68-4833-8c0a-2036aa4d7fc0 | TASK | Stopping instance | SUCCESS | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+| fc6f61f3-18d4-4b33-81cf-1dfbda88f752 | TASK | Stopping instance | SUCCESS | NO         | 2026/10/16 12:57 CDT |
++--------------------------------------+------+-------------------+---------+------------+----------------------+
+

@@ -1,0 +1,6 @@
+
+The command exited with code 0.
+Output:
+[+] Graph 1 saved to /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph1_cow_vs_deploy.png and /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph1_cow_vs_deploy.pdf
+[+] Graph 2 saved to /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph2_microphase_breakdown.png and /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph2_microphase_breakdown.pdf
+

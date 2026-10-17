@@ -1,0 +1,1 @@
+A1: (Recommended) Sample /proc/stat and /proc/meminfo (+ ZFS ARC /proc/spl/kstat/zfs/arcstats) every 100ms in a dedicated Python subprocess, reporting Avg & Peak (Max) CPU % (total + iowait) and Avg & Peak RAM MB (total used + net container RAM excluding ZFS ARC + delta over baseline) for each step

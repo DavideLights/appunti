@@ -1,0 +1,27 @@
+The following changes were made by the replace_file_content tool to: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/benchmark_suite.py. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -167,8 +167,8 @@
+         try:
+             instances = await engine.list_instances()
+             orphan_insts = [
+-                inst.get('name', '') for inst in instances
+-                if inst.get('name', '').startswith('verify-') or inst.get('name', '').startswith('c-')
++                name for name in instances
++                if name.startswith('verify-') or name.startswith('c-')
+             ]
+             if orphan_insts:
+                 logger.warning('Sweeping %d orphaned Incus instances: %s', len(orphan_insts), orphan_insts)
+@@ -177,8 +177,8 @@
+ 
+             networks = await engine.list_networks()
+             orphan_nets = [
+-                net.get('name', '') for net in networks
+-                if net.get('name', '').startswith('verify-')
++                name for name in networks
++                if name.startswith('verify-')
+             ]
+             if orphan_nets:
+                 logger.warning('Sweeping %d orphaned OVN networks: %s', len(orphan_nets), orphan_nets)
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

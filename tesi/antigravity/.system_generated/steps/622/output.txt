@@ -1,0 +1,10 @@
+
+The command exited with code 0.
+Output:
+thesis_ubuntu_raw_samples.csv                   0%    0     0.0KB/s   --:-- ETAthesis_ubuntu_raw_samples.csv                 100%   13KB  26.0MB/s   00:00    
+thesis_ubuntu_report.md                         0%    0     0.0KB/s   --:-- ETAthesis_ubuntu_report.md                       100% 3061    13.4MB/s   00:00    
+thesis_ubuntu_results.csv                       0%    0     0.0KB/s   --:-- ETAthesis_ubuntu_results.csv                     100% 3962    14.2MB/s   00:00    
+thesis_ubuntu_state.json                        0%    0     0.0KB/s   --:-- ETAthesis_ubuntu_state.json                      100%  195KB 139.3MB/s   00:00    
+thesis_ubuntu_step_resources.csv                0%    0     0.0KB/s   --:-- ETAthesis_ubuntu_step_resources.csv              100%   15KB  55.2MB/s   00:00    
+thesis_ubuntu_timeseries.csv                    0%    0     0.0KB/s   --:-- ETAthesis_ubuntu_timeseries.csv                  100%  905KB 297.3MB/s   00:00    
+

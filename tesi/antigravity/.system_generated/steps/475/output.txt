@@ -1,0 +1,2 @@
+A1: blueagent should have time mesuring inside its function, we can reuse it
+A2: (Recommended) Re-run both Alpine (Stages 1–3) and Ubuntu Heavy (Test 1 + Stage 3) with the new CPU/RAM sampler so all thesis plots have complete, matching data

@@ -1,0 +1,27 @@
+
+The command exited with code 0.
+Output:
+138-                    f"Production bridge '{bridge_name}' for team {team_k} is not provisioned or active"
+139-                )
+140-
+141-            # 3. Verify all container images are from distrobuilder and ready
+142-            for c in config.containers:
+143:                img_record = await self.db.get_image(c.image)
+144-                if not img_record or img_record.status != "ready":
+145-                    raise ImageNotReadyError(
+146-                        f"Image '{c.image}' is not ready in distrobuilder catalog. "
+147-                        f"Only pre-built distrobuilder images are allowed. Build via PUT /images/{c.image} first."
+148-                    )
+--
+151-                        f"Image alias '{c.image}' does not exist in container engine runtime"
+152-                    )
+153-
+154-            if config.verifier:
+155-                v_img = config.verifier.image
+156:                v_record = await self.db.get_image(v_img)
+157-                if not v_record or v_record.status != "ready":
+158-                    raise ImageNotReadyError(
+159-                        f"Verifier image '{v_img}' is not ready in distrobuilder catalog. "
+160-                        f"Only pre-built distrobuilder images are allowed. Build via PUT /images/{v_img} first."
+161-                    )
+

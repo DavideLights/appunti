@@ -1,0 +1,22 @@
+
+The command exited with code 0.
+Output:
+config:
+  ipv4.address: 172.16.0.1/24
+  ipv4.dhcp.ranges: 172.16.0.2-172.16.0.99
+  ipv4.nat: "true"
+  ipv4.ovn.ranges: 172.16.0.100-172.16.0.199
+  ipv4.routes: 10.0.0.0/8
+  ipv6.address: fd42:c431:14d3:2f72::1/64
+  ipv6.nat: "true"
+description: ""
+name: incusbr0
+type: bridge
+used_by:
+- /1.0/profiles/default
+managed: true
+status: Created
+locations:
+- none
+project: default
+

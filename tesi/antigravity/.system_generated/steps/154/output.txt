@@ -1,0 +1,35 @@
+
+The command exited with code 0.
+Output:
+                    updated_at=datetime.fromisoformat(now_str),
+                ), True
+
+            # Completely new image
+            await db.execute(
+                """
+                INSERT INTO images (alias, yaml_sha256, yaml_text, status, fingerprint, error, created_at, updated_at)
+                VALUES (?, ?, ?, 'building', NULL, NULL, ?, ?)
+                """,
+                (alias, yaml_sha256, yaml_text, now_str, now_str),
+            )
+            await db.commit()
+            return ImageRecord(
+                alias=alias,
+                yaml_sha256=yaml_sha256,
+                yaml_text=yaml_text,
+                status="building",
+                fingerprint=None,
+                error=None,
+                created_at=datetime.fromisoformat(now_str),
+                updated_at=datetime.fromisoformat(now_str),
+            ), True
+
+    async def set_image_status(
+        self,
+        alias: str,
+        new_status: str,
+        expected_statuses: List[str],
+        fingerprint: Optional[str] = None,
+        error: Optional[str] = None,
+    ) -> bool:
+

@@ -1,0 +1,17 @@
+
+The command exited with code 0.
+Output:
+total 32
+drwx------ 4 debian debian 4096 Oct 16 11:21 .
+drwxr-xr-x 4 root   root   4096 Apr 30 22:14 ..
+-rw------- 1 debian debian 1018 Oct 16 11:21 .bash_history
+-rw-r--r-- 1 debian debian  220 Apr 30 22:14 .bash_logout
+-rw-r--r-- 1 debian debian 3526 Apr 30 22:14 .bashrc
+drwxrwxr-x 6 debian debian 4096 Oct 16 11:23 bluectfd
+-rw-r--r-- 1 debian debian  807 Apr 30 22:14 .profile
+drwx------ 2 debian debian 4096 Oct 16 11:21 .ssh
+-rw-r--r-- 1 debian debian    0 Apr 30 22:23 .sudo_as_admin_successful
+./bluectfd
+./bluectfd/blueagent/context.md
+./bluectfd/context.md
+

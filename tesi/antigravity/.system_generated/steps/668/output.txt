@@ -1,0 +1,12 @@
+
+The command exited with code 0.
+Output:
+                        min       max  count
+step_name                                   
+deploy_challenges    1.3311  104.3486   1011
+provision_teams      0.1172    1.2291     12
+teardown_machines  199.6738  222.6086    223
+teardown_teams     222.7090  224.1911     15
+verify_cleanup     181.5843  199.5734    179
+verify_setup       105.4556  180.5629    745
+

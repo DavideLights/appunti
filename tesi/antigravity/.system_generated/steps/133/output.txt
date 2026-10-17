@@ -1,0 +1,25 @@
+
+The command exited with code 0.
+Output:
+500:    async def get_image(self, alias: str) -> Optional[ImageRecord]:
+501-        """Retrieves image record by alias."""
+502-        async with self._connect() as db:
+503-            async with db.execute("SELECT * FROM images WHERE alias = ?", (alias,)) as cursor:
+504-                row = await cursor.fetchone()
+505-                if not row:
+506-                    return None
+507-                return ImageRecord(
+508-                    alias=row["alias"],
+509-                    yaml_sha256=row["yaml_sha256"],
+510-                    yaml_text=row["yaml_text"],
+511-                    status=row["status"],
+512-                    fingerprint=row["fingerprint"],
+513-                    error=row["error"],
+514-                    created_at=datetime.fromisoformat(row["created_at"]),
+515-                    updated_at=datetime.fromisoformat(row["updated_at"]),
+516-                )
+517-
+518-    async def list_images(self) -> List[ImageRecord]:
+519-        """Lists all image records ordered by created_at desc."""
+520-        async with self._connect() as db:
+

@@ -1,0 +1,7 @@
+
+The command exited with code 0.
+Output:
+[+] Graph 3 saved to /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph3_memory_scaling.png and /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph3_memory_scaling.pdf
+[+] Graph 4 saved to /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph4_lifecycle_timeline.png and /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph4_lifecycle_timeline.pdf
+[+] Graph 5 saved to /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph5_step_cpu_iowait.png and /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/thesis_figures/graph5_step_cpu_iowait.pdf
+

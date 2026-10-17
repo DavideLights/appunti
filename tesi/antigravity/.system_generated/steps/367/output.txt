@@ -1,0 +1,19 @@
+Task: 335ea41a-df46-4ffa-bb4c-eefc5a5248cd/task-365
+Status: RUNNING
+Log: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/.system_generated/tasks/task-365.log
+Log output:
+<truncated 4 lines>
+], N in [7, 10])
+13:20:58 [INFO] ===============================================================
+13:20:58 [INFO] >>> STARTING TIER: M=2 teams, N=7 containers/team (Peak Instances: 28) <<<
+13:20:58 [INFO] Performing parallel pre-flight cleanup for teams: [1, 2]
+13:20:58 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 404 Not Found"
+13:20:58 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2/machines "HTTP/1.1 404 Not Found"
+13:20:58 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+13:20:58 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/2 "HTTP/1.1 204 No Content"
+13:20:58 [INFO] HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+13:20:58 [INFO] HTTP Request: GET http://localhost/1.0/networks "HTTP/1.1 200 OK"
+13:20:58 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/2 "HTTP/1.1 201 Created"
+13:20:58 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+
+Last progress: 5s ago

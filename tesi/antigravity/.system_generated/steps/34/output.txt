@@ -1,0 +1,16 @@
+
+The command exited with code 0.
+Output:
+total 76
+drwxrwxr-x 2 debian debian 4096 Oct 16 11:20 .
+drwxrwxr-x 3 debian debian 4096 Oct 16 11:20 ..
+-rw-rw-r-- 1 debian debian 7234 Oct 16 11:20 client.py
+-rw-rw-r-- 1 debian debian 2140 Oct 16 11:20 conftest.py
+-rw-rw-r-- 1 debian debian   54 Oct 16 11:20 __init__.py
+-rw-rw-r-- 1 debian debian 5629 Oct 16 11:20 test_1_team_and_network.py
+-rw-rw-r-- 1 debian debian 4129 Oct 16 11:20 test_2_image_creation.py
+-rw-rw-r-- 1 debian debian 6182 Oct 16 11:20 test_3_challenge_and_instance.py
+-rw-rw-r-- 1 debian debian 5418 Oct 16 11:20 test_4_dataplane_usability.py
+-rw-rw-r-- 1 debian debian 4350 Oct 16 11:20 test_5_edge_cases.py
+-rw-rw-r-- 1 debian debian 8752 Oct 16 11:20 test_6_verifier.py
+

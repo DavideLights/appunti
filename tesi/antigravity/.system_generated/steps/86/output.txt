@@ -1,0 +1,5 @@
+
+The command exited with code 1.
+Output:
+Error: Get "http://unix.socket/1.0": dial unix /var/lib/incus/unix.socket: connect: permission denied
+

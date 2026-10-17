@@ -1,0 +1,16 @@
+
+The command exited with code 0.
+Output:
+python3-venv:
+  Installed: (none)
+  Candidate: 3.13.5-1
+  Version table:
+     3.13.5-1 500
+        500 http://deb.debian.org/debian trixie/main amd64 Packages
+python3-pip:
+  Installed: (none)
+  Candidate: 25.1.1+dfsg-1
+  Version table:
+     25.1.1+dfsg-1 500
+        500 http://deb.debian.org/debian trixie/main amd64 Packages
+

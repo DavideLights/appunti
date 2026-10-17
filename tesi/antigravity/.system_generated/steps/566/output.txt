@@ -1,0 +1,29 @@
+
+The command exited with code 0.
+Output:
+Oct 16 14:11:58 debian13 uvicorn[1125385]:   File "/home/debian/bluectfd/blueagent/src/blueagent/verifier/ovn.py", line 72, in __aenter__
+Oct 16 14:11:58 debian13 uvicorn[1125385]:     await self.engine.clone_instance(source_name, clone_name)
+Oct 16 14:11:58 debian13 uvicorn[1125385]:   File "/home/debian/bluectfd/blueagent/src/blueagent/engine/incus.py", line 360, in clone_instance
+Oct 16 14:11:58 debian13 uvicorn[1125385]:     await self._wait_incus_op(op)
+Oct 16 14:11:58 debian13 uvicorn[1125385]:   File "/home/debian/bluectfd/blueagent/src/blueagent/engine/incus.py", line 88, in _wait_incus_op
+Oct 16 14:11:58 debian13 uvicorn[1125385]:     raise RuntimeError(f"Incus operation {clean_uuid} failed: {err_msg}")
+Oct 16 14:11:58 debian13 uvicorn[1125385]: RuntimeError: Incus operation 01771cc4-85fe-4c21-8627-66dcba317e33 failed: Failed creating instance record: Add instance info to the database: Failed to create "instances" entry: UNIQUE constraint failed: instances.project_id, instances.name
+Oct 16 14:11:58 debian13 uvicorn[1125385]: INFO:     127.0.0.1:54394 - "POST /teams/1/verificator?skip_cleanup=true HTTP/1.1" 500 Internal Server Error
+Oct 16 14:11:58 debian13 uvicorn[1125385]: 2026-10-16 14:11:58,843 [INFO] httpx: HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+Oct 16 14:11:58 debian13 uvicorn[1125385]: 2026-10-16 14:11:58,859 [INFO] httpx: HTTP Request: PUT http://localhost/1.0/instances/verify-1-app1/state "HTTP/1.1 202 Accepted"
+Oct 16 14:11:58 debian13 uvicorn[1125385]: 2026-10-16 14:11:58,860 [INFO] httpx: HTTP Request: GET http://localhost/1.0/operations/6454594b-7b81-4f1d-b1d3-99b51f9b9533/wait?timeout=60 "HTTP/1.1 200 OK"
+Oct 16 14:11:59 debian13 uvicorn[1125385]: 2026-10-16 14:11:59,697 [INFO] httpx: HTTP Request: DELETE http://localhost/1.0/instances/verify-1-app1 "HTTP/1.1 202 Accepted"
+Oct 16 14:11:59 debian13 uvicorn[1125385]: 2026-10-16 14:11:59,698 [INFO] httpx: HTTP Request: GET http://localhost/1.0/operations/9687a746-17ee-4b67-aaef-2b055e813435/wait?timeout=60 "HTTP/1.1 200 OK"
+Oct 16 14:12:00 debian13 uvicorn[1125385]: 2026-10-16 14:12:00,068 [INFO] httpx: HTTP Request: DELETE http://localhost/1.0/networks/verify-1 "HTTP/1.1 200 OK"
+Oct 16 14:12:00 debian13 uvicorn[1125385]: INFO:     127.0.0.1:54394 - "DELETE /teams/1/verificator HTTP/1.1" 200 OK
+Oct 16 14:12:00 debian13 uvicorn[1125385]: 2026-10-16 14:12:00,072 [INFO] blueagent.services.challenges: Stopping and deleting instance 'c-1-app1'
+Oct 16 14:12:00 debian13 uvicorn[1125385]: 2026-10-16 14:12:00,089 [INFO] httpx: HTTP Request: PUT http://localhost/1.0/instances/c-1-app1/state "HTTP/1.1 202 Accepted"
+Oct 16 14:12:00 debian13 uvicorn[1125385]: 2026-10-16 14:12:00,091 [INFO] httpx: HTTP Request: GET http://localhost/1.0/operations/08409b98-b87a-4661-98c2-d571ed7479fd/wait?timeout=60 "HTTP/1.1 200 OK"
+Oct 16 14:12:01 debian13 uvicorn[1125385]: 2026-10-16 14:12:01,049 [INFO] httpx: HTTP Request: DELETE http://localhost/1.0/instances/c-1-app1 "HTTP/1.1 202 Accepted"
+Oct 16 14:12:01 debian13 uvicorn[1125385]: 2026-10-16 14:12:01,050 [INFO] httpx: HTTP Request: GET http://localhost/1.0/operations/0ede15a7-a2d8-4c0e-8d6f-d7fbc1d370cd/wait?timeout=60 "HTTP/1.1 200 OK"
+Oct 16 14:12:01 debian13 uvicorn[1125385]: 2026-10-16 14:12:01,239 [INFO] blueagent.services.challenges: Containers for team 1 successfully torn down.
+Oct 16 14:12:01 debian13 uvicorn[1125385]: INFO:     127.0.0.1:54394 - "DELETE /teams/1/machines HTTP/1.1" 204 No Content
+Oct 16 14:12:01 debian13 uvicorn[1125385]: 2026-10-16 14:12:01,243 [INFO] blueagent.network.wireguard: Tearing down WireGuard interface 'wg-1' for team 1
+Oct 16 14:12:01 debian13 uvicorn[1125385]: 2026-10-16 14:12:01,613 [INFO] blueagent.network.host_net: Tearing down host bridge 'br-team-1' for team 1
+Oct 16 14:12:01 debian13 uvicorn[1125385]: INFO:     127.0.0.1:54394 - "DELETE /teams/1 HTTP/1.1" 204 No Content
+

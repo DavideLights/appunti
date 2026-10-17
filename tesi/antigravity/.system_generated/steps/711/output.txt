@@ -1,0 +1,5 @@
+
+The command exited with code 0.
+Output:
+thesis_evaluation_chapter.md                    0%    0     0.0KB/s   --:-- ETAthesis_evaluation_chapter.md                  100%   18KB  24.1MB/s   00:00    
+

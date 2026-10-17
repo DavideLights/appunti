@@ -1,0 +1,187 @@
+
+The command exited with code 0.
+Output:
+<truncated 791 lines>
+                raise TeamNotFoundError(f"Team {team_k} not found")
+
+            member = await self.db.get_team_member(str(member_id), team_k=team_k)
+            if not member or member.team_k != team_k:
+                raise MemberNotFoundError(f"Member {member_id} not found on team {team_k}")
+
+            await self.wg.remove_peer(team_k, member.public_key)
+            await self.db.delete_team_member_by_team(team_k, member.member_id)
+
+    async def get_peer_stats(self, team_k: int) -> List[PeerStats]:
+        """Returns active WireGuard peers and telemetry for a team."""
+        team = await self.db.get_team_by_k(team_k)
+        if not team:
+            raise TeamNotFoundError(f"Team {team_k} not found")
+
+        members = await self.db.list_team_members(team_k)
+        active_peers = await self.wg.list_peers(team_k)
+        now_ts = int(time.time())
+
+        stats_list: List[PeerStats] = []
+        for m in members:
+            p_stat = active_peers.get(m.public_key, {})
+            latest_hs = p_stat.get("latest_handshake", 0)
+            online = (now_ts - latest_hs <= 180) if latest_hs > 0 else False
+            stats_list.append(
+                PeerStats(
+                    member_id=m.member_id,
+                    ctfd_user_id=m.ctfd_user_id,
+                    name=m.name,
+                    client_ip=m.client_ip,
+                    public_key=m.public_key,
+                    endpoint=p_stat.get("endpoint") if p_stat.get("endpoint") != "(none)" else None,
+                    allowed_ips=p_stat.get("allowed_ips", f"{m.client_ip}/32"),
+                    latest_handshake=latest_hs,
+                    transfer_rx=p_stat.get("transfer_rx", 0),
+                    transfer_tx=p_stat.get("transfer_tx", 0),
+                    persistent_keepalive=p_stat.get("persistent_keepalive", "off"),
+                    online=online,
+                )
+            )
+        return stats_list
+=== OVN.PY HEAD ===
+"""OVN dark sandbox verification orchestrator template.
+
+Acts as an Asynchronous Context Manager (RAII) coordinating:
+1. Creation of dark OVN logical switch.
+2. Fast CoW cloning of production target containers.
+3. Rebinding container eth0 NIC from live bridge to OVN switch.
+4. Optional provisioning of ephemeral verifier runner.
+5. In-situ and black-box probe execution.
+6. Guaranteed reverse-order teardown.
+"""
+
+import asyncio
+import time
+from typing import Any, Dict, List, Optional
+from ..config import settings
+from ..engine.base import ContainerEngine
+from ..incus import devices
+from ..models import ChallengeConfig, VerifyResultResp, ContainerSpec
+from ..network.commands import ip
+from ..network.templates import render_interfaces_conf, render_networkd_conf
+
+
+
+class OVNVerifier:
+    """Async context manager managing OVN sandbox lifecycle and verifier runners.
+
+    NOTE: This is an architectural template to be populated in Phase 2.
+    """
+
+    def __init__(self, engine: ContainerEngine, config: ChallengeConfig, session_id: str, team_k: Optional[int] = None):
+        self.engine = engine
+        self.config = config
+        self.session_id = session_id[:4] if len(session_id) > 4 else session_id
+        if team_k is not None:
+            self.team_k = team_k
+        elif hasattr(config, "team_k") and getattr(config, "team_k") is not None:
+            self.team_k = getattr(config, "team_k")
+        else:
+            raise ValueError("team_k must be provided to OVNVerifier")
+        self.net_name = f"verify-{self.team_k}"
+        self.clones: List[str] = []
+        self.verifier_container_name: Optional[str] = None
+        self.step_timings: Dict[str, Any] = {}
+        self._t_start = time.perf_counter()
+
+    async def __aenter__(self) -> "OVNVerifier":
+        """Provisions the dark OVN network and CoW clones the target instances."""
+        try:
+            t_enter = time.perf_counter()
+            net_config = {
+                "network": "incusbr0",
+                "ipv4.address": f"10.{self.team_k}.1.1/24",
+                "ipv4.nat": "true",
+            }
+
+            t0 = time.perf_counter()
+            await self.engine.create_network(
+                name=self.net_name,
+                config=net_config,
+            )
+            ovn_net_sec = time.perf_counter() - t0
+
+            clone_timings: List[dict] = []
+            for c in self.config.containers:
+                c_t0 = time.perf_counter()
+                source_name = f"c-{self.team_k}-{c.name}"
+                clone_name = f"verify-{self.team_k}-{c.name}"
+                ip_addr = f"10.{self.team_k}.1.{c.ip_suffix}"
+                gw_ip = f"10.{self.team_k}.1.1"
+
+                t_cl = time.perf_counter()
+                await self.engine.clone_instance(source_name, clone_name)
+                clone_sec = time.perf_counter() - t_cl
+
+                t_conn = time.perf_counter()
+                await self.engine.connect_network(clone_name, self.net_name)
+                conn_sec = time.perf_counter() - t_conn
+
+                t_st = time.perf_counter()
+                await self.engine.start_instance(clone_name)
+                start_sec = time.perf_counter() - t_st
+                self.clones.append(clone_name)
+
+                # Ensure runtime IP and route are active
+                t_net = time.perf_counter()
+                try:
+                    await self.engine.exec_command(clone_name, ip.addr_replace(f"{ip_addr}/24", "eth0"))
+                    await self.engine.exec_command(clone_name, ip.link_up("eth0"))
+                    await self.engine.exec_command(clone_name, ip.route_replace_default(gw_ip, "eth0"))
+                except Exception:
+                    pass
+                runtime_net_sec = time.perf_counter() - t_net
+
+                clone_timings.append({
+                    "clone": clone_name,
+                    "clone_sec": round(clone_sec, 4),
+                    "connect_sec": round(conn_sec, 4),
+                    "start_sec": round(start_sec, 4),
+                    "runtime_net_sec": round(runtime_net_sec, 4),
+                    "total_clone_sec": round(time.perf_counter() - c_t0, 4),
+                })
+
+            runner_sec = 0.0
+            if self.config.verifier:
+                t_v = time.perf_counter()
+                v_name = f"verify-runner-{self.team_k}"
+                self.verifier_container_name = v_name
+                v_ip = f"10.{self.team_k}.1.{self.config.verifier.ip_suffix}"
+                gw_ip = f"10.{self.team_k}.1.1"
+
+                v_spec = ContainerSpec(
+                    name=v_name,
+                    image=self.config.verifier.image,
+                    ip_suffix=self.config.verifier.ip_suffix,
+                    limits_cpu=self.config.verifier.limits_cpu,
+                    limits_memory=self.config.verifier.limits_memory,
+                )
+                dev_map = devices.nic_ovn(self.net_name, dev_name="eth0")
+                await self.engine.create_instance(v_spec, devices=dev_map)
+
+                # Inject static network configuration
+                networkd_conf = render_networkd_conf(ip=v_ip, gateway=gw_ip)
+                try:
+                    await self.engine.push_file(v_name, "/etc/systemd/network/10-eth0.network", networkd_conf, mode="0644")
+                except Exception:
+                    pass
+
+                interfaces_conf = render_interfaces_conf(ip=v_ip, gateway=gw_ip)
+                try:
+                    await self.engine.push_file(v_name, "/etc/network/interfaces", interfaces_conf, mode="0644")
+                except Exception:
+                    pass
+
+                await self.engine.start_instance(v_name)
+
+                # Ensure runtime IP and route are active
+                try:
+                    await self.engine.exec_command(v_name, ip.addr_replace(f"{v_ip}/24", "eth0"))
+                    await self.engine.exec_command(v_name, ip.link_up("eth0"))
+                    await self.engine.exec_command(v_name, ip.route_replace_default(gw_ip, "eth0"))
+

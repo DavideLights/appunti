@@ -1,0 +1,8 @@
+
+The command exited with code 0.
+Output:
+Deploy: 201
+Verify setup: 200 True
+Cleanup verify: 200 {'clones_teardown_sec': 1.3841, 'ovn_network_delete_sec': 0.0858, 'total_cleanup_sec': 1.4699}
+All clean!
+

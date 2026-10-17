@@ -1,0 +1,13 @@
+
+The command exited with code 0.
+Output:
+             step_name  duration_sec  ...  net_ram_peak_mb  net_ram_delta_mb
+102    provision_teams        1.3258  ...             3006              12.0
+103  deploy_challenges      103.1003  ...             5424            2430.0
+104       verify_setup       75.1486  ...             8269            5275.0
+105     verify_cleanup       18.0063  ...             8241            5247.0
+106  teardown_machines       23.0930  ...             5656            2662.0
+107     teardown_teams        1.5602  ...             3102             108.0
+
+[6 rows x 7 columns]
+

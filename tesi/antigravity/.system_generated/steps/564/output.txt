@@ -1,0 +1,8 @@
+
+The command exited with code 0.
+Output:
+services_challenges.py                          0%    0     0.0KB/s   --:-- ETAservices_challenges.py                        100%   17KB  27.6MB/s   00:00    
+Verify setup: 500 None
+Cleanup verify: 200 {'status': 'cleaned', 'step_timings': {'clones_teardown_sec': 1.0782, 'ovn_network_delete_sec': 0.1476, 'total_cleanup_sec': 1.2258}}
+Cleanup done!
+

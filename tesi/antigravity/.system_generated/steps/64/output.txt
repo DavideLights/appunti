@@ -1,0 +1,225 @@
+
+The command exited with code 0.
+Output:
+<truncated 1 lines>
+
+from datetime import datetime, timezone
+import logging
+import time
+from typing import List, Optional
+
+from ..config import settings
+from ..database import DatabaseManager
+from ..engine.base import ContainerEngine
+from ..incus import devices
+from ..locks import LockRegistry, LockTimeoutError
+from ..models import (
+    ChallengeConfig,
+    DeployResponse,
+    RunningContainerRecord,
+    VerifyResultResp,
+)
+from ..network.commands import ip
+from ..network.host_net import HostNetworkManager
+from ..network.templates import render_interfaces_conf, render_networkd_conf
+from ..verifier.ovn import OVNVerifier
+
+logger = logging.getLogger(__name__)
+
+
+class ChallengeServiceError(Exception):
+    """Base exception for challenge service operations."""
+
+
+class TeamNotFoundError(ChallengeServiceError):
+    """Raised when the specified team does not exist."""
+
+
+class BridgeNotActiveError(ChallengeServiceError):
+    """Raised when the team production bridge is not active."""
+
+
+class ImageNotReadyError(ChallengeServiceError):
+    """Raised when a container image is not ready or missing."""
+
+
+class DeploymentRollbackError(ChallengeServiceError):
+    """Raised when deployment fails and rollback succeeds."""
+
+
+class DeploymentFailedError(ChallengeServiceError):
+    """Raised when deployment fails and rollback also encounters errors."""
+
+
+class VerificationLockedError(ChallengeServiceError):
+    """Raised when verification cannot acquire required locks."""
+
+
+class TeardownError(ChallengeServiceError):
+    """Raised when container or state teardown fails."""
+
+
+async def teardown_challenge(
+    challenge_id: str,
+    team_k: int,
+    db: DatabaseManager,
+    engine: ContainerEngine,
+    container_names: Optional[List[str]] = None,
+) -> None:
+    """Tears down container instances and clears database state.
+
+    If container_names is provided, only those specific containers are torn down.
+    Otherwise, all containers for team_k are torn down.
+    Expects caller to manage locks.
+    """
+    targets = []
+    if container_names:
+        for name in container_names:
+            c = await db.get_container_by_spec(team_k, name)
+            if c:
+                targets.append(c)
+            else:
+                c_full = await db.get_container(name)
+                if c_full and c_full.team_k == team_k:
+                    targets.append(c_full)
+                else:
+                    full_name = f"c-{team_k}-{name}"
+                    targets.append(type("TempTarget", (), {"instance_name": full_name})())
+    else:
+        targets = await db.list_team_containers(team_k)
+
+    errors = []
+    for inst in targets:
+        try:
+            logger.info("Stopping and deleting instance '%s'", inst.instance_name)
+            await engine.delete_instance(inst.instance_name, force=True)
+            await db.delete_container(inst.instance_name)
+        except Exception as exc:
+            logger.warning("Error deleting instance '%s': %s", inst.instance_name, exc)
+            errors.append(f"{inst.instance_name}: {exc}")
+
+    if errors:
+        err_msg = "; ".join(errors)
+        raise TeardownError(f"Failed to teardown containers for team {team_k}: {err_msg}")
+
+    logger.info("Containers for team %d successfully torn down.", team_k)
+
+
+class ChallengeService:
+    """Orchestrates challenge deployment, container lifecycle, and sandbox verification."""
+
+    def __init__(
+        self,
+        db: DatabaseManager,
+        engine: ContainerEngine,
+        host_net: HostNetworkManager,
+        locks: LockRegistry,
+    ):
+        self.db = db
+        self.engine = engine
+        self.host_net = host_net
+        self.locks = locks
+
+    async def deploy_challenge(self, team_k: int, config: ChallengeConfig) -> DeployResponse:
+=== OVN TOP ===
+"""OVN dark sandbox verification orchestrator template.
+
+Acts as an Asynchronous Context Manager (RAII) coordinating:
+1. Creation of dark OVN logical switch.
+2. Fast CoW cloning of production target containers.
+3. Rebinding container eth0 NIC from live bridge to OVN switch.
+4. Optional provisioning of ephemeral verifier runner.
+5. In-situ and black-box probe execution.
+6. Guaranteed reverse-order teardown.
+"""
+
+import asyncio
+import time
+from typing import Any, Dict, List, Optional
+from ..config import settings
+from ..engine.base import ContainerEngine
+from ..incus import devices
+from ..models import ChallengeConfig, VerifyResultResp, ContainerSpec
+from ..network.commands import ip
+from ..network.templates import render_interfaces_conf, render_networkd_conf
+
+
+
+class OVNVerifier:
+    """Async context manager managing OVN sandbox lifecycle and verifier runners.
+
+    NOTE: This is an architectural template to be populated in Phase 2.
+    """
+
+    def __init__(self, engine: ContainerEngine, config: ChallengeConfig, session_id: str, team_k: Optional[int] = None):
+        self.engine = engine
+        self.config = config
+        self.session_id = session_id[:4] if len(session_id) > 4 else session_id
+        if team_k is not None:
+            self.team_k = team_k
+        elif hasattr(config, "team_k") and getattr(config, "team_k") is not None:
+            self.team_k = getattr(config, "team_k")
+        else:
+            raise ValueError("team_k must be provided to OVNVerifier")
+        self.net_name = f"verify-{self.team_k}"
+        self.clones: List[str] = []
+        self.verifier_container_name: Optional[str] = None
+        self.step_timings: Dict[str, Any] = {}
+        self._t_start = time.perf_counter()
+
+    async def __aenter__(self) -> "OVNVerifier":
+        """Provisions the dark OVN network and CoW clones the target instances."""
+        try:
+            t_enter = time.perf_counter()
+            net_config = {
+                "network": "incusbr0",
+                "ipv4.address": f"10.{self.team_k}.1.1/24",
+                "ipv4.nat": "true",
+            }
+
+            t0 = time.perf_counter()
+            await self.engine.create_network(
+                name=self.net_name,
+                config=net_config,
+            )
+            ovn_net_sec = time.perf_counter() - t0
+
+            clone_timings: List[dict] = []
+            for c in self.config.containers:
+                c_t0 = time.perf_counter()
+                source_name = f"c-{self.team_k}-{c.name}"
+                clone_name = f"verify-{self.team_k}-{c.name}"
+                ip_addr = f"10.{self.team_k}.1.{c.ip_suffix}"
+                gw_ip = f"10.{self.team_k}.1.1"
+
+                t_cl = time.perf_counter()
+                await self.engine.clone_instance(source_name, clone_name)
+                clone_sec = time.perf_counter() - t_cl
+
+                t_conn = time.perf_counter()
+                await self.engine.connect_network(clone_name, self.net_name)
+                conn_sec = time.perf_counter() - t_conn
+
+                t_st = time.perf_counter()
+                await self.engine.start_instance(clone_name)
+                start_sec = time.perf_counter() - t_st
+                self.clones.append(clone_name)
+
+                # Ensure runtime IP and route are active
+                t_net = time.perf_counter()
+                try:
+                    await self.engine.exec_command(clone_name, ip.addr_replace(f"{ip_addr}/24", "eth0"))
+                    await self.engine.exec_command(clone_name, ip.link_up("eth0"))
+                    await self.engine.exec_command(clone_name, ip.route_replace_default(gw_ip, "eth0"))
+                except Exception:
+                    pass
+                runtime_net_sec = time.perf_counter() - t_net
+
+                clone_timings.append({
+                    "clone": clone_name,
+                    "clone_sec": round(clone_sec, 4),
+                    "connect_sec": round(conn_sec, 4),
+                    "start_sec": round(start_sec, 4),
+                    "runtime_net_sec": round(runtime_net_sec, 4),
+                    "total_clone_sec": round(time.perf_counter() - c_t0, 4),
+

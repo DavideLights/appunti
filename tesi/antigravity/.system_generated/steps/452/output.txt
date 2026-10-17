@@ -1,0 +1,14 @@
+
+The command exited with code 0.
+Output:
+CREATE TABLE images (
+    alias TEXT PRIMARY KEY,
+    yaml_sha256 TEXT NOT NULL,
+    yaml_text TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('building', 'ready', 'failed')),
+    fingerprint TEXT,
+    error TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+)
+

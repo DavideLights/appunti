@@ -1,0 +1,17 @@
+
+The command exited with code 0.
+Output:
++------+-------+------+------+------+-----------+
+| NAME | STATE | IPV4 | IPV6 | TYPE | SNAPSHOTS |
++------+-------+------+------+------+-----------+
+br-team-11       DOWN           7a:fa:71:0b:67:6a <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+wg-11            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+br-team-12       DOWN           e6:37:15:87:17:40 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+wg-12            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+br-team-13       DOWN           2a:f5:83:fb:f8:4e <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+wg-13            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+br-team-14       DOWN           4e:7d:5a:a1:bc:e8 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+wg-14            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+br-team-15       DOWN           66:cf:a6:be:84:df <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+wg-15            UNKNOWN        <POINTOPOINT,NOARP,UP,LOWER_UP> 
+

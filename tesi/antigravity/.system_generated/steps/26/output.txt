@@ -1,0 +1,44 @@
+
+The command exited with code 0.
+Output:
+# BlueAgent v2: Problem & Hybrid Architecture
+
+## 1. Problem & Requirements
+Attack-Defense and Patch Management Cyber Ranges require stateful, multi-tier system environments (system containers running full OS, systemd, web, DB) rather than stateless Jeopardy tasks.
+
+Key engineering requirements:
+1. **Sub-Second Provisioning:** Rapid deployment vs slow (minutes) VM setup.
+2. **Deterministic Topology & Addressing:** Identical private IP topology per team ($k$) with static IPs (`10.k.1.x`), without cross-team collisions.
+3. **Non-Destructive, Leak-Free Verification:** Automated exploit/patch checkers must never run on live production (risking crashes, flag tampering, or payload sniffing via `tcpdump`).
+4. **Minimal Footprint:** High participant density without full VM virtualization overhead.
+
+---
+
+## 2. Core Architectural Principles
+
+- **Topological Fidelity:** Containers maintain single `eth0`, unchanged IP (`10.k.1.x`), and gateway (`10.k.1.1`) across both live and sandbox. Challenge applications are completely unaware of sandbox rebinding.
+- **Dual-Mode Verification:**
+  1. *In-Container (Agentless)*: Executed directly inside cloned target instances via hypervisor exec (`incus exec`) for health, configuration, and white-box checks.
+  2. *Ephemeral Verifier Container*: Test runner container (`verify-runner-{id}`) attached directly to the sandbox OVN logical switch for black-box network exploits without host routing.
+- **Occam’s Razor for Live Production:** Live path uses native kernel primitives (WireGuard + Linux Bridges) for bare-metal speed and transparent observability (`tcpdump`).
+- **Cryptokey Routing:** WireGuard peers have `AllowedIPs = 10.k.0.x/32` bound biunivoquely to participant public keys, preventing cross-team IP spoofing.
+
+---
+
+## 3. Technology Stack
+
+| Component | Technology | Operational Role |
+| :--- | :--- | :--- |
+| **Language & API** | Python 3.12 (Async) + FastAPI | Asynchronous REST control plane and event loop |
+| **IPC Transport** | `httpx` (Unix Domain Sockets) | Non-blocking communication via `/var/lib/incus/unix.socket` |
+| **Container Engine** | Incus (Primary) / Docker (Secondary) | System containers (Incus/LXC) and application containers (OCI) |
+| **SDN Provider** | OVN / Open vSwitch (OVS) | Geneve-encapsulated logical switches and routers |
+| **CoW Storage** | ZFS / Btrfs | Block-level Copy-on-Write for sub-second (~100 ms) cloning |
+| **L3 VPN** | WireGuard | Isolated participant network access with Cryptokey Routing |
+
+---
+
+## 4. Hybrid Architecture Topology
+
+```
+

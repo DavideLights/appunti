@@ -1,0 +1,17 @@
+
+The command exited with code 0.
+Output:
+totale 2224
+drwxr-xr-x 1 davidel davidel    540 16 ott 22.10 .
+drwxr-xr-x 1 davidel davidel    924 16 ott 22.10 ..
+-rw-r--r-- 1 davidel davidel  39289 16 ott 22.03 graph1_cow_vs_deploy.pdf
+-rw-r--r-- 1 davidel davidel 367392 16 ott 22.03 graph1_cow_vs_deploy.png
+-rw-r--r-- 1 davidel davidel  41209 16 ott 22.03 graph2_microphase_breakdown.pdf
+-rw-r--r-- 1 davidel davidel 410238 16 ott 22.03 graph2_microphase_breakdown.png
+-rw-r--r-- 1 davidel davidel  40609 16 ott 22.10 graph3_memory_scaling.pdf
+-rw-r--r-- 1 davidel davidel 295388 16 ott 22.10 graph3_memory_scaling.png
+-rw-r--r-- 1 davidel davidel 102371 16 ott 22.10 graph4_lifecycle_timeline.pdf
+-rw-r--r-- 1 davidel davidel 697543 16 ott 22.10 graph4_lifecycle_timeline.png
+-rw-r--r-- 1 davidel davidel  34598 16 ott 22.10 graph5_step_cpu_iowait.pdf
+-rw-r--r-- 1 davidel davidel 229330 16 ott 22.10 graph5_step_cpu_iowait.png
+

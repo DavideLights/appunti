@@ -1,0 +1,29 @@
+
+The command exited with code 0.
+Output:
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "/home/debian/bluectfd/blueagent/src/blueagent/main.py", line 14, in <module>
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     from .api import challenges_router, health_router, images_router, teams_router
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "/home/debian/bluectfd/blueagent/src/blueagent/api/__init__.py", line 3, in <module>
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     from .teams import router as teams_router
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "/home/debian/bluectfd/blueagent/src/blueagent/api/teams.py", line 18, in <module>
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     from ..services.teams import (
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     ...<8 lines>...
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     )
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "/home/debian/bluectfd/blueagent/src/blueagent/services/__init__.py", line 3, in <module>
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     from .challenges import ChallengeService
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "/home/debian/bluectfd/blueagent/src/blueagent/services/challenges.py", line 105, in <module>
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     class ChallengeService:
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     ...<292 lines>...
+Oct 16 14:10:40 debian13 uvicorn[1123885]:             }
+Oct 16 14:10:40 debian13 uvicorn[1123885]:   File "/home/debian/bluectfd/blueagent/src/blueagent/services/challenges.py", line 370, in ChallengeService
+Oct 16 14:10:40 debian13 uvicorn[1123885]:     async def cleanup_verify_sandbox(self, team_k: int, config: Optional[ChallengeConfig] = None) -> Dict[str, Any]:
+Oct 16 14:10:40 debian13 uvicorn[1123885]:                                                                                                      ^^^^
+Oct 16 14:10:40 debian13 uvicorn[1123885]: NameError: name 'Dict' is not defined. Did you mean: 'dict'?
+Oct 16 14:10:40 debian13 systemd[1]: blueagent.service: Main process exited, code=exited, status=1/FAILURE
+Oct 16 14:10:40 debian13 systemd[1]: blueagent.service: Failed with result 'exit-code'.
+

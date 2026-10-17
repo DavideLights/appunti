@@ -1,0 +1,7 @@
+
+The command exited with code 1.
+Output:
+debian cdrom floppy sudo audio dip video plugdev users netdev bluetooth
+uid=1000(debian) gid=1000(debian) groups=1000(debian),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),100(users),101(netdev),103(bluetooth)
+Error: You don't have the needed permissions to talk to the incus daemon (socket path: /var/lib/incus/unix.socket)
+

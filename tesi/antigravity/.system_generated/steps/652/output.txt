@@ -1,0 +1,14 @@
+The following changes were made by the replace_file_content tool to: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/plot_thesis_graphs.py. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -226,7 +226,7 @@
+     ax_ver.set_xticklabels(labels)
+     ax_ver.grid(True, axis='y')
+     ax_ver.legend(loc='upper left', framealpha=0.95)
+-    ax_ver.set_ylim(0, 58)
++    ax_ver.set_ylim(0, 85)
+ 
+     plt.suptitle('Graph 2: Micro-Phase Latency Breakdown (Ubuntu Heavy ~1.5 GB Service Stack)', fontsize=15, fontweight='bold', y=0.98)
+     plt.tight_layout()
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

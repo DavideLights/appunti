@@ -1,0 +1,95 @@
+
+The command exited with code 0.
+Output:
+"""Pytest fixtures for BlueAgent usability tests."""
+
+import os
+import subprocess
+import time
+import pytest
+from pathlib import Path
+from .client import BlueAgentTestClient, DEFAULT_BASE_URL, DEFAULT_TOKEN
+
+PORT = 8000
+SERVER_URL = f"http://127.0.0.1:{PORT}"
+
+
+@pytest.fixture(scope="session")
+def client():
+    """Provides an authenticated BlueAgentTestClient ensuring server is running."""
+    test_client = BlueAgentTestClient(base_url=SERVER_URL, token=DEFAULT_TOKEN)
+    proc = None
+
+    # Always terminate any stale server to load latest codebase
+    subprocess.run(["sudo", "pkill", "-9", "-f", f"port {PORT}"], check=False)
+    subprocess.run(["sudo", "pkill", "-9", "-f", "uvicorn blueagent.main:app"], check=False)
+    time.sleep(0.5)
+
+    src_path = str(Path(__file__).resolve().parent.parent.parent / "src")
+    log_file = Path("/tmp/blueagent_usability.log")
+    log_fd = open(log_file, "w")
+    cmd = [
+        "sudo",
+        "-E",
+        "env",
+        f"PYTHONPATH={src_path}",
+        f"BLUEAGENT_CTFD_API_TOKEN={DEFAULT_TOKEN}",
+        "python3",
+        "-m",
+        "uvicorn",
+        "blueagent.main:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        str(PORT),
+    ]
+    proc = subprocess.Popen(cmd, stdout=log_fd, stderr=log_fd)
+
+    # Wait for server to start
+    start_time = time.time()
+    ready = False
+    while time.time() - start_time < 20.0:
+        try:
+            import urllib.request
+=== client.py ===
+"""Async HTTP client helper for BlueAgent usability testing."""
+
+import asyncio
+import time
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+import httpx
+
+DEFAULT_BASE_URL = "http://127.0.0.1:8000"
+DEFAULT_TOKEN = "secret-token"
+
+
+class BlueAgentTestClient:
+    """Async wrapper over the BlueAgent REST API matching container-centric design."""
+
+    def __init__(self, base_url: str = DEFAULT_BASE_URL, token: str = DEFAULT_TOKEN, timeout: float = 600.0):
+        self.base_url = base_url.rstrip("/")
+        self.token = token
+        self.headers = {"Authorization": f"Bearer {self.token}"}
+        self.timeout = timeout
+
+    def _client(self) -> httpx.AsyncClient:
+        return httpx.AsyncClient(base_url=self.base_url, timeout=self.timeout)
+
+    async def wait_server_ready(self, max_seconds: float = 15.0) -> bool:
+        """Polls /health until the server is responsive."""
+        start = time.time()
+        while time.time() - start < max_seconds:
+            try:
+                async with self._client() as c:
+                    r = await c.get("/health")
+                    if r.status_code == 200:
+                        return True
+            except Exception:
+                pass
+            await asyncio.sleep(0.5)
+        raise TimeoutError(f"BlueAgent server at {self.base_url} did not become ready within {max_seconds}s")
+
+    # Team & Network endpoints
+    async def create_team(self, team_k: int, name: str = "Test Team", ctfd_team_id: Optional[int] = None) -> httpx.Response:
+

@@ -1,0 +1,9 @@
+
+The command exited with code 0.
+Output:
+c-15-app4
+c-15-app5
+c-15-app6
+c-15-app7
+verify-12-app1
+

@@ -1,0 +1,40 @@
+
+The command exited with code 0.
+Output:
+
+            # 3. Verify all container images are from distrobuilder and ready
+            for c in config.containers:
+                img_record = await self.db.get_image(c.image)
+                if not img_record or img_record.status != "ready":
+                    raise ImageNotReadyError(
+                        f"Image '{c.image}' is not ready in distrobuilder catalog. "
+                        f"Only pre-built distrobuilder images are allowed. Build via PUT /images/{c.image} first."
+                    )
+                if not await self.engine.image_alias_exists(c.image):
+                    raise ImageNotReadyError(
+                        f"Image alias '{c.image}' does not exist in container engine runtime"
+                    )
+
+            if config.verifier:
+                v_img = config.verifier.image
+                v_record = await self.db.get_image(v_img)
+                if not v_record or v_record.status != "ready":
+                    raise ImageNotReadyError(
+                        f"Verifier image '{v_img}' is not ready in distrobuilder catalog. "
+                        f"Only pre-built distrobuilder images are allowed. Build via PUT /images/{v_img} first."
+                    )
+                if not await self.engine.image_alias_exists(v_img):
+                    raise ImageNotReadyError(
+                        f"Verifier image alias '{v_img}' does not exist in container engine runtime"
+                    )
+            validation_sec = time.perf_counter() - t0
+
+            # 4. Container provisioning and configuration (idempotent upsert)
+            created_instances: List[str] = []
+            container_timings: List[dict] = []
+            try:
+                for c in config.containers:
+                    c_t0 = time.perf_counter()
+                    full_inst_name = f"c-{team_k}-{c.name}"
+                    ip_addr = f"10.{team_k}.1.{c.ip_suffix}"
+

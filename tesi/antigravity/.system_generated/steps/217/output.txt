@@ -1,0 +1,6 @@
+
+The command exited with code 127.
+Output:
+Running as unit: blueagent.service; invocation ID: ab70b3daa5c24abeb5e949ded208d7c5
+bash: line 1: curl: command not found
+

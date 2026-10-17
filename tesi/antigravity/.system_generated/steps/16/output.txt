@@ -1,0 +1,21 @@
+
+The command exited with code 0.
+Output:
+-rw-rw-r-- 1 debian debian 22638 Oct 16 11:20 /home/debian/bluectfd/blueagent/context.md
+
+/home/debian/bluectfd/blueagent/:
+total 88
+drwxrwxr-x 7 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 6 debian debian  4096 Oct 16 11:23 ..
+drwxrwxr-x 4 debian debian  4096 Oct 16 11:20 agent
+drwxrwxr-x 3 debian debian  4096 Oct 16 11:20 .agents
+-rw-rw-r-- 1 debian debian   586 Oct 16 11:20 AGENTS.md
+-rw-rw-r-- 1 debian debian 22638 Oct 16 11:20 context.md
+-rw-rw-r-- 1 debian debian   263 Oct 16 11:20 .gitignore
+-rw-rw-r-- 1 debian debian   761 Oct 16 11:20 pyproject.toml
+-rw-rw-r-- 1 debian debian  8603 Oct 16 11:20 README.md
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 scripts
+drwxrwxr-x 3 debian debian  4096 Oct 16 11:20 src
+drwxrwxr-x 3 debian debian  4096 Oct 16 11:20 tests
+-rw-rw-r-- 1 debian debian 10896 Oct 16 11:20 TODO.md
+

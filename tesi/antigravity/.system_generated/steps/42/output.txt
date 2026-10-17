@@ -1,0 +1,6 @@
+
+The command exited with code 0.
+Output:
+srw-rw---- 1 root incus-admin 0 Oct 16 11:16 /var/lib/incus/unix.socket
+incus-admin:x:987:
+

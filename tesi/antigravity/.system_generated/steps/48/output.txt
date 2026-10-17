@@ -1,0 +1,14 @@
+
+The command exited with code 0.
+Output:
+total 52
+drwxrwxr-x 6 debian debian  4096 Oct 16 11:23 .
+drwx------ 6 debian debian  4096 Oct 16 11:26 ..
+drwxrwxr-x 7 debian debian  4096 Oct 16 11:20 blueagent
+-rw-rw-r-- 1 debian debian  7176 Oct 16 11:20 context.md
+-rw-r--r-- 1 debian debian 16384 Oct 16 11:23 .context.md.swp
+drwxrwxr-x 9 debian debian  4096 Oct 16 11:20 CTFd
+drwxrwxr-x 8 debian debian  4096 Oct 16 11:20 .git
+-rw-rw-r-- 1 debian debian    85 Oct 16 11:20 .gitignore
+drwxrwxr-x 2 debian debian  4096 Oct 16 11:20 yaml
+

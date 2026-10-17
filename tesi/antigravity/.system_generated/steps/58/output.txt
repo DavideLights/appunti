@@ -1,0 +1,23 @@
+
+The command exited with code 0.
+Output:
+dcb8e42 initial commit
+89bdb53 sync
+9b88c20 update blueagent pointer to latest backup 0b8aeb2
+369b490 backup: BlueCTFd monorepo orchestrator (BlueAgent + CTFd + configs)
+src/blueagent/services/:
+total 60
+drwxrwxr-x  2 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 10 debian debian  4096 Oct 16 11:20 ..
+-rw-rw-r--  1 debian debian 15729 Oct 16 11:20 challenges.py
+-rw-rw-r--  1 debian debian  9813 Oct 16 11:20 images.py
+-rw-rw-r--  1 debian debian   217 Oct 16 11:20 __init__.py
+-rw-rw-r--  1 debian debian 19987 Oct 16 11:20 teams.py
+
+src/blueagent/verifier/:
+total 28
+drwxrwxr-x  2 debian debian  4096 Oct 16 11:20 .
+drwxrwxr-x 10 debian debian  4096 Oct 16 11:20 ..
+-rw-rw-r--  1 debian debian   118 Oct 16 11:20 __init__.py
+-rw-rw-r--  1 debian debian 14463 Oct 16 11:20 ovn.py
+

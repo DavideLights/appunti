@@ -1,0 +1,13 @@
+
+The command exited with code 0.
+Output:
+  pool: blueagent-zfs
+ state: ONLINE
+config:
+
+	NAME                                      STATE     READ WRITE CKSUM
+	blueagent-zfs                             ONLINE       0     0     0
+	  /var/lib/incus/disks/blueagent-zfs.img  ONLINE       0     0     0
+
+errors: No known data errors
+

@@ -1,0 +1,27 @@
+
+The command exited with code 0.
+Output:
+config: {}
+description: Default Incus profile
+devices:
+  eth0:
+    name: eth0
+    network: incusbr0
+    type: nic
+name: default
+used_by: []
+project: default
+NAME                                     USED  AVAIL  REFER  MOUNTPOINT
+blueagent-zfs                            644K  1.75G    24K  legacy
+blueagent-zfs/buckets                     24K  1.75G    24K  legacy
+blueagent-zfs/containers                  24K  1.75G    24K  legacy
+blueagent-zfs/custom                      24K  1.75G    24K  legacy
+blueagent-zfs/deleted                    144K  1.75G    24K  legacy
+blueagent-zfs/deleted/buckets             24K  1.75G    24K  legacy
+blueagent-zfs/deleted/containers          24K  1.75G    24K  legacy
+blueagent-zfs/deleted/custom              24K  1.75G    24K  legacy
+blueagent-zfs/deleted/images              24K  1.75G    24K  legacy
+blueagent-zfs/deleted/virtual-machines    24K  1.75G    24K  legacy
+blueagent-zfs/images                      24K  1.75G    24K  legacy
+blueagent-zfs/virtual-machines            24K  1.75G    24K  legacy
+

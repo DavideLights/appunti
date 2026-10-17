@@ -1,0 +1,8 @@
+
+The command exited with code 1.
+Output:
+root        1874  0.0  0.5 6712524 97460 ?       Ssl  11:23   0:00 /usr/libexec/incus/incusd --group incus-admin --logfile=/var/log/incus/incus.log
+debian      3224  0.0  0.0   7076  3492 ?        Ss   12:19   0:00 bash -c incus launch alpine test-probe && incus list && incus delete -f test-probe
+debian      3225  0.0  0.1 5810152 18372 ?       Sl   12:19   0:00 incus launch alpine test-probe
+Error: unknown command "operations" for "incus"
+

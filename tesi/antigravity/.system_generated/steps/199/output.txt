@@ -1,0 +1,12 @@
+
+The command exited with code 0.
+Output:
+27:    def __init__(
+38:    async def setup_team_bridge(self, team_k: int, gateway_ip: Optional[str] = None) -> str:
+88:    async def teardown_team_bridge(self, team_k: int) -> None:
+108:    async def check_bridge_status(self, team_k: int) -> bool:
+136:    async def apply_nftables_rules(self) -> None:
+153:    async def register_team_links(self, team_k: int) -> None:
+163:    async def unregister_team_links(self, team_k: int) -> None:
+172:    async def ensure_ip_forwarding(self) -> bool:
+

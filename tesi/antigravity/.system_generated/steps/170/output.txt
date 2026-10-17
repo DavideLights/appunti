@@ -1,0 +1,19 @@
+
+The command exited with code 0.
+Output:
+Device root added to default
+config: {}
+description: Default Incus profile
+devices:
+  eth0:
+    name: eth0
+    network: incusbr0
+    type: nic
+  root:
+    path: /
+    pool: blueagent-zfs
+    type: disk
+name: default
+used_by: []
+project: default
+

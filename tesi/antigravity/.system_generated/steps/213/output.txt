@@ -1,0 +1,26 @@
+
+The command exited with code 3.
+Output:
+Running as unit: blueagent.service; invocation ID: 842bdb0c114640e6bb615de9ae503d27
+× blueagent.service - [systemd-run] /home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000
+     Loaded: loaded (/run/systemd/transient/blueagent.service; transient)
+  Transient: yes
+     Active: failed (Result: exit-code) since Fri 2026-10-16 12:21:47 CDT; 4s ago
+   Duration: 389ms
+ Invocation: 842bdb0c114640e6bb615de9ae503d27
+    Process: 4213 ExecStart=/home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000 (code=exited, status=1/FAILURE)
+   Main PID: 4213 (code=exited, status=1/FAILURE)
+   Mem peak: 42M
+        CPU: 356ms
+
+Oct 16 12:21:47 debian13 uvicorn[4213]:   File "/home/debian/bluectfd/blueagent/.venv/lib/python3.13/site-packages/fastapi/dependencies/utils.py", line 523, in analyze_param
+Oct 16 12:21:47 debian13 uvicorn[4213]:     ensure_multipart_is_installed()
+Oct 16 12:21:47 debian13 uvicorn[4213]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+Oct 16 12:21:47 debian13 uvicorn[4213]:   File "/home/debian/bluectfd/blueagent/.venv/lib/python3.13/site-packages/fastapi/dependencies/utils.py", line 129, in ensure_multipart_is_installed
+Oct 16 12:21:47 debian13 uvicorn[4213]:     raise RuntimeError(multipart_not_installed_error) from None
+Oct 16 12:21:47 debian13 uvicorn[4213]: RuntimeError: Form data requires "python-multipart" to be installed.
+Oct 16 12:21:47 debian13 uvicorn[4213]: You can install "python-multipart" with:
+Oct 16 12:21:47 debian13 uvicorn[4213]: pip install python-multipart
+Oct 16 12:21:47 debian13 systemd[1]: blueagent.service: Main process exited, code=exited, status=1/FAILURE
+Oct 16 12:21:47 debian13 systemd[1]: blueagent.service: Failed with result 'exit-code'.
+

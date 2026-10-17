@@ -1,0 +1,39 @@
+The following changes were made by the replace_file_content tool to: /home/davidel/.gemini/antigravity/brain/335ea41a-df46-4ffa-bb4c-eefc5a5248cd/scratch/benchmark_suite.py. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -1062,6 +1062,8 @@
+     parser.add_argument('--test', choices=['1', 'matrix', 'all'], default='all',
+                         help='Which test to run: 1 (Baseline), matrix (8 Matrix scenarios), or all (Test 1 + Matrix)')
+     parser.add_argument('--cycles', type=int, default=10, help='Cycles for Test 1')
++    parser.add_argument('--single-m', type=int, default=None, help='Run only single scenario with M teams')
++    parser.add_argument('--single-n', type=int, default=None, help='Run only single scenario with N containers')
+     parser.add_argument('--reset', action='store_true', help='Clear previous saved benchmark state before running')
+     args = parser.parse_args()
+ 
+@@ -1079,11 +1079,15 @@
+ 
+     t_suite_start = time.perf_counter()
+ 
+-    if args.test in ('1', 'all'):
++    if args.test in ('1', 'all') and args.single_m is None:
+         await runner.run_test_1(cycles=args.cycles)
+ 
+-    if args.test in ('matrix', 'all'):
+-        await runner.run_scenarios(THESIS_MATRIX_SCENARIOS)
++    if args.test in ('matrix', 'all') or args.single_m is not None:
++        if args.single_m is not None and args.single_n is not None:
++            scenarios = [(args.single_m, args.single_n)]
++        else:
++            scenarios = THESIS_MATRIX_SCENARIOS
++        await runner.run_scenarios(scenarios)
+ 
+     total_elapsed = time.perf_counter() - t_suite_start
+     logger.info('[*] Suite Finished in %.2f seconds (%.2f minutes)', total_elapsed, total_elapsed / 60)
+@@ -1090,4 +1090,5 @@
+ 
++
+ if __name__ == '__main__':
+     asyncio.run(main())
+ 
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

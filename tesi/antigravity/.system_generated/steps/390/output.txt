@@ -1,0 +1,4 @@
+A1: Ubuntu 24.04 + pre-installed packages (e.g. nginx + python3 + postgresql/sqlite baked into the image for a ~600+ MB "fat" CTF service image)
+A2: (Recommended) Run Test 1 Baseline (M=1, N=1) + Stage 3 (M in {2,5} x N in {7,10} and M=10 x N in {2,5}) so you have both single-container baseline and high-density (up to 100 containers) data for Ubuntu
+A3: (Recommended) Save Ubuntu runs to separate files (thesis_ubuntu_results.csv, thesis_ubuntu_raw_samples.csv, thesis_ubuntu_report.md) AND also include an image_alias column so Alpine files remain untouched
+A4: (Recommended) /home/debian/bluectfd/thesis_notes.md on the remote server (plus a synced copy in the local workspace)

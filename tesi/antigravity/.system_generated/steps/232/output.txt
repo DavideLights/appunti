@@ -1,0 +1,6 @@
+
+The command exited with code 2.
+Output:
+bash: -c: riga 439: errore di sintassi vicino al token non atteso "'test_name'"
+bash: -c: riga 439: `                f.write(f"| {r.get('test_name')} | {r.get('teams_count')} | {r.get('containers_per_team')} | {r.get('peak_containers_verify', 2 * r.get('teams_count', 0) * r.get('containers_per_team', 0))} | {r.get('deploy_wall_sec', '-')} | {r.get('deploy_stats', {}).get('p95', '-')} | {r.get('verify_wall_sec', '-')} | {r.get('verify_stats', {}).get('p95', '-')} | {r.get('phase_stats', {}).get('cow_clone_sec', {}).get('avg', '-')} | {r.get('phase_stats', {}).get('ovn_create_sec', {}).get('avg', '-')} | {r.get('ram_used_mb', '-')} |\n")'
+

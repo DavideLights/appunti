@@ -1,0 +1,14 @@
+
+The command exited with code 0.
+Output:
+21 1 0x01 148 40256 13517134659 11075169228708
+name                            type data
+hits                            4    101773275
+iohits                          4    20285
+misses                          4    27673
+demand_data_hits                4    4161854
+demand_data_iohits              4    0
+demand_data_misses              4    153
+demand_metadata_hits            4    97549623
+demand_metadata_iohits          4    126
+

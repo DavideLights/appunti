@@ -1,0 +1,60 @@
+
+The command exited with code 0.
+Output:
+                    "total_runtime_net_sec": round(sum(ct["runtime_net_sec"] for ct in container_timings), 4),
+                    "total_db_record_sec": round(sum(ct["db_record_sec"] for ct in container_timings), 4),
+                    "total_deploy_sec": round(deploy_total_sec, 4),
+                    "container_details": container_timings,
+                }
+
+                return DeployResponse(
+                    team_k=team_k,
+                    challenge_id=config.challenge_id,
+                    status="running",
+                    config_json=config.model_dump_json(),
+                    deployed_at=now_dt,
+                    updated_at=now_dt,
+                    containers=team_containers,
+                    instances=team_containers,
+                    step_timings=step_timings,
+                )
+
+            except Exception as deploy_err:
+                logger.exception(
+                    "Challenge '%s' deployment failed on team %d, performing atomic rollback: %s",
+                    config.challenge_id,
+                    team_k,
+                    deploy_err,
+                )
+                rollback_errors = []
+                for name in reversed(created_instances):
+                    try:
+                        logger.info("Rolling back instance '%s'", name)
+                        await self.engine.delete_instance(name, force=True)
+                        await self.db.delete_container(name)
+                    except Exception as rb_exc:
+                        rollback_errors.append(f"{name}: {rb_exc}")
+
+                if not rollback_errors:
+                    raise DeploymentRollbackError(
+                        f"Challenge deployment failed and was rolled back: {deploy_err}"
+                    ) from deploy_err
+                else:
+                    raise DeploymentFailedError(
+                        f"Challenge deployment failed and rollback encountered errors: {deploy_err}"
+                    ) from deploy_err
+
+    async def teardown_challenge(
+        self,
+        team_k: int,
+        challenge_id: Optional[str] = "ch",
+        container_names: Optional[List[str]] = None,
+    ) -> None:
+        """Tears down containers for team k within the team lock."""
+        async with self.locks.lock_team(team_k):
+            team = await self.db.get_team_by_k(team_k)
+            if not team:
+                raise TeamNotFoundError(f"Team {team_k} does not exist")
+            await teardown_challenge(
+                challenge_id=challenge_id or "ch",
+

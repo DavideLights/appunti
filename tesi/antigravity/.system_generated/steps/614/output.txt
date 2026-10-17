@@ -1,0 +1,10 @@
+
+The command exited with code 0.
+Output:
+               total        used        free      shared  buff/cache   available
+Mem:           15998        3695        8423           1        4215       12302
+Swap:           2043           0        2043
++------+-------+------+------+------+-----------+
+| NAME | STATE | IPV4 | IPV6 | TYPE | SNAPSHOTS |
++------+-------+------+------+------+-----------+
+

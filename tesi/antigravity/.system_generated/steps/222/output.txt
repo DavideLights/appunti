@@ -1,0 +1,26 @@
+
+The command exited with code 0.
+Output:
+● blueagent.service - [systemd-run] /home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000
+     Loaded: loaded (/run/systemd/transient/blueagent.service; transient)
+  Transient: yes
+     Active: active (running) since Fri 2026-10-16 12:22:06 CDT; 11s ago
+ Invocation: ab70b3daa5c24abeb5e949ded208d7c5
+   Main PID: 4264 (uvicorn)
+      Tasks: 5 (limit: 19127)
+     Memory: 45.2M (peak: 47M)
+        CPU: 363ms
+     CGroup: /system.slice/blueagent.service
+             └─4264 /home/debian/bluectfd/blueagent/.venv/bin/python3 /home/debian/bluectfd/blueagent/.venv/bin/uvicorn blueagent.main:app --host 127.0.0.1 --port 8000
+
+Oct 16 12:22:07 debian13 uvicorn[4264]: 2026-10-16 12:22:07,238 [INFO] blueagent: IncusEngine initialized via Unix socket '/var/lib/incus/unix.socket'
+Oct 16 12:22:07 debian13 uvicorn[4264]: 2026-10-16 12:22:07,238 [INFO] blueagent: HostNetworkManager and WireGuardManager initialized
+Oct 16 12:22:07 debian13 uvicorn[4264]: 2026-10-16 12:22:07,242 [INFO] blueagent.network.host_net: Applying atomic nftables skeleton for table 'inet blueagent'
+Oct 16 12:22:08 debian13 uvicorn[4264]: 2026-10-16 12:22:08,383 [INFO] blueagent: Host nftables rules and MSS clamping applied
+Oct 16 12:22:08 debian13 uvicorn[4264]: 2026-10-16 12:22:08,384 [INFO] blueagent.lifecycle.manager: LifecycleManager background worker started with interval=120s, grace_period=600s
+Oct 16 12:22:08 debian13 uvicorn[4264]: 2026-10-16 12:22:08,384 [INFO] blueagent: LifecycleManager background worker started
+Oct 16 12:22:08 debian13 uvicorn[4264]: INFO:     Application startup complete.
+Oct 16 12:22:08 debian13 uvicorn[4264]: INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Oct 16 12:22:08 debian13 uvicorn[4264]: 2026-10-16 12:22:08,397 [INFO] httpx: HTTP Request: GET http://localhost/1.0/instances "HTTP/1.1 200 OK"
+Oct 16 12:22:08 debian13 uvicorn[4264]: 2026-10-16 12:22:08,399 [INFO] httpx: HTTP Request: GET http://localhost/1.0/networks "HTTP/1.1 200 OK"
+

@@ -1,0 +1,10 @@
+
+The command exited with code 0.
+Output:
+thesis_alpine_raw_samples.csv                   0%    0     0.0KB/s   --:-- ETAthesis_alpine_raw_samples.csv                 100%   12KB  20.1MB/s   00:00    
+thesis_alpine_report.md                         0%    0     0.0KB/s   --:-- ETAthesis_alpine_report.md                       100% 3022    10.2MB/s   00:00    
+thesis_alpine_results.csv                       0%    0     0.0KB/s   --:-- ETAthesis_alpine_results.csv                     100% 3885    13.7MB/s   00:00    
+thesis_alpine_state.json                        0%    0     0.0KB/s   --:-- ETAthesis_alpine_state.json                      100%  194KB 123.2MB/s   00:00    
+thesis_alpine_step_resources.csv                0%    0     0.0KB/s   --:-- ETAthesis_alpine_step_resources.csv              100%   14KB  41.4MB/s   00:00    
+thesis_alpine_timeseries.csv                    0%    0     0.0KB/s   --:-- ETAthesis_alpine_timeseries.csv                  100%  127KB 159.1MB/s   00:00    
+

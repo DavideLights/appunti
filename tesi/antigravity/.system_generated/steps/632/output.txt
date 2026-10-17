@@ -1,0 +1,8 @@
+
+The command exited with code 0.
+Output:
++------+-------+------+------+------+-----------+
+| NAME | STATE | IPV4 | IPV6 | TYPE | SNAPSHOTS |
++------+-------+------+------+------+-----------+
+BlueAgent health: {'status': 'ok'}
+

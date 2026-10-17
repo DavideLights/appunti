@@ -1,0 +1,7 @@
+
+The command exited with code 0.
+Output:
+services_challenges.py                          0%    0     0.0KB/s   --:-- ETAservices_challenges.py                        100%   17KB  17.5MB/s   00:00    
+api_challenges.py                               0%    0     0.0KB/s   --:-- ETAapi_challenges.py                             100% 5778    15.3MB/s   00:00    
+{'status': 'ok'}
+

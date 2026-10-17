@@ -1,0 +1,50 @@
+
+The command exited with code 0.
+Output:
+12:24:40 [INFO] HTTP Request: GET http://127.0.0.1:8000/health "HTTP/1.1 200 OK"
+12:24:40 [INFO] ===============================================================
+12:24:40 [INFO] TEST 1: SINGLE-TEAM BASELINE & MICRO-PHASE PROFILING (N=1, M=1, 5 cycles)
+12:24:40 [INFO] ===============================================================
+12:24:40 [INFO] Performing pre-flight teardown of existing teams: [1]
+12:24:40 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 404 Not Found"
+12:24:40 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+12:24:40 [INFO] [Test 1] Cycle 1/5 starting...
+12:24:40 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+12:24:41 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+12:24:44 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+12:24:46 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+12:24:46 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+12:24:46 [INFO] Cycle 1 finished: Deploy=1.029s, Verify=2.764s
+12:24:46 [INFO] [Test 1] Cycle 2/5 starting...
+12:24:46 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+12:24:47 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+12:24:50 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+12:24:50 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+12:24:51 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+12:24:51 [INFO] Cycle 2 finished: Deploy=0.983s, Verify=2.285s
+12:24:51 [INFO] [Test 1] Cycle 3/5 starting...
+12:24:51 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+12:24:53 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+12:24:57 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+12:24:57 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+12:24:58 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+12:24:58 [INFO] Cycle 3 finished: Deploy=1.896s, Verify=3.496s
+12:24:58 [INFO] [Test 1] Cycle 4/5 starting...
+12:24:58 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+12:25:00 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+12:25:03 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+12:25:04 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+12:25:04 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+12:25:04 [INFO] Cycle 4 finished: Deploy=1.927s, Verify=2.674s
+12:25:04 [INFO] [Test 1] Cycle 5/5 starting...
+12:25:04 [INFO] HTTP Request: PUT http://127.0.0.1:8000/teams/1 "HTTP/1.1 201 Created"
+12:25:05 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 201 Created"
+12:25:09 [INFO] HTTP Request: POST http://127.0.0.1:8000/teams/1/verificator "HTTP/1.1 200 OK"
+12:25:09 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1/machines "HTTP/1.1 204 No Content"
+12:25:08 [INFO] HTTP Request: DELETE http://127.0.0.1:8000/teams/1 "HTTP/1.1 204 No Content"
+12:25:08 [INFO] Cycle 5 finished: Deploy=0.838s, Verify=3.371s
+12:25:08 [INFO] [+] Test 1 Completed successfully.
+12:25:08 [INFO] [+] Exported CSV to /home/debian/bluectfd/blueagent/tests/thesis_stress_test_results.csv
+12:25:08 [INFO] [+] Exported Markdown Report to /home/debian/bluectfd/blueagent/tests/thesis_stress_test_report.md
+12:25:08 [INFO] [*] Entire Benchmark Suite Finished in 29.53 seconds (0.49 minutes)
+
