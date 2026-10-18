@@ -231,3 +231,33 @@ All protected endpoints require authentication via CTFd token (`Authorization: B
 | **Thesis Benchmark Suite**| `tests/test_thesis.py` | Complete | Modular matrix ($K \times M$) test harness with CSV and Markdown export |
 | **CTFd Plugin Tutorial**  | `agent/ctfd_plugin_tutorial.md` | Complete | Guide & code reference for CTFd plugin integration |
 
+---
+
+## 7. Aggiornamenti, Hardening & Ottimizzazioni (Ottobre 2026)
+
+Nel mese di Ottobre 2026 è stato eseguito un ciclo intensivo di refactoring, hardening, ottimizzazione I/O e snellimento dell'interfaccia client su BlueAgent (`111/111 unit tests passed`).
+
+### 7.1 Risoluzione Bug Logici & Concorrenza (L1–L6)
+- **L1 (Reboot Reconciliation)**: Aggiunta procedura di riconciliazione automatica allo startup (`main.py` lifespan) che ripristina bridge kernel `br-team-k`, interfacce WireGuard `wg-k` e peer da SQLite, riavviando i container `STOPPED` e riapplicando gli IP runtime.
+- **L2 (OVN Race Condition)**: `LifecycleManager` ora verifica `locks.is_verify_locked(team_k)` ed esclude le reti OVN associate a sessioni di verifica in corso prima di potare gli orfani.
+- **L3 (Zombie Clone Prevention)**: In `OVNVerifier`, la registrazione in `self.clones` avviene immediatamente dopo `clone_instance()`, garantendo la pulizia CoW anche in caso di fail su rete o start.
+- **L4 (Deterministic Verify Execution)**: Rimosso il loop 3x cieco su `verify_commands`. Aggiunti campi `retries: int = 1` e `retry_delay: float = 1.0` configurabili su `CommandSpec`.
+- **L5 (Verify Internet Access Flag)**: `OVNVerifier` applica dinamicamente `ipv4.nat` e la uplink `settings.incus_uplink_network` rispettando `config.verify_internet_access`.
+- **L6 (Lock Registry State Isolation)**: Rimosso side-effect mutation di `default_timeout` sull'istanza cache di `AsyncFileLock`.
+
+### 7.2 Ottimizzazione Prestazioni & I/O (P1–P4)
+- **P1 (Parallel Container Lifecycle)**: Parallelizzato il deployment multi-container (`asyncio.gather`), il teardown e la clonazione CoW / distruzione cloni in `OVNVerifier`.
+- **P2 (Incus HTTP Overhead Reduction)**: Aggiunto `capture_output: bool = True` in `exec_command()`. Per comandi operativi interni (`capture_output=False`), disabilita `record-output`, riducendo le chiamate HTTP da 6 a 2 su Incus.
+- **P4 (In-Memory Subprocess IPC)**: `SubprocessRunner` utilizza `stdin=asyncio.subprocess.PIPE` e `communicate(input=stdin)` in memoria RAM, evitando l'I/O su `/tmp` e proteggendo le chiavi crittografiche WireGuard.
+
+### 7.3 Pulizia e Snellimento (Clean-up & Debloat)
+- Rimosso codice morto (`netns_exec`, `get_peer_stats`, `create_team`, `session_id`).
+- Deduplicati i modelli: eliminato `PeerStats` a favore di `PeerTelemetry`, rimosso `instances` duplicato in `DeployResponse`.
+- Semplificata la generazione chiavi WireGuard in `wireguard.py`.
+
+### 7.4 Miglioramento Interazione Utente / Client
+- **Template Rendering Nativo**: BlueAgent ora sostituisce direttamente e nativamente i placeholder `{{team_k}}`, `{{subnet}}`, `{{verifier_ip}}` e `{{ip:<container>}}` prima di deploy e verifica. I client (CTFd, CLI, script) possono inviare specifiche astratte senza calcolare subnet IP a monte.
+- **Snellimento `DELETE /teams/{team_k}/machines`**: Supporta query parameter standard HTTP (es. `DELETE /teams/3/machines?containers=web,db`) o teardown completo senza body, mantenendo retrocompatibilità con i body JSON.
+- **Risoluzione Dinamica Endpoint**: Aggiornato `start_services.sh` per rilevare dinamicamente l'indirizzo IP host da `enp0s3`, garantendo endpoint WireGuard sempre validi anche con cambi di lease DHCP.
+
+
