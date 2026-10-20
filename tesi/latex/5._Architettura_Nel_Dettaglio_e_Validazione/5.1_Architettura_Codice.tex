@@ -164,55 +164,89 @@ Questo lock protegge l'accesso alle risorse in due casi:
 \end{itemize}
 
 \begin{quote}
-Come si avviano più worker?
-\passthrough{\lstinline!uvicorn main:app --workers 4!}
+L'esecuzione multi-processo è abilitata configurando il numero di worker
+e viene gestito da uvicorn.
 \end{quote}
 
 \begin{quote}
-\passthrough{\lstinline!uvicorn!}: è il web server su cui si basa
-FastAPI, dunque è uvicorn che decide come gestire le richieste, e a
-quali task e worker assegnarli. Da solo FastAPI non funziona, non
-implementa il server di rete.
+\passthrough{\lstinline!uvicorn!}: è il web server ASGI ad alte
+prestazioni su cui si appoggia FastAPI; mentre FastAPI modella e valida
+le rotte dell'applicazione, Uvicorn governa l'accettazione delle
+connessioni HTTP e ne distribuisce il carico tra worker e task
+asincroni.
 \end{quote}
 
-Questa architettura protegge le risorse sia a livello di singolo
-processo sia in caso di server multi-worker, garantendo mutua esclusione
-sulle mutazioni su tutti i tipi di risorse.
-
 La risorsa principale su cui avviene la mutua esclusione nel codice è il
-team. Qualsiasi operazione sul team \(k\) genera un lock a 2 tier per
-quel team.
+team.
+
+Il lock può essere effettuato anche sulla singola istanza, o a livello
+globale, utile quando si interagisce con meccanismi di sistema come
+\passthrough{\lstinline!nftables!}.
+
+I lock inoltre sono rientranti, dunque uno stesso task può richiedere
+più volte lo stesso lock incrementando all'acquisizione il suo
+contatore.
 
 \subsection{Pipeline Asincrona non Bloccante su Socket
 Unix}\label{pipeline-asincrona-non-bloccante-su-socket-unix}
 
-Le operazioni di Incus su container possono comportare latenze
-nell'ordine di decine o centinaia di millisecondi. L'adozione di un
-modello sincrono sarebbe totalmente inefficiente.
+BlueAgent utilizza il modello asincrono per comunicare con la socket
+Incus ed adattarsi al metodo \passthrough{\lstinline!wait!} che espone.
+La classe \passthrough{\lstinline!IncusEngine!} comunica con il socket
+UDS locale (\passthrough{\lstinline!/var/lib/incus/unix.socket!}) per
+mezzo di \passthrough{\lstinline!httpx.AsyncClient!}.
 
-BlueAgent è progettato secondo un paradigma completamente asincrono in
-modo da adattarsi al metodo \passthrough{\lstinline!wait!} di Incus:
+Successivamente se Incus gestisce la richiesta in background, BlueAgent
+interroga l'endpoint di Incus
+\passthrough{\lstinline!/1.0/operations/<uuid>/wait!} per sapere quando
+l'operazione viene rilasciata in modo asincrono.
+
+Inoltre, l'esecuzione dei comandi sulla macchina host avviene tramite
+\passthrough{\lstinline!asyncio.create\_subprocess\_exec!} all'interno
+del runner asincrono, evitando chiamate bloccanti sul task.
+
+Evitare il busy waiting (o comunque operazioni bloccanti) sui task
+uvicorn è essenziale in BlueAgent per mantenere il sistema reattivo
+nella gestione delle richieste che spesso possono richiedere vari
+secondi per essere soddisfatte.
+
+\subsection{\texorpdfstring{Resilienza e Riconciliazione dello Stato
+(\texttt{LifecycleManager})}{Resilienza e Riconciliazione dello Stato (LifecycleManager)}}\label{resilienza-e-riconciliazione-dello-stato-lifecyclemanager}
+
+Qualora l'host subisca un riavvio forzato improvviso o il processo di
+BlueAgent venga terminato bruscamente con
+\passthrough{\lstinline!SIGKILL!}, le routine di pulizia
+(\passthrough{\lstinline!\_\_aexit\_\_!}) non possono intervenire,
+lasciando container e switch virtuali orfani sul sistema.
+
+Per risolvere queste anomalie BlueAgent ha un demone in background, il
+\passthrough{\lstinline!LifecycleManager!}. Ogni 600 secondi (10 minuti,
+o comunque un tempo configurabile) il demone interroga i metadati di
+Incus, per ogni container di verifica, ed elimina quelli con età
+superiore al \textbf{grace period} (per esempio, 600 secondi).
+
+In questo modo si eliminano le risorse di verifica rimaste orfane per
+qualsiasi motivo.
+
+\subsection{Compilazione delle
+immagini}\label{compilazione-delle-immagini}
+
+La generazione delle immagini prevede di calcolare lo \textbf{SHA-256}
+della configurazione ricevuta. Questo permette di gestire i seguenti
+casi:
 
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!IncusEngine!} comunica con il socket UDS
-  locale (\passthrough{\lstinline!/var/lib/incus/unix.socket!}) per
-  mezzo di \passthrough{\lstinline!httpx.AsyncClient!}.
+  Se un'immagine con stesso hash e stesso id è già presente nel database
+  allora il sistema non fa nulla.
 \item
-  Poiché le operazioni bloccanti di Incus sono gestite in background,
-  BlueAgent interroga asincronamente l'endpoint
-  \passthrough{\lstinline!/1.0/operations/<uuid>/wait!} per sapere
-  quando l'operazione viene rilasciata.
+  Se l'hash differisce ma l'id è presente nel database allora si può
+  forzare la ricompilazione dell'immagine usando la nuova
+  configurazione.
 \end{itemize}
 
-Inoltre, l'esecuzione dei comandi sulla macchina host avviene tramite
-\passthrough{\lstinline!asyncio.create\_subprocess\_exec!} all'interno
-del runner asincrono, evitando chiamate bloccanti sul loop principale ed
-esecuzione di shell non sicure.
-
-Questo approccio consente a un singolo processo BlueAgent di servire le
-richieste di telemetria utilizzando più task e senza rimanere in attesa
-su una singola richiesta evitando di servire le altre richieste.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+La compilazione delle immagini è protetta da un lock sul nome
+dell'immagine, ed il log relativo viene riversato su un file
+\passthrough{\lstinline!.log!} accessibile tramite
+\passthrough{\lstinline!GET /images/\{alias\}/logs!}.

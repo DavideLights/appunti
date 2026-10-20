@@ -2,186 +2,263 @@
 
 I requisiti di sistema definiscono i vincoli architetturali,
 infrastrutturali e operativi che BlueAgent deve garantire per supportare
-i casi d'uso descritti.
+i casi d'uso descritti. Di seguito vengono presentati, suddivisi nelle
+rispettive categorie funzionali, i requisiti formali di progetto.
 
 \subsection{Piattaforma Host e
 Infrastruttura}\label{piattaforma-host-e-infrastruttura}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{\passthrough{\lstinline!SR-HST-01!} (Sistema Operativo Host)}:
-  L'host deve eseguire Debian 13 (e quindi un Kernel Linux), con IP
-  forwarding abilitato e fornire \passthrough{\lstinline!nftables!}.
-\item
-  \textbf{\passthrough{\lstinline!SR-HST-02!} (ZFS)}: L'host deve
-  disporre di uno storage pool ZFS con supporto nativo a snapshot.
-\item
-  \textbf{\passthrough{\lstinline!SR-HST-03!} (SDN)}: L'host deve
-  eseguire i servizi Open vSwitch e OVN
-  (\passthrough{\lstinline!ovs-vswitchd!},
-  \passthrough{\lstinline!ovn-northd!},
-  \passthrough{\lstinline!ovn-controller!}) per il provisioning degli
-  switch logici necessari all'implementazione della rete di verifica.
-\item
-  \textbf{\passthrough{\lstinline!SR-HST-04!} (Supporto WireGuard)}:
-  L'host deve disporre di WireGuard per la gestione dei tunnel VPN.
-\item
-  \textbf{\passthrough{\lstinline!SR-HST-05!} (Distrobuilder)}: L'host
-  deve disporre del compilatore \passthrough{\lstinline!distrobuilder!}
-  per la generazione delle immagini dei container vulnerabili.
-\end{itemize}
+La tabella seguente riassume i requisiti relativi al sistema operativo
+host e ai componenti infrastrutturali di base necessari all'esecuzione
+di BlueAgent.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1531}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6224}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Codice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requisito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione Operativa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\passthrough{\lstinline!SR-HST-01!}} & Sistema Operativo Host &
+L'host deve eseguire un kernel Linux, con IP forwarding abilitato e
+supporto completo per il sottosistema
+\passthrough{\lstinline!nftables!}. \\
+\textbf{\passthrough{\lstinline!SR-HST-02!}} & Storage Pool ZFS & L'host
+deve disporre di uno storage pool ZFS
+(\passthrough{\lstinline!blueagent-zfs!}) con supporto nativo a snapshot
+Copy-on-Write (CoW). \\
+\textbf{\passthrough{\lstinline!SR-HST-03!}} & Servizi SDN Host & L'host
+deve eseguire i demoni Open vSwitch e OVN
+(\passthrough{\lstinline!ovs-vswitchd!},
+\passthrough{\lstinline!ovn-northd!},
+\passthrough{\lstinline!ovn-controller!}) per il provisioning dinamico
+degli switch logici effimeri. \\
+\textbf{\passthrough{\lstinline!SR-HST-04!}} & Supporto WireGuard &
+L'host deve fornire il modulo kernel WireGuard e i relativi strumenti di
+configurazione. \\
+\textbf{\passthrough{\lstinline!SR-HST-05!}} & Pipeline Distrobuilder &
+L'host deve disporre di \passthrough{\lstinline!distrobuilder!} per la
+compilazione automatizzata e riproducibile delle immagini dei
+container. \\
+\end{longtable}
 
 \subsection{Motore di
 Containerizzazione}\label{motore-di-containerizzazione}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{\passthrough{\lstinline!SR-ENG-01!} (Astrazione)}:
-  Disaccoppiamento della logica di orchestrazione tramite interfaccia
-  astratta \passthrough{\lstinline!ContainerEngine!} per garantire
-  l'indipendenza del codice da Incus.
-\item
-  \textbf{\passthrough{\lstinline!SR-ENG-02!} (Client Asincrono)}:
-  Comunicazione non bloccante con Incus via Unix Domain Socket mediante
-  client HTTP asincrono.
-\item
-  \textbf{\passthrough{\lstinline!SR-ENG-03!} (Limitazione Risorse)}:
-  Applicazione di quote hardware per container
-  (\passthrough{\lstinline!limits.cpu!} e
-  \passthrough{\lstinline!limits.memory!}) per impedire starvation delle
-  risorse.
-\item
-  \textbf{\passthrough{\lstinline!SR-ENG-04!} (Clonazione Snapshot
-  CoW)}: Duplicazione istantanea delle istanze dei container basata su
-  snapshot CoW a livello di storage.
-\end{itemize}
+I requisiti per il motore di containerizzazione stabiliscono i
+meccanismi di interazione con Incus, l'isolamento dei carichi e la
+gestione del ciclo di vita dei container di sistema.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1531}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6224}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Codice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requisito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione Operativa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\passthrough{\lstinline!SR-ENG-01!}} & Astrazione del Motore &
+Disaccoppiamento della logica di orchestrazione tramite l'interfaccia
+astratta \passthrough{\lstinline!ContainerEngine!}. \\
+\textbf{\passthrough{\lstinline!SR-ENG-02!}} & Client Asincrono UDS &
+Comunicazione non bloccante con Incus via Unix Domain Socket
+(\passthrough{\lstinline!/var/lib/incus/unix.socket!}) mediante client
+HTTP asincrono. \\
+\textbf{\passthrough{\lstinline!SR-ENG-03!}} & Limitazione Risorse
+(Cgroups v2) & Applicazione di quote hardware per impedire la starvation
+delle risorse dell'host. \\
+\textbf{\passthrough{\lstinline!SR-ENG-04!}} & Clonazione Snapshot CoW &
+Duplicazione istantanea delle istanze container basata su snapshot CoW a
+livello di storage pool ZFS. \\
+\end{longtable}
 
 \subsection{Rete Ibrida e
 Connettività}\label{rete-ibrida-e-connettivituxe0}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{\passthrough{\lstinline!SR-NET-01!} (Terminazione Gateway
-  VPN)}: Ogni team ha a disposizione l'interfaccia WireGuard
-  \passthrough{\lstinline!wg-k!} su porta UDP \(51820+k\) ed IP gateway
-  \passthrough{\lstinline!10.k.0.1/24!}.
-\item
-  \textbf{\passthrough{\lstinline!SR-NET-02!} (Linux Bridge L2)}: Ogni
-  team ha a disposizione un bridge L2
-  \passthrough{\lstinline!br-team-k!}, con gateway
-  \passthrough{\lstinline!10.k.1.1/24!} per garantire prestazioni di
-  inoltro alla velocità della RAM e che funzioni da punto d'aggancio per
-  i container del team.
-\item
-  \textbf{\passthrough{\lstinline!SR-NET-03!} (Indirizzamento e
-  Credenziali VPN)}: Allocazione degli indirizzi IP per i membri del
-  team nella subnet \passthrough{\lstinline!10.k.0.0/24!} e generazione
-  delle chiavi asimmetriche.
-\item
-  \textbf{\passthrough{\lstinline!SR-NET-04!} (Topologia
-  Deterministica)}: Configurazione statica della rete nei container in
-  base al suffisso per l'indirizzo IP fornito nella configurazione della
-  challenge.
-\item
-  \textbf{\passthrough{\lstinline!SR-NET-05!} (TCP MSS Clamping)}:
-  Applicazione di regole \passthrough{\lstinline!nftables!} per forzare
-  il clamping del MSS, prevenendo blackhole dovuti alla riduzione di MTU
-  causata dal tunnel WireGuard.
-\item
-  \textbf{\passthrough{\lstinline!SR-NET-06!} (Isolamento e Masquerading
-  NAT)}: Isolamento del traffico tra team differenti via
-  \passthrough{\lstinline!@team\_links!} e masquerading del traffico
-  uscente verso Internet.
-\end{itemize}
+Questa sezione elenca i requisiti di rete necessari a garantire
+prestazioni native in fase di gara e isolamento crittografico per ogni
+squadra.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1531}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6224}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Codice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requisito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione Operativa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\passthrough{\lstinline!SR-NET-01!}} & Gateway VPN WireGuard &
+Allocazione di un'interfaccia kernel \passthrough{\lstinline!wg-k!} per
+ciascun team \(k\), in ascolto sulla porta UDP \(51820 + k\) con
+indirizzo gateway \passthrough{\lstinline!10.k.0.1/24!}. \\
+\textbf{\passthrough{\lstinline!SR-NET-02!}} & Linux Bridge L2 Live &
+Allocazione di un bridge Linux \passthrough{\lstinline!br-team-k!} per
+ciascun team \(k\), con gateway
+\passthrough{\lstinline!10.k.1.1/24!}. \\
+\textbf{\passthrough{\lstinline!SR-NET-03!}} & Indirizzamento e
+Credenziali VPN & Allocazione deterministica degli IP dei membri nella
+subnet \passthrough{\lstinline!10.k.0.0/24!}. \\
+\textbf{\passthrough{\lstinline!SR-NET-04!}} & Topologia Deterministica
+& Configurazione statica degli indirizzi IP
+\passthrough{\lstinline!10.k.1.x!} nei container in base al suffisso
+(\passthrough{\lstinline!ip\_suffix!}) dichiarato nella specifica della
+challenge. \\
+\textbf{\passthrough{\lstinline!SR-NET-05!}} & TCP MSS Clamping &
+Applicazione di regole \passthrough{\lstinline!nftables!} per forzare il
+clamping del MSS, prevenendo pacchetti persi dovuti al tunnel
+WireGuard. \\
+\textbf{\passthrough{\lstinline!SR-NET-06!}} & Isolamento e Masquerading
+NAT & Isolamento inter-team tramite il set
+\passthrough{\lstinline!@team\_links!} e masquerading del traffico
+outbound verso la rete esterna per l'accesso a Internet per giocatori,
+container e rete di verifica. \\
+\end{longtable}
 
 \subsection{Motore di Verifica OVN
 Sandbox}\label{motore-di-verifica-ovn-sandbox}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{\passthrough{\lstinline!SR-VRF-01!} (Switch OVN)}: Creazione
-  di una rete OVN in fase di verifica, isolata e senza esporre il
-  gateway dello switch all'host per prevenire sovrapposizione di rotte.
-\item
-  \textbf{\passthrough{\lstinline!SR-VRF-02!} (Fedeltà Topologica)}: I
-  cloni nell'ambiente di verifica preservano l'interfaccia
-  \passthrough{\lstinline!eth0!} e la configurazione IP identica a
-  quella di produzione.
-\item
-  \textbf{\passthrough{\lstinline!SR-VRF-03!} (Readiness Probes e
-  Timeout)}: Esecuzione di controlli di readiness con tentativi
-  periodici sottoposti a timeout, prima della verifica effettiva.
-\item
-  \textbf{\passthrough{\lstinline!SR-VRF-04!} (Zero Side-Channel)}:
-  Confinamento rigoroso dell'ambiente di test allo switch virtuale
-  isolato per impedire sniffing del traffico di exploit ed accesso da
-  parte dei giocatori.
-\item
-  \textbf{\passthrough{\lstinline!SR-VRF-05!} (Rilascio Delle Risorse
-  Categorico)}: Deallocazione in ordine inverso (LIFO) di tutte le
-  risorse allocate al completamento della verifica o in caso di errore.
-\end{itemize}
+I requisiti del motore di verifica definiscono le garanzie di non
+interferenza, trasparenza e sicurezza durante l'esecuzione degli exploit
+e dei test di integrità.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1531}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6224}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Codice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requisito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione Operativa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\passthrough{\lstinline!SR-VRF-01!}} & Switch Logico OVN &
+Provisioning di uno switch virtuale OVN
+(\passthrough{\lstinline!verify-<session>!}) senza esporre il gateway
+all'host per evitare collisioni di rotte tra container. \\
+\textbf{\passthrough{\lstinline!SR-VRF-02!}} & Fedeltà Topologica & I
+cloni nella sandbox preservano l'interfaccia
+\passthrough{\lstinline!eth0!} e la medesima configurazione IP
+(\passthrough{\lstinline!10.k.1.x!}) specificata. \\
+\textbf{\passthrough{\lstinline!SR-VRF-03!}} & Readiness Probes e
+Timeout & Esecuzione preliminare dei controlli di prontezza sui servizi
+con tentativi periodici, prima dell'esecuzione dei check di verifica. \\
+\textbf{\passthrough{\lstinline!SR-VRF-04!}} & Confinamento Zero
+Side-Channel & Isolamento del traffico di verifica sullo switch OVN per
+impedire qualsiasi sniffing (es. \passthrough{\lstinline!tcpdump!}) da
+parte dei concorrenti. \\
+\textbf{\passthrough{\lstinline!SR-VRF-05!}} & Rilascio Automatico
+Risorse & Deallocazione automatica e atomica di cloni, switch e porte
+virtuali al termine della verifica o su eccezione. \\
+\end{longtable}
 
 \subsection{Control Plane, Concorrenza e
 Persistenza}\label{control-plane-concorrenza-e-persistenza}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-01!} (Two-Tier Lock)}:
-  Meccanismo di lock gerarchico a due livelli (in-process ed
-  inter-process) per prevenire mutazioni concorrenti sulla stessa
-  risorsa.
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-02!} (Self-Healing
-  Automatico)}: Demone in background
-  \passthrough{\lstinline!LifecycleManager!} che rilascia periodicamente
-  (ogni 120 secondi) switch e container di verifica orfani con un
-  periodo di tolleranza di 600 secondi.
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-03!} (Healthcheck \&
-  Telemetria)}: Endpoint di monitoraggio per liveness e readiness probe
-  ed estrazione live di handshake e metriche di traffico dei peer
-  WireGuard.
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-04!} (Persistenza Locale
-  Asincrona)}: Memorizzazione dello stato e delle associazioni (team,
-  macchine, peer e immagini) su database SQLite.
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-05!} (Rollback in caso di
-  errore)}: Qualunque errore imprevisto durante la creazione di
-  container o interfacce di rete innesca il rilascio delle risorse
-  allocate.
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-06!} (Idempotenza Operativa)}:
-  Le richieste di provisioning per risorse già allocate non alterano lo
-  stato del sistema e ne generano errori.
-\item
-  \textbf{\passthrough{\lstinline!SR-CON-07!} (Autenticazione)}:
-  L'accesso alle API deve essere validato tramite un token di accesso
-  configurato dall'amministratore. Si vuole evitare che altre entità
-  oltre al CTF Manager possano usare l'interfaccia di BlueAgent.
-\end{itemize}
+La tabella seguente specifica i vincoli di sincronizzazione, resilienza
+e coerenza dello stato applicativo gestiti dal control plane di
+BlueAgent.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1531}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6224}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Codice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requisito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione Operativa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\passthrough{\lstinline!SR-CON-01!}} & Two-Tier Lock Registry &
+Meccanismo di lock gerarchico a due livelli per prevenire race condition
+sulle risorse. \\
+\textbf{\passthrough{\lstinline!SR-CON-02!}} & Self-Healing e
+Riconciliazione & Demone \passthrough{\lstinline!LifecycleManager!} per
+la bonifica automatica degli switch e cloni orfani. \\
+\textbf{\passthrough{\lstinline!SR-CON-03!}} & Healthcheck \& Telemetria
+Live & Endpoint \passthrough{\lstinline!/health!} per ottenere lo stato
+di salute del sistema. Raccolta telemetrica dello stato dei peer
+WireGuard. \\
+\textbf{\passthrough{\lstinline!SR-CON-04!}} & Persistenza Asincrona
+SQLite & Memorizzazione dello stato di team, membri, container e
+cataloghi su database SQLite. \\
+\textbf{\passthrough{\lstinline!SR-CON-05!}} & Rollback Atomico su
+Errore & Qualsiasi fallimento durante il provisioning di container o
+interfacce di rete innesca la deallocazione delle risorse. \\
+\textbf{\passthrough{\lstinline!SR-CON-06!}} & Idempotenza Operativa &
+Tutte le richieste di creazione e configurazione per risorse già
+esistenti non generano errori applicativi. \\
+\textbf{\passthrough{\lstinline!SR-CON-07!}} & Autenticazione
+Centralizzata & Validazione obbligatoria dell'accesso a tutti gli
+endpoint tramite token segreto condiviso. \\
+\end{longtable}
 
 \subsection{Pipeline Immagini
 Distrobuilder}\label{pipeline-immagini-distrobuilder}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{\passthrough{\lstinline!SR-IMG-01!} (Definizione IaC
-  Distrobuilder)}: Creazione dichiarativa di immagini per container di
-  sistema a partire da file di definizione YAML.
-\item
-  \textbf{\passthrough{\lstinline!SR-IMG-02!} (Identificazione e Caching
-  Crittografico)}: Utilizzo dell'alias come chiave a catalogo e calcolo
-  dell'hash crittografico della specifica YAML per identificare
-  modifiche e riutilizzare immagini già compilate.
-\item
-  \textbf{\passthrough{\lstinline!SR-IMG-03!} (Compilazione Asincrona)}:
-  Esecuzione delle fasi di build in background tramite worker asincrono.
-\end{itemize}
+I requisiti della pipeline stabiliscono la creazione riproducibile delle
+immagini per le sfide, il loro tracciamento e il caching dei binari.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1531}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6224}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Codice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requisito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione Operativa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\passthrough{\lstinline!SR-IMG-01!}} & Definizione IaC
+Distrobuilder & Creazione dichiarativa di immagini per container di
+sistema a partire da manifesti YAML versionabili. \\
+\textbf{\passthrough{\lstinline!SR-IMG-02!}} & Caching e Identificazione
+SHA-256 & Tracciamento crittografico della specifica YAML tramite hash
+SHA-256 per identificare modifiche su immagini già compilate nel
+database. \\
+\textbf{\passthrough{\lstinline!SR-IMG-03!}} & Compilazione Asincrona &
+Esecuzione delle fasi di build e import Incus in background tramite task
+asincrono con tracciamento dei log. \\
+\end{longtable}

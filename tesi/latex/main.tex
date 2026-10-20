@@ -1,5 +1,4 @@
 \documentclass[a4paper, 12pt, italian]{report}
-\usepackage[a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, headheight=15pt]{geometry}
 \usepackage[italian,provide=*]{babel}
 %\usepackage[latin1]{inputenc}
 %\usepackage[T1]{fontenc}
@@ -80,12 +79,19 @@
 \fancyhead{}\renewcommand{\headrulewidth}{0pt} } \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{\small CAP. \thechapter \textit{ #1}} {} }
 \renewcommand{\sectionmark}[1]{\markright{\small  \thesection \textit{ #1}} {} }
-\fancyhead{}
-\fancyfoot{}
+\voffset=-20pt    % distanza tra il limite superiore del foglio e l'intestazione
+\headsep=40pt     % distanza  l'intestazione ed il testo del corpo
+\hoffset=0 pt     % misura equivalente al margine sinistro
+\textheight=620pt % altezza del corpo del testo
+\textwidth=435pt  % larghezza del corpo del testo
+\footskip=40pt    % distanza tra il testo del corpo ed il pie' di pagina
+\fancyhead{}      % cancella qualsiasi impostazione per l'intestazione
+\fancyfoot{}      % cancella qualsiasi impostazione per il pie' di pagina
+\headwidth=435pt  % larghezza del'intestazione e del pie' di pagina
 \fancyhead[R]{\rightmark} \fancyfoot[L]{\leftmark}
 \fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
-\renewcommand{\footrulewidth}{0.3pt}
+\renewcommand{\headrulewidth}{0.3pt}   % spessore della linea dell'intestazione
+\renewcommand{\footrulewidth}{0.3pt}   % spessore della linea del piè di pagina
 
 \numberwithin{equation}{section}
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
@@ -197,10 +203,15 @@
 %\dedicate{Inserire la dedica}
 
 \titoloTesi{BlueAgent} 
-\anno{2023-2024}
+\anno{2025-2026}
+\macroarea{MACROAREA DI SCIENZE}
+\corsodilaurea{CORSO DI LAUREA IN INFORMATICA}
+\tipotesi{Tesi di laurea triennale}
 \relatore{Pierpaolo Loreti}
 \correlatore{Ing. Francesco Mancini}
 \candidato{Davide Luci}
+\matricola{0341922}
+\linespread{1.15}\selectfont
 \intestazione 
 \linespread{1.15}\selectfont 
 %------------------------------------------------
@@ -211,12 +222,19 @@
 \fancyhead{}\renewcommand{\headrulewidth}{0pt} } \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{\small Cap. \thechapter \textit{ #1}} {} }
 \renewcommand{\sectionmark}[1]{\markright{\small  \S \thesection \textit{ #1}} {} }
-\fancyhead{}
-\fancyfoot{}
+\voffset=-20pt                         % distanza tra il limite superiore del foglio e l'intestazione
+\headsep=40pt                          % distanza  l'intestazione ed il testo del corpo
+\hoffset=0pt                           % misura equivalente al margine sinistro
+\textheight=620pt                      % altezza del corpo del testo
+\textwidth=435pt                       % larghezza del corpo del testo
+\footskip=40pt                         % distanza tra il testo del corpo ed il pie' di pagina
+\fancyhead{}                           % cancella qualsiasi impostazione per l'intestazione
+\fancyfoot{}                           % cancella qualsiasi impostazione per il pie' di pagina
+\headwidth=435pt                       % larghezza del'intestazione e del pie' di pagina
 \fancyhead[R]{\rightmark} \fancyfoot[L]{\leftmark}
 \fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
-\renewcommand{\footrulewidth}{0.3pt}
+\renewcommand{\headrulewidth}{0.3pt}   % spessore della linea dell'intestazione
+\renewcommand{\footrulewidth}{0.3pt}   % spessore della linea del piè di pagina
 
 \pagenumbering{Roman} \tableofcontents
 \newpage
@@ -229,20 +247,23 @@
 \fancyhead[R]{Introduzione} \fancyfoot[L]{Introduzione}
 \include{Introduzione}
 
-\fancyhead[R]{Contesto e Confronto con lo Stato dell Arte} \fancyfoot[L]{Contesto e Confronto con lo Stato dell Arte}
+\fancyhead[R]{Contesto e Confronto con lo Stato dell'Arte} \fancyfoot[L]{Contesto e Confronto con lo Stato dell'Arte}
 \include{Contesto_e_Confronto_con_lo_Stato_dell_Arte}
 
 \fancyhead[R]{BlueAgent} \fancyfoot[L]{BlueAgent}
 \include{BlueAgent}
 
-\fancyhead[R]{Architettura Rete Alto Livello} \fancyfoot[L]{Architettura Rete Alto Livello}
+\fancyhead[R]{Architettura di Rete ad Alto Livello} \fancyfoot[L]{Architettura di Rete ad Alto Livello}
 \include{Architettura_Rete_Alto_Livello}
 
-\fancyhead[R]{Architettura Nel Dettaglio e Validazione} \fancyfoot[L]{Architettura Nel Dettaglio e Validazione}
+\fancyhead[R]{Architettura nel Dettaglio e Validazione} \fancyfoot[L]{Architettura nel Dettaglio e Validazione}
 \include{Architettura_Nel_Dettaglio_e_Validazione}
 
-\fancyhead[R]{Architetture Rete  Alternative} \fancyfoot[L]{Architetture Rete  Alternative}
+\fancyhead[R]{Architetture di Rete Alternative} \fancyfoot[L]{Architetture di Rete Alternative}
 \include{Architetture_Rete__Alternative}
+
+\fancyhead[R]{Conclusioni e Sviluppi Futuri} \fancyfoot[L]{Conclusioni e Sviluppi Futuri}
+\include{Conclusioni_e_Sviluppi_Futuri}
 
 \fancyhead[R]{Appendice} \fancyfoot[L]{Appendice}
 \include{Appendice}
@@ -253,14 +274,6 @@
 \fancyhead[R]{\rightmark} \fancyhead[L]{\leftmark}
 \fancyfoot[R]{\thepage}\fancyfoot[L]{\leftmark}
 
-
-% ELENCO DELLE FIGURE (OPZIONALE)
-\addcontentsline{toc}{chapter}{Elenco delle figure}
-\listoffigures
-\addcontentsline{toc}{chapter}{Elenco dei codici}
-\lstlistoflistings
-\addcontentsline{toc}{chapter}{Elenco degli algoritmi}
-\listofalgorithms
 
 
 % BIBLIOGRAFIA

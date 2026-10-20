@@ -1,0 +1,42 @@
+\newpage
+
+\section{Tabella riassuntiva}\label{tabella-riassuntiva}
+
+In sintesi, la seguente tabella riassume e pone a confronto le proprietà
+e i compromessi delle architetture analizzate.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2143}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2071}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2286}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Architettura
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fedeltà di Rete
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Accesso WAN
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Complessità Software
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Overhead Risorse
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{6.1 Bridge L2 (senza GW)} & Bassa (nessun default gateway) &
+Assente & Minima (bridge kernel) & Quasi nullo \\
+\textbf{6.2 Interfaccia wan1} & Scadente (interfaccia anomala) &
+Presente (tramite wan1) & Media (routing custom container) & Basso \\
+\textbf{6.3 NetNS separato} & Buona (topologia identica) & Presente
+(coppia veth) & Elevata (gestione manuale veth) & Basso \\
+\textbf{6.4 Router intermedio} & Buona (topologia identica) & Presente
+(SNAT su router) & Medio-alta (container dedicato) & Medio (+1
+container) \\
+\textbf{BlueAgent (OVN SDN)} & \textbf{Buona (topologia identica)} &
+\textbf{Presente (SNAT a 2 stadi)} & \textbf{Minima (delegata a Incus)}
+& \textbf{Basso (condiviso)} \\
+\end{longtable}

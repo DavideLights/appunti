@@ -1,0 +1,39 @@
+\section{Difesa e Validazione di
+BlueAgent}\label{difesa-e-validazione-di-blueagent}
+
+Come Sistema Operativo su cui basare lo sviluppo è stato scelto
+\textbf{Debian 13}, in quanto offre un kernel stabile ed un'ottima
+compatibilità tra i vari pacchetti e le componenti utilizzate da
+BlueAgent, facilitando la configurazione di OVN, ZFS ed Incus.
+
+Su questo sistema operativo si è scelto di utilizzare ZFS per creare lo
+storage pool per le immagini dei container. ZFS offre il meccanismo CoW
+a costo computazionale costante, ed è stato preferito rispetto ad
+alternative come BTRFS poiché ritenuto notevolmente più maturo e
+performante.
+
+Si beneficia del CoW in due scenari chiave: quando si effettua il deploy
+della challenge per un team (clonando l'immagine base dallo storage
+pool) e durante la duplicazione per la verifica.
+
+L'adozione di Incus è dovuta alla necessità di offrire ai concorrenti
+macchine realistiche mediante system container (dotati di un proprio
+init system completo e del processo \passthrough{\lstinline!init!} con
+\passthrough{\lstinline!PID!} 1). Tale approccio permette ai
+partecipanti di operare realisticamente accedendo a tutte le utility di
+sistema e installando pacchetti software. Incus gestisce inoltre
+nativamente gli storage pool ZFS e le reti OVN, semplificando
+l'architettura del software BlueAgent.
+
+Il principale vantaggio introdotto da BlueAgent è l'invisibilità totale
+dell'Oracolo rispetto ai concorrenti: per i partecipanti è impossibile
+intercettare o sniffare il traffico di rete generato durante la
+validazione, poiché la rete di verifica \(\text{verify-}k\) risiede in
+un dominio SDN logicamente separato. In
+\passthrough{\lstinline!nftables!}, le regole di filtraggio consentono
+il transito unicamente tra l'endpoint VPN \(\text{wg-}k\) e il bridge di
+produzione \(\text{br-team-}k\).
+
+Inoltre, l'adozione del meccanismo CoW riduce significativamente i tempi
+di provisioning dei container come abbiamo visto in 5.4, mentre
+l'impiego di OVN automatizza la configurazione della topologia di rete.

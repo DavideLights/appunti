@@ -26,8 +26,8 @@ La piattaforma si concentra per soddisfare due casi d'uso principali:
   partecipanti.
 \end{itemize}
 
-La piattaforma CyberRangeCZ si occupa di creare e approvvigionare un
-ambiente virtuale emulato costituito da Sandbox e Pool.
+Il sistema si occupa di creare e approvvigionare un ambiente virtuale
+emulato costituito da Sandbox e Pool.
 
 \begin{quote}
 \textbf{Sandbox}: \emph{``È un ambiente di test isolato con reti
@@ -100,7 +100,7 @@ L'accesso alle macchine dentro la Sandbox è regolato tramite SSH, oppure
 da una console web accessibile via browser.
 
 Gestire Sandbox, ossia intere Topology Instance è costoso, infatti i
-requisiti sono i seguenti:
+requisiti minimi sono i seguenti:
 
 \begin{itemize}
 \tightlist
@@ -123,13 +123,11 @@ Requisiti così alti sono necessari per:
   scalabilità al crescere degli utenti.
 \end{itemize}
 
-CyberRangeCZ a differenza di BlueAgent gestisce un'intera rete cloud, su
-cui vengono orchestrati container, configurati dinamicamente con Ansible
-e gestiti via Kubernetes, mentre BlueAgent è un orchestratore di
-container che esegue su un unico host.
-
-Di seguito sono illustrate le principali differenze tra CyberRangeCZ e
-BlueAgent:
+CyberRangeCZ a differenza di BlueAgent gestisce un'intera infrastruttura
+cloud, su cui vengono orchestrate macchine virtuali su OpenStack
+(configurate con Ansible) affiancate da microservizi gestiti tramite
+Kubernetes, mentre BlueAgent è un orchestratore di container che esegue
+su un unico host.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
@@ -155,12 +153,9 @@ Kubernetes) & Singolo nodo host (Debian 13) \\
 disco) & Minimi (eseguibile su singolo server o PC economico) \\
 \textbf{Configurazione} & Runtime con Ansible e template Packer &
 Creazione immagine con Distrobuilder \\
-\textbf{Provisioning} & Lento (nell'ordine dei minuti) & Rapido
-(nell'ordine dei secondi con CoW) \\
-\textbf{Rete} & Rete virtuale OpenStack con nodo MAN & Linux Bridge L2,
-WireGuard VPN e SDN OVN \\
-\textbf{Verifica Difesa} & Non prevista nativamente & Cloni ZFS CoW su
-switch OVN isolato \\
+\textbf{Rete} & Rete virtuale OpenStack & Linux Bridge, WireGuard VPN e
+SDN \\
+\textbf{Verifica Difesa} & Non prevista nativamente & Prevista \\
 \textbf{Scopo Principale} & Emulazione reti aziendali e training su
 larga scala & Cyber Range compatto per CTF di difesa \\
 \end{longtable}

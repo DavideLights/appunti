@@ -14,6 +14,12 @@ un'estensione per CTFd composta da due moduli integrati:
 intermediario tra l'interfaccia web della competizione e le API REST
 esposte da BlueAgent.
 
+\begin{quote}
+CTFd usa Flask al posto di FastAPI (adottato in BlueAgent) ed usa
+SQLAlchemy per gestire facilmente il modello dei dati utilizzato nel
+codice.
+\end{quote}
+
 \subsection{Componenti del Plugin: PatchChallenge e
 PatchFlag}\label{componenti-del-plugin-patchchallenge-e-patchflag}
 
@@ -23,58 +29,45 @@ classi base:
 \begin{itemize}
 \tightlist
 \item
-  \textbf{\passthrough{\lstinline!PatchChallenge!}
-  (\passthrough{\lstinline!BaseChallenge!})}: definisce una nuova
-  tipologia di sfida all'interno del pannello di amministrazione. Oltre
-  ai metadati convenzionali (nome, descrizione, punteggio, categoria),
-  la classe associa alla sfida il modello dati
-  \passthrough{\lstinline!PatchChallengeModel!}. Questo modello
-  memorizza la specifica dichiarativa della topologia in formato
-  JSON/YAML (immagini da utilizzare, indirizzi IP, quote di risorse) e
+  \textbf{\passthrough{\lstinline!PatchChallenge!}}: definisce una nuova
+  tipologia di sfida. Ha un modello dei dati per facilitare
+  l'integrazione con il database di CTFd. Questo modello memorizza la
+  specifica dichiarativa della topologia in formato JSON/YAML e
   l'insieme dei comandi di verifica da inoltrare a BlueAgent.
 \item
   \textbf{\passthrough{\lstinline!PatchFlag!}
-  (\passthrough{\lstinline!BaseFlag!})}: ridefinisce radicalmente il
-  meccanismo di validazione della flag. Invece di confrontare una
+  (\passthrough{\lstinline!BaseFlag!})}: invece di confrontare una
   stringa inserita dal giocatore con un valore memorizzato nel database,
   il metodo \passthrough{\lstinline!compare()!} interroga l'Oracolo
-  (BlueAgent). Se tutti i controlli eseguiti nella sandbox hanno esito
-  positivo, il metodo restituisce \passthrough{\lstinline!True!}
-  confermando la risoluzione; in caso contrario solleva una
-  \passthrough{\lstinline!FlagException!} specificando la causa del
-  fallimento (es. \emph{service crash}, fallimento di un'asserzione
-  funzionale o timeout dei controlli di readiness).
+  (BlueAgent) e registra il tentativo di verifica ed il suo esito.
 \end{itemize}
 
 \subsection{Distribuzione delle Configurazioni
 WireGuard}\label{distribuzione-delle-configurazioni-wireguard}
 
 Per permettere ai partecipanti di operare sui container della propria
-challenge, il plugin gestisce in modo trasparente l'accesso alla rete
-del team:
+challenge, il plugin gestisce automaticamente l'accesso alla rete del
+team:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Tramite un blueprint Flask
-  (\passthrough{\lstinline!patch\_challenges\_ns!}), il plugin espone al
-  frontend le rotte per la gestione della connettività.
+  Il plugin espone all'interfaccia web le rotte per la gestione della
+  connettività.
 \item
   Quando un utente autenticato visualizza la sfida o richiede l'accesso,
-  CTFd invoca l'endpoint
+  CTFd invoca
   \passthrough{\lstinline!PUT /teams/\{team\_k\}/members/\{user\_id\}!}
   di BlueAgent.
 \item
   BlueAgent alloca dinamicamente un indirizzo IP libero all'interno
   della subnet VPN del team (\passthrough{\lstinline!10.k.0.0/24!}),
-  genera la coppia di chiavi asimmetriche Curve25519 e registra il peer
-  sull'interfaccia \(\text{wg-}k\).
+  genera la coppia di chiavi asimmetriche e registra il peer
+  sull'interfaccia WireGuard.
 \item
-  Il plugin restituisce al browser del concorrente il file di
-  configurazione WireGuard (\passthrough{\lstinline!.conf!}) pronto per
-  l'importazione, consentendo l'accesso SSH diretto ai container sulla
-  rete \(\text{production-}k\).
+  Il plugin restituisce al browser il file di configurazione WireGuard
+  (\passthrough{\lstinline!.conf!}) pronto per l'importazione.
 \end{enumerate}
 
 \subsection{Flusso di Verifica e
@@ -96,16 +89,9 @@ seguenti fasi:
   BlueAgent, trasmettendo l'identificativo del team e la specifica della
   challenge.
 \item
-  \textbf{Esecuzione in Sandbox}: BlueAgent attiva il gestore di
-  contesto \passthrough{\lstinline!OVNVerifier!}, clona i container ZFS
-  e ne collega le interfacce virtuali alla rete oscura
-  \(\text{verify-}k\). Dopo aver convalidato l'avvio dei servizi tramite
-  i comandi di readiness, esegue i test di exploit o di conformità e
-  dealloca tempestivamente l'intero ambiente effimero.
+  \textbf{Esecuzione}: BlueAgent esegue la verifica in ambiente
+  separato.
 \item
   \textbf{Aggiornamento punteggio}: BlueAgent restituisce il verdetto a
-  CTFd. Se il sistema risulta integro e non vulnerabile,
-  \passthrough{\lstinline!PatchFlag!} valida la submission e CTFd
-  registra la soluzione, aggiornando la classifica generale in tempo
-  reale.
+  CTFd che si occupa di aggiornare i punteggi.
 \end{enumerate}

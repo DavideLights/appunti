@@ -28,9 +28,9 @@ Dunque CTF Manager è l'unico attore per BlueAgent e rendere il CTF
 Manager esterno ed indipendente da BlueAgent nella sua architettura,
 permette di non vincolare l'uso di BlueAgent con CTFd.
 
-Ora vogliamo definire meglio il ruolo che hanno l'Admin, il Giocatore e
-l'Autore della sfida (o challenge). Chiariremo subito che questi tre non
-sono attori che dialogano direttamente con BlueAgent.
+È opportuno definire il ruolo dell'Amministratore, del Giocatore e
+dell'Autore della sfida, evidenziando come tali figure non interagiscano
+direttamente con BlueAgent bensì mediatamente tramite il CTF Manager.
 
 \subsection{Giocatore (attore esterno per CTF
 Manager)}\label{giocatore-attore-esterno-per-ctf-manager}
@@ -47,13 +47,13 @@ Manager)}\label{autore-della-sfida-attore-esterno-per-ctf-manager}
 Si occupa di creare i file di configurazione per una o più challenge e
 di inviare tramite CTF Manager le immagini dei container definite
 tramite configurazione distrobuilder. Dunque non dialoga direttamente
-con BlueAgent
+con BlueAgent.
 
 \subsection{Amministratore della competizione (attore esterno per CTF
 Manager)}\label{amministratore-della-competizione-attore-esterno-per-ctf-manager}
 
-Per aspetti legati alla gestione della competizione CTF si interfaccia
-direttamente con il CTF Manager. Se ha bisogno di interagire con
-configurazioni di team e container, il CTF Manager cattura le richieste
-dell'amministratore (tramite interfaccia apposita di amministrazione) e
-le inoltra a BlueAgent.
+Per aspetti legati alla gestione della competizione CTF,
+l'amministratore si interfaccia direttamente con il CTF Manager. Se ha
+bisogno di interagire con configurazioni di team e container, il CTF
+Manager cattura le richieste dell'amministratore (tramite interfaccia
+apposita) e le inoltra a BlueAgent.

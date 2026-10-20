@@ -1,19 +1,23 @@
 \section{CR Alternativi: kCTF}\label{cr-alternativi-kctf}
 
-kCTF\footnote{\label{fn:ref_2}https://google.github.io/kctf/} è una piattaforma
-sviluppata da Google, basata su \emph{Kubernetes} e \emph{nsjail}.
+kCTF\footnote{\label{fn:ref_2}Google Security Team, \emph{kCTF: Kubernetes-based CTF
+  infrastructure}, https://google.github.io/kctf/} è una piattaforma
+sviluppata da Google basata su \emph{Kubernetes} e \emph{nsjail}.
 
 \begin{quote}
 \emph{Kubernetes}: è un sistema open source per automatizzare il deploy,
-scalare e gestire applicazioni containerizzate.\footnote{\label{fn:ref_3}https://kubernetes.io/}
+scalare e gestire applicazioni containerizzate.\footnote{\label{fn:ref_3}The Linux
+  Foundation, \emph{Kubernetes Documentation},
+  https://kubernetes.io/docs/}
 \end{quote}
 
 \begin{quote}
-\emph{NSJail}: ossia, NameSpace Jail, è un tool Linux per isolare i
-processi utilizzando varie feature del Kernel Linux come: namespaces,
-resource limits, seccomp-bpf syscall filters. L'obiettivo di NSJail è
-quello di creare un ambiente sicuro e isolato per eseguire le
-applicazioni. \footnote{\label{fn:ref_4}https://github.com/google/nsjail/}
+\emph{NSJail} NameSpace Jail. È un tool Linux per isolare i processi
+utilizzando varie feature del kernel come: namespaces, resource limits e
+seccomp-bpf syscall filters. L'obiettivo di NSJail è quello di creare un
+ambiente sicuro e isolato per eseguire le applicazioni. \footnote{\label{fn:ref_4}Google,
+  \emph{NsJail: A light-weight process isolation tool},
+  https://github.com/google/nsjail/}
 \end{quote}
 
 
@@ -50,7 +54,9 @@ l'architettura di kCTF prevede:
 \begin{quote}
 \textbf{Pod}: in Kubernetes, è la più piccola unità che Kubernetes può
 eseguire. Un Pod, rappresenta uno o più container in esecuzione su un
-singolo nodo.\footnote{\label{fn:ref_5}https://www.k8s.guide/workloads/pods-deployments/}
+singolo nodo.\footnote{\label{fn:ref_5}The Kubernetes Authors, \emph{Workload
+  Management: Pods and Deployments},
+  https://kubernetes.io/docs/concepts/workloads/}
 \end{quote}
 
 \begin{quote}
@@ -140,7 +146,9 @@ rende difficoltosa l'implementazione di challenge in cui si vuole dare
 la libertà ai partecipanti di installare pacchetti dentro al container,
 oppure di modificare file di configurazione che risiedono per esempio in
 \passthrough{\lstinline!/etc!} e di modificare direttamente servizi in
-esecuzione sul container. \footnote{\label{fn:ref_6}https://github.com/google/kctf/blob/v1/docs/security-threat-model.md}
+esecuzione sul container. \footnote{\label{fn:ref_6}Google Security Team, \emph{kCTF
+  Security and Threat Model},
+  https://github.com/google/kctf/blob/v1/docs/security-threat-model.md}
 
 Queste limitazioni ci sono perché NsJail nell'ambiente sandbox non
 fornisce una propria istanza di \passthrough{\lstinline!systemd!} (o un
@@ -156,19 +164,17 @@ NsJail porta con sé altri problemi:
   filesystem in RAM andrebbe perso.
 \item
   L'uso di \passthrough{\lstinline!seccomp!} per filtrare le chiamate di
-  sistema potrebbe impedire l'esecuzione di alcuni programmi
-  fondamentali per la challenge.
+  sistema potrebbe impedire l'esecuzione di alcuni programmi essenziali
+  per la challenge.
 \end{itemize}
 
 Dunque kCTF potrebbe essere utilizzato per implementare un Cyber Range
-difensivo ma con varie limitazioni e problemi da raggirare.
+difensivo ma con varie limitazioni e problemi da aggirare.
 
 L'approccio di kCTF è completamente all'opposto di quanto fatto in
 BlueAgent ed in altri Cyber Range. BlueAgent si occupa di gestire più
 container per ogni team, mentre kCTF assegna un container per tutti i
 team da dividere usando ambienti separati con NsJail.
-
-Di seguito sono riportate le principali differenze tra kCTF e BlueAgent:
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
@@ -196,5 +202,5 @@ Container di sistema dedicati e separati per ciascun team \\
 \textbf{Persistenza} & Filesystem effimero in RAM
 (\passthrough{\lstinline!tmpfs!}) & Persistente su disco \\
 \textbf{Provisioning} & Istantaneo (consiste nel fork con NsJail) &
-Rapido (consiste nel deploy di uno o più container) \\
+Nell'ordine dei secondi (deploy di uno o più container) \\
 \end{longtable}

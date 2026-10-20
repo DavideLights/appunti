@@ -1,0 +1,120 @@
+\section{WireGuard}\label{wireguard}
+
+La \textbf{VPN} è un servizio usato per comunicare in modo sicuro tra
+membri di un gruppo attraverso l'uso di una infrastruttura di
+comunicazione pubblica su cui il traffico viene incapsulato dentro ad un
+tunnel cifrato. \footnote{\label{fn:ref_27}M. S. et al., \emph{Virtual Private Network
+  (VPN) Protocols and Architecture}, IEEE,
+  https://ieeexplore.ieee.org/document/4756450}
+
+\textbf{Wireguard} è una VPN che utilizza il concetto di
+\textbf{cryptokey routing}: viene mantenuta in memoria una tabella dove
+ad ogni chiave pubblica di un peer, viene associata una lista di
+indirizzi ip identificati come allowed.\footnote{\label{fn:ref_28}J. A. Donenfeld,
+  \emph{WireGuard: Next Generation Kernel Network Tunnel}, NDSS
+  Symposium, 2017. https://www.wireguard.com/papers/wireguard.pdf}
+Fornisce un'interfaccia stateless per utilizzare il tunnel VPN, ossia
+un'interfaccia di rete virtuale, che potrebbe essere per esempio
+\passthrough{\lstinline!wg0!}.
+
+\begin{quote}
+Per \textbf{stateless}, si intende il fatto che l'amministratore non
+deve occuparsi della gestione esplicita dello stato di sessione,
+dell'handshake periodico o della riconnessione, poiché tali compiti sono
+demandati automaticamente al modulo kernel di WireGuard.
+\end{quote}
+
+Rispetto ad OpenVPN, WireGuard è considerato superiore sul piano della
+sicurezza e dell'efficienza:
+
+\begin{itemize}
+\tightlist
+\item
+  OpenVPN supporta una vasta gamma di cifrari e opzioni TLS che
+  incrementano notevolmente la superficie di attacco complessiva.
+\item
+  OpenVPN opera nello spazio utente tramite dispositivi virtuali
+  TUN/TAP, introducendo un overhead significativo dovuto a molteplici
+  passaggi di contesto e copie di buffer di memoria tra \emph{user
+  space} e \emph{kernel space}.
+\end{itemize}
+
+WireGuard non implementa un protocollo applicativo per lo scambio e la
+negoziazione iniziale delle chiavi, delegando tale incombenza a canali
+di distribuzione sicuri esterni e preesistenti (quali ad esempio
+orchestratori, agenti software dedicati o canali SSH protetti).
+
+\pagebreak
+
+La struttura concettuale di una \emph{cryptokey routing table} associa a
+ciascun peer autorizzato la relativa chiave pubblica crittografica e la
+lista di indirizzi IP sorgente consentiti:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Peer Public Key
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Allowed Source IPs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Endpoint (Opzionale)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descrizione
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\passthrough{\lstinline!xTIB...p8Dg!} &
+\passthrough{\lstinline!10.k.0.2/32!} &
+\passthrough{\lstinline!198.51.100.1:51820!} & Giocatore 1 (Team
+\(k\)) \\
+\passthrough{\lstinline!TrMv...WXX0!} &
+\passthrough{\lstinline!10.k.0.3/32!} &
+\passthrough{\lstinline!203.0.113.2:51820!} & Giocatore 2 (Team
+\(k\)) \\
+\passthrough{\lstinline!gN65...z6EA!} &
+\passthrough{\lstinline!10.k.0.4/32!} &
+\passthrough{\lstinline!198.51.100.5:51820!} & Giocatore 3 (Team
+\(k\)) \\
+\end{longtable}
+
+La tabella determina quali coppie
+\((\text{Peer Public Key, Allowed Source IP})\) abbiano facoltà di
+inviare e ricevere pacchetti attraverso l'interfaccia virtuale
+\passthrough{\lstinline!wg-k!}.
+
+Opzionalmente è possibile specificare verso quale endpoint inoltrare il
+pacchetto. L'\textbf{endpoint} identifica l'indirizzo IP pubblico e la
+porta UDP su cui il demone o modulo WireGuard remoto è in ascolto.
+
+Il flusso di elaborazione e instradamento dei pacchetti si articola
+nelle seguenti fasi:
+
+\begin{itemize}
+\tightlist
+\item
+  l'interfaccia \passthrough{\lstinline!wg0!} riceve un pacchetto IP da
+  inoltrare nel tunnel;
+\item
+  il kernel incapsula il pacchetto all'interno di un datagramma UDP il
+  cui payload viene autenticato e cifrato mediante il cifrario
+  simmetrico \passthrough{\lstinline!ChaCha20Poly1305!};
+\item
+  il pacchetto cifrato viene trasmesso verso l'endpoint specificato,
+  oppure verso l'indirizzo remoto appreso dinamicamente in occasione
+  dell'ultimo handshake;
+\item
+  il nodo ricevente valida la corrispondenza dell'indirizzo sorgente
+  nella \emph{cryptokey routing table};
+\item
+  il payload viene decifrato e autenticato, estraendo il pacchetto
+  originale;
+\item
+  il pacchetto in chiaro viene immesso nello stack di rete locale
+  attraverso l'interfaccia virtuale \(\text{wg}0\).
+\end{itemize}

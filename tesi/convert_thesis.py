@@ -196,6 +196,16 @@ def ensure_table_blank_lines(text: str) -> str:
         
     return "\n".join(new_lines)
 
+def normalize_requirements_tables(text: str) -> str:
+    """
+    Ensures requirements tables (Codice | Requisito | Descrizione Operativa)
+    have optimal column proportions when compiled by Pandoc to LaTeX:
+    ~15% for Codice, ~23% for Requisito, ~62% for Descrizione Operativa.
+    """
+    pattern = r'(\|\s*Codice\s*\|\s*Requisito\s*\|\s*Descrizione Operativa\s*\|\n)\|\s*:?-+:?\s*\|\s*:?-+:?\s*\|\s*:?-+:?\s*\|'
+    replacement = r'\1| :-------------- | :--------------------- | :------------------------------------------------------------ |'
+    return re.sub(pattern, replacement, text)
+
 def ensure_list_blank_lines(text: str) -> str:
     lines = text.splitlines()
     new_lines = []
@@ -266,6 +276,7 @@ def preprocess_markdown(text: str, file_stem: str = "doc") -> str:
 
     # 0b. Ensure blank lines before and after tables for proper pandoc parsing
     text = ensure_table_blank_lines(text)
+    text = normalize_requirements_tables(text)
 
     # 0c. Ensure blank lines before and after lists for proper pandoc parsing
     text = ensure_list_blank_lines(text)
@@ -559,7 +570,20 @@ def convert_md_file(md_path: Path, target_dir: Path, global_fn_map: dict) -> Pat
 
     return tex_path
 
+CHAPTER_TITLES = {
+    "1._Introduzione": "Introduzione",
+    "2._Contesto_e_Confronto_con_lo_Stato_dell_Arte": "Contesto e Confronto con lo Stato dell'Arte",
+    "3._BlueAgent": "BlueAgent",
+    "4._Architettura_Rete_Alto_Livello": "Architettura di Rete ad Alto Livello",
+    "5._Architettura_Nel_Dettaglio_e_Validazione": "Architettura nel Dettaglio e Validazione",
+    "6._Architetture_Rete__Alternative": "Architetture di Rete Alternative",
+    "7._Conclusioni_e_Sviluppi_Futuri": "Conclusioni e Sviluppi Futuri",
+    "8._Appendice": "Appendice",
+}
+
 def format_chapter_title(dir_name: str) -> str:
+    if dir_name in CHAPTER_TITLES:
+        return CHAPTER_TITLES[dir_name]
     cleaned = re.sub(r'^\d+[\._\s]*', '', dir_name).replace('_', ' ').strip()
     return cleaned if cleaned else dir_name
 
@@ -588,7 +612,8 @@ def main():
             tex_files.append(tex_file)
 
         chapter_title = format_chapter_title(c_dir.name)
-        wrapper_name = f"{chapter_title.replace(' ', '_')}.tex"
+        clean_dir_stem = re.sub(r'^\d+[\._\s]*', '', c_dir.name).strip()
+        wrapper_name = f"{clean_dir_stem}.tex"
         wrapper_path = LATEX_DIR / wrapper_name
         print(f"Generating wrapper: {wrapper_name}")
 

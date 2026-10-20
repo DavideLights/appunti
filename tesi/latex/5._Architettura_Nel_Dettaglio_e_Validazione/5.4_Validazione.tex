@@ -2,12 +2,15 @@
 
 Illustreremo e commenteremo adesso i dati ottenuti testando BlueAgent.
 Per tutti i test è stato eseguito BlueAgent all'interno di una macchina
-virtuale con a disposizione 8 Core AMD Ryzen 7 7700X, 16GB RAM DDR5
-5600MHz e il pool ZFS ospitato all'interno di un SSD.
+virtuale Debian 13 con a disposizione 8 Core AMD Ryzen 7 7700X, 16GB RAM
+DDR5 5600MHz e il pool ZFS ospitato all'interno di un SSD. BlueAgent è
+stato avviato utilizzando solo un processo uvicorn che può
+all'occorrenza suddividere il lavoro in più task.
 
 I test effettuati si occupano di fare richieste HTTP verso BlueAgent e
-di misurare il tempo richiesto per soddisfarle (misurando anche le varie
-sottofasi). Le richieste sono organizzate nelle seguenti fasi:
+di misurare il tempo richiesto per soddisfarle (ottenendo in risposta
+anche il tempo per l'esecuzione delle varie sottofasi). Le richieste
+sono organizzate in barriere:
 
 \begin{itemize}
 \tightlist
@@ -54,6 +57,25 @@ BlueAgent mentre ogni 100ms si campiona il contenuto di
   \(\text{IO}_{\text{wait}} = \frac{\Delta \text{iowait}}{\Delta \text{total}} \times 100\)
 \end{itemize}
 
+I valori
+\(\Delta \text{user}, \Delta \text{system}, \Delta \text{nice}, \Delta \text{iowait}\)
+sono presi campionando \passthrough{\lstinline!/proc/stat!}
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!nice!}: tempo speso per i processi con bassa
+  priorità
+\item
+  \passthrough{\lstinline!user!}: tempo speso per eseguire i processi
+  con priorità normale
+\item
+  \passthrough{\lstinline!system!}: tempo speso nel kernel
+\item
+  \passthrough{\lstinline!iowait!}: tempo in cui la CPU è in idle, in
+  attesa di I/O.
+\end{itemize}
+
 \begin{quote}
 Il file virtuale \passthrough{\lstinline!/proc/stat!} espone il tempo
 speso dalla CPU nelle varie modalità operative. Campionando i contatori
@@ -74,21 +96,20 @@ Per ottenere l'uso della RAM invece sono stati campionati
   \(\text{RAM}_{\text{usata\_grezza}} = \text{MemTotal} - \text{MemFree} - \text{Buffers} - \text{Cached}\)
 \item
   \(\text{RAM}_{\text{netta\_container}} = \text{RAM}_{\text{usata\_grezza}} - \text{ARC}_{\text{size}} - \text{RAM}_{\text{baseline}}\)
-\end{itemize}
 
-\begin{quote}
-Su filesystem basati su ZFS, la metrica standard di memoria libera
-risulta fuorviante: ZFS alloca la propria \emph{Adaptive Replacement
-Cache} (ARC) direttamente nello spazio kernel, facendola apparire come
-memoria occupata nelle metriche generiche del sistema operativo. Man
-mano che i container leggono e scrivono blocchi disco, l'ARC si espande
-dinamicamente per accelerare le letture successive. Sottraendo la
-dimensione attuale dell'ARC (\passthrough{\lstinline!ARC\_size!}) e
-l'impronta di memoria a riposo iniziale dell'host
-(\(\text{RAM}_{\text{baseline}}\)), la metrica
-\(\text{RAM}_{\text{netta\_container}}\) isola con rigore unicamente la
-memoria fisica occupata dai processi dei container.
-\end{quote}
+  \begin{itemize}
+  \tightlist
+  \item
+    \passthrough{\lstinline!Buffers!}: è la memoria allocata dal kernel
+    per conservare dati e metadati.
+  \item
+    \passthrough{\lstinline!Cached!}: memoria impiegata per tenere in
+    RAM i file.
+  \item
+    \passthrough{\lstinline!ARC!}: è la Adaptive Replacement Cache di
+    ZFS, memoria cache che si allarga per accelerare l'accesso al disco.
+  \end{itemize}
+\end{itemize}
 
 I test sono stati eseguiti utilizzando due immagini differenti in due
 run separate:
@@ -109,9 +130,9 @@ run separate:
   \(\sim \text{1.5GB}\).
 \end{itemize}
 
-Abbiamo provato inoltre ad eseguire le barriere per diverse combinazioni
-di \(M \text{ ed } N\) fino ad arrivare ai casi più pesanti con \(M=10\)
-ed \(N=5\) o viceversa.
+Le barriere di sincronizzazione sono state inoltre valutate per diverse
+combinazioni di \(M\) e \(N\), fino a raggiungere gli scenari più
+gravosi con \(M=10\) ed \(N=5\) (o viceversa).
 
 \begin{quote}
 Il numero totale di container istanziati in un test è sempre
@@ -138,10 +159,9 @@ le barriere.
 Come ci si poteva aspettare, presi singolarmente i casi \((5,10)\) ed
 \((10,5)\) hanno performance simili poiché condividono lo stesso numero
 complessivo di container. In particolare su tutti i test effettuati si
-ha che \(T(B_{3}) < T(B_{2})\): la fase di verifica è sensibilmente più
-rapida del deploy e, in entrambi questi scenari ad alta concorrenza, la
-differenza è di circa 20 secondi su Alpine e oltre 25 secondi su Ubuntu
-Heavy.
+ha che \(T(B_{3}) < T(B_{2})\): la fase di verifica è più rapida del
+deploy e, in entrambi questi scenari ad alta concorrenza, la differenza
+è di circa 20 secondi su Alpine e oltre 25 secondi su Ubuntu Heavy.
 
 \begin{quote}
 La ragione di questo vantaggio risiede nella diversa metodologia usata:
@@ -182,11 +202,17 @@ Dal grafico in Figura \ref{fig:graph1_cow_vs_deploy} (Graph 1), si nota
 che mentre il tempo per \passthrough{\lstinline!Deploy Create!} sale
 all'aumentare della concorrenza e della complessità dell'immagine, il
 tempo per \passthrough{\lstinline!Verify CoW Clone!} è nettamente più
-basso e dipende fortemente dai parametri \(M,N\) del test. Entrambe le
-metriche sono strettamente confrontabili in quanto misurano l'intervallo
-necessario a portare un'istanza nello stato creato (spento), escludendo
-l'avvio e la configurazione di rete che vengono cronometrati in
-sotto-fasi successive.
+basso e dipende fortemente dai parametri \(M,N\) del test.
+
+\begin{quote}
+Si riesce ad ottenere nei vari casi uno \(\text{Speedup}\) pari a
+\(3.6\) nel caso \((10,5)\) con Alpine.
+\end{quote}
+
+Entrambe le metriche sono strettamente confrontabili in quanto misurano
+l'intervallo necessario a portare un'istanza nello stato creato
+(spento), escludendo l'avvio e la configurazione di rete che vengono
+cronometrati in sotto-fasi successive.
 
 
 \begin{figure}[!htbp]
@@ -205,20 +231,21 @@ differenti). Nel caso \((10,5)\), ogni task si occupa di clonare in
 serie solo 5 container per il rispettivo team, sfruttando appieno il
 parallelismo dei core della CPU e accorciando la coda locale. L'altro
 caso \((5,10)\) utilizza invece soltanto 5 task concorrenti, dove
-ciascun task deve gestire una catena sequenziale più lunga di 10
-container consecutivi.
+ciascun task deve gestire una catena di 10 container.
 
 \begin{quote}
-All'interno di un singolo task, la clonazione dei container per quel
-team è sequenziale (prima \passthrough{\lstinline!A!}, poi
-\passthrough{\lstinline!B!}, poi \passthrough{\lstinline!C!}).
+All'interno di un singolo task (associato ad un team), la clonazione dei
+container per quel team è sequenziale (prima
+\passthrough{\lstinline!A!}, poi \passthrough{\lstinline!B!}, poi
+\passthrough{\lstinline!C!}).
 \end{quote}
 
 \begin{quote}
 In generale, per migliorare ulteriormente le performance di clonazione
 in BlueAgent, si potrebbe teoricamente valutare di parallelizzare anche
-l'interno del singolo team. Tuttavia un parallelismo eccessivo verrebbe
-limitato dalla gestione della mutua esclusione in ZFS e OVN.
+il processo di creazione del singolo team. Tuttavia un parallelismo
+eccessivo verrebbe limitato dalla gestione della mutua esclusione in ZFS
+e OVN.
 \end{quote}
 
 Il diagramma in Figura \ref{fig:graph2_microphase_breakdown} (Graph 2)
@@ -239,10 +266,9 @@ zero.
 
 \begin{quote}
 Poiché la clonazione è nettamente più efficiente della creazione a
-partire dall'immagine grezza, in future evoluzioni di BlueAgent si
-potrebbe prevedere l'avvio preventivo di container template (golden
-images a caldo) da clonare nella rete di produzione all'occorrenza,
-accelerando anche la fase iniziale di deploy.
+partire dall'immagine, si potrebbe evolvere l'architettura implementando
+l'avvio preventivo di container template da clonare nella rete di
+produzione.
 \end{quote}
 
 \subsection{Uso di Memoria}\label{uso-di-memoria}
@@ -279,24 +305,3 @@ transazioni di I/O.
   \label{fig:graph4_lifecycle_timeline}
 \end{figure}
 
-
-\subsection{Considerazioni su Filesystem Alternativi
-(BTRFS)}\label{considerazioni-su-filesystem-alternativi-btrfs}
-
-\subsection{Sviluppi Futuri nei
-Benchmark}\label{sviluppi-futuri-nei-benchmark}
-
-Tra le possibili estensioni delle misurazioni sperimentali, si
-evidenziano:
-
-\begin{itemize}
-\tightlist
-\item
-  La valutazione quantitativa del degrado prestazionale della rete OVN e
-  Geneve sotto traffico continuo di pacchetti ad alta frequenza durante
-  lo svolgimento contemporaneo di verifiche sandbox.
-\item
-  La misurazione dell'impatto dei limiti cgroup su CPU e memoria nel
-  caso in cui le challenge eseguano payload di attacco o exploit
-  computation-intensive all'interno dell'ambiente di gara.
-\end{itemize}

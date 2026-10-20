@@ -5,33 +5,30 @@ In BlueAgent, abbiamo introdotto OVN per semplificare la gestione di due
 reti con stesso gateway.
 
 Per evitare di aggiungere la complessità computazionale di OVN, si può
-pensare di creare un network namespace separato al momento della
-verifica.
+pensare di creare un \textbf{network namespace} separato nell'host al
+momento della verifica.
 
 All'interno di questo nuovo namespace, chiamato \(\text{verify-}k\) si
-crea la rete di verifica composta dal solo bridge L2 e si assegna a
-questo bridge il gateway originale.
+crea la rete di verifica composta dal bridge L2 e si assegna a questo il
+gateway.
 
-I container duplicati dovranno poi essere collegati al nuovo bridge.
+I container duplicati dovranno poi essere collegati al bridge nel
+namespace \(\text{verify-}k\).
 
 Per consentire l'accesso alla rete WAN bisogna usare una coppia di
 \passthrough{\lstinline!veth!}, per collegare il namespace
-\(\text{verify-}k\) al namespace root.
+\(\text{verify-}k\) al namespace root. In questo modo, i due bridge con
+stesso indirizzo IP possono coesistere poiché risiedono in namespace
+differenti: il kernel Linux effettua l'instradamento dei pacchetti verso
+le rispettive interfacce nei diversi namespace.
 
-In questo modo i due bridge con stesso ip gateway possono coesistere
-poiché risiedono in namespace differenti, ci pensa il kernel ad
-effettuare il routing dei pacchetti verso le giuste interfacce nei
-differenti namespace.
+Tuttavia l'implementazione non è immediata e l'integrazione con Incus
+risulta problematica, in quanto l'orchestratore non prevede il
+tracciamento di interfacce di rete all'interno di altri network
+namespace. Bisogna aggirare tale vincolo, creando e gestendo
+direttamente all'interno di BlueAgent le coppie di \emph{veth}
+necessarie a colmare questa discrepanza.
 
-Tuttavia l'implementazione non è immediata e l'uso di Incus non si sposa
-bene con la creazione di network namespace separati dato che non sa come
-tracciarne l'esistenza. Dunque bisogna gestire manualmente le interfacce
-di rete, aggiungendo una notevole complessità. Questo perché il motore
-di Incus esegue sul namespace root, e non è progettato per gestire
-interfacce dentro altri namespace. Bisogna dunque raggirare Incus, ed
-istanziare e gestire in BlueAgent coppie di \emph{veth} che gestiscano
-questo disallineamento.
-
-Dal lato del codice aumenta dunque la complessità: invece di fare
-richieste verso l'API di Incus per gestire le interfacce, bisogna usare
-vari comandi e tracciare il ciclo di vita delle interfacce usate.
+Nell'implementazione software aumenta la complessità: anziché delegare
+la gestione della rete all'API di Incus, è necessario invocare comandi
+di basso livello per gestire le \emph{veth}.

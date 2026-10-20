@@ -244,9 +244,6 @@ macchine, con 20 immagini differenti.
 \end{figure}
 
 
-Le differenze tra CyTrONE e BlueAgent sono elencate nella seguente
-tabella:
-
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
@@ -267,9 +264,10 @@ BlueAgent
 \textbf{Infrastruttura} & Cluster distribuito su larga scala (es:
 \emph{StarBED}) & Singolo nodo host \\
 \textbf{Isolamento e Verifica} & Il controller invia exploit via rete &
-Exploit inviati in una rete separata inaccessibile al giocatore \\
-\textbf{Rete} & Reti virtuali KVM & Linux Bridge per L2, SDN, WireGuard
-per L3 \\
+Injection tramite Incus dei comandi all'interno di una rete
+inaccessibile al giocatore \\
+\textbf{Paradigmi di Rete} & Reti virtuali KVM & Linux Bridge, SDN,
+WireGuard \\
 \textbf{Scopo Principale} & Formazione didattica guidata con Moodle e
 verifiche statiche sulle macchine & Cyber Range compatto per
 competizioni di Difesa \\

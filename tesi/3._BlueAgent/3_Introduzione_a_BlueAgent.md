@@ -1,27 +1,26 @@
 
-Si vuole presentare dunque il nostro Cyber Range: *BlueAgent*. Un servizio *HTTP* che implementa delle *API REST* per la gestione e la verifica delle macchine a partire da file dichiarativi (*IaC*) forniti dagli organizzatori della CTF. Queste API REST potranno poi essere sfruttate ed implementate da un qualsiasi applicativo (denominato CTF Manager) per gestire le challenge, come per esempio, un plugin per CTFd[^1].
+Si presenta dunque l'architettura di *BlueAgent*, una piattaforma di Cyber Range in esecuzione come servizio *HTTP* che espone *API REST* per il deployment, la gestione del ciclo di vita e la verifica automatizzata delle challenge, a partire da definizioni dichiarative (*Infrastructure as Code*) predisposte dagli organizzatori della gara. Tali API REST possono essere consumate da un qualsiasi applicativo esterno denominato CTF Manager, come ad esempio un plugin per la piattaforma CTFd[^1].
 
-Il Cyber Range implementato da BlueAgent è pensato per scenari di Patch Management da eseguire su un unico nodo con hardware "leggero". Dunque si vuole offrire un ambiente basato su container (invece di utilizzare delle macchine virtuali pesanti) che offra un meccanismo di verifica completamente nascosto ai giocatori. Tale meccanismo è basato sulla clonazione sul momento dell'intera infrastruttura interessata, in una rete separata e inaccessibile ai giocatori, su cui verranno poi eseguiti i comandi dell'oracolo definito in fase di dichiarazione.
+Il Cyber Range implementato da BlueAgent è pensato per scenari di Patch Management da eseguire su un singolo host. Si propone di offrire un ambiente basato su container di sistema, che garantisca un meccanismo di verifica completamente inaccessibile ai concorrenti. Tale meccanismo si fonda sulla clonazione all'occorrenza dell'intera infrastruttura del team in una rete logica separata, sulla quale vengono eseguiti i comandi di verifica definiti dall'oracolo.
 
-I membri dei team, potranno connettersi alla rete dei container a loro assegnati utilizzando una VPN, implementata da WireGuard, tenendo presente che ogni membro avrà un peer associato (una coppia di chiavi pubbliche e private).
+I membri di ciascun team possono connettersi alla rete dei container a loro assegnata mediante una VPN WireGuard, dove a ciascun partecipante corrisponde un peer dedicato (ossia, coppia di chiavi pubblica e privata).
 
-È importante puntualizzare che:
-1. Gli indirizzi IP dei container, nelle reti dei giocatori, saranno statici e noti a priori (questo scenario si applica alla stragrande maggioranza delle challenge)
-2. Il meccanismo di duplicazione avviene sfruttando il meccanismo CoW di ZFS per abbattere il costo in memoria. Inoltre utilizzeremo una SDN per semplificare la gestione e la creazione di router e switch necessari ai container duplicati.
-3. BlueAgent non mantiene in memoria lo stato delle challenge (per esempio i punteggi dei vari team). Questo software deve essere inteso come un orchestratore di container. BlueAgent si limita a prendere in input la definizione di una challenge e di istanziare i container richiesti.
+È opportuno evidenziare che:
+1. Gli indirizzi IP dei container all'interno della rete di produzione di ciascun team sono statici e noti a priori (il che si applica alla maggior parte delle challenge).
+2. La duplicazione istantanea sfrutta le proprietà Copy-on-Write (CoW) del filesystem ZFS. Inoltre viene impiegata una rete SDN (Software-Defined Network) per orchestrare router e switch logici dedicati all'ambiente di verifica.
+3. BlueAgent non mantiene lo stato della competizione (quali i punteggi o la classifica dei team), delegando tale responsabilità al CTF Manager. BlueAgent opera esclusivamente come un orchestratore specializzato che traduce le specifiche delle challenge in container da eseguire.
 
-A scopo d'esempio mostriamo come creare ed istanziare una challenge con BlueAgent:
-1. Il creatore della challenge definisce in modo dichiarativo i container. 
-2. Il creatore della challenge, inserisce nel CTF Manager la nuova challenge tenendo in memoria tutte le informazioni necessarie a BlueAgent (inclusi i file dichiarativi)
-3. Il giocatore di un determinato team, accede alla challenge e tramite il CTF Manager richiede la creazione dei container
-4. Il CTF Manager invia a BlueAgent i file di configurazione della challenge da istanziare
-5. BlueAgent si occupa di istanziare i container per il team.
+A scopo d'esempio, mostriamo ad alto livello come si crea una challenge:
+1. Il creatore della challenge definisce tramite un file YAML i container. 
+2. Il creatore della challenge, inserisce la nuova challenge tenendo in memoria tutte le informazioni necessarie a BlueAgent (inclusi i file dichiarativi)
+3. Il giocatore di un determinato team accede alla challenge e tramite il CTF Manager richiede la creazione dei container.
+4. BlueAgent si occupa di istanziare i container per il team.
 
 BlueAgent è basato su *FastAPI*, per gestire in modo semplice ed efficiente le richieste HTTP. 
 
 L'host su cui viene eseguito BlueAgent deve mettere a disposizione dell'architettura le seguenti componenti:
 * **Debian 13**: o una qualsiasi distribuzione Linux.
-* `nftables`: per filtrare i pacchetti nel Kernel
+* `nftables`: per filtrare i pacchetti nel kernel
 * **Python 3**: per eseguire BlueAgent.
 * **Pool ZFS**: filesystem che supporta il meccanismo `COW`.
 * **OVN ed Open vSwitch**: per gestire la rete di verifica dei container.
@@ -31,4 +30,4 @@ L'host su cui viene eseguito BlueAgent deve mettere a disposizione dell'architet
 
 Per comprendere passo-passo cosa permette di fare il sistema e come lo fa sono elencati gli attori, gli use cases ed i requisiti di sistema.
 
-[^1]: https://ctfd.io/
+[^1]: CTFd LLC, *CTFd: Open Source Capture The Flag Framework*, https://ctfd.io/

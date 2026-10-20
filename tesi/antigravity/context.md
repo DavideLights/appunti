@@ -51,12 +51,13 @@ This workspace hosts the engineering assets, empirical datasets, and compilation
 │   ├── 4._Architettura_Rete_Alto_.../     # Chapter 4: Dual-plane network design & WireGuard
 │   ├── 5._Architettura_Nel_Dettaglio_.../ # Chapter 5: In-depth architecture & empirical validation
 │   ├── 6._Architetture_Rete__.../         # Chapter 6: Alternative network topologies & tradeoffs
-│   ├── 7._Appendice/                      # Chapter 7: Appendices, configs, and specifications
+│   ├── 7._Conclusioni_e_Sviluppi_Futuri/  # Chapter 7: Conclusioni e Sviluppi Futuri
+│   ├── 8._Appendice/                      # Chapter 8: Appendices (Linux Networking, WireGuard, ZFS, NsJail)
 │   ├── Bibliography.bib                   # BibTeX references
 │   ├── compile.sh                         # Markdown -> LaTeX -> PDF compilation script
 │   ├── convert_thesis.py                  # Pandoc & regex processor (Mermaid, math, footnotes)
 │   ├── latex/                             # Target LaTeX build tree (template.tex, main.tex)
-│   └── main.pdf                           # Compiled thesis PDF output
+│   └── main.pdf                           # Compiled thesis PDF output (79 pages)
 │
 ├── blueagent/                             # Local BlueAgent Development Codebase
 │   ├── context.md                         # Codebase-specific architecture & component inventory
@@ -168,6 +169,7 @@ python3 /home/davidel/.gemini/config/skills/update-context/scripts/sync_context.
 | Conversation ID | Chat Title | Last Activity | Primary Objective / Request | Status |
 | :--- | :--- | :--- | :--- | :--- |
 | `f8e7a793` | **AI Engineer Context File Setup** | 2026-10-17 13:21:16 | write a context file that is useful to you to access resources faster... | `Active / Complete` |
+| `6b7c0364` | **Thesis Academic Review & Restructuring** | 2026-10-20 17:25:00 | Academic review, IA-pattern cleanup, Option A restructuring (Cap. 7/8), conceptual fixes | `Complete / Verified` |
 | `430a2f9a` | **CTFd and Blueagent Testing Plan** | 2026-10-16 11:32:13 | use ssh to login into debian@10.226.253.215... run ctfd and blueagent | `Testing / Complete` |
 | `4e891783` | **Git Project Backup Strategy** | 2026-10-16 11:16:51 | do a backup of the whole project using git, go! | `Backup / Complete` |
 | `07ba0c08` | **Cross Chat Context Updater Skill** | 2026-10-16 11:14:59 | create a skill that updates on context.md between all the project chats | `Skill Active` |
@@ -175,6 +177,14 @@ python3 /home/davidel/.gemini/config/skills/update-context/scripts/sync_context.
 ---
 
 ### 3. Detailed Cross-Chat Activity & Progress Log
+
+#### Session: Thesis Academic Review & Restructuring (`6b7c0364`)
+- **Objective:** Comprehensive academic revision of thesis text: eliminate AI hyperbole/patterns, restructure chapters according to Option A, enforce uniform plural/impersonal academic register, and resolve conceptual errors.
+- **Key Actions:** 
+  1. Restructured thesis into 8 chapters (created dedicated `Capitolo 7: Conclusioni e Sviluppi Futuri` from 5.5/5.6, moved Appendice to `Capitolo 8`).
+  2. Fixed conceptual errors: CyTrONE testbed scale (600 VMs on 30 hosts), CyberRangeCZ OpenStack vs K8s virtualization, nftables clarification in Appendix 8.1, team indexing cardinality $1 \le k \le 254$ (254 teams).
+  3. Cleaned TOC and LaTeX headers: moved all footnote markers out of markdown section headers, eliminating trailing spaces and `Hfootnote` LaTeX warnings.
+  4. Updated `convert_thesis.py` with Italian typographic titles dictionary mapping. Full compilation `./compile.sh` verified with exit code 0 (79 pages).
 
 #### Session: AI Engineer Context File Setup (`f8e7a793`)
 - **Objective:** Design and generate a high-signal AI Engineer context file enabling instantaneous resource lookup, command navigation, and environment awareness across workspaces.

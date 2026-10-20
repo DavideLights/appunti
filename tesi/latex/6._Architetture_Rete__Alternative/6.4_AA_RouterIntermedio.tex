@@ -1,32 +1,25 @@
 \section{Router Intermedio}\label{router-intermedio}
 
 Un'altra possibile alternativa consiste nell'introdurre un router
-dedicato (ad esempio un container Linux minimale) posto tra il bridge di
-verifica e l'interfaccia uplink \passthrough{\lstinline!incusbr0!}.
+dedicato (con un'immagine alpine per esempio) che fa da tramite tra il
+bridge di verifica e l'interfaccia \passthrough{\lstinline!incusbr0!}.
 
 In questa architettura, i container duplicati vengono collegati a un
-bridge L2 isolato. Il router intermedio si aggancia su questo bridge
-assumendo l'indirizzo IP del gateway originale
-(\passthrough{\lstinline!10.k.1.1/24!}), permettendo ai container di
-verifica di preservare inalterata la propria topologia, la
-configurazione IP e le tabelle di routing.
+bridge L2 isolato. Il router intermedio si aggancia al bridge usando
+come IP il gateway originale (\passthrough{\lstinline!10.k.1.1/24!}).
 
-Verso l'esterno, il router dispone di una seconda interfaccia agganciata
-ad \passthrough{\lstinline!incusbr0!}, su cui applica regole di SNAT per
-mascherare il traffico uscente. In questo modo la topologia interna
-della rete di verifica viene completamente nascosta all'host e
-all'esterno, evitando i conflitti di instradamento con la rete di
-produzione.
+Verso l'esterno, il router ha una seconda interfaccia collegata verso
+\passthrough{\lstinline!incusbr0!} da cui ottiene un indirizzo IP.
+Vengono applicate le regole di SNAT per mascherare il traffico uscente.
+In questo modo la topologia interna della rete di verifica viene
+completamente nascosta, evitando i conflitti di instradamento con la
+rete di produzione.
 
-L'architettura è concettualmente valida e pienamente fattibile, offrendo
-un isolamento efficace e un'elevata fedeltà dell'ambiente replicato.
-Tuttavia, sul piano operativo risulta leggermente più complessa rispetto
-alla soluzione adottata in BlueAgent con OVN.
+Sul piano operativo l'adozione del router richiede di istanziare un
+container in più rispetto alla soluzione adottata con OVN.
 
-Mentre con OVN la creazione dello switch, del router logico e delle
-regole di NAT è gestita in modo nativo e dichiarativo da Incus tramite
-API, l'uso di un router intermedio impone a BlueAgent di gestire
-manualmente l'intero ciclo di vita di un container ausiliario aggiuntivo
-per ogni sessione di verifica. Questo comporta una maggiore complessità
-nel codice di orchestrazione, un footprint di memoria leggermente
-superiore rispetto alla soluzione che sfrutta la SDN.
+In OVN inoltre la creazione dello switch, del router logico e delle
+regole di NAT è gestita in modo nativo da Incus, mentre l'uso di un
+router intermedio impone a BlueAgent di gestirlo manualmente per ogni
+sessione di verifica. Questo comporta un lieve aumento della complessità
+nel codice e del footprint di memoria.

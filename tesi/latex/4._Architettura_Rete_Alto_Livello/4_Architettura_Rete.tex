@@ -33,7 +33,9 @@ di gioco del team \(k\), la rete WireGuard e la rete di Incus:
 \(\text{production-}k\)}{Rete \textbackslash text\{production-\}k}}\label{rete-textproduction-k}
 
 La rete \(\text{production-}k\) (Figura \ref{fig:production-network}) è
-fatta così, contiene:
+progettata per offrire un ambiente isolato e raggiungibile
+esclusivamente dai membri autorizzati del team. È costituita dai
+seguenti dispositivi di rete:
 
 \begin{itemize}
 \tightlist
@@ -60,24 +62,24 @@ routing}), e quindi assegnare ad ogni membro del team \(k\) un indirizzo
 nella sottorete \passthrough{\lstinline!10.k.0.0/24!}.
 
 L'interfaccia \(\text{br-team-}k\) permette di creare una rete LAN per i
-container del team \(k\), a cui questi si collegano definendo
-direttamente un dispositivo NIC bridged per ciascun container.
+container del team \(k\), a cui questi si collegano.
 
 Questo collegamento avviene tramite l'utilizzo di una
 \passthrough{\lstinline!veth pair!} (Virtual Ethernet) per container:
 un'estremità è collegata a \(\text{br-team-}k\), l'altra all'interfaccia
-del container \passthrough{\lstinline!eth0!}. Dunque all'interno del
-kernel appesantiamo il carico nella gestione delle interfacce, infatti
-avremmo oltre ad \passthrough{\lstinline!eth0!}, una coppia
-\passthrough{\lstinline!veth!} per ogni container.
+del container \passthrough{\lstinline!eth0!}. Questa architettura
+comporta la creazione di un numero di \passthrough{\lstinline!veth!}
+pair lineare al numero di container attivi.
 
 \begin{quote}
 \passthrough{\lstinline!veth!}: È utile per collegare interfacce che
 risiedono per esempio su differenti Network Namespace (ossia il modo in
 cui sono implementati i container). Utilizzano poca CPU e poca memoria,
-dato che l'implementazione risiede direttamente nel kernel. Dunque per
-centinaia di \passthrough{\lstinline!veth!} non si ha un degrado
-evidente delle prestazioni. \footnote{\label{fn:ref_15}https://dev.to/godofgeeks/virtual-ethernet-devices-veth-ofd}
+dato che l'implementazione è efficiente e risiede direttamente nel
+kernel. Dunque per centinaia di \passthrough{\lstinline!veth!} non si ha
+un degrado evidente delle prestazioni. \footnote{\label{fn:ref_16}Linux manual page,
+  veth(4) - Virtual Ethernet Device:
+  https://man7.org/linux/man-pages/man4/veth.4.html}
 \end{quote}
 
 Tramite regole di forwarding del kernel e di firewall via
@@ -101,14 +103,14 @@ del kernel gestita da nftables) la coppia di interfacce interessate.
 \section{\texorpdfstring{Rete
 \(\text{verify-}k\)}{Rete \textbackslash text\{verify-\}k}}\label{rete-textverify-k}
 
-La rete \(\text{verify-}k\) (Figura \ref{fig:verify-network}) è fatta
-così, contiene:
+La rete \(\text{verify-}k\) (Figura \ref{fig:verify-network}) è
+costituita dai seguenti componenti:
 
 \begin{itemize}
 \tightlist
 \item
   \(\text{verify-}k\): rete virtuale logica gestita via SDN tramite OVN
-  e orchestrata da Incus \footnote{\label{fn:ref_16}Documentazione ufficiale Incus, OVN
+  e orchestrata da Incus \footnote{\label{fn:ref_17}Documentazione ufficiale Incus, OVN
     network driver:
     https://linuxcontainers.org/incus/docs/main/reference/network\_ovn/}.
   Non costituisce una singola interfaccia di rete convenzionale del
@@ -139,12 +141,12 @@ implementata da:
 \tightlist
 \item
   un \textbf{Logical Switch} (denominato internamente da Incus nel DB di
-  OVN come \passthrough{\lstinline!incus-net<ID>-ls-int!} \footref{fn:ref_16}):
+  OVN come \passthrough{\lstinline!incus-net<ID>-ls-int!} \footref{fn:ref_17}):
   rappresenta la LAN su cui si agganciano le interfacce virtuali dei
   container di verifica.
 \item
   un \textbf{Logical Router} (denominato
-  \passthrough{\lstinline!incus-net<ID>-lr!} \footref{fn:ref_16}):
+  \passthrough{\lstinline!incus-net<ID>-lr!} \footref{fn:ref_17}):
   agisce come gateway (\passthrough{\lstinline!10.k.1.1/24!}),
   permettendo ai container clonati di preservare l'identica
   configurazione IP rispetto alla produzione.
@@ -153,28 +155,23 @@ implementata da:
 \begin{quote}
 \textbf{Tunneling Geneve e considerazioni sull'MTU:} OVN impiega il
 protocollo di tunneling \textbf{Geneve} (\emph{Generic Network
-Virtualization Encapsulation}) \footnote{\label{fn:ref_17}Documentazione architetturale
+Virtualization Encapsulation}) \footnote{\label{fn:ref_18}Documentazione architetturale
   OVN e Geneve: https://docs.ovn.org/en/latest/topics/geneve.html} per
 spostare i pacchetti tra più nodi della rete.
 \end{quote}
 
 L'incapsulamento Geneve introduce tuttavia un overhead di intestazione
-di 58 byte, riducendo l'MTU effettiva della rete di verifica a \(1442\)
-byte (rispetto ai 1500 byte standard). Se pacchetti di dimensione
-eccedente hanno il flag \emph{Don't Fragment} (DF) abilitato, rischiano
-di essere scartati generando un fenomeno di \emph{Path MTU Blackhole}.
-Questo problema viene risolto forzando il \emph{clamping} del MSS per il
-traffico TCP via \passthrough{\lstinline!nftables!} \footnote{\label{fn:ref_18}Documentazione
-  Netfilter, TCP MSS Clamping:
-  https://wiki.nftables.org/wiki-nftables/index.php/Forwarding\_traffic},
-mentre il traffico UDP deve rimanere entro i limiti imposti dall'MTU.
+variabile (fino a 58 byte), riducendo l'MTU effettiva della rete a
+\(1442\) byte (rispetto ai 1500 byte dello standard Ethernet). Se
+pacchetti di dimensione eccedente hanno il flag \emph{Don't Fragment}
+(DF) abilitato, rischiano di essere scartati generando un fenomeno di
+\emph{Path MTU Blackhole}.
 
 Bisogna notare che il tunnel Geneve non viene mai utilizzato, poiché i
 container di verifica risiedono tutti all'interno dello stesso nodo.
 Tuttavia Incus limita di default l'MTU delle interfacce di rete dei
-container a 1420 byte per precauzione (in caso di una rete OVN con
-tunnel) e per risolvere il problema del \emph{Path MTU Blackhole} nella
-rete di verifica è possibile forzare l'MTU a 1500.
+container a 1442 byte per precauzione; per risolvere il problema è
+possibile forzare l'MTU a 1500.
 
 L'uso di una SDN garantisce l'assenza di conflitti di routing grazie a
 una netta separazione tra \textbf{spazio utente} e \textbf{spazio
@@ -186,14 +183,16 @@ kernel} \footnote{\label{fn:ref_19}Documentazione Open vSwitch, architettura Dat
 \tightlist
 \item
   \textbf{Spazio Utente (Control Plane):} i demoni di controllo di OVN
-  (\passthrough{\lstinline!ovn-controller!},
-  \passthrough{\lstinline!ovn-northd!}) e di Open vSwitch
-  (\passthrough{\lstinline!ovs-vswitchd!}) elaborano la topologia logica
-  e la traducono in flussi OpenFlow. Il router OVN esiste puramente a
-  livello logico.
+  (\passthrough{\lstinline!ovn-northd!} e l'agente locale
+  \passthrough{\lstinline!ovn-controller!}) elaborano la topologia
+  logica e la traducono in flussi OpenFlow concreti per Open vSwitch
+  (\passthrough{\lstinline!ovs-vswitchd!}). Il router OVN esiste
+  puramente a livello logico.
 \item
-  \textbf{Spazio Kernel (Data Plane):} qui viene applicato l'inoltro dei
-  frame ad alte prestazioni tramite il modulo kernel di Open vSwitch.
+  \textbf{Spazio Kernel (Data Plane):} il demone
+  \passthrough{\lstinline!ovs-vswitchd!} riceve i flussi OpenFlow e
+  programma il modulo kernel \passthrough{\lstinline!openvswitch.ko!},
+  dove viene applicato l'inoltro dei frame ad alte prestazioni.
 \end{itemize}
 
 Il collegamento tra i container e la rete OVN sfrutta sempre una coppia
@@ -219,13 +218,17 @@ vSwitch.
 \begin{quote}
 \passthrough{\lstinline!OVN (Open Virtual Network)!}: Sistema SDN che
 opera come Control Plane per Open vSwitch. Traduce topologie logiche
-(Logical Switch, Logical Router, NAT e ACL) in flussi OpenFlow
-distribuiti, istruendo Open vSwitch su come instradare il traffico senza
-creare molteplici interfacce o bridge dedicati nel kernel host. È
-costituito da due interfacce: \textbf{OVN Northbound}: è l'interfaccia
-dove dichiaro le reti che voglio creare e le loro proprietà che devono
-rispettare. \textbf{OVN Southbound DB:} Memorizza le tabelle di flussi
-logici compilate e le associazioni di chassis (host fisici).
+(Logical Switch, Logical Router, NAT e ACL) tramite
+\passthrough{\lstinline!ovn-northd!} e
+\passthrough{\lstinline!ovn-controller!} in flussi OpenFlow distribuiti,
+istruendo Open vSwitch su come instradare il traffico senza creare
+molteplici interfacce o bridge dedicati nel kernel host. È costituito da
+due database: \textbf{OVN Northbound}: memorizza la dichiarazione delle
+reti logiche da creare e le proprietà che devono rispettare. \textbf{OVN
+Southbound:} memorizza le tabelle di flussi logici compilate da
+\passthrough{\lstinline!ovn-northd!}, che
+\passthrough{\lstinline!ovn-controller!} traduce in regole OpenFlow
+concrete per il piano dei dati.
 \end{quote}
 
 La comunicazione verso l'esterno avviene collegando il Logical Router
@@ -236,26 +239,59 @@ un meccanismo di NAT a due stadi:
 \begin{itemize}
 \tightlist
 \item
-  \textbf{SNAT in OVN}: quando un container
+  \textbf{Primo Stadio (SNAT in OVN)}: quando un container di verifica
   (\passthrough{\lstinline!10.k.1.x!}) invia traffico all'esterno, il
   Logical Router riscrive l'indirizzo sorgente sostituendolo con l'IP
-  uplink assegnato su \passthrough{\lstinline!incusbr0!}. Se non fosse
-  applicato, i pacchetti in uscita manterrebbero l'indirizzo sorgente
-  \passthrough{\lstinline!10.k.1.x!} e le risposte dall'esterno
-  verrebbero erroneamente instradate verso l'ambiente di produzione.
+  assegnatogli da \passthrough{\lstinline!incusbr0!} (nella sottorete
+  \passthrough{\lstinline!172.16.0.0/24!}). Se non fosse applicato, i
+  pacchetti in uscita manterrebbero l'indirizzo sorgente
+  \passthrough{\lstinline!10.k.1.x!}, i quali sono attestati sulle
+  interfacce di rete dei container nella rete di produzione.
 \item
-  \textbf{SNAT su \passthrough{\lstinline!incusbr0!}}: una volta
-  raggiunto \passthrough{\lstinline!incusbr0!}, le regole
-  \passthrough{\lstinline!nftables!} dell'host applicano la regola di
+  \textbf{Secondo Stadio (SNAT su \passthrough{\lstinline!incusbr0!})}:
+  una volta raggiunto \passthrough{\lstinline!incusbr0!}, il
+  sottosistema Netfilter, tramite regole
+  \passthrough{\lstinline!nftables!}, applica la regola di
   \textbf{masquerade} verso l'interfaccia fisica per uscire su Internet.
+  Viene sostituito l'indirizzo di \passthrough{\lstinline!incusbr0!} con
+  l'indirizzo pubblico dell'host che esegue BlueAgent.
 \end{itemize}
 
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2889}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2889}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2593}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1630}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Tratta del Pacchetto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Indirizzo Sorgente (\(IP_{src}\))
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Indirizzo Destinazione (\(IP_{dst}\))
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Responsabile
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Dal Container ad \passthrough{\lstinline!incusbr0!} &
+\passthrough{\lstinline!10.k.1.x!} \emph{(IP duplicato)} & \(IP_{ext}\)
+\emph{(Internet)} & Container di verifica \\
+Da \passthrough{\lstinline!incusbr0!} all'interfaccia dell'host &
+\passthrough{\lstinline!172.16.0.x!} \emph{(IP transito univoco)} &
+\(IP_{ext}\) \emph{(Internet)} & Incus \\
+Dall'host verso l'esterno & IP dell'interfaccia pubblica dell'host. &
+\(IP_{ext}\) \emph{(Internet)} & \passthrough{\lstinline!nftables!} /
+Netfilter \\
+\end{longtable}
+
 Il NAT a due stadi è necessario per evitare collisioni di routing
-sull'host: il primo stadio ``nasconde'' gli indirizzi duplicati
-\passthrough{\lstinline!10.k.1.x!} traducendoli in un IP univoco
-sull'infrastruttura \passthrough{\lstinline!172.16.0.0/24!}, mentre il
-secondo stadio permette la navigazione esterna condividendo l'IP
-dell'host.
+sull'Host: il primo stadio ``nasconde'' gli indirizzi duplicati
+\passthrough{\lstinline!10.k.1.x!} traducendoli in un IP su
+\passthrough{\lstinline!172.16.0.0/24!}, mentre il secondo stadio
+permette la navigazione esterna condividendo l'IP dell'host.
 
 \begin{quote}
 \passthrough{\lstinline!NAT (Network Address Translation)!}: Meccanismo

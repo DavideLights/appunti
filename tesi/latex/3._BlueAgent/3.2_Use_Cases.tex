@@ -9,7 +9,7 @@ Di seguito è riportato un breve glossario:
 \begin{quote}
 \passthrough{\lstinline!br-team-k!}: è il bridge di rete che fornisce
 una rete locale per i container del team \(k\). Ogni
-\passthrough{\lstinline!br-team-k!} è logicamente separato dagli altri
+\passthrough{\lstinline!br-team-k!} è una LAN separata dagli altri
 \passthrough{\lstinline!br-team-k!}.
 \end{quote}
 
@@ -27,8 +27,8 @@ container.
 
 \begin{quote}
 \passthrough{\lstinline!verify-k!}: è lo switch logico (gestito tramite
-OVN SDN) utilizzato per implementare la rete di verifica per il team
-\(k\). Questa rete è completamente scollegata da
+SDN) utilizzato per implementare la rete di verifica per il team \(k\).
+Questa rete è completamente scollegata da
 \passthrough{\lstinline!br-team-k!} e da \passthrough{\lstinline!wg-k!}.
 \end{quote}
 
@@ -197,15 +197,15 @@ Flusso delle azioni:
     Crea uno switch logico OVN denominato
     \passthrough{\lstinline!verify-k!}.
   \item
-    Esegue la clonazione CoW (ZFS) di tutti i container della challenge
-    del team \(k\).
+    Esegue la clonazione CoW di tutti i container della challenge del
+    team \(k\).
   \item
     Riconfigura l'interfaccia \passthrough{\lstinline!eth0!} dei cloni
     agganciandola allo switch OVN di verifica.
   \item
     Avvia i cloni sandbox e configura al loro interno lo stesso
     indirizzo IP statico di produzione
-    \passthrough{\lstinline!10.k.1.\{ip\_suffix\}/24!}.
+    (\passthrough{\lstinline!10.k.1.\{ip\_suffix\}/24!}).
   \item
     Se specificato nella configurazione, avvia un container di verifica
     runner.
@@ -218,8 +218,7 @@ Flusso delle azioni:
   Esegue i comandi di verifica all'interno dei container clonati o dal
   container runner.
 \item
-  Dealloca in ordine inverso (LIFO) le risorse sandbox create per il
-  controllo.
+  Dealloca le risorse sandbox create per il controllo.
 \item
   BlueAgent risponde con stato \passthrough{\lstinline!HTTP 200 OK!}
   comunicando l'esito della verifica.

@@ -1,0 +1,109 @@
+\section{NsJail e Container}\label{nsjail-e-container}
+
+Si vuole in questo capitolo approfondire i meccanismi utilizzati da
+NsJail per l'isolamento delle risorse del kernel Linux.\footnote{\label{fn:ref_30}Google
+  Security Team, \emph{NsJail Process Isolation Tool},
+  https://nsjail.dev/} Tutti questi meccanismi utilizzati da NsJail sono
+utilizzati anche da Docker e Incus per implementare i container e verrà
+visto brevemente in che modo.
+
+\subsection{Namespaces}\label{namespaces}
+
+Un namespace è una feature del kernel Linux che permette di partizionare
+le risorse del kernel in modo che:\footnote{\label{fn:ref_31}Linux manual page,
+  \emph{namespaces(7) - Overview of Linux namespaces},
+  https://man7.org/linux/man-pages/man7/namespaces.7.html}
+
+\begin{itemize}
+\tightlist
+\item
+  un insieme di processi è in grado di vedere un certo insieme di
+  risorse
+\item
+  un altro insieme di processi è in grado di vedere un altro insieme di
+  risorse.
+\end{itemize}
+
+Il kernel Linux supporta diversi tipi di namespace: Cgroup, IPC,
+Network, Mount, PID, Time, User ed UTS.
+
+Il \textbf{PID namespace} permette di partizionare gli ID dei processi
+in modo che per esempio, su due PID namespace differenti possano
+coesistere due processi con process ID identici. Inoltre un processo che
+esegue sul pid namespace \passthrough{\lstinline!A!} non può vedere
+quali processi sono in esecuzione sul pid namespace
+\passthrough{\lstinline!B!}.
+
+Il \textbf{Network namespace} invece offre l'isolamento delle risorse di
+networking, come device, lo stack IPv4, le tabelle di routing, ecc. Un
+device fisico vive all'interno di un unico network namespace, e le
+connessioni tra namespace sono gestite dai device
+\passthrough{\lstinline!veth!}.\footnote{\label{fn:ref_32}Linux manual page,
+  \emph{network\_namespaces(7) - Network namespaces},
+  https://man7.org/linux/man-pages/man7/network\_namespaces.7.html}
+
+In sintesi, i container sfruttano i namespace per creare un ambiente
+isolato in cui eseguire i processi, montare il filesystem e configurare
+le interfacce di rete.
+
+\subsection{Seccomp}\label{seccomp}
+
+Seccomp permette a un processo di specificare un filtro per le chiamate
+di sistema.\footnote{\label{fn:ref_33}Linux manual page, \emph{seccomp(2) - Operate on
+  Secure Computing state of the process},
+  https://man7.org/linux/man-pages/man2/seccomp.2.html} Il filtro è
+espresso come un programma \passthrough{\lstinline!cBPF!} (classic BPF),
+che opera sul numero della syscall e sui suoi argomenti. Fornisce un
+meccanismo essenziale per minimizzare la superficie di attacco verso il
+kernel.
+
+A titolo esemplificativo, l'utilizzo dell'API
+\passthrough{\lstinline!libseccomp!} in linguaggio
+\passthrough{\lstinline!C!} prevede la seguente sequenza operativa:
+
+\begin{itemize}
+\tightlist
+\item
+  Si inizializza nel codice il contesto del filtro:
+  \passthrough{\lstinline!scmp\_filter\_ctx ctx!}
+\item
+  Si aggiungono le regole selettive invocando
+  \passthrough{\lstinline!seccomp\_rule\_add(ctx, ...)!}
+\item
+  Si caricano le regole nel kernel con
+  \passthrough{\lstinline!seccomp\_load(ctx, ...)!}. Da questo istante,
+  il processo e i suoi discendenti saranno soggetti ai vincoli definiti.
+\end{itemize}
+
+I container Docker tradizionali applicano Seccomp per bloccare le
+chiamate di sistema considerate pericolose, mentre Incus nei system
+container privilegiati o semi-privilegiati adotta una policy permissiva
+delegando l'isolamento agli user namespace.
+
+\subsection{cgroups}\label{cgroups}
+
+I Control Groups costituiscono un meccanismo per aggregare o
+partizionare insiemi di task e i loro discendenti in gerarchie
+controllate.\footnote{\label{fn:ref_34}The Linux Kernel Organization, \emph{Control
+  Groups (cgroups) Documentation},
+  https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html}
+
+In particolare, la documentazione del kernel Linux formalizza i seguenti
+concetti:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!cgroup!}: associa un insieme di task a un
+  insieme di parametri e limiti per uno o più sottosistemi.
+\item
+  \passthrough{\lstinline!sottosistema!}: noto anche come \emph{resource
+  controller}, schedula una risorsa hardware o applica quote e vincoli a
+  un determinato raggruppamento di task.
+\end{itemize}
+
+Tramite un \passthrough{\lstinline!cgroup!} è possibile ad esempio
+limitare la quota di CPU o di memoria RAM assegnata a un gruppo di task.
+Nei container, i \passthrough{\lstinline!cgroup!} sono utilizzati
+sistematicamente per imporre tetti massimi all'utilizzo di risorse
+computazionali e condurre attività di accounting e monitoraggio.

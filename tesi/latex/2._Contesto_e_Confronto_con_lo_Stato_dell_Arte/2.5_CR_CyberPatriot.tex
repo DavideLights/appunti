@@ -4,26 +4,35 @@
 CyberPatriot}\label{cr-alternativi-cyberpatriot}
 
 È un programma di educazione nazionale per il K-12 creato dalla
-\emph{Air \& Space Forces Association}. I team assumono il ruolo di
-professionisti di cybersecurity che hanno l'obiettivo di proteggere vari
-sistemi entro un limite di tempo, analizzando le macchine virtuali,
+\emph{Air \& Space Forces Association} (AFA) \footnote{\label{fn:ref_12}Air \& Space
+  Forces Association, ``CyberPatriot: The National Youth Cyber Education
+  Program'', https://www.uscyberpatriot.org}. I team assumono il ruolo
+di professionisti di cybersecurity che hanno l'obiettivo di proteggere
+vari sistemi entro un limite di tempo, analizzando le macchine virtuali,
 identificandone le vulnerabilità e mitigandole.
 
+Ciascun team riceve una o più macchine virtuali complete pre-configurate
+(basate su distribuzioni Windows Server/Desktop o Linux), volutamente
+affette da molteplici difetti di sicurezza: account non autorizzati,
+policy di password permissive, servizi di rete non necessari in
+esecuzione, permessi errati sul filesystem e malware dormiente. I
+partecipanti operano come amministratori di sistema (``Blue Team''), con
+il compito di individuare e correggere tali falle entro una finestra
+temporale prefissata, mantenendo al contempo operativi i servizi critici
+per il business.
+
 Il CyberPatriot Scoring System (CSS) tiene traccia della progressione
-del team. Un demone locale esegue controlli periodici sulla macchina per
-determinarne lo stato, mentre un server centrale registra i punteggi
-comunicando con i demoni delle macchine.
+del team e dei punteggi dei team. Un demone locale esegue controlli
+periodici sulla macchina per determinarne lo stato, mentre un server
+centrale registra i punteggi comunicando con i demoni delle macchine.
 
 Questo sistema tuttavia è \textbf{closed-source} e solo l'\textbf{AFA}
 può utilizzarlo.
 
-Le differenze tra CyberPatriot e BlueAgent sono riassunte nella seguente
-tabella:
-
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2212}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3540}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4248}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Caratteristica
@@ -36,12 +45,10 @@ BlueAgent
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-\textbf{Virtualizzazione} & Macchine Virtuali complete (VMware /
-VirtualBox) & Container di sistema leggeri (Incus) \\
-\textbf{Consumo di Risorse} & Elevato (diversi GB di RAM per singola VM)
-& Minimo (\textasciitilde50 MB di RAM per container) \\
-\textbf{Ambiente di Rete} & Singola VM isolata & Topologia
-multi-container in LAN virtuale \\
+\textbf{Virtualizzazione} & Macchine Virtuali (VMware / VirtualBox) &
+Container di sistema (Incus) \\
+\textbf{Consumo di Risorse} & Diversi GB di RAM per singola VM &
+\textasciitilde50 MB di RAM per container \\
 \textbf{Motore di Valutazione} & Demone locale (CSS) all'interno della
 VM & Oracolo esterno in sandbox di rete isolata (OVN) \\
 \end{longtable}

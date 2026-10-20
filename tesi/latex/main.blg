@@ -7,6 +7,7 @@ A level-1 auxiliary file: BlueAgent.aux
 A level-1 auxiliary file: Architettura_Rete_Alto_Livello.aux
 A level-1 auxiliary file: Architettura_Nel_Dettaglio_e_Validazione.aux
 A level-1 auxiliary file: Architetture_Rete__Alternative.aux
+A level-1 auxiliary file: Conclusioni_e_Sviluppi_Futuri.aux
 A level-1 auxiliary file: Appendice.aux
 The style file: IEEEtran.bst
 A level-1 auxiliary file: Ringraziamenti.aux
@@ -23,7 +24,7 @@ Database file #1: Bibliography.bib
 Done.
 You've used 33 entries,
             4087 wiz_defined-function locations,
-            987 strings with 12661 characters,
+            988 strings with 12694 characters,
 and the built_in function-call counts, 15866 in all, are:
 = -- 1340
 > -- 263

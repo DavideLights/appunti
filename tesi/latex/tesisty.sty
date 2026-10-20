@@ -1,34 +1,73 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tesisty}[2026/10/09 Stile tesi personalizzato]
+\ProvidesPackage{tesisty}[2026/10/19 Stile tesi Tor Vergata personalizzato]
 
 \newcommand{\titoloTesi}[1]{\gdef\@titolo{#1}}
 \newcommand{\anno}[1]{\gdef\@annoAccademico{#1}}
 \newcommand{\relatore}[1]{\gdef\@relatore{#1}}
 \newcommand{\correlatore}[1]{\gdef\@correlatore{#1}}
 \newcommand{\candidato}[1]{\gdef\@candidato{#1}}
+\newcommand{\matricola}[1]{\gdef\@matricola{#1}}
 \newcommand{\dedicate}[1]{\gdef\@dedica{#1}}
+
+% Macro opzionali con valori di default conformi al frontespizio di Tor Vergata
+\newcommand{\universita}[1]{\gdef\@universita{#1}}
+\newcommand{\macroarea}[1]{\gdef\@macroarea{#1}}
+\newcommand{\corsodilaurea}[1]{\gdef\@corsodilaurea{#1}}
+\newcommand{\tipotesi}[1]{\gdef\@tipotesi{#1}}
+
+\universita{UNIVERSIT\`A DEGLI STUDI DI\\[0.3cm] ROMA TOR VERGATA}
+\macroarea{MACROAREA DI SCIENZE}
+\corsodilaurea{CORSO DI LAUREA IN INFORMATICA}
+\tipotesi{Tesi di laurea triennale}
 
 \newcommand{\intestazione}{
   \begin{titlepage}
     \begin{center}
-      {\large \scshape Università degli Studi}\\[1.5cm]
-      {\Large \textbf{\@titolo}}\\[2cm]
+      \vspace*{-0.5cm}
+      \IfFileExists{logo_tor_vergata.png}{%
+        \includegraphics[width=9.5cm]{logo_tor_vergata.png}\\[1.2cm]
+      }{%
+        \IfFileExists{../logo_tor_vergata.png}{%
+          \includegraphics[width=9.5cm]{../logo_tor_vergata.png}\\[1.2cm]
+        }{%
+          \vspace*{2cm}
+        }%
+      }
+      {\LARGE \@universita\par}
+      \vspace{1.8cm}
+      {\large \@macroarea\par}
+      \vspace{0.4cm}
+      {\large \@corsodilaurea\par}
+      \vspace{1.6cm}
+      {\large \textbf{\@tipotesi}\par}
+      \vspace{0.9cm}
+      {\Large \@titolo\par}
+      \vspace{1.4cm}
+      {\large \@annoAccademico\par}
     \end{center}
     \vfill
-    \begin{flushleft}
-      \textbf{Relatore:} \@relatore\\[0.3cm]
+    \noindent
+    \begin{minipage}[t]{0.55\textwidth}
+      \textbf{RELATORE:}\\[0.2cm]
+      \@relatore
       \ifdefined\@correlatore
-      \textbf{Correlatore:} \@correlatore\\[0.3cm]
+        \\[0.6cm]
+        \textbf{CORRELATORE:}\\[0.2cm]
+        \@correlatore
       \fi
-    \end{flushleft}
-    \begin{flushright}
-      \textbf{Candidato:}\\[0.2cm]
-      \@candidato
-    \end{flushright}
-    \vfill
-    \begin{center}
-      \rule{\textwidth}{0.4pt}\\[0.3cm]
-      Anno Accademico \@annoAccademico
-    \end{center}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.42\textwidth}
+      \raggedleft
+      \begin{tabular}{@{}l@{}}
+        \textbf{CANDIDATO:}\\[0.2cm]
+        \@candidato
+        \ifdefined\@matricola
+          \\[0.15cm]
+          Matricola \@matricola
+        \fi
+      \end{tabular}
+    \end{minipage}
+    \vspace*{0.6cm}
   \end{titlepage}
 }

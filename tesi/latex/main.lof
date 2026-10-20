@@ -10,13 +10,13 @@
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Istanziazione topologia in KYPO}}{16}{figure.2.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Topologia della rete di produzione per il team k}}{33}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Topologia della rete di verifica sandbox per il team k}}{37}{figure.4.2}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Topologia della rete di produzione per il team k}}{36}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Topologia della rete di verifica sandbox per il team k}}{39}{figure.4.2}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Confronto dei tempi delle macrofasi di benchmark}}{49}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Confronto tra clonazione CoW e deploy da catalogo}}{50}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Scomposizione temporale sottofasi di verifica}}{50}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Consumo di memoria RAM netta al crescere dei container}}{51}{figure.5.4}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Timeline del ciclo di vita e della concorrenza}}{51}{figure.5.5}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Confronto dei tempi delle macrofasi di benchmark}}{52}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Confronto tra clonazione CoW e deploy da catalogo}}{53}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Scomposizione temporale sottofasi di verifica}}{53}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Consumo di memoria RAM netta al crescere dei container}}{54}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Timeline del ciclo di vita e della concorrenza}}{54}{figure.5.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -1,0 +1,86 @@
+\section{ZFS}\label{zfs}
+
+In ZFS si segue questo principio base: \emph{Un blocco in uso non viene
+mai sovrascritto.}\footnote{\label{fn:ref_29}OpenZFS Documentation Project, \emph{OpenZFS
+  System Administration and Architecture},
+  https://openzfs.github.io/openzfs-docs/}
+
+Modificare dati vuol dire dunque scrivere il contenuto in una nuova
+porzione di memoria, ed il filesystem dovrà essere modificato per
+puntare a questa nuova area.
+
+Questo principio, permette di implementare e gestire facilmente feature
+avanzate come snapshots ed il self-healing dei dati.
+
+In ZFS lo storage è organizzato all'interno di un pool (denominato
+\emph{zpool}), strutturato come un albero di blocchi:
+
+\begin{itemize}
+\tightlist
+\item
+  le foglie contengono i blocchi di dati effettivi;
+\item
+  i nodi intermedi sono puntatori indiretti a blocchi (\textbf{block
+  pointers});
+\item
+  l'\textbf{uberblock} è il nodo radice dell'albero, da cui è navigabile
+  l'intero filesystem.
+\end{itemize}
+
+Un block pointer tiene traccia di un insieme di blocchi memorizzandone
+dimensione e \textbf{checksum}. Ciascun nodo intermedio valida
+crittograficamente i propri figli. Di conseguenza, modificare dati nel
+filesystem comporta il ricalcolo delle checksum e la riscrittura della
+catena dei nodi padri a ritroso fino alla radice, allocando nuovi
+blocchi per ogni livello.
+
+Al termine della catena di modifiche, viene generato un nuovo
+\(\text{uberblock'}\), che fa riferimento al nuovo albero con i dati
+aggiornati e i puntatori consistenti. L'intera transizione avviene in
+modo \textbf{atomico}.
+
+Il costo computazionale per una modifica è proporzionale all'altezza
+dell'albero, non alla dimensione assoluta dello storage pool. Questa
+proprietà permette di mantenere contemporaneamente valido sia il nuovo
+\(\text{uberblock'}\) sia il precedente \(\text{uberblock}\).
+
+ZFS segue un modello transazionale: le operazioni di scrittura vengono
+aggregate in gruppi di transazione (\emph{transaction groups},
+\passthrough{\lstinline!txg!}) applicati atomicamente su disco.
+
+\subsection{Vantaggi di Pool e
+transazioni}\label{vantaggi-di-pool-e-transazioni}
+
+\emph{Gli snapshot del filesystem vengono eseguiti con complessità
+temporale \(O(1)\)}: creare uno snapshot consiste semplicemente
+nell'impedire che i blocchi foglia dell'albero al momento dello snapshot
+vengano deallocati o sovrascritti. Per preservare l'intero stato del
+filesystem è sufficiente conservare il riferimento
+all'\(\text{uberblock}\) congelato.
+
+\begin{quote}
+Uno snapshot in ZFS è una vista read-only del dataset congelata a un
+istante preciso. La sua creazione è un'operazione atomica, istantanea e
+a costo zero di spazio disco iniziale.
+\end{quote}
+
+\textbf{Integrità dei dati e self-healing}: ZFS rileva corruzioni
+silenti confrontando le checksum memorizzate nei puntatori padri con il
+contenuto effettivo dei blocchi. Qualora il pool sia configurato con
+ridondanza (mirroring o RAID-Z), il filesystem è in grado di correggere
+automaticamente il dato corrotto attingendo dalla copia integra.
+
+\subsection{Considerazioni di Efficienza e
+Frammentazione}\label{considerazioni-di-efficienza-e-frammentazione}
+
+La natura Copy-on-Write implica che l'aggiornamento di dati preesistenti
+allochi blocchi in posizioni non contigue dello storage pool,
+frammentando progressivamente la sequenzialità fisica dei dati su disco
+(\emph{fragmentation}). L'efficienza dell'allocatore di ZFS dipende
+pertanto dalla percentuale di spazio libero residuo nel pool e dal
+livello di frammentazione complessivo.
+
+Inoltre, qualsiasi operazione di scrittura (inclusa la cancellazione di
+file) richiede l'allocazione di nuovi metadati. Nel caso di scritture
+parziali e casuali di piccole dimensioni, il costo di riallocazione dei
+metadati e il ricalcolo delle checksum possono risultare significativi.

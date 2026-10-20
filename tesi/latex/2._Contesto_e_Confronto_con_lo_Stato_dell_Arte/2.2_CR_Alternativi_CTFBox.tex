@@ -1,12 +1,13 @@
 \section{CR Alternativi: CTFBox}\label{cr-alternativi-ctfbox}
 
-CTFBox è un Cyber Range perfetto per organizzare CTF di tipo
+CTFBox è un Cyber Range progettato per organizzare CTF di tipo
 Attack/Defense, dove ogni team ha una macchina con uno o più servizi
 vulnerabili da difendere, mentre si attaccano i servizi esposti sulle
 macchine avversarie per recuperare le flag. Durante il gioco, ogni team
 deve fare attenzione a non rompere i propri servizi, mantenendo un'alta
 percentuale di SLA. Una SLA bassa comporta una penalità in termini di
-punteggio. \footnote{\label{fn:ref_7}https://ctfbox.domy.sh/}
+punteggio. \footnote{\label{fn:ref_7}Domy, \emph{CTFBox: Automated CTF Infrastructure
+  Framework}, https://ctfbox.domy.sh/}
 
 Fa uso di \textbf{Docker} per gestire i servizi essenziali del gioco (e
 che costituiscono quindi CTFBox), mentre \textbf{Incus} viene utilizzato
@@ -23,24 +24,24 @@ team (Figura \ref{fig:ctfbox-architecture}).
 
 
 \textbf{Router}: è un container Docker, che gestisce le configurazioni
-della rete WireGuard, permettendo ai giocatori di connettersi alla rete
-di gioco. Controlla le regole di routing sulla rete, e governa la
-transizione della rete tra 3 stati diversi:
+della rete WireGuard, permettendo ai giocatori di connettersi alla rete.
+Controlla le regole di routing sulla rete, e governa la transizione
+della rete tra 3 stati diversi:
 
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!freeze!}: in questo stato, nessuno può
-  accedere alle macchine vulnerabili
+  \passthrough{\lstinline!freeze!}: in questo stato nessuno può accedere
+  alle macchine vulnerabili
 \item
-  \passthrough{\lstinline!lock!}: in questo stato, ogni team può
-  accedere solo alla propria macchina vulnerabile.
+  \passthrough{\lstinline!lock!}: in questo stato ogni team può accedere
+  solo alla propria macchina vulnerabile.
 \item
-  \passthrough{\lstinline!unlock!}: in questo stato, la rete è
+  \passthrough{\lstinline!unlock!}: in questo stato la rete è
   completamente aperta, i team possono attaccare le macchine avversarie.
 \end{itemize}
 
-\textbf{Game System}: è un container Docker, che agisce da cervello
+\textbf{Game System}: è un container Docker, che agisce da componente
 centrale per la gestione del gioco.
 
 \begin{itemize}
@@ -56,13 +57,13 @@ centrale per la gestione del gioco.
 \end{itemize}
 
 In CTFBox, ad ogni tick (ossia ogni round di gioco), le flag vengono
-rigenerate su ogni macchina, per ogni servizio vulnerabile, e registrate
-nel database. L'obiettivo di un team in una competizione Attack/Defense
-strutturata in questo modo è di attaccare più volte lo stesso servizio
-sulle macchine avversarie, per recuperare quante più flag possibili,
-finché le difese avversarie non bloccano gli attacchi.
+rigenerate su ogni macchina, per ogni servizio vulnerabile, e poi
+registrate nel database. L'obiettivo di un team in una competizione
+Attack/Defense strutturata in questo modo è di attaccare più volte lo
+stesso servizio sulle macchine avversarie, per recuperare quante più
+flag possibili, finché le difese avversarie non bloccano gli attacchi.
 
-\textbf{Checkers}, ad ogni tick (o round) fanno due cose:
+I \textbf{Checkers} fanno due cose ad ogni tick:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -83,7 +84,7 @@ mentre le macchine dei team si trovano nella sottorete
 
 Dunque CTFBox si rivela essere un ottimo sistema per gestire
 competizioni Attack/Defense e per regolare l'accesso alle macchine, ma
-la sua architettura non si applica in contesti in cui vorremmo solo
+la sua architettura non si applica in contesti in cui si desidera
 assegnare ad ogni team un insieme di macchine vulnerabili il cui stato
 verrà poi verificato da un oracolo.
 
@@ -93,13 +94,10 @@ connessioni dei partecipanti e le macchine dei vari team.
 Tuttavia CTFBox gestisce intere macchine virtuali mentre BlueAgent per
 design gestisce di default solo container di sistema.
 
-Di seguito sono riassunte le principali differenze tra CTFBox e
-BlueAgent:
-
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1694}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5410}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2896}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Caratteristica
@@ -115,15 +113,16 @@ BlueAgent
 \textbf{Modello di Gioco} & Attack \& Defense competitivo tra team &
 Defensive / Blue Teaming \& Patching \\
 \textbf{Virtualizzazione} & Macchine Virtuali / Container eterogenei &
-Container di sistema dedicati (Incus) \\
+Container (Incus) \\
 \textbf{Topologia di Rete} & Subnet condivisa aperta
 (\passthrough{\lstinline!10.60.0.0/16!}) & LAN virtuale dedicata e
 isolata per team \\
-\textbf{Meccanismo di Verifica} & Polling periodico su rete di gioco
-(Checkers a tick) & Esecuzione su clone CoW ZFS in rete OVN isolata \\
-\textbf{Invisibilità della Verifica} & Assente (il traffico dei checker
-viaggia su rete condivisa) & Totale (l'oracolo esegue in una rete SDN
-separata) \\
+\textbf{Meccanismo di Verifica} & Polling periodico dello stato dei
+servizi su rete di gioco (Checkers a tick, assenza di un Oracolo) &
+Esecuzione di un Oracolo su cloni in rete OVN isolata \\
+\textbf{Invisibilità della Verifica} & Assente (inoltre, il traffico dei
+checker viaggia su rete condivisa) & Totale (l'oracolo esegue in una
+rete SDN separata) \\
 \textbf{Calcolo del Punteggio} & SLA di uptime dei servizi e flag rubate
-& Rilascio della flag a seguito di patch corretta \\
+& SLA non previsto. \\
 \end{longtable}

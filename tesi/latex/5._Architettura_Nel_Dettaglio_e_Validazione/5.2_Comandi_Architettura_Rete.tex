@@ -9,13 +9,14 @@ eseguiti direttamente da BlueAgent.
 \subsection{Configurazione OVN e Open
 vSwitch}\label{configurazione-ovn-e-open-vswitch}
 
-Qui riporto la configurazione per implementare la SDN. Il \textbf{piano
-dei dati} è implementato da Open vSwitch (\textbf{OVS}) e deve esser
-configurato in modo che possa comunicare con Incus tramite l'interfaccia
-di OVN
+Di seguito è riportata la configurazione per implementare la SDN. Il
+\textbf{piano dei dati} è implementato da Open vSwitch (\textbf{OVS}),
+mentre il \textbf{piano di controllo} è gestito da OVN, che comunica con
+Incus tramite il database Northbound.
 
-Si configura OVS in modo che possa comunicare con l'interfaccia south
-bound di OVN (\passthrough{\lstinline!ovnsb\_db.sock!}):
+Si configurano i parametri in OVS affinché l'agente locale
+\passthrough{\lstinline!ovn-controller!} possa comunicare con il
+database Southbound di OVN (\passthrough{\lstinline!ovnsb\_db.sock!}):
 
 \begin{lstlisting}[language=bash]
 sudo ovs-vsctl set open_vswitch . \
@@ -35,7 +36,7 @@ sudo ovs-vsctl set open_vswitch . \
   terminazione del tunnel nel localhost.
 \end{itemize}
 
-Si configura invece l'interfaccia North Bound in modo che possa
+Si configura invece il database Northbound di OVN in modo che possa
 comunicare con Incus:
 
 \begin{lstlisting}[language=bash]
@@ -44,10 +45,11 @@ incus config set network.ovn.northbound_connection tcp:127.0.0.1:6641
 \end{lstlisting}
 
 \begin{quote}
-\textbf{OVN Northbound}: è l'interfaccia dove dichiaro le reti che
-voglio creare e le proprietà che devono rispettare. \textbf{OVN
-Southbound DB:} memorizza le tabelle di inoltro e la logica da applicare
-sul piano dei dati.
+\textbf{OVN Northbound}: memorizza la dichiarazione delle reti da creare
+e le proprietà che devono rispettare. \textbf{OVN Southbound:} memorizza
+i flussi logici compilati da \passthrough{\lstinline!ovn-northd!}, che
+\passthrough{\lstinline!ovn-controller!} traduce in regole OpenFlow
+concrete per il piano dei dati di OVS.
 \end{quote}
 
 \subsection{\texorpdfstring{\(\text{production-}k\) Routing e

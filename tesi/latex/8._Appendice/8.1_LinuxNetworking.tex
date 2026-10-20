@@ -1,0 +1,179 @@
+\section{Linux Networking}\label{linux-networking}
+
+Per approfondire meglio il discorso relativo al routing dei pacchetti e
+delle interfacce di rete, si vuole elencare ad alto livello cosa succede
+all'interno del kernel linux e quali sono gli oggetti fondamentali.
+
+\subsection{Network Device Driver}\label{network-device-driver}
+
+Un network device opera sempre a livello 2 o 3 dello stack di rete, ed è
+rappresentato nel kernel dalla struttura
+\passthrough{\lstinline!net\_device!}.\footnote{\label{fn:ref_23}R. Rosen, \emph{Linux
+  Kernel Networking: Implementation and Theory}, Apress, 2014.} Questa
+struttura dati contiene varie informazioni:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!IRQ!}: numero identificativo del dispositivo
+\item
+  \passthrough{\lstinline!MTU!}
+\item
+  \passthrough{\lstinline!MAC!}: MAC address
+\item
+  \passthrough{\lstinline!Nome!}: \passthrough{\lstinline!eth0!},
+  \passthrough{\lstinline!enp0s3!}, \passthrough{\lstinline!wlan0!},
+  ecc\ldots{}
+\item
+  \passthrough{\lstinline!net\_device\_ops!}: contiene i puntatori alle
+  funzioni per la gestione del dispositivo (come le primitive start,
+  stop, transmit, receive)
+\end{itemize}
+
+Un device driver si occupa di:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Ricevere} i pacchetti destinati al local host, inoltrandoli al
+  livello di rete, e successivamente al livello di trasporto.
+\item
+  \textbf{Trasmettere} i pacchetti generati dal local host, o fa il
+  forward dei pacchetti ricevuti verso un'altra interfaccia.
+\end{itemize}
+
+Ogni pacchetto in transito in tutti e due i sensi scatena un lookup nel
+\emph{sottosistema di routing}, che decide cosa bisogna fare con quel
+pacchetto. La fase di routing si distingue in 5 fasi, detti
+\textbf{hook}, dove possiamo registrare dei \textbf{callback} per il
+\textbf{sottosistema netfilter}.
+
+Per esempio l'hook \passthrough{\lstinline!NF\_INET\_PRE\_ROUTING!},
+registra la chiamata al callback per essere eseguito prima che il lookup
+del sottosistema di routing venga effettuato. Il callback ritorna un
+verdetto sul filtraggio del pacchetto, decidendo se bisogna accettarlo
+(\passthrough{\lstinline!NF\_ACCEPT!}), oppure scartarlo
+(\passthrough{\lstinline!NF\_DROP!}).
+
+\begin{quote}
+Con \passthrough{\lstinline!nftables!} applichiamo le regole di
+filtraggio dei pacchetti in modo da intercettare e manipolare il
+sottosistema di routing
+\end{quote}
+
+\begin{quote}
+Oltre ai callback registrati, altri fattori influenzano il modo in cui
+il routing viene effettuato. Per esempio un pacchetto viene scartato
+quando il TTL viene diminuito e arriva a 0.
+\end{quote}
+
+La struttura \passthrough{\lstinline!sk\_buff!} (Socket Buffer)
+definisce come un pacchetto nel kernel Linux viene rappresentato, tale
+struttura viene manipolata unicamente attraverso la SKB API.
+
+La Socket Buffer viene allocata dinamicamente quando il pacchetto viene
+ricevuto sul cavo, ed è la struttura dati utilizzata per manipolare il
+pacchetto nel kernel sui vari layer di rete.
+
+All'interno del kernel la struttura dati responsabile per il
+sottosistema di routing è la \passthrough{\lstinline!fib\_table!}, ossia
+la tabella che raccoglie le rotte per il traffico destinato ad una certa
+sottorete.
+
+\subsection{Bridge}\label{bridge}
+
+Un bridge è un dispositivo L2 che capisce il protocollo del livello di
+collegamento ed effettua l'inoltro dei dati copiandoli frame per
+frame.\footnote{\label{fn:ref_24}C. Benvenuti, \emph{Understanding Linux Network
+  Internals}, O'Reilly Media, 2006.} Per farlo deve mantenere nel suo
+buffer almeno un frame per volta.
+
+Un bridge assegna un indirizzo al livello di collegamento ad ognuna
+delle sue interfacce ed effettua il forward verso di queste se il bridge
+non è il destinatario del pacchetto. Opzionalmente può implementare il
+livello di rete (Layer 3) per offrire visibilità sulla WAN alle
+interfacce collegate. Un bridge viene di solito utilizzato per unire due
+LAN differenti, o per creare una LAN.
+
+Un bridge nel kernel Linux è un device virtuale, finché non viene
+collegato ad altri device non può né ricevere né trasmettere frame. Usa
+il concetto di enslaving: ossia gli vengono assegnate delle interfacce
+dette \textbf{enslaved} da controllare.
+
+Quando si tenta di trasmettere su un bridge (es:
+\passthrough{\lstinline!br0!}), il device driver gestisce i device
+\textbf{enslaved} effettuando il forwarding dei frame.
+
+\subsection{Netfilter}\label{netfilter}
+
+È un sottosistema del kernel che fornisce le seguenti funzionalità
+all'interno del sottosistema di routing:\footnote{\label{fn:ref_25}The Netfilter Project,
+  \emph{Netfilter Architecture and Packet Traversal Documentation},
+  https://www.netfilter.org/} \footnote{\label{fn:ref_26}Netfilter Core Team,
+  \emph{nftables Documentation and HOWTO}, https://wiki.nftables.org/}
+
+\begin{itemize}
+\tightlist
+\item
+  Selezione e filtraggio dei pacchetti
+\item
+  NAT
+\item
+  Tracciamento delle connessioni
+\item
+  Accounting di rete.
+\end{itemize}
+
+Per quanto riguarda il filtraggio dei pacchetti, abbiamo a disposizione
+5 hook differenti:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!NF\_INET\_PRE\_ROUTING!}: è chiamato nel
+  metodo \passthrough{\lstinline!ip\_rcv()!} del kernel, quindi ancora
+  prima di entrare nel sottosistema di routing.
+\item
+  \passthrough{\lstinline!NF\_INET\_LOCAL\_IN!}: è chiamato nel momento
+  in cui il pacchetto è indirizzato al local host.
+\item
+  \passthrough{\lstinline!NF\_INET\_FORWARD!}: è chiamato dopo che è
+  stato effettuato il lookup nel sottosistema di routing.
+\item
+  \passthrough{\lstinline!NF\_INET\_POST\_ROUTING!}: è chiamato per i
+  pacchetti che devono essere inoltrati, pochi istanti prima che il
+  pacchetto entri fisicamente nel cavo.
+\item
+  \passthrough{\lstinline!NF\_INET\_LOCAL\_OUT!}: è chiamato per i
+  pacchetti creati nel local host, prima che escano.
+\end{itemize}
+
+Molte utility, comunemente usate, si basano sul sottosistema netfilter:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!iptables!}: agisce come front-end per
+  netfilter ed implementa un \textbf{firewall}. Fornisce un'interfaccia
+  per aggiungere, eliminare, regole netfilter, aggiungere tabelle,
+  ecc\ldots{}
+\item
+  \passthrough{\lstinline!nftables!}: è sviluppato da \textbf{netfilter}
+  (l'organizzazione dietro al sottosistema netfilter). È un rimpiazzo
+  per iptables che è riconosciuto avere problemi di scalabilità e
+  performance.
+\end{itemize}
+
+In \passthrough{\lstinline!nftables!}, utilizzato in BlueAgent, le
+regole sono organizzate in tabelle e catene: ad esempio, è stata
+definita una catena di tipo \passthrough{\lstinline!nat!} per gestire la
+traduzione degli indirizzi di rete.
+
+Spesso le connessioni a livello applicativo hanno una connessione
+mantenuta nel tempo ed una serie di eventi che determinano la storia
+della comunicazione. Il \textbf{Connection Tracking}
+(\passthrough{\lstinline!conntrack!}) Layer permette al kernel di tenere
+traccia delle sessioni create, è la struttura dati fondamentale per
+implementare il NAT. \passthrough{\lstinline!conntrack!} mantiene per
+ogni connessione che deve usufruire del NAT le traduzioni necessarie per
+gli indirizzi IP.
