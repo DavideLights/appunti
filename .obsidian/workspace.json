@@ -81,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 283.8467903137207
+    "width": 335.8307304382324
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -214,6 +214,12 @@
   },
   "active": "2c423b60d60d3df3",
   "lastOpenFiles": [
+    "tesi/antigravity/figures/slide_phases_vertical.png",
+    "tesi/antigravity/figures/slide_graph2_vertical.png",
+    "tesi/antigravity/figures/slide_graph1_vertical.png",
+    "tesi/antigravity/presentazione_blueagent.html.part",
+    "tesi/antigravity/presentazione_blueagent.html",
+    "tesi/antigravity/presentazione_blueagent(1).html",
     "tesi/antigravity/README.md",
     "tesi/6._Architetture_Rete__Alternative/6_Architetture_Rete_Alternative.md",
     "tesi/6._Architetture_Rete__Alternative/6.1_AA_BridgeL2_Senza_Gateway.md",
@@ -230,9 +236,6 @@
     "tesi/latex/8._Appendice/8.2_Wireguard.tex",
     "tesi/latex/8._Appendice/8.1_LinuxNetworking.tex",
     "tesi/latex/8._Appendice",
-    "tesi/latex/Conclusioni_e_Sviluppi_Futuri.tex",
-    "tesi/latex/7._Conclusioni_e_Sviluppi_Futuri/7.2_Compromessi_e_Sviluppi_Futuri.tex",
-    "tesi/latex/7._Conclusioni_e_Sviluppi_Futuri/7.1_Difesa_Architettura.tex",
     "tesi/8._Appendice/8.4_NsJail.md",
     "tesi/8._Appendice/8.3_ZFS.md",
     "tesi/8._Appendice/8.2_Wireguard.md",
@@ -249,7 +252,6 @@
     "tesi/5._Architettura_Nel_Dettaglio_e_Validazione/5.1_Architettura_Codice.md",
     "tesi/7._Appendice/7.2_Wireguard.md",
     "tesi/7._Appendice/7.4_NsJail.md",
-    "tesi/7._Appendice/7.1_LinuxNetworking.md",
     "tesi/latex/check_frontespizio-01.png",
     "tesi/latex/final_frontespizio-01.png",
     "tesi/latex/comparison.png",
@@ -258,8 +260,6 @@
     "tesi/latex/logo_extracted_user.png",
     "tesi/latex/zoom_cand.png",
     "tesi/latex/zoom_rel.png",
-    "tesi/latex/zoom_uni.png",
-    "tesi/latex/zoom_tesi.png",
     "Senza nome.canvas"
   ]
 }
