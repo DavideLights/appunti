@@ -126,8 +126,8 @@
 
       .cols-text-img {
         display: grid;
-        grid-template-columns: 0.96fr 1.04fr;
-        gap: 1.8rem;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 2rem;
         align-items: center;
       }
 
@@ -196,52 +196,39 @@
       }
 
       /* Images constrained to fit 16:9 (1280x720) without overflow */
-      .slide-img {
-        max-height: 500px;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
+      .reveal section img.slide-img,
+      .reveal section img.slide-img-tall {
+        max-height: 480px !important;
+        width: auto !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
         border: 1px solid #cbd5e1;
         border-radius: 6px;
-        padding: 6px;
+        padding: 5px;
         background: #ffffff;
         box-sizing: border-box;
       }
 
-      .slide-img-tall {
-        max-height: 540px;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
-        border: 1px solid #cbd5e1;
-        border-radius: 6px;
-        padding: 6px;
-        background: #ffffff;
-        box-sizing: border-box;
-      }
-
-      .img-stack {
+      .reveal section .img-stack {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         align-items: center;
         justify-content: center;
       }
 
-      .img-stack img {
-        max-height: 260px;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
+      .reveal section .img-stack img {
+        max-height: 235px !important;
+        width: auto !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
         border: 1px solid #cbd5e1;
         border-radius: 6px;
-        padding: 5px;
+        padding: 4px;
         background: #ffffff;
         box-sizing: border-box;
       }
@@ -292,6 +279,44 @@
         font-weight: 700;
         padding: 0.08em 0.45em;
         border-radius: 4px;
+      }
+
+      /* Clean SVG Icons */
+      .slide-icon {
+        display: inline-block;
+        width: 1.15em;
+        height: 1.15em;
+        vertical-align: -0.18em;
+        margin-right: 0.35em;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+        flex-shrink: 0;
+      }
+      .slide-icon-primary {
+        stroke: var(--blue-primary);
+      }
+      .slide-icon-accent {
+        stroke: var(--blue-accent);
+      }
+
+      /* Candidate Avatar */
+      .cover-candidate {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .candidate-avatar {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.20);
+        border: 2px solid #ffffff;
+        background: #ffffff;
+        margin: 0 !important;
+        flex-shrink: 0;
       }
 
       /* Use case card styling */
@@ -419,11 +444,14 @@
               Orchestratore di container per Cyber Range orientati a CTF di Difesa
             </div>
             <div class="cover-meta">
-              <div>
-                <p><strong>Candidato:</strong> Davide Luci<br>
-                <strong>Matricola:</strong> 0341922</p>
+              <div class="cover-candidate">
+                <img src="figures/davide_avatar.svg" alt="Davide Luci Avatar" class="candidate-avatar">
+                <div>
+                  <p><strong>Candidato:</strong> Davide Luci<br>
+                  <strong>Matricola:</strong> 0341922</p>
+                </div>
               </div>
-              <div>
+              <div style="display: flex; align-items: center; justify-content: flex-end;">
                 <p><strong>Relatore:</strong> Prof. Pierpaolo Loreti<br>
                 <strong>Correlatore:</strong> Ing. Francesco Mancini</p>
               </div>
@@ -437,7 +465,7 @@
           <h2>BlueAgent: Orchestratore per CTF di Difesa</h2>
           <div class="cols">
             <div class="card">
-              <h3>Contesto e Obiettivi</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Contesto e Obiettivi</h3>
               <p><strong>Contesto:</strong> gestione di challenge CTF orientate alla Difesa (la flag si ottiene <em>patchando</em> e mettendo in sicurezza la vulnerabilità).</p>
               <p><strong>Requisiti chiave:</strong></p>
               <ol>
@@ -447,7 +475,7 @@
               </ol>
             </div>
             <div class="card-accent">
-              <h3>Soluzione e Implementazione</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>Soluzione e Implementazione</h3>
               <p><strong>La soluzione, BlueAgent:</strong> Orchestratore su singolo host, scritto in <strong>Python</strong> e basato sul framework <strong>FastAPI</strong>.</p>
               <ul>
                 <li>Gestisce <strong>system container (Incus).</strong></li>
@@ -464,7 +492,7 @@
           <h2>Cyber Range Alternativi: kCTF e CTFBox</h2>
           <div class="cols">
             <div class="card">
-              <h3>kCTF (Google)</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>kCTF (Google)</h3>
               <ul>
                 <li>Basato su cluster <strong>Kubernetes</strong> e <strong>NSJail</strong>.</li>
                 <li>Un unico container condiviso: ad ogni connessione esegue un fork e rilascia un ambiente separato.</li>
@@ -473,7 +501,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>CTFBox</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>CTFBox</h3>
               <ul>
                 <li>Pensato per competizioni <strong>Attack &amp; Defense</strong> competitive tra squadre. Basato su Docker, Incus e WireGuard.</li>
                 <li>I Checkers interrogano i servizi ad ogni tick su rete condivisa. Calcolano uptime, SLA ed installano nuove flag.</li>
@@ -490,7 +518,7 @@
           <h2>Cyber Range Alternativi: CyTrONE e CyberRangeCZ</h2>
           <div class="cols">
             <div class="card">
-              <h3>CyTrONE</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="12" x="3" y="4" rx="2"/><line x1="2" x2="22" y1="20" y2="20"/><line x1="12" x2="12" y1="16" y2="20"/></svg>CyTrONE</h3>
               <ul>
                 <li>Integra una piattaforma didattica (LMS) ed un Cyber Range. Basato su <strong>Macchine Virtuali KVM</strong>.</li>
                 <li>Supporta training di difesa definiti tramite YAML.</li>
@@ -499,7 +527,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>CyberRangeCZ / KYPO</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>CyberRangeCZ / KYPO</h3>
               <ul>
                 <li>Piattaforma cloud basata su <strong>OpenStack</strong>, Kubernetes, Terraform e Ansible.</li>
                 <li>Sandbox di Macchine Virtuali per emulare scenari.</li>
@@ -516,14 +544,14 @@
           <h2>Cyber Range Alternativi: CyberPatriot</h2>
           <div class="cols">
             <div class="card">
-              <h3>Architettura</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Architettura</h3>
               <ul>
                 <li>Programma educativo nazionale (AFA) basato su <strong>Macchine Virtuali.</strong></li>
                 <li>I partecipanti operano come amministratori di sistemi vulnerabili.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Limiti rispetto a BlueAgent</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>Limiti rispetto a BlueAgent</h3>
               <ul>
                 <li><strong>Consumo elevato:</strong> diversi GB di RAM per singola VM (contro ~50 MB in BlueAgent).</li>
                 <li><strong>CSS:</strong> lo scoring avviene tramite un demone residente all'interno della VM.</li>
@@ -605,7 +633,7 @@
           <h2>Attori del Sistema</h2>
           <div class="cols">
             <div class="card">
-              <h3>Attore Diretto: CTF Manager</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Attore Diretto: CTF Manager</h3>
               <ul>
                 <li>Unica entità autenticata che comunica direttamente con BlueAgent tramite <strong>API REST</strong> (autenticate con token condiviso).</li>
                 <li>Mantiene lo stato della competizione (punteggi, squadre, progressione), disaccoppiando la gara dall'infrastruttura.</li>
@@ -613,7 +641,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Attori Esterni (tramite CTF Manager)</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Attori Esterni (tramite CTF Manager)</h3>
               <ul>
                 <li><strong>Giocatore:</strong> richiede il deploy dell'ambiente, ottiene la configurazione WG e richiede le verifiche.</li>
                 <li><strong>Autore della sfida:</strong> scrive i file YAML della topologia e le definizioni Distrobuilder.</li>
@@ -632,7 +660,7 @@
             <div>
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title">UC-01 Setup Rete Team</span>
+                  <span class="uc-title"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>UC-01 Setup Rete Team</span>
                   <span class="uc-endpoint">PUT /teams/{team_k}</span>
                 </div>
                 <p class="uc-desc">Alloca il bridge di produzione <code>br-team-k</code> (<code>10.k.1.1/24</code>) e il gateway WireGuard <code>wg-k</code> associandogli la porta $51820+k$.</p>
@@ -640,7 +668,7 @@
 
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title">UC-02 Deploy Challenge</span>
+                  <span class="uc-title"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>UC-02 Deploy Challenge</span>
                   <span class="uc-endpoint">POST /teams/{team_k}/machines</span>
                 </div>
                 <p class="uc-desc">Istanzia i container di sistema, collega <code>eth0</code> a <code>br-team-k</code>, inietta la configurazione IP statica e applica i limiti cgroups.</p>
@@ -650,7 +678,7 @@
             <div>
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title">UC-03 Verifica Challenge</span>
+                  <span class="uc-title"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><path d="m9 11 1.5 1.5 3-3"/></svg>UC-03 Verifica Challenge</span>
                   <span class="uc-endpoint">POST /teams/{team_k}/verificator</span>
                 </div>
                 <p class="uc-desc">Crea una rete OVN separata, clona i container con ZFS, esegue i comandi di readiness e i comandi di verifica dell'oracolo.</p>
@@ -658,7 +686,7 @@
 
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title">UC-06 Accesso VPN Membro</span>
+                  <span class="uc-title"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>UC-06 Accesso VPN Membro</span>
                   <span class="uc-endpoint">PUT /teams/{team_k}/members/{user_id}</span>
                 </div>
                 <p class="uc-desc">Alloca un IP libero (<code>10.k.0.x</code>), genera le chiavi crittografiche, registra il peer e restituisce il file <code>.conf</code>.</p>
@@ -673,7 +701,7 @@
           <h2>Requisiti di Sistema Rappresentativi</h2>
           <div class="cols">
             <div class="card">
-              <h3>Infrastruttura e Rete</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>Infrastruttura e Rete</h3>
               <ul>
                 <li><strong>Host e Storage:</strong> Debian 13 con <code>nftables</code> e storage pool ZFS.</li>
                 <li><strong>Una rete per Team:</strong> tunnel <code>wg-k</code> e bridge <code>br-team-k</code> comunicanti, isolati per ogni squadra $k$.</li>
@@ -682,7 +710,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Verifica e Control Plane</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Verifica e Control Plane</h3>
               <ul>
                 <li><strong>Fedeltà Topologica:</strong> i cloni preservano l'interfaccia <code>eth0</code> e l'IP (<code>10.k.1.x</code>) di produzione.</li>
                 <li><strong>Zero Side-Channel:</strong> traffico e container di verifica confinati nella rete OVN, inaccessibili ai giocatori.</li>
@@ -700,7 +728,7 @@
           <p><strong>Oracolo (<code>OVNVerifier</code>):</strong> determina se il sistema è <em>patchato</em> eseguendo comandi sui nodi e confrontando l'output con il valore atteso.</p>
           <div class="cols" style="margin-top: 0.6em;">
             <div class="card">
-              <h3>Approcci Tradizionali (Scartati)</h3>
+              <h3><svg class="slide-icon" style="stroke: #ef4444;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>Approcci Tradizionali (Scartati)</h3>
               <ul>
                 <li><strong>Verifica Statica (diff, SAST):</strong> falsi positivi e inefficace sui binari compilati.</li>
                 <li><strong>Verifica Dinamica esterna:</strong> i giocatori (root) intercettano i payload con <code>tcpdump</code>.</li>
@@ -708,7 +736,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Approccio BlueAgent</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Approccio BlueAgent</h3>
               <ul>
                 <li><strong>Clonazione in rete separata:</strong> duplica i container dentro una rete OVN/SDN inaccessibile ai giocatori.</li>
                 <li>Impossibile intercettare il traffico di rete.</li>
@@ -804,7 +832,7 @@
           <h2>Struttura YAML della Challenge</h2>
           <div class="cols">
             <div class="card">
-              <h3>Topologia e Metadati</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>Topologia e Metadati</h3>
               <ul>
                 <li><strong>Metadati:</strong> <code>challenge_id</code>, <code>team_k</code>.</li>
                 <li><strong><code>containers</code>:</strong> lista delle macchine. Si specificano <code>image</code>, <code>ip_suffix</code> (<code>10.k.1.X</code>) e limiti CPU/RAM.</li>
@@ -812,7 +840,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Comandi di Verifica</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>Comandi di Verifica</h3>
               <ul>
                 <li><strong><code>readiness_commands</code>:</strong> attende l'avvio dei servizi prima dei test (con retry e timeout).</li>
                 <li><strong><code>verify_commands</code>:</strong>
@@ -832,7 +860,7 @@
           <h2>Configurazione Immagini con Distrobuilder</h2>
           <div class="cols">
             <div class="card">
-              <h3>Definizione Dichiarativa</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Definizione Dichiarativa</h3>
               <p><strong>Distrobuilder:</strong> tool ufficiale per generare immagini di container Incus in modo riproducibile.</p>
               <ul>
                 <li><strong><code>image</code> e <code>source</code>:</strong> distribuzione Linux di base (es. Ubuntu 22.04, Alpine 3.21).</li>
@@ -840,7 +868,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Predisposizione Rete e Import</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" x2="12" y1="2" y2="5"/></svg>Predisposizione Rete e Import</h3>
               <ul>
                 <li><strong><code>actions</code>:</strong> uso di hook per predisporre i servizi di rete (<code>systemd-networkd</code> o <code>/etc/network</code>) ed installare le configurazioni in <code>/etc</code>.</li>
                 <li><strong>Pool ZFS:</strong> l'archivio unificato prodotto viene importato nella storage pool ZFS.</li>
@@ -855,7 +883,7 @@
           <h2>Architettura del Codice</h2>
           <div class="cols">
             <div class="card">
-              <h3>Strati Applicativi</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Strati Applicativi</h3>
               <ul>
                 <li><strong><code>/api</code>:</strong> endpoint REST scritti in FastAPI, autenticati via token.</li>
                 <li><strong><code>/services</code>:</strong> logica di business dell'orchestrazione.</li>
@@ -863,7 +891,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Driver e Moduli Specializzati</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg>Driver e Moduli Specializzati</h3>
               <ul>
                 <li><strong><code>/engine</code>:</strong> interfaccia astratta verso il runtime Incus.</li>
                 <li><strong><code>/network</code>:</strong> gestione di bridge Linux, WireGuard e regole <code>nftables</code>.</li>
@@ -880,7 +908,7 @@
           <h2>Astrazione del Runtime: <code>ContainerEngine</code></h2>
           <div class="cols">
             <div class="card">
-              <h3>Interfaccia Astratta</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg>Interfaccia Astratta</h3>
               <p>Disaccoppia il servizio dall'implementazione specifica del demone container.</p>
               <p><strong>Primitive esposte:</strong></p>
               <ul>
@@ -890,7 +918,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Implementazione <code>IncusEngine</code></h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Implementazione <code>IncusEngine</code></h3>
               <ul>
                 <li><strong>System Container:</strong> offre un gestore di servizi (ed un suo PID 1) nel container e l'infrastruttura per un sistema realistico.</li>
                 <li>Comunicazione tramite <strong>Unix Domain Socket</strong> (<code>/var/lib/incus/unix.socket</code>): dati trasferiti direttamente in memoria kernel.</li>
@@ -906,7 +934,7 @@
           <p>Implementa il pattern <strong>RAII</strong> per garantire che la sandbox esista solo per la durata della verifica:</p>
           <div class="cols" style="margin-top: 0.5em;">
             <div class="card">
-              <h3>1. <code>__aenter__</code> e 2. <code>run_checks</code></h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>1. <code>__aenter__</code> e 2. <code>run_checks</code></h3>
               <ul>
                 <li>Crea la rete OVN temporanea.</li>
                 <li>Clona i container tramite snapshot ZFS e collega ogni <code>eth0</code> a OVN.</li>
@@ -914,7 +942,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>3. Teardown Sicuro (<code>__aexit__</code>)</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>3. Teardown Sicuro (<code>__aexit__</code>)</h3>
               <ol>
                 <li>Arresta ed elimina il container <code>verify-runner</code>.</li>
                 <li>Arresta ed elimina tutti i container clonati.</li>
@@ -931,7 +959,7 @@
           <h2>Gestione della Concorrenza: <code>TwoTierLock</code></h2>
           <div class="cols" style="margin-top: 0.5em;">
             <div class="card">
-              <h3>I Due Livelli di Lock</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>I Due Livelli di Lock</h3>
               <ul>
                 <li><strong>Tier 1 (Intra-processo):</strong> usa <code>asyncio.Lock</code> tra task concorrenti sullo stesso worker.</li>
                 <li><strong>Tier 2 (Inter-processo):</strong> usa <code>fcntl.flock</code> sul filesystem tra più processi worker (<code>uvicorn</code>).</li>
@@ -939,7 +967,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Ambito di Applicazione</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Ambito di Applicazione</h3>
               <ul>
                 <li><strong>Per Team:</strong> mutua esclusione su tutte le operazioni del team $k$.</li>
                 <li><strong>Per Istanza e Globale:</strong> protegge i singoli container e le modifiche a <code>nftables</code>.</li>
@@ -955,7 +983,7 @@
           <h2>Pipeline Asincrona, Lifecycle e Immagini</h2>
           <div class="cols">
             <div class="card">
-              <h3>Pipeline Asincrona Non Bloccante</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Pipeline Asincrona Non Bloccante</h3>
               <ul>
                 <li>Client HTTP asincrono (<code>httpx.AsyncClient</code>) sul socket Unix di Incus.</li>
                 <li>Attesa non bloccante delle operazioni su <code>/1.0/operations/&lt;uuid&gt;/wait</code>.</li>
@@ -963,7 +991,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3><code>LifecycleManager</code> e Immagini</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><code>LifecycleManager</code> e Immagini</h3>
               <ul>
                 <li><strong><code>LifecycleManager</code>:</strong> demone che rimuove container e reti di verifica rimasti attivi oltre il <em>grace period.</em></li>
                 <li><strong>Caching SHA-256:</strong> calcola l'hash dello YAML dell'immagine per evitare ricompilazioni inutili.</li>
@@ -979,7 +1007,7 @@
           <h2>Struttura del Plugin CTFd</h2>
           <div class="cols">
             <div class="card">
-              <h3>Componenti Estese</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Componenti Estese</h3>
               <ul>
                 <li><strong><code>PatchChallenge</code>:</strong> memorizza nel database di CTFd la configurazione YAML delle challenge.</li>
                 <li><strong><code>PatchFlag</code>:</strong> ridefinisce <code>compare()</code> interrogando l'Oracolo (BlueAgent).</li>
@@ -987,7 +1015,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Flusso Operativo</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>Flusso Operativo</h3>
               <ul>
                 <li><strong>Accesso VPN:</strong> richiede a BlueAgent la creazione del peer e consegna al giocatore il file WireGuard <code>.conf</code>.</li>
                 <li><strong>Verifica:</strong> inoltra la richiesta all'Oracolo e aggiorna il punteggio se la patch viene convalidata.</li>
@@ -1024,10 +1052,13 @@
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong><code>Deploy Create</code>:</strong> cresce sensibilmente con il numero di container e la dimensione dell'immagine.</li>
-                <li><strong><code>Verify CoW Clone</code>:</strong> resta nettamente inferiore (Speedup fino a <span class="badge-num">3.6x</span> nello scenario $10 \times 5$).</li>
-                <li><strong>Parallelismo CPU:</strong> clonare i container in $(10,5)$ è più rapido di $(5,10)$ perché sfruttano 10 task differenti.</li>
-                <li>Nello scenario $(5,10)$, 5 worker devono gestire una coda più lunga di operazioni.</li>
+                <li><strong><code>Deploy Create</code>:</strong> tempo di creazione a freddo; cresce sensibilmente con il numero di container e la dimensione dell'immagine.</li>
+                <li><strong><code>Verify CoW Clone</code>:</strong> tempo di clonazione istantaneo; resta nettamente inferiore (Speedup fino a <span class="badge-num">3.6x</span> nello scenario $10 \times 5$).</li>
+                <li><strong>Parallelismo CPU:</strong> clonare i container in $(10,5)$ è più rapido di $(5,10)$ sfruttando 10 task paralleli:
+                  <ul>
+                    <li>In $(5,10)$, 5 worker devono smaltire una coda più lunga di operazioni concorrenti.</li>
+                  </ul>
+                </li>
               </ul>
             </div>
             <div>
@@ -1043,9 +1074,10 @@
           <div class="cols-text-img">
             <div>
               <ul>
-                <li>La creazione da zero dell'istanza domina l'intero tempo di deploy iniziale.</li>
-                <li>La clonazione CoW abbatte drasticamente il tempo di creazione durante la verifica.</li>
-                <li><strong>Sviluppi Futuri:</strong> istanziare preventivamente ogni challenge. Si migliora anche il deploy tramite la duplicazione.</li>
+                <li><strong>Deploy a Freddo (Grafico A):</strong> dominato da <em>Instance Create</em> (unpack dell'immagine rootfs da disco, fino all'80% del tempo totale).</li>
+                <li><strong>Verifica Sandbox (Grafico B):</strong> la clonazione CoW ZFS sostituisce l'unpack dell'immagine, abbattendo la creazione del filesystem.</li>
+                <li><strong>Fasi di Verifica:</strong> il tempo residuo è ripartito tra boot dei servizi (<em>systemd</em>) e applicazione dei flussi di rete OVN.</li>
+                <li><strong>Sviluppi Futuri:</strong> istanziare preventivamente ogni challenge (pool CoW pre-allocati) per velocizzare anche il deploy iniziale.</li>
               </ul>
             </div>
             <div>
@@ -1085,7 +1117,7 @@
           <h2>Difesa Architetturale, Compromessi e Sviluppi Futuri</h2>
           <div class="cols">
             <div class="card">
-              <h3>Difesa e Compromessi</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Difesa e Compromessi</h3>
               <ul>
                 <li><strong>Vantaggi:</strong> Debian 13 stabile, ZFS con CoW, container Incus che offrono <code>init</code> e invisibilità totale grazie ad OVN.</li>
                 <li><strong>Compromessi:</strong>
@@ -1097,7 +1129,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>Sviluppi Futuri</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Sviluppi Futuri</h3>
               <ul>
                 <li><strong>CLI <code>bluecmd</code>:</strong> gestione e debug in locale senza dipendere da CTFd.</li>
                 <li><strong>Monitoraggio SLA:</strong> controlli periodici sui container di produzione per penalizzare chi spegne i servizi.</li>
@@ -1113,7 +1145,7 @@
           <h2>Architetture di Rete Alternative: 6.1 e 6.2</h2>
           <div class="cols">
             <div class="card">
-              <h3>6.1 Bridge L2 Senza Gateway</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>6.1 Bridge L2 Senza Gateway</h3>
               <ul>
                 <li>Collega i container clonati a un semplice bridge L2 privo di indirizzo gateway.</li>
                 <li><strong>Pro:</strong> implementazione minima e zero conflitti IP.</li>
@@ -1121,7 +1153,7 @@
               </ul>
             </div>
             <div class="card-accent">
-              <h3>6.2 Interfaccia <code>wan1</code> Aggiuntiva</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>6.2 Interfaccia <code>wan1</code> Aggiuntiva</h3>
               <ul>
                 <li>Aggiunge a ogni clone una seconda interfaccia <code>wan1</code> collegata a <code>incusbr0</code>.</li>
                 <li><strong>Pro:</strong> fornisce accesso a Internet senza gateway sul bridge.</li>
@@ -1137,14 +1169,14 @@
           <h2>Architetture di Rete Alternative: 6.3 e 6.4</h2>
           <div class="cols">
             <div class="card">
-              <h3>6.3 Network Namespace Separato</h3>
+              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>6.3 Network Namespace Separato</h3>
               <ul>
                 <li>Crea il bridge di verifica (con gateway <code>10.k.1.1/24</code>) dentro un nuovo Network Namespace collegato via <code>veth</code>.</li>
                 <li><strong>Perché scartata:</strong> Incus opera nel namespace root e non gestisce namespace esterni, richiedendo una gestione manuale complessa.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3>6.4 Router Intermedio</h3>
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="8" rx="2"/><circle cx="6" cy="12" r="1"/><circle cx="10" cy="12" r="1"/><line x1="14" x2="18" y1="12" y2="12"/></svg>6.4 Router Intermedio</h3>
               <ul>
                 <li>Usa un container Linux dedicato come gateway (<code>10.k.1.1/24</code>) che applica SNAT verso <code>incusbr0</code>.</li>
                 <li><strong>Perché scartata:</strong> richiede di orchestrare un container aggiuntivo per ogni verifica, con maggiore complessità rispetto a OVN.</li>
@@ -1206,6 +1238,29 @@
             </tbody>
           </table>
         </section>
+        <!-- SLIDE 30: CONCLUSIONI E DOMANDE -->
+        <section>
+          <div class="accent-bar"></div>
+          <h2>Conclusioni e Spazio alle Domande</h2>
+          <div class="cols" style="align-items: center; margin-top: 1.2em;">
+            <div class="card" style="text-align: center; align-items: center; justify-content: center; padding: 2em 1.5em;">
+              <img src="figures/davide_avatar.svg" alt="Davide Luci Avatar" style="width: 140px; height: 140px; border-radius: 50%; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.22); margin-bottom: 1.2em;">
+              <h3 style="font-size: 1.3em; margin-bottom: 0.2em;">Davide Luci</h3>
+              <p style="margin: 0; font-size: 0.9em; color: var(--blue-primary); font-weight: 600;">Matricola: 0341922</p>
+              <p style="margin-top: 0.5em; font-size: 0.85em; color: #64748b;">Ingegneria Informatica — Tor Vergata</p>
+            </div>
+            <div class="card-accent" style="justify-content: center;">
+              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Riepilogo Contributi di Tesi</h3>
+              <ul style="margin-top: 0.5em;">
+                <li>Orchestrazione leggera di system container con <strong>Incus</strong>.</li>
+                <li>Isolamento trasparente della verifica mediante <strong>OVN &amp; OpenFlow</strong>.</li>
+                <li>Clonazione istantanea ad alte prestazioni tramite snapshot <strong>ZFS CoW</strong>.</li>
+                <li>Integrazione oracolo e plugin di verifica automatica per <strong>CTFd</strong>.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
 
       </div>
     </div>
@@ -1246,7 +1301,7 @@
 
       // --- In-Place Slide Editor Implementation ---
       (function() {
-        const STORAGE_KEY = 'blueagent_slides_content_v2';
+        const STORAGE_KEY = 'blueagent_slides_content_v4';
         const slidesContainer = document.querySelector('.reveal .slides');
         const toggleBtn = document.getElementById('btn-toggle-edit');
         const editLabel = document.getElementById('edit-label');

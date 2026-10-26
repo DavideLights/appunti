@@ -7,8 +7,8 @@
 
 ## 1. System Mission & Architectural Philosophy
 
-This workspace hosts the engineering assets, empirical datasets, and compilation pipeline for the Master's Thesis:  
-**"BlueAgent: Multi-Tenant Cyber Range Verification and Isolation with Incus and Open Virtual Network (OVN)"**.
+This workspace hosts the engineering assets, empirical datasets, and compilation pipeline for the Bachelor's Thesis:  
+**"BlueAgent: progettazione e sviluppo di un framework per l'orchestrazione di container in competizioni CTF difensive"**.
 
 ### Core Technical Pillars & Invariants
 1. **Client-Agnostic Container Orchestration:**

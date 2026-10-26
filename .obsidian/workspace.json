@@ -4,22 +4,37 @@
     "type": "split",
     "children": [
       {
-        "id": "6b6919bdee174ba7",
+        "id": "241a8dccf5c7eeea",
         "type": "tabs",
         "children": [
           {
-            "id": "2c423b60d60d3df3",
+            "id": "a54d61d4d80f0c21",
             "type": "leaf",
             "state": {
               "type": "pdf",
               "state": {
-                "file": "tesi/main.pdf"
+                "file": "tesi/latex/main.pdf"
               },
               "icon": "lucide-file-text",
               "title": "main"
             }
+          },
+          {
+            "id": "2451deda4d0939f7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1o anno M/distributed cocks/lez. 10 exercises.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "lez. 10 exercises"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -53,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#gemini",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -81,7 +96,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 335.8307304382324
+    "width": 218.12369918823242,
+    "collapsed": true
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -212,11 +228,38 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "2c423b60d60d3df3",
+  "active": "2451deda4d0939f7",
   "lastOpenFiles": [
-    "tesi/antigravity/figures/slide_phases_vertical.png",
-    "tesi/antigravity/figures/slide_graph2_vertical.png",
-    "tesi/antigravity/figures/slide_graph1_vertical.png",
+    "1o anno M/distributed cocks/lez. 10.md",
+    "1o anno M/distributed cocks/lez. 10 exercises.md",
+    "1o anno M/cockgraphy/lez. 8.md",
+    "tesi/latex/main.pdf",
+    "1o anno M/cockgraphy/lez. 4.md",
+    "1o anno M/cockgraphy/lez. 3.md",
+    "immagini/lez4_owf_and_negligible.png",
+    "immagini/lez4_reduction_and_impagliazzo.png",
+    "1o anno M/cockgraphy/lez. 5.md",
+    "1o anno M/cockgraphy/lez. 2.md",
+    "1o anno M/cockgraphy/lez. 1.md",
+    "1o anno M/distributed cocks/lez. 5.md",
+    "1o anno M/distributed cocks/lez. 3.md",
+    "GEMINI.md",
+    "Excalidraw/lez. 8 2026-10-23 17.58.08.excalidraw.md",
+    "Excalidraw/lez. 8 2026-10-23 18.03.08.excalidraw.md",
+    "Excalidraw/lez. 8 2026-10-23 18.08.17.excalidraw.md",
+    "immagini/lez3_statistical_distance_and_lhl.png",
+    "immagini/lez3_impossibility_seedless_extractor.png",
+    "Excalidraw/lez. 8 2026-10-23 16.29.38.excalidraw.md",
+    "Excalidraw/lez. 8 2026-10-23 16.28.17.excalidraw.md",
+    "Excalidraw/lez. 8 2026-10-23 16.20.23.excalidraw.md",
+    "immagini/lez2_mac_pairwise_independence.png",
+    "immagini/lez2_shannon_impossibility.png",
+    "immagini/lez1_otp_two_time_pad.png",
+    "immagini/lez1_perfect_secrecy_mapping.png",
+    "tesi/main.pdf",
+    "tesi/antigravity/figures/avatar_exports/davide_avatar_128.png",
+    "tesi/antigravity/figures/avatar_exports/davide_avatar_256.png",
+    "tesi/antigravity/figures/avatar_exports",
     "tesi/antigravity/presentazione_blueagent.html.part",
     "tesi/antigravity/presentazione_blueagent.html",
     "tesi/antigravity/presentazione_blueagent(1).html",
@@ -226,7 +269,6 @@
     "tesi/6._Architetture_Rete__Alternative/6.2_AA_Interfaccia_wan1_Aggiuntiva.md",
     "tesi/6._Architetture_Rete__Alternative/6.3_AA_NetworkNamespace_separato.md",
     "tesi/6._Architetture_Rete__Alternative/6.5 Tabella Riassuntiva.md",
-    "tesi/main.pdf",
     "tesi/4._Architettura_Rete_Alto_Livello/4.3_Struttura_Challenge.md",
     "tesi/2._Contesto_e_Confronto_con_lo_Stato_dell_Arte/2_Cyber_Range_Lo_Stato_Dell_Arte.md",
     "tesi/1._Introduzione/1_Introduzione.md",
@@ -234,32 +276,6 @@
     "tesi/latex/8._Appendice/8.4_NsJail.tex",
     "tesi/latex/8._Appendice/8.3_ZFS.tex",
     "tesi/latex/8._Appendice/8.2_Wireguard.tex",
-    "tesi/latex/8._Appendice/8.1_LinuxNetworking.tex",
-    "tesi/latex/8._Appendice",
-    "tesi/8._Appendice/8.4_NsJail.md",
-    "tesi/8._Appendice/8.3_ZFS.md",
-    "tesi/8._Appendice/8.2_Wireguard.md",
-    "tesi/8._Appendice/8.1_LinuxNetworking.md",
-    "tesi/8._Appendice/7.4_NsJail.md",
-    "tesi/8._Appendice/7.3_ZFS.md",
-    "tesi/7._Conclusioni_e_Sviluppi_Futuri/7.2_Compromessi_e_Sviluppi_Futuri.md",
-    "tesi/7._Conclusioni_e_Sviluppi_Futuri/7.1_Difesa_Architettura.md",
-    "tesi/5._Architettura_Nel_Dettaglio_e_Validazione/5.5_Difesa_Architettura.md",
-    "tesi/risoluzione_errori_e_incongruenze.md",
-    "tesi/5._Architettura_Nel_Dettaglio_e_Validazione/5.6_Compromessi_e_Sviluppi_Futuri.md",
-    "tesi/5._Architettura_Nel_Dettaglio_e_Validazione/5.2_Comandi_Architettura_Rete.md",
-    "tesi/4._Architettura_Rete_Alto_Livello/4_Architettura_Rete.md",
-    "tesi/5._Architettura_Nel_Dettaglio_e_Validazione/5.1_Architettura_Codice.md",
-    "tesi/7._Appendice/7.2_Wireguard.md",
-    "tesi/7._Appendice/7.4_NsJail.md",
-    "tesi/latex/check_frontespizio-01.png",
-    "tesi/latex/final_frontespizio-01.png",
-    "tesi/latex/comparison.png",
-    "tesi/latex/test_titlepage_resized.png",
-    "tesi/latex/test_titlepage_page-1.png",
-    "tesi/latex/logo_extracted_user.png",
-    "tesi/latex/zoom_cand.png",
-    "tesi/latex/zoom_rel.png",
     "Senza nome.canvas"
   ]
 }
