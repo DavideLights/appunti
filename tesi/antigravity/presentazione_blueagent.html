@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="it">
-  <head>
+<html lang="it" class="reveal-full-page"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlueAgent — Presentazione Tesi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css">
@@ -423,23 +422,23 @@
         margin-left: 4px;
       }
     </style>
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script></head>
+  <body class="reveal-viewport" style="--slide-width: 1280px; --slide-height: 720px; --slide-scale: 1.0392222222222223; --viewport-width: 1566px; --viewport-height: 796px;">
+    <div class="reveal focused has-horizontal-slides ready none" role="application" data-transition-speed="default" data-background-transition="none" style="">
+      <div class="slides" style="width: 1280px; height: 720px; inset: 50% auto auto 50%; transform: translate(-50%, -50%) scale(1.03922);">
 
         <!-- SLIDE 1: COPERTINA -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="cover-wrapper">
             <div class="cover-uni">
               <img src="../logo_tor_vergata.png" alt="Logo Tor Vergata">
               <div class="cover-uni-text">
                 Università degli Studi di Roma "Tor Vergata"<br>
-                Corso di Laurea in Ingegneria Informatica
+                Corso di Laurea in Informatica Triennale
               </div>
             </div>
             <div class="accent-bar"></div>
-            <h1>BlueAgent</h1>
+            <h1 data-editable="true" spellcheck="false">BlueAgent</h1>
             <div class="cover-subtitle">
               Orchestratore di container per Cyber Range orientati a CTF di Difesa
             </div>
@@ -447,12 +446,12 @@
               <div class="cover-candidate">
                 <img src="figures/davide_avatar.svg" alt="Davide Luci Avatar" class="candidate-avatar">
                 <div>
-                  <p><strong>Candidato:</strong> Davide Luci<br>
+                  <p data-editable="true" spellcheck="false"><strong>Candidato:</strong> Davide Luci<br>
                   <strong>Matricola:</strong> 0341922</p>
                 </div>
               </div>
               <div style="display: flex; align-items: center; justify-content: flex-end;">
-                <p><strong>Relatore:</strong> Prof. Pierpaolo Loreti<br>
+                <p data-editable="true" spellcheck="false"><strong>Relatore:</strong> Prof. Pierpaolo Loreti<br>
                 <strong>Correlatore:</strong> Ing. Francesco Mancini</p>
               </div>
             </div>
@@ -460,303 +459,303 @@
         </section>
 
         <!-- SLIDE 2: CAPITOLO 1 - INTRODUZIONE -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>BlueAgent: Orchestratore per CTF di Difesa</h2>
+          <h2 data-editable="true" spellcheck="false">BlueAgent: Orchestratore per CTF di Difesa</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Contesto e Obiettivi</h3>
-              <p><strong>Contesto:</strong> gestione di challenge CTF orientate alla Difesa (la flag si ottiene <em>patchando</em> e mettendo in sicurezza la vulnerabilità).</p>
-              <p><strong>Requisiti chiave:</strong></p>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>Contesto e Obiettivi</h3>
+              <p data-editable="true" spellcheck="false"><strong>Contesto:</strong> gestione di challenge CTF orientate alla Difesa (la flag si ottiene <em>patchando</em> e mettendo in sicurezza la vulnerabilità).</p>
+              <p data-editable="true" spellcheck="false"><strong>Requisiti chiave:</strong></p>
               <ol>
-                <li>Gestire una o più macchine comunicanti (scenari multi-nodo).</li>
-                <li>Determinare lo stato delle macchine all'oscuro dei giocatori.</li>
-                <li>Preservare l'operatività dei servizi legittimi dopo le patch.</li>
+                <li data-editable="true" spellcheck="false">Gestire una o più macchine comunicanti (scenari multi-nodo).</li>
+                <li data-editable="true" spellcheck="false">Determinare lo stato delle macchine all'oscuro dei giocatori.</li>
+                <li data-editable="true" spellcheck="false">Preservare l'operatività dei servizi legittimi dopo le patch.</li>
               </ol>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>Soluzione e Implementazione</h3>
-              <p><strong>La soluzione, BlueAgent:</strong> Orchestratore su singolo host, scritto in <strong>Python</strong> e basato sul framework <strong>FastAPI</strong>.</p>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Soluzione e Implementazione</h3>
+              <p data-editable="true" spellcheck="false"><strong>La soluzione, BlueAgent:</strong> Orchestratore su singolo host, scritto in <strong>Python</strong> e basato sul framework <strong>FastAPI</strong>.</p>
               <ul>
-                <li>Gestisce <strong>system container (Incus).</strong></li>
-                <li>Verifica le patch clonando i container in un ambiente di rete inaccessibile ai giocatori.</li>
-                <li><strong>Validazione:</strong> misurazione dei tempi di esecuzione e dell'uso di CPU e RAM al crescere di team e container.</li>
+                <li data-editable="true" spellcheck="false">Gestisce <strong>system container (Incus).</strong></li>
+                <li data-editable="true" spellcheck="false">Verifica le patch clonando i container in un ambiente di rete inaccessibile ai giocatori.</li>
+                <li data-editable="true" spellcheck="false"><strong>Validazione:</strong> misurazione dei tempi di esecuzione e dell'uso di CPU e RAM al crescere di team e container.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 3: CAPITOLO 2 - ALTERNATIVE: kCTF e CTFBox -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Cyber Range Alternativi: kCTF e CTFBox</h2>
+          <h2 data-editable="true" spellcheck="false">Cyber Range Alternativi: kCTF e CTFBox</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>kCTF (Google)</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>kCTF (Google)</h3>
               <ul>
-                <li>Basato su cluster <strong>Kubernetes</strong> e <strong>NSJail</strong>.</li>
-                <li>Un unico container condiviso: ad ogni connessione esegue un fork e rilascia un ambiente separato.</li>
-                <li>Usa seccomp, Namespaces, cgroups e fornisce un filesystem in RAM (<code>tmpfs</code>).</li>
-                <li><strong>Limite:</strong> assenza di <code>systemd</code> e impossibilità di installare pacchetti o modificare servizi permanentemente.</li>
+                <li data-editable="true" spellcheck="false">Basato su cluster <strong>Kubernetes</strong> e <strong>NSJail</strong>.</li>
+                <li data-editable="true" spellcheck="false">Un unico container condiviso: ad ogni connessione esegue un fork e rilascia un ambiente separato.</li>
+                <li data-editable="true" spellcheck="false">Usa seccomp, Namespaces, cgroups e fornisce un filesystem in RAM (<code data-editable="true" spellcheck="false">tmpfs</code>).</li>
+                <li data-editable="true" spellcheck="false"><strong>Limite:</strong> assenza di <code data-editable="true" spellcheck="false">systemd</code> e impossibilità di installare pacchetti o modificare servizi permanentemente.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>CTFBox</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg>CTFBox</h3>
               <ul>
-                <li>Pensato per competizioni <strong>Attack &amp; Defense</strong> competitive tra squadre. Basato su Docker, Incus e WireGuard.</li>
-                <li>I Checkers interrogano i servizi ad ogni tick su rete condivisa. Calcolano uptime, SLA ed installano nuove flag.</li>
-                <li>3 stati di rete: freeze, lock e unlock.</li>
-                <li><strong>Limite:</strong> assenza di un oracolo isolato; il traffico di verifica è visibile ai team sulla rete di gioco.</li>
+                <li data-editable="true" spellcheck="false">Pensato per competizioni <strong>Attack &amp; Defense</strong> competitive tra squadre. Basato su Docker, Incus e WireGuard.</li>
+                <li data-editable="true" spellcheck="false">I Checkers interrogano i servizi ad ogni tick su rete condivisa. Calcolano uptime, SLA ed installano nuove flag.</li>
+                <li data-editable="true" spellcheck="false">3 stati di rete: freeze, lock e unlock.</li>
+                <li data-editable="true" spellcheck="false"><strong>Limite:</strong> assenza di un oracolo isolato; il traffico di verifica è visibile ai team sulla rete di gioco.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 4: CAPITOLO 2 - ALTERNATIVE: CyTrONE e CyberRangeCZ -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Cyber Range Alternativi: CyTrONE e CyberRangeCZ</h2>
+          <h2 data-editable="true" spellcheck="false">Cyber Range Alternativi: CyTrONE e CyberRangeCZ</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="12" x="3" y="4" rx="2"/><line x1="2" x2="22" y1="20" y2="20"/><line x1="12" x2="12" y1="16" y2="20"/></svg>CyTrONE</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="12" x="3" y="4" rx="2"></rect><line x1="2" x2="22" y1="20" y2="20"></line><line x1="12" x2="12" y1="16" y2="20"></line></svg>CyTrONE</h3>
               <ul>
-                <li>Integra una piattaforma didattica (LMS) ed un Cyber Range. Basato su <strong>Macchine Virtuali KVM</strong>.</li>
-                <li>Supporta training di difesa definiti tramite YAML.</li>
-                <li>Un controller invia exploit via rete verso le macchine degli studenti.</li>
-                <li>Usa <code>parallel-scp</code> per distribuire le immagini.</li>
+                <li data-editable="true" spellcheck="false">Integra una piattaforma didattica (LMS) ed un Cyber Range. Basato su <strong>Macchine Virtuali KVM</strong>.</li>
+                <li data-editable="true" spellcheck="false">Supporta training di difesa definiti tramite YAML.</li>
+                <li data-editable="true" spellcheck="false">Un controller invia exploit via rete verso le macchine degli studenti.</li>
+                <li data-editable="true" spellcheck="false">Usa <code data-editable="true" spellcheck="false">parallel-scp</code> per distribuire le immagini.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>CyberRangeCZ / KYPO</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>CyberRangeCZ / KYPO</h3>
               <ul>
-                <li>Piattaforma cloud basata su <strong>OpenStack</strong>, Kubernetes, Terraform e Ansible.</li>
-                <li>Sandbox di Macchine Virtuali per emulare scenari.</li>
-                <li>Accesso dei partecipanti regolato da un gateway (MAN).</li>
-                <li>Requisiti elevati per gestire centinaia di VM.</li>
+                <li data-editable="true" spellcheck="false">Piattaforma cloud basata su <strong>OpenStack</strong>, Kubernetes, Terraform e Ansible.</li>
+                <li data-editable="true" spellcheck="false">Sandbox di Macchine Virtuali per emulare scenari.</li>
+                <li data-editable="true" spellcheck="false">Accesso dei partecipanti regolato da un gateway (MAN).</li>
+                <li data-editable="true" spellcheck="false">Requisiti elevati per gestire centinaia di VM.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 5: CAPITOLO 2 - ALTERNATIVE: CyberPatriot -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Cyber Range Alternativi: CyberPatriot</h2>
+          <h2 data-editable="true" spellcheck="false">Cyber Range Alternativi: CyberPatriot</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Architettura</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>Architettura</h3>
               <ul>
-                <li>Programma educativo nazionale (AFA) basato su <strong>Macchine Virtuali.</strong></li>
-                <li>I partecipanti operano come amministratori di sistemi vulnerabili.</li>
+                <li data-editable="true" spellcheck="false">Programma educativo nazionale (AFA) basato su <strong>Macchine Virtuali.</strong></li>
+                <li data-editable="true" spellcheck="false">I partecipanti operano come amministratori di sistemi vulnerabili.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>Limiti rispetto a BlueAgent</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>Limiti rispetto a BlueAgent</h3>
               <ul>
-                <li><strong>Consumo elevato:</strong> diversi GB di RAM per singola VM (contro ~50 MB in BlueAgent).</li>
-                <li><strong>CSS:</strong> lo scoring avviene tramite un demone residente all'interno della VM.</li>
-                <li>Piattaforma <strong>closed-source.</strong></li>
+                <li data-editable="true" spellcheck="false"><strong>Consumo elevato:</strong> diversi GB di RAM per singola VM (contro ~50 MB in BlueAgent).</li>
+                <li data-editable="true" spellcheck="false"><strong>CSS:</strong> lo scoring avviene tramite un demone residente all'interno della VM.</li>
+                <li data-editable="true" spellcheck="false">Piattaforma <strong>closed-source.</strong></li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 6: CAPITOLO 2 - TABELLA DI CONFRONTO FINALE -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Confronto con lo Stato dell'Arte</h2>
+          <h2 data-editable="true" spellcheck="false">Confronto con lo Stato dell'Arte</h2>
           <table>
             <thead>
               <tr>
-                <th>Caratteristica</th>
-                <th>kCTF</th>
-                <th>CTFBox</th>
-                <th>CyTrONE</th>
-                <th>CyberRangeCZ</th>
-                <th>CyberPatriot</th>
-                <th>BlueAgent</th>
+                <th data-editable="true" spellcheck="false">Caratteristica</th>
+                <th data-editable="true" spellcheck="false">kCTF</th>
+                <th data-editable="true" spellcheck="false">CTFBox</th>
+                <th data-editable="true" spellcheck="false">CyTrONE</th>
+                <th data-editable="true" spellcheck="false">CyberRangeCZ</th>
+                <th data-editable="true" spellcheck="false">CyberPatriot</th>
+                <th data-editable="true" spellcheck="false">BlueAgent</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Componenti</strong></td>
-                <td>Kubernetes, NSJail</td>
-                <td>VM, Container di sistema (Incus)</td>
-                <td>Macchine Virtuali</td>
-                <td>Macchine Virtuali</td>
-                <td>Macchine Virtuali</td>
-                <td>Container di sistema (Incus)</td>
+                <td data-editable="true" spellcheck="false"><strong>Componenti</strong></td>
+                <td data-editable="true" spellcheck="false">Kubernetes, NSJail</td>
+                <td data-editable="true" spellcheck="false">VM, Container di sistema (Incus)</td>
+                <td data-editable="true" spellcheck="false">Macchine Virtuali</td>
+                <td data-editable="true" spellcheck="false">Macchine Virtuali</td>
+                <td data-editable="true" spellcheck="false">Macchine Virtuali</td>
+                <td data-editable="true" spellcheck="false">Container di sistema (Incus)</td>
               </tr>
               <tr>
-                <td><strong>Infrastruttura</strong></td>
-                <td>Cluster Kubernetes</td>
-                <td>Singolo host</td>
-                <td>Cluster distribuito</td>
-                <td>Cloud OpenStack</td>
-                <td>N/A</td>
-                <td>Singolo nodo host</td>
+                <td data-editable="true" spellcheck="false"><strong>Infrastruttura</strong></td>
+                <td data-editable="true" spellcheck="false">Cluster Kubernetes</td>
+                <td data-editable="true" spellcheck="false">Singolo host</td>
+                <td data-editable="true" spellcheck="false">Cluster distribuito</td>
+                <td data-editable="true" spellcheck="false">Cloud OpenStack</td>
+                <td data-editable="true" spellcheck="false">N/A</td>
+                <td data-editable="true" spellcheck="false">Singolo nodo host</td>
               </tr>
               <tr>
-                <td><strong>Rete / Ambiente</strong></td>
-                <td>Condiviso (<code>tmpfs</code>)</td>
-                <td>Subnet dedicata ai team condivisa</td>
-                <td>Reti KVM</td>
-                <td>Rete OpenStack</td>
-                <td>VM dedicata</td>
-                <td>LAN isolata per team</td>
+                <td data-editable="true" spellcheck="false"><strong>Rete / Ambiente</strong></td>
+                <td data-editable="true" spellcheck="false">Condiviso (<code data-editable="true" spellcheck="false">tmpfs</code>)</td>
+                <td data-editable="true" spellcheck="false">Subnet dedicata ai team condivisa</td>
+                <td data-editable="true" spellcheck="false">Reti KVM</td>
+                <td data-editable="true" spellcheck="false">Rete OpenStack</td>
+                <td data-editable="true" spellcheck="false">VM dedicata</td>
+                <td data-editable="true" spellcheck="false">LAN isolata per team</td>
               </tr>
               <tr>
-                <td><strong>Verifica</strong></td>
-                <td>Container Healthcheck</td>
-                <td>Checkers ad ogni tick</td>
-                <td>Exploit via rete</td>
-                <td>Non prevista</td>
-                <td>Demone interno</td>
-                <td>Clonazione</td>
+                <td data-editable="true" spellcheck="false"><strong>Verifica</strong></td>
+                <td data-editable="true" spellcheck="false">Container Healthcheck</td>
+                <td data-editable="true" spellcheck="false">Checkers ad ogni tick</td>
+                <td data-editable="true" spellcheck="false">Exploit via rete</td>
+                <td data-editable="true" spellcheck="false">Non prevista</td>
+                <td data-editable="true" spellcheck="false">Demone interno</td>
+                <td data-editable="true" spellcheck="false">Clonazione</td>
               </tr>
               <tr class="highlight-row">
-                <td><strong>Invisibilità Verifica</strong></td>
-                <td>Visibile</td>
-                <td>Assente</td>
-                <td>Visibile</td>
-                <td>Assente</td>
-                <td>Visibile</td>
-                <td>Invisibile</td>
+                <td data-editable="true" spellcheck="false"><strong>Invisibilità Verifica</strong></td>
+                <td data-editable="true" spellcheck="false">Visibile</td>
+                <td data-editable="true" spellcheck="false">Assente</td>
+                <td data-editable="true" spellcheck="false">Visibile</td>
+                <td data-editable="true" spellcheck="false">Assente</td>
+                <td data-editable="true" spellcheck="false">Visibile</td>
+                <td data-editable="true" spellcheck="false">Invisibile</td>
               </tr>
             </tbody>
           </table>
         </section>
 
         <!-- SLIDE 7: CAPITOLO 3 - ATTORI -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Attori del Sistema</h2>
+          <h2 data-editable="true" spellcheck="false">Attori del Sistema</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Attore Diretto: CTF Manager</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>&nbsp;CTF Manager</h3>
               <ul>
-                <li>Unica entità autenticata che comunica direttamente con BlueAgent tramite <strong>API REST</strong> (autenticate con token condiviso).</li>
-                <li>Mantiene lo stato della competizione (punteggi, squadre, progressione), disaccoppiando la gara dall'infrastruttura.</li>
-                <li>Invia a BlueAgent le configurazioni YAML e inoltra le richieste di verifica.</li>
+                <li data-editable="true" spellcheck="false">Unica entità autenticata che comunica direttamente con BlueAgent tramite <strong>API REST</strong> (autenticate con token condiviso).</li>
+                <li data-editable="true" spellcheck="false">Mantiene lo stato della competizione (punteggi, squadre, progressione), disaccoppiando la gara dall'infrastruttura.</li>
+                <li data-editable="true" spellcheck="false">Invia a BlueAgent le configurazioni YAML e inoltra le richieste di verifica.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Attori Esterni (tramite CTF Manager)</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Attori Esterni (tramite CTF Manager)</h3>
               <ul>
-                <li><strong>Giocatore:</strong> richiede il deploy dell'ambiente, ottiene la configurazione WG e richiede le verifiche.</li>
-                <li><strong>Autore della sfida:</strong> scrive i file YAML della topologia e le definizioni Distrobuilder.</li>
-                <li><strong>Amministratore:</strong> monitora lo stato dei team, l'infrastruttura e le risorse attive.</li>
-                <li>Nessun attore esterno comunica direttamente con BlueAgent o ha accesso alle sue API.</li>
+                <li data-editable="true" spellcheck="false"><strong>Giocatore:</strong> richiede il deploy dell'ambiente, ottiene la configurazione WG e richiede le verifiche.</li>
+                <li data-editable="true" spellcheck="false"><strong>Autore della sfida:</strong> scrive i file YAML della topologia e le definizioni Distrobuilder.</li>
+                <li data-editable="true" spellcheck="false"><strong>Amministratore:</strong> monitora lo stato dei team, l'infrastruttura e le risorse attive.</li>
+                <li data-editable="true" spellcheck="false">Nessun attore esterno comunica direttamente con BlueAgent o ha accesso alle sue API.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 8: CAPITOLO 3 - USE CASES -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Use Cases Principali</h2>
+          <h2 data-editable="true" spellcheck="false">Use Cases Principali</h2>
           <div class="cols">
             <div>
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>UC-01 Setup Rete Team</span>
-                  <span class="uc-endpoint">PUT /teams/{team_k}</span>
+                  <span class="uc-title" data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"></rect><rect width="6" height="6" x="2" y="16" rx="1"></rect><rect width="6" height="6" x="16" y="16" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>UC-01 Setup Rete Team</span>
+                  <span class="uc-endpoint" data-editable="true" spellcheck="false">PUT /teams/{team_k}</span>
                 </div>
-                <p class="uc-desc">Alloca il bridge di produzione <code>br-team-k</code> (<code>10.k.1.1/24</code>) e il gateway WireGuard <code>wg-k</code> associandogli la porta $51820+k$.</p>
+                <p class="uc-desc" data-editable="true" spellcheck="false">Alloca il bridge di produzione <code data-editable="true" spellcheck="false">br-team-k</code> (<code data-editable="true" spellcheck="false">10.k.1.1/24</code>) e il gateway WireGuard <code data-editable="true" spellcheck="false">wg-k</code> associandogli la porta <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>51820</mn><mo>+</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">51820+k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.7278em; vertical-align: -0.0833em;"></span><span class="mord">51820</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span>.</p>
               </div>
 
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>UC-02 Deploy Challenge</span>
-                  <span class="uc-endpoint">POST /teams/{team_k}/machines</span>
+                  <span class="uc-title" data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>UC-02 Deploy Challenge</span>
+                  <span class="uc-endpoint" data-editable="true" spellcheck="false">POST /teams/{team_k}/machines</span>
                 </div>
-                <p class="uc-desc">Istanzia i container di sistema, collega <code>eth0</code> a <code>br-team-k</code>, inietta la configurazione IP statica e applica i limiti cgroups.</p>
+                <p class="uc-desc" data-editable="true" spellcheck="false">Istanzia i container di sistema, collega <code data-editable="true" spellcheck="false">eth0</code> a <code data-editable="true" spellcheck="false">br-team-k</code>, inietta la configurazione IP statica e applica i limiti cgroups.</p>
               </div>
             </div>
 
             <div>
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><path d="m9 11 1.5 1.5 3-3"/></svg>UC-03 Verifica Challenge</span>
-                  <span class="uc-endpoint">POST /teams/{team_k}/verificator</span>
+                  <span class="uc-title" data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line><path d="m9 11 1.5 1.5 3-3"></path></svg>UC-03 Verifica Challenge</span>
+                  <span class="uc-endpoint" data-editable="true" spellcheck="false">POST /teams/{team_k}/verificator</span>
                 </div>
-                <p class="uc-desc">Crea una rete OVN separata, clona i container con ZFS, esegue i comandi di readiness e i comandi di verifica dell'oracolo.</p>
+                <p class="uc-desc" data-editable="true" spellcheck="false">Crea una rete OVN separata, clona i container con ZFS, esegue i comandi di readiness e i comandi di verifica dell'oracolo.</p>
               </div>
 
               <div class="uc-card">
                 <div class="uc-header">
-                  <span class="uc-title"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>UC-06 Accesso VPN Membro</span>
-                  <span class="uc-endpoint">PUT /teams/{team_k}/members/{user_id}</span>
+                  <span class="uc-title" data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>UC-06 Accesso VPN Membro</span>
+                  <span class="uc-endpoint" data-editable="true" spellcheck="false">PUT /teams/{team_k}/members/{user_id}</span>
                 </div>
-                <p class="uc-desc">Alloca un IP libero (<code>10.k.0.x</code>), genera le chiavi crittografiche, registra il peer e restituisce il file <code>.conf</code>.</p>
+                <p class="uc-desc" data-editable="true" spellcheck="false">Alloca un IP libero (<code data-editable="true" spellcheck="false">10.k.0.x</code>), genera le chiavi crittografiche, registra il peer e restituisce il file <code data-editable="true" spellcheck="false">.conf</code>.</p>
               </div>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 9: CAPITOLO 3 - REQUISITI DI SISTEMA -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Requisiti di Sistema Rappresentativi</h2>
+          <h2 data-editable="true" spellcheck="false">Requisiti di Sistema Rappresentativi</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>Infrastruttura e Rete</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>Infrastruttura e Rete</h3>
               <ul>
-                <li><strong>Host e Storage:</strong> Debian 13 con <code>nftables</code> e storage pool ZFS.</li>
-                <li><strong>Una rete per Team:</strong> tunnel <code>wg-k</code> e bridge <code>br-team-k</code> comunicanti, isolati per ogni squadra $k$.</li>
-                <li><strong>Cgroups:</strong> applicazione di limiti su CPU e memoria RAM per impedire starvation.</li>
-                <li><strong>TCP MSS Clamping:</strong> forzatura dell'MSS in nftables per evitare MTU blackhole.</li>
+                <li data-editable="true" spellcheck="false"><strong>Host e Storage:</strong> Debian 13 con <code data-editable="true" spellcheck="false">nftables</code> e storage pool ZFS.</li>
+                <li data-editable="true" spellcheck="false"><strong>Una rete per Team:</strong> tunnel <code data-editable="true" spellcheck="false">wg-k</code> e bridge <code data-editable="true" spellcheck="false">br-team-k</code> comunicanti, isolati per ogni squadra <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Cgroups:</strong> applicazione di limiti su CPU e memoria RAM per impedire starvation.</li>
+                <li data-editable="true" spellcheck="false"><strong>TCP MSS Clamping:</strong> forzatura dell'MSS in nftables per evitare MTU blackhole.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Verifica e Control Plane</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>Verifica e Control Plane</h3>
               <ul>
-                <li><strong>Fedeltà Topologica:</strong> i cloni preservano l'interfaccia <code>eth0</code> e l'IP (<code>10.k.1.x</code>) di produzione.</li>
-                <li><strong>Zero Side-Channel:</strong> traffico e container di verifica confinati nella rete OVN, inaccessibili ai giocatori.</li>
-                <li><strong>Affidabilità:</strong> mutua esclusione con <code>TwoTierLock</code> e rilascio di risorse inutilizzate.</li>
-                <li><strong>Lifecycle:</strong> demone per la pulizia delle risorse orfane.</li>
+                <li data-editable="true" spellcheck="false"><strong>Fedeltà Topologica:</strong> i cloni preservano l'interfaccia <code data-editable="true" spellcheck="false">eth0</code> e l'IP (<code data-editable="true" spellcheck="false">10.k.1.x</code>) di produzione.</li>
+                <li data-editable="true" spellcheck="false"><strong>Zero Side-Channel:</strong> traffico e container di verifica confinati nella rete OVN, inaccessibili ai giocatori.</li>
+                <li data-editable="true" spellcheck="false"><strong>Affidabilità:</strong> mutua esclusione con <code data-editable="true" spellcheck="false">TwoTierLock</code> e rilascio di risorse inutilizzate.</li>
+                <li data-editable="true" spellcheck="false"><strong>Lifecycle:</strong> demone per la pulizia delle risorse orfane.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 10: CAPITOLO 3 - MECCANISMI DI VERIFICA ED ORACOLO -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>L'Oracolo e i Meccanismi di Verifica</h2>
-          <p><strong>Oracolo (<code>OVNVerifier</code>):</strong> determina se il sistema è <em>patchato</em> eseguendo comandi sui nodi e confrontando l'output con il valore atteso.</p>
+          <h2 data-editable="true" spellcheck="false">L'Oracolo e i Meccanismi di Verifica</h2>
+          <p data-editable="true" spellcheck="false"><strong>Oracolo (<code data-editable="true" spellcheck="false">OVNVerifier</code>):</strong> determina se il sistema è <em>patchato</em> eseguendo comandi sui nodi e confrontando l'output con il valore atteso.</p>
           <div class="cols" style="margin-top: 0.6em;">
             <div class="card">
-              <h3><svg class="slide-icon" style="stroke: #ef4444;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>Approcci Tradizionali (Scartati)</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon" style="stroke: #ef4444;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" x2="9" y1="9" y2="15"></line><line x1="9" x2="15" y1="9" y2="15"></line></svg>Approcci Tradizionali (Scartati)</h3>
               <ul>
-                <li><strong>Verifica Statica (diff, SAST):</strong> falsi positivi e inefficace sui binari compilati.</li>
-                <li><strong>Verifica Dinamica esterna:</strong> i giocatori (root) intercettano i payload con <code>tcpdump</code>.</li>
-                <li><strong>Injection (<code>incus exec</code>):</strong> i giocatori intercettano i comandi con <code>pspy</code> su <code>/proc</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Verifica Statica (diff, SAST):</strong> falsi positivi e inefficace sui binari compilati.</li>
+                <li data-editable="true" spellcheck="false"><strong>Verifica Dinamica esterna:</strong> i giocatori (root) intercettano i payload con <code data-editable="true" spellcheck="false">tcpdump</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Injection (<code data-editable="true" spellcheck="false">incus exec</code>):</strong> i giocatori intercettano i comandi con <code data-editable="true" spellcheck="false">pspy</code> su <code data-editable="true" spellcheck="false">/proc</code>.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Approccio BlueAgent</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Approccio BlueAgent</h3>
               <ul>
-                <li><strong>Clonazione in rete separata:</strong> duplica i container dentro una rete OVN/SDN inaccessibile ai giocatori.</li>
-                <li>Impossibile intercettare il traffico di rete.</li>
-                <li>Il giocatore non può accedere con ssh al container di verifica.</li>
+                <li data-editable="true" spellcheck="false"><strong>Clonazione in rete separata:</strong> duplica i container dentro una rete OVN inaccessibile ai giocatori.</li>
+                <li data-editable="true" spellcheck="false">Impossibile intercettare il traffico di rete.</li>
+                <li data-editable="true" spellcheck="false">Il giocatore non può accedere con ssh al container di verifica.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 11: CAPITOLO 4 - RETE PRODUCTION-K -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Rete production-$k$</h2>
+          <h2 data-editable="true" spellcheck="false">Rete production-<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span></h2>
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong><code>wg-k</code> (Gateway VPN):</strong> terminazione WireGuard dedicata al team $k$ (<code>10.k.0.0/24</code>, porta UDP $51820+k$).</li>
-                <li><strong><code>br-team-k</code> e <code>veth pair</code>:</strong> bridge Linux L2 per la LAN dei container (<code>10.k.1.1/24</code>), collegato a <code>eth0</code> tramite coppie virtuali <code>veth</code>.</li>
-                <li><strong>Isolamento tra Team:</strong> policy di <em>drop</em> predefinita in <code>nftables</code>; <strong>team diversi non possono comunicare tra loro</strong> né accedere a bridge di altre squadre.</li>
-                <li><strong>Set <code>@team_links</code>:</strong> autorizza il forwarding bidirezionale esclusivamente tra l'interfaccia <code>wg-k</code> e il rispettivo bridge <code>br-team-k</code> dello stesso team.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">wg-k</code> (Gateway VPN):</strong> terminazione WireGuard dedicata al team <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span> (<code data-editable="true" spellcheck="false">10.k.0.0/24</code>, porta UDP <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>51820</mn><mo>+</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">51820+k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.7278em; vertical-align: -0.0833em;"></span><span class="mord">51820</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span>).</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">br-team-k</code> e <code data-editable="true" spellcheck="false">veth pair</code>:</strong> bridge Linux per la LAN dei container (<code data-editable="true" spellcheck="false">10.k.1.1/24</code>), collegato a <code data-editable="true" spellcheck="false">eth0</code> tramite coppie virtuali <code data-editable="true" spellcheck="false">veth</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Isolamento tra Team:</strong> policy di <em>drop</em> predefinita in <code data-editable="true" spellcheck="false">nftables</code>; <strong>team diversi non possono comunicare tra loro.</strong></li>
+                <li data-editable="true" spellcheck="false"><strong>Set <code data-editable="true" spellcheck="false">@team_links</code>:</strong> autorizza il forwarding bidirezionale esclusivamente tra l'interfaccia <code data-editable="true" spellcheck="false">wg-k</code> e il rispettivo bridge <code data-editable="true" spellcheck="false">br-team-k.</code></li>
               </ul>
             </div>
             <div>
@@ -766,17 +765,17 @@
         </section>
 
         <!-- SLIDE 12: CAPITOLO 4 - RETE VERIFY-K -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Rete verify-$k$: SDN, OVN e OpenFlow</h2>
+          <h2 data-editable="true" spellcheck="false">Rete verify-<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span>: SDN, OVN e OpenFlow</h2>
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong>Sandbox SDN Isolata:</strong> rete virtuale OVN istanziata ad ogni verifica, separata da <code>production-k</code> e dalle altre squadre.</li>
-                <li><strong>Logical Switch e Router OVN:</strong> replicano la LAN (<code>10.k.1.0/24</code>) e il gateway (<code>10.k.1.1/24</code>) per i container clonati, senza conflitti di routing sull'host.</li>
-                <li><strong><code>incusbr0</code> (<code>172.16.0.1/24</code>):</strong> bridge di transito condiviso che collega i router OVN verso la WAN.</li>
-                <li><strong>Piano di Controllo (OVN):</strong> traduce la topologia logica in regole di matching e azioni <strong>OpenFlow</strong>.</li>
-                <li><strong>Piano dei Dati (Open vSwitch):</strong> applica i flussi OpenFlow nel kernel per inoltrare i pacchetti tra i cloni.</li>
+                <li data-editable="true" spellcheck="false"><strong>Sandbox SDN Isolata:</strong> rete virtuale OVN istanziata ad ogni verifica, separata da <code data-editable="true" spellcheck="false">production-k</code> e dalle altre squadre.</li>
+                <li data-editable="true" spellcheck="false"><strong>Logical Switch e Router OVN:</strong> replicano la LAN (<code data-editable="true" spellcheck="false">10.k.1.0/24</code>) e il gateway (<code data-editable="true" spellcheck="false">10.k.1.1/24</code>) per i container clonati, senza conflitti di routing sull'host.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">incusbr0</code> (<code data-editable="true" spellcheck="false">172.16.0.1/24</code>):</strong> bridge di transito condiviso che collega i router OVN verso la WAN.</li>
+                <li data-editable="true" spellcheck="false"><strong>Piano di Controllo (OVN):</strong> traduce la topologia logica in regole di matching e azioni <strong>OpenFlow</strong>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Piano dei Dati (Open vSwitch):</strong> applica i flussi OpenFlow nel kernel per inoltrare i pacchetti tra i cloni.</li>
               </ul>
             </div>
             <div>
@@ -786,67 +785,67 @@
         </section>
 
         <!-- SLIDE 13: CAPITOLO 4 - MECCANISMO DI SNAT -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Meccanismo di SNAT a Due Stadi</h2>
-          <p>Evita collisioni di routing sull'host nascondendo gli IP duplicati (<code>10.k.1.x</code>) dei container di verifica:</p>
+          <h2 data-editable="true" spellcheck="false">Meccanismo di SNAT a Due Stadi</h2>
+          <p data-editable="true" spellcheck="false">Evita collisioni di routing sull'host nascondendo gli IP duplicati (<code data-editable="true" spellcheck="false">10.k.1.x</code>) dei container di verifica:</p>
           <ul>
-            <li><strong>Primo Stadio (SNAT in OVN):</strong> il Router riscrive l'IP src con l'IP su <code>incusbr0</code> (<code>172.16.0.x</code>).</li>
-            <li><strong>Secondo Stadio (SNAT su <code>incusbr0</code>):</strong> <code>nftables</code> applica il <em>masquerade</em> con l'IP pubblico dell'host.</li>
+            <li data-editable="true" spellcheck="false"><strong>Primo Stadio (SNAT in OVN):</strong> il Router riscrive l'IP src con l'IP su <code data-editable="true" spellcheck="false">incusbr0</code> (<code data-editable="true" spellcheck="false">172.16.0.x</code>).</li>
+            <li data-editable="true" spellcheck="false"><strong>Secondo Stadio (SNAT su <code data-editable="true" spellcheck="false">incusbr0</code>):</strong> <code data-editable="true" spellcheck="false">nftables</code> applica il <em>masquerade</em> con l'IP pubblico dell'host.</li>
           </ul>
           <table>
             <thead>
               <tr>
-                <th>Tratta del Pacchetto</th>
-                <th>Indirizzo Sorgente ($IP_{src}$)</th>
-                <th>Indirizzo Destinazione ($IP_{dst}$)</th>
-                <th>Responsabile</th>
+                <th data-editable="true" spellcheck="false">Tratta del Pacchetto</th>
+                <th data-editable="true" spellcheck="false">Indirizzo Sorgente (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><msub><mi>P</mi><mrow><mi>s</mi><mi>r</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">IP_{src}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord mathnormal" style="margin-right: 0.0785em;">I</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.1514em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right: 0.0278em;">sr</span><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span>)</th>
+                <th data-editable="true" spellcheck="false">Indirizzo Destinazione (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><msub><mi>P</mi><mrow><mi>d</mi><mi>s</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">IP_{dst}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord mathnormal" style="margin-right: 0.0785em;">I</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3361em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span>)</th>
+                <th data-editable="true" spellcheck="false">Responsabile</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Dal Container ad <code>incusbr0</code></td>
-                <td><code>10.k.1.x</code> <em>(IP duplicato)</em></td>
-                <td>$IP_{ext}$ <em>(Internet)</em></td>
-                <td>Container di verifica</td>
+                <td data-editable="true" spellcheck="false">Dal Container ad <code data-editable="true" spellcheck="false">incusbr0</code></td>
+                <td data-editable="true" spellcheck="false"><code data-editable="true" spellcheck="false">10.k.1.x</code> <em>(IP duplicato)</em></td>
+                <td data-editable="true" spellcheck="false"><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><msub><mi>P</mi><mrow><mi>e</mi><mi>x</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">IP_{ext}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord mathnormal" style="margin-right: 0.0785em;">I</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2806em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">x</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span> <em>(Internet)</em></td>
+                <td data-editable="true" spellcheck="false">Container di verifica</td>
               </tr>
               <tr>
-                <td>Da <code>incusbr0</code> all'interfaccia dell'host</td>
-                <td><code>172.16.0.x</code> <em>(IP transito univoco)</em></td>
-                <td>$IP_{ext}$ <em>(Internet)</em></td>
-                <td>Incus (OVN)</td>
+                <td data-editable="true" spellcheck="false">Da <code data-editable="true" spellcheck="false">incusbr0</code> all'interfaccia dell'host</td>
+                <td data-editable="true" spellcheck="false"><code data-editable="true" spellcheck="false">172.16.0.x</code> <em>(IP transito univoco)</em></td>
+                <td data-editable="true" spellcheck="false"><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><msub><mi>P</mi><mrow><mi>e</mi><mi>x</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">IP_{ext}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord mathnormal" style="margin-right: 0.0785em;">I</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2806em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">x</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span> <em>(Internet)</em></td>
+                <td data-editable="true" spellcheck="false">Incus (OVN)</td>
               </tr>
               <tr>
-                <td>Dall'host verso l'esterno</td>
-                <td>IP dell'interfaccia pubblica dell'host</td>
-                <td>$IP_{ext}$ <em>(Internet)</em></td>
-                <td><code>nftables</code></td>
+                <td data-editable="true" spellcheck="false">Dall'host verso l'esterno</td>
+                <td data-editable="true" spellcheck="false">IP dell'interfaccia pubblica dell'host</td>
+                <td data-editable="true" spellcheck="false"><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><msub><mi>P</mi><mrow><mi>e</mi><mi>x</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">IP_{ext}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord mathnormal" style="margin-right: 0.0785em;">I</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2806em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">x</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span> <em>(Internet)</em></td>
+                <td data-editable="true" spellcheck="false"><code data-editable="true" spellcheck="false">nftables</code></td>
               </tr>
             </tbody>
           </table>
         </section>
 
         <!-- SLIDE 14: CAPITOLO 4 - STRUTTURA YAML DELLA CHALLENGE -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Struttura YAML della Challenge</h2>
+          <h2 data-editable="true" spellcheck="false">Struttura YAML della Challenge</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>Topologia e Metadati</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>Topologia e Metadati</h3>
               <ul>
-                <li><strong>Metadati:</strong> <code>challenge_id</code>, <code>team_k</code>.</li>
-                <li><strong><code>containers</code>:</strong> lista delle macchine. Si specificano <code>image</code>, <code>ip_suffix</code> (<code>10.k.1.X</code>) e limiti CPU/RAM.</li>
-                <li><strong><code>verifier</code> (opzionale):</strong> container dedicato ai test nella rete OVN (<code>10.k.1.250</code>).</li>
+                <li data-editable="true" spellcheck="false"><strong>Metadati:</strong> <code data-editable="true" spellcheck="false">challenge_id</code>, <code data-editable="true" spellcheck="false">team_k</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">containers</code>:</strong> lista delle macchine. Si specificano <code data-editable="true" spellcheck="false">image</code>, <code data-editable="true" spellcheck="false">ip_suffix</code> (<code data-editable="true" spellcheck="false">10.k.1.X</code>) e limiti CPU/RAM.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">verifier</code> (opzionale):</strong> container dedicato ai test nella rete OVN (<code data-editable="true" spellcheck="false">10.k.1.250</code>).</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>Comandi di Verifica</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>Comandi di Verifica</h3>
               <ul>
-                <li><strong><code>readiness_commands</code>:</strong> attende l'avvio dei servizi prima dei test (con retry e timeout).</li>
-                <li><strong><code>verify_commands</code>:</strong>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">readiness_commands</code>:</strong> attende l'avvio dei servizi prima dei test (con retry e timeout).</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">verify_commands</code>:</strong>
                   <ul>
-                    <li><code>target: "container"</code> — eseguito dentro il clone con <code>incus exec</code>.</li>
-                    <li><code>target: "verifier"</code> — eseguito dentro il container di verifica con <code>incus exec</code>.</li>
+                    <li data-editable="true" spellcheck="false"><code data-editable="true" spellcheck="false">target: "container"</code> — eseguito dentro il clone con <code data-editable="true" spellcheck="false">incus exec</code>.</li>
+                    <li data-editable="true" spellcheck="false"><code data-editable="true" spellcheck="false">target: "verifier"</code> — eseguito dentro il container di verifica con <code data-editable="true" spellcheck="false">incus exec</code>.</li>
                   </ul>
                 </li>
               </ul>
@@ -855,188 +854,188 @@
         </section>
 
         <!-- SLIDE 15: CAPITOLO 4 - IMMAGINI CON DISTROBUILDER -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Configurazione Immagini con Distrobuilder</h2>
+          <h2 data-editable="true" spellcheck="false">Configurazione Immagini con Distrobuilder</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Definizione Dichiarativa</h3>
-              <p><strong>Distrobuilder:</strong> tool ufficiale per generare immagini di container Incus in modo riproducibile.</p>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Definizione Dichiarativa</h3>
+              <p data-editable="true" spellcheck="false"><strong>Distrobuilder:</strong> tool ufficiale per generare immagini di container Incus in modo riproducibile.</p>
               <ul>
-                <li><strong><code>image</code> e <code>source</code>:</strong> distribuzione Linux di base (es. Ubuntu 22.04, Alpine 3.21).</li>
-                <li><strong><code>packages</code>:</strong> pacchetti software da includere nel rootfs (Nginx, PostgreSQL, Python).</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">image</code> e <code data-editable="true" spellcheck="false">source</code>:</strong> distribuzione Linux di base (es. Ubuntu 22.04, Alpine 3.21).</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">packages</code>:</strong> pacchetti software da includere nel rootfs (Nginx, PostgreSQL, Python).</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" x2="12" y1="2" y2="5"/></svg>Predisposizione Rete e Import</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle><line x1="12" x2="12" y1="2" y2="5"></line></svg>Predisposizione Rete e Import</h3>
               <ul>
-                <li><strong><code>actions</code>:</strong> uso di hook per predisporre i servizi di rete (<code>systemd-networkd</code> o <code>/etc/network</code>) ed installare le configurazioni in <code>/etc</code>.</li>
-                <li><strong>Pool ZFS:</strong> l'archivio unificato prodotto viene importato nella storage pool ZFS.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">actions</code>:</strong> uso di hook per predisporre i servizi di rete (<code data-editable="true" spellcheck="false">systemd-networkd</code> o <code data-editable="true" spellcheck="false">/etc/network</code>) ed installare le configurazioni in <code data-editable="true" spellcheck="false">/etc</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Pool ZFS:</strong> l'archivio unificato prodotto viene importato nella storage pool ZFS.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 16: CAPITOLO 5 - ARCHITETTURA DEL CODICE -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Architettura del Codice</h2>
+          <h2 data-editable="true" spellcheck="false">Architettura del Codice</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Strati Applicativi</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>Strati Applicativi</h3>
               <ul>
-                <li><strong><code>/api</code>:</strong> endpoint REST scritti in FastAPI, autenticati via token.</li>
-                <li><strong><code>/services</code>:</strong> logica di business dell'orchestrazione.</li>
-                <li><strong>Tecnologie e librerie:</strong> <code>FastAPI</code>, <code>Pydantic</code>, <code>httpx</code>, <code>uvicorn</code> e <code>SQLite</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">/api</code>:</strong> endpoint REST scritti in FastAPI, autenticati via token.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">/services</code>:</strong> logica di business dell'orchestrazione.</li>
+                <li data-editable="true" spellcheck="false"><strong>Tecnologie e librerie:</strong> <code data-editable="true" spellcheck="false">FastAPI</code>, <code data-editable="true" spellcheck="false">Pydantic</code>, <code data-editable="true" spellcheck="false">httpx</code>, <code data-editable="true" spellcheck="false">uvicorn</code> e <code data-editable="true" spellcheck="false">SQLite</code>.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg>Driver e Moduli Specializzati</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"></rect><rect width="6" height="6" x="9" y="9" rx="1"></rect><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"></path></svg>Driver e Moduli Specializzati</h3>
               <ul>
-                <li><strong><code>/engine</code>:</strong> interfaccia astratta verso il runtime Incus.</li>
-                <li><strong><code>/network</code>:</strong> gestione di bridge Linux, WireGuard e regole <code>nftables</code>.</li>
-                <li><strong><code>/verifier</code>:</strong> coordinamento della rete OVN e dei comandi dell'oracolo.</li>
-                <li><strong><code>/images</code> e <code>/lifecycle</code>:</strong> compilazione rootfs e pulizia risorse orfane.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">/engine</code>:</strong> interfaccia astratta verso il runtime Incus.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">/network</code>:</strong> gestione di bridge Linux, WireGuard e regole <code data-editable="true" spellcheck="false">nftables</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">/verifier</code>:</strong> coordinamento della rete OVN e dei comandi dell'oracolo.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">/images</code> e <code data-editable="true" spellcheck="false">/lifecycle</code>:</strong> compilazione rootfs e pulizia risorse orfane.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 17: CAPITOLO 5 - CONTAINER ENGINE -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Astrazione del Runtime: <code>ContainerEngine</code></h2>
+          <h2 data-editable="true" spellcheck="false">Astrazione del Runtime: <code data-editable="true" spellcheck="false">ContainerEngine</code></h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg>Interfaccia Astratta</h3>
-              <p>Disaccoppia il servizio dall'implementazione specifica del demone container.</p>
-              <p><strong>Primitive esposte:</strong></p>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"></path><circle cx="12" cy="12" r="4"></circle></svg>Interfaccia Astratta</h3>
+              <p data-editable="true" spellcheck="false">Disaccoppia il servizio dall'implementazione specifica del demone container.</p>
+              <p data-editable="true" spellcheck="false"><strong>Primitive esposte:</strong></p>
               <ul>
-                <li>Creazione, avvio, arresto ed eliminazione istanze.</li>
-                <li>Duplicazione rapida e configurazione schede di rete.</li>
-                <li>Esecuzione non bloccante di comandi nei container.</li>
+                <li data-editable="true" spellcheck="false">Creazione, avvio, arresto ed eliminazione istanze.</li>
+                <li data-editable="true" spellcheck="false">Duplicazione rapida e configurazione schede di rete.</li>
+                <li data-editable="true" spellcheck="false">Esecuzione non bloccante di comandi nei container.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Implementazione <code>IncusEngine</code></h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Implementazione <code data-editable="true" spellcheck="false">IncusEngine</code></h3>
               <ul>
-                <li><strong>System Container:</strong> offre un gestore di servizi (ed un suo PID 1) nel container e l'infrastruttura per un sistema realistico.</li>
-                <li>Comunicazione tramite <strong>Unix Domain Socket</strong> (<code>/var/lib/incus/unix.socket</code>): dati trasferiti direttamente in memoria kernel.</li>
+                <li data-editable="true" spellcheck="false"><strong>System Container:</strong> offre un gestore di servizi (ed un suo PID 1) nel container e l'infrastruttura per un sistema realistico.</li>
+                <li data-editable="true" spellcheck="false">Comunicazione tramite <strong>Unix Domain Socket</strong> (<code data-editable="true" spellcheck="false">/var/lib/incus/unix.socket</code>): dati trasferiti direttamente in memoria kernel.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 18: CAPITOLO 5 - ASYNC CONTEXT MANAGER (OVNVERIFIER) -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Async Context Manager in <code>OVNVerifier</code></h2>
-          <p>Implementa il pattern <strong>RAII</strong> per garantire che la sandbox esista solo per la durata della verifica:</p>
+          <h2 data-editable="true" spellcheck="false">Async Context Manager in <code data-editable="true" spellcheck="false">OVNVerifier</code></h2>
+          <p data-editable="true" spellcheck="false">Implementa il pattern <strong>RAII</strong> per garantire che la sandbox esista solo per la durata della verifica:</p>
           <div class="cols" style="margin-top: 0.5em;">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>1. <code>__aenter__</code> e 2. <code>run_checks</code></h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>1. <code data-editable="true" spellcheck="false">__aenter__</code> e 2. <code data-editable="true" spellcheck="false">run_checks</code></h3>
               <ul>
-                <li>Crea la rete OVN temporanea.</li>
-                <li>Clona i container tramite snapshot ZFS e collega ogni <code>eth0</code> a OVN.</li>
-                <li>Avvia il <em>Verifier Runner</em> ed esegue i test.</li>
+                <li data-editable="true" spellcheck="false">Crea la rete OVN temporanea.</li>
+                <li data-editable="true" spellcheck="false">Clona i container tramite snapshot ZFS e collega ogni <code data-editable="true" spellcheck="false">eth0</code> a OVN.</li>
+                <li data-editable="true" spellcheck="false">Avvia il <em>Verifier Runner</em> ed esegue i test.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>3. Teardown Sicuro (<code>__aexit__</code>)</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>3. Teardown Sicuro (<code data-editable="true" spellcheck="false">__aexit__</code>)</h3>
               <ol>
-                <li>Arresta ed elimina il container <code>verify-runner</code>.</li>
-                <li>Arresta ed elimina tutti i container clonati.</li>
-                <li>Elimina la rete virtuale OVN.</li>
+                <li data-editable="true" spellcheck="false">Arresta ed elimina il container <code data-editable="true" spellcheck="false">verify-runner</code>.</li>
+                <li data-editable="true" spellcheck="false">Arresta ed elimina tutti i container clonati.</li>
+                <li data-editable="true" spellcheck="false">Elimina la rete virtuale OVN.</li>
               </ol>
-              <p style="font-size: 0.85em; margin-top: 0.4em;">Garantito in caso di errore o eccezione.</p>
+              <p style="font-size: 0.85em; margin-top: 0.4em;" data-editable="true" spellcheck="false">Garantito in caso di errore o eccezione.</p>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 19: CAPITOLO 5 - GESTIONE DELLA CONCORRENZA -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Gestione della Concorrenza: <code>TwoTierLock</code></h2>
+          <h2 data-editable="true" spellcheck="false">Gestione della Concorrenza: <code data-editable="true" spellcheck="false">TwoTierLock</code></h2>
           <div class="cols" style="margin-top: 0.5em;">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>I Due Livelli di Lock</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>I Due Livelli di Lock</h3>
               <ul>
-                <li><strong>Tier 1 (Intra-processo):</strong> usa <code>asyncio.Lock</code> tra task concorrenti sullo stesso worker.</li>
-                <li><strong>Tier 2 (Inter-processo):</strong> usa <code>fcntl.flock</code> sul filesystem tra più processi worker (<code>uvicorn</code>).</li>
-                <li>Garantisce coerenza anche in architetture multi-worker (es. <code>--workers 4</code>).</li>
+                <li data-editable="true" spellcheck="false"><strong>Tier 1 (Intra-processo):</strong> usa <code data-editable="true" spellcheck="false">asyncio.Lock</code> tra task concorrenti sullo stesso worker.</li>
+                <li data-editable="true" spellcheck="false"><strong>Tier 2 (Inter-processo):</strong> usa <code data-editable="true" spellcheck="false">fcntl.flock</code> sul filesystem tra più processi worker (<code data-editable="true" spellcheck="false">uvicorn</code>).</li>
+                <li data-editable="true" spellcheck="false">Garantisce coerenza anche in architetture multi-worker (es. <code data-editable="true" spellcheck="false">--workers 4</code>).</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Ambito di Applicazione</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>Ambito di Applicazione</h3>
               <ul>
-                <li><strong>Per Team:</strong> mutua esclusione su tutte le operazioni del team $k$.</li>
-                <li><strong>Per Istanza e Globale:</strong> protegge i singoli container e le modifiche a <code>nftables</code>.</li>
-                <li><strong>Rientrante:</strong> uno stesso task può acquisire più volte il lock tramite contatore.</li>
+                <li data-editable="true" spellcheck="false"><strong>Per Team:</strong> mutua esclusione su tutte le operazioni del team <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Per Istanza e Globale:</strong> protegge i singoli container e le modifiche a <code data-editable="true" spellcheck="false">nftables</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Rientrante:</strong> uno stesso task può acquisire più volte il lock tramite contatore.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 20: CAPITOLO 5 - PIPELINE ASINCRONA, LIFECYCLE E IMMAGINI -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Pipeline Asincrona, Lifecycle e Immagini</h2>
+          <h2 data-editable="true" spellcheck="false">Pipeline Asincrona, Lifecycle e Immagini</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Pipeline Asincrona Non Bloccante</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Pipeline Asincrona Non Bloccante</h3>
               <ul>
-                <li>Client HTTP asincrono (<code>httpx.AsyncClient</code>) sul socket Unix di Incus.</li>
-                <li>Attesa non bloccante delle operazioni su <code>/1.0/operations/&lt;uuid&gt;/wait</code>.</li>
-                <li>Comandi host eseguiti tramite <code>asyncio.create_subprocess_exec</code>.</li>
+                <li data-editable="true" spellcheck="false">Client HTTP asincrono (<code data-editable="true" spellcheck="false">httpx.AsyncClient</code>) sul socket Unix di Incus.</li>
+                <li data-editable="true" spellcheck="false">Attesa non bloccante delle operazioni su <code data-editable="true" spellcheck="false">/1.0/operations/&lt;uuid&gt;/wait</code>.</li>
+                <li data-editable="true" spellcheck="false">Comandi host eseguiti tramite <code data-editable="true" spellcheck="false">asyncio.create_subprocess_exec</code>.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><code>LifecycleManager</code> e Immagini</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><code data-editable="true" spellcheck="false">LifecycleManager</code> e Immagini</h3>
               <ul>
-                <li><strong><code>LifecycleManager</code>:</strong> demone che rimuove container e reti di verifica rimasti attivi oltre il <em>grace period.</em></li>
-                <li><strong>Caching SHA-256:</strong> calcola l'hash dello YAML dell'immagine per evitare ricompilazioni inutili.</li>
-                <li>Log delle build accessibili in streaming via API.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">LifecycleManager</code>:</strong> demone che rimuove container e reti di verifica rimasti attivi oltre il <em>grace period.</em></li>
+                <li data-editable="true" spellcheck="false"><strong>Caching SHA-256:</strong> calcola l'hash dello YAML dell'immagine per evitare ricompilazioni inutili.</li>
+                <li data-editable="true" spellcheck="false">Log delle build accessibili in streaming via API.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 21: CAPITOLO 5 - PLUGIN CTFD -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Struttura del Plugin CTFd</h2>
+          <h2 data-editable="true" spellcheck="false">Struttura del Plugin CTFd</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Componenti Estese</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Componenti Estese</h3>
               <ul>
-                <li><strong><code>PatchChallenge</code>:</strong> memorizza nel database di CTFd la configurazione YAML delle challenge.</li>
-                <li><strong><code>PatchFlag</code>:</strong> ridefinisce <code>compare()</code> interrogando l'Oracolo (BlueAgent).</li>
-                <li>Uso di SQLAlchemy di CTFd per definire il modello dei dati.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">PatchChallenge</code>:</strong> memorizza nel database di CTFd la configurazione YAML delle challenge.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">PatchFlag</code>:</strong> ridefinisce <code data-editable="true" spellcheck="false">compare()</code> interrogando l'Oracolo (BlueAgent).</li>
+                <li data-editable="true" spellcheck="false">Uso di SQLAlchemy di CTFd per definire il modello dei dati.</li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>Flusso Operativo</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>Flusso Operativo</h3>
               <ul>
-                <li><strong>Accesso VPN:</strong> richiede a BlueAgent la creazione del peer e consegna al giocatore il file WireGuard <code>.conf</code>.</li>
-                <li><strong>Verifica:</strong> inoltra la richiesta all'Oracolo e aggiorna il punteggio se la patch viene convalidata.</li>
-                <li>Visualizzazione dello stato dei container nella dashboard giocatore.</li>
+                <li data-editable="true" spellcheck="false"><strong>Accesso VPN:</strong> richiede a BlueAgent la creazione del peer e consegna al giocatore il file WireGuard <code data-editable="true" spellcheck="false">.conf</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Verifica:</strong> inoltra la richiesta all'Oracolo e aggiorna il punteggio se la patch viene convalidata.</li>
+                <li data-editable="true" spellcheck="false">Visualizzazione dello stato dei container nella dashboard giocatore.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <!-- SLIDE 22: CAPITOLO 5 - VALIDAZIONE 1/4: CONFRONTO FASI -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Validazione: Confronto tra Fasi (Alpine vs Ubuntu)</h2>
+          <h2 data-editable="true" spellcheck="false">Validazione: Confronto tra Fasi (Alpine vs Ubuntu)</h2>
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong>Piattaforma:</strong> 8 Core Ryzen 7 7700X, 16 GB RAM, SSD ZFS.</li>
-                <li><strong>Immagini:</strong> <code>alpine</code> ($3.2\text{ MB}$) e <code>ubuntu-heavy</code> ($\sim 1.5\text{ GB}$).</li>
-                <li><strong>Risultato ($T(B_3) &lt; T(B_2)$):</strong> la verifica ($B_3$) è sempre più veloce del deploy iniziale ($B_2$).</li>
-                <li>Nei casi (5,10) e (10,5) si risparmiano <span class="badge-num">~20s</span> su Alpine e <span class="badge-num">&gt;25s</span> su Ubuntu Heavy.</li>
-                <li><strong>Vantaggio della Clonazione:</strong> nella verifica ($B_3$) il container è già esistente; BlueAgent esegue uno snapshot ZFS e un clone CoW senza dover istanziare la macchina da zero.</li>
+                <li data-editable="true" spellcheck="false"><strong>Piattaforma:</strong> 8 Core Ryzen 7 7700X, 16 GB RAM, SSD ZFS.</li>
+                <li data-editable="true" spellcheck="false"><strong>Immagini:</strong> <code data-editable="true" spellcheck="false">alpine</code> (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3.2</mn><mtext>&nbsp;MB</mtext></mrow><annotation encoding="application/x-tex">3.2\text{ MB}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6833em;"></span><span class="mord">3.2</span><span class="mord text"><span class="mord">&nbsp;MB</span></span></span></span></span></span>) e <code data-editable="true" spellcheck="false">ubuntu-heavy</code> (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mn>1.5</mn><mtext>&nbsp;GB</mtext></mrow><annotation encoding="application/x-tex">\sim 1.5\text{ GB}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.3669em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 0.6833em;"></span><span class="mord">1.5</span><span class="mord text"><span class="mord">&nbsp;GB</span></span></span></span></span></span>).</li>
+                <li data-editable="true" spellcheck="false"><strong><br><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><msub><mi>B</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>&lt;</mo><mi>T</mi><mo stretchy="false">(</mo><msub><mi>B</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(B_3) &lt; T(B_2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.1389em;">T</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.0502em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.1389em;">T</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.0502em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span>:</strong> la verifica (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">B_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.0502em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span>) è sempre più veloce del deploy iniziale (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">B_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.0502em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span>).</li>
+                <li data-editable="true" spellcheck="false">Nei casi (5,10) e (10,5) si risparmiano <span class="badge-num" data-editable="true" spellcheck="false">~20s</span> su Alpine e <span class="badge-num" data-editable="true" spellcheck="false">&gt;25s</span> su Ubuntu Heavy.</li>
+                <li data-editable="true" spellcheck="false"><strong>Vantaggio della Clonazione:</strong> nella verifica (<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">B_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.8333em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.0502em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span>) il container è già esistente; BlueAgent esegue uno snapshot ZFS ed un clone CoW.</li>
               </ul>
             </div>
             <div>
@@ -1046,17 +1045,17 @@
         </section>
 
         <!-- SLIDE 23: CAPITOLO 5 - VALIDAZIONE 2/4: CLONAZIONE COW VS DEPLOY -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Validazione: Clonazione CoW vs Deploy</h2>
+          <h2 data-editable="true" spellcheck="false">Validazione: Clonazione CoW vs Deploy</h2>
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong><code>Deploy Create</code>:</strong> tempo di creazione a freddo; cresce sensibilmente con il numero di container e la dimensione dell'immagine.</li>
-                <li><strong><code>Verify CoW Clone</code>:</strong> tempo di clonazione istantaneo; resta nettamente inferiore (Speedup fino a <span class="badge-num">3.6x</span> nello scenario $10 \times 5$).</li>
-                <li><strong>Parallelismo CPU:</strong> clonare i container in $(10,5)$ è più rapido di $(5,10)$ sfruttando 10 task paralleli:
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">Deploy Create</code>:</strong> tempo di creazione a freddo; cresce sensibilmente con il numero di container e la dimensione dell'immagine.</li>
+                <li data-editable="true" spellcheck="false"><strong><code data-editable="true" spellcheck="false">Verify CoW Clone</code>:</strong> tempo di clonazione istantaneo; resta nettamente inferiore (Speedup fino a <span class="badge-num" data-editable="true" spellcheck="false">3.6x</span> nello scenario <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mo>×</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">10 \times 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.7278em; vertical-align: -0.0833em;"></span><span class="mord">10</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 0.6444em;"></span><span class="mord">5</span></span></span></span></span>).</li>
+                <li data-editable="true" spellcheck="false"><strong>Parallelismo CPU:</strong> clonare i container in <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>10</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(10,5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord">10</span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></span> è più rapido di <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo separator="true">,</mo><mn>10</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(5,10)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord">10</span><span class="mclose">)</span></span></span></span></span> sfruttando 10 task paralleli:
                   <ul>
-                    <li>In $(5,10)$, 5 worker devono smaltire una coda più lunga di operazioni concorrenti.</li>
+                    <li data-editable="true" spellcheck="false">In <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo separator="true">,</mo><mn>10</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(5,10)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord">10</span><span class="mclose">)</span></span></span></span></span>, 5 worker devono smaltire una coda più lunga di operazioni concorrenti.</li>
                   </ul>
                 </li>
               </ul>
@@ -1068,16 +1067,16 @@
         </section>
 
         <!-- SLIDE 24: CAPITOLO 5 - VALIDAZIONE 3/4: SOTTO-FASI -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Validazione: Ripartizione nelle Sotto-Fasi</h2>
+          <h2 data-editable="true" spellcheck="false">Validazione: Ripartizione nelle Sotto-Fasi</h2>
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong>Deploy a Freddo (Grafico A):</strong> dominato da <em>Instance Create</em> (unpack dell'immagine rootfs da disco, fino all'80% del tempo totale).</li>
-                <li><strong>Verifica Sandbox (Grafico B):</strong> la clonazione CoW ZFS sostituisce l'unpack dell'immagine, abbattendo la creazione del filesystem.</li>
-                <li><strong>Fasi di Verifica:</strong> il tempo residuo è ripartito tra boot dei servizi (<em>systemd</em>) e applicazione dei flussi di rete OVN.</li>
-                <li><strong>Sviluppi Futuri:</strong> istanziare preventivamente ogni challenge (pool CoW pre-allocati) per velocizzare anche il deploy iniziale.</li>
+                <li data-editable="true" spellcheck="false"><strong>Deploy a Freddo (Grafico A):</strong> dominato da <em>Instance Create</em> (unpack dell'immagine rootfs da disco, fino all'80% del tempo totale).</li>
+                <li data-editable="true" spellcheck="false"><strong>Verifica Sandbox (Grafico B):</strong> la clonazione CoW ZFS sostituisce Instance Create, abbattendo la creazione del filesystem.</li>
+                <li data-editable="true" spellcheck="false"><strong>Fasi di Verifica:</strong> il tempo residuo è ripartito tra boot dei servizi (<em>systemd</em>) e applicazione dei flussi di rete OVN.</li>
+                <li data-editable="true" spellcheck="false"><strong>Sviluppi Futuri:</strong> istanziare preventivamente ogni challenge (pre-allocate) per velocizzare anche il deploy iniziale.</li>
               </ul>
             </div>
             <div>
@@ -1087,21 +1086,21 @@
         </section>
 
         <!-- SLIDE 25: CAPITOLO 5 - VALIDAZIONE 4/4: MEMORIA E CPU -->
-        <section>
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Validazione: Uso di Memoria RAM e CPU</h2>
+          <h2 data-editable="true" spellcheck="false">Validazione: Uso di Memoria RAM e CPU</h2>
           <div class="cols-text-img">
             <div>
               <ul>
-                <li><strong>100 container Ubuntu Heavy</strong> richiedono solo <span class="badge-num">~5.2 GB</span> di RAM netta dell'host.</li>
-                <li>Consumo medio RAM container:
+                <li data-editable="true" spellcheck="false"><strong>100 container Ubuntu Heavy</strong> richiedono solo <span class="badge-num" data-editable="true" spellcheck="false">~5.2 GB</span> di RAM netta dell'host.</li>
+                <li data-editable="true" spellcheck="false">Consumo medio RAM container:
                   <ul>
-                    <li><strong>Ubuntu Heavy:</strong> $\sim 52.5\text{ MB}$ per container.</li>
-                    <li><strong>Alpine:</strong> $\sim 15.3\text{ MB}$ per container.</li>
+                    <li data-editable="true" spellcheck="false"><strong>Ubuntu Heavy:</strong> <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mn>52.5</mn><mtext>&nbsp;MB</mtext></mrow><annotation encoding="application/x-tex">\sim 52.5\text{ MB}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.3669em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 0.6833em;"></span><span class="mord">52.5</span><span class="mord text"><span class="mord">&nbsp;MB</span></span></span></span></span></span> per container.</li>
+                    <li data-editable="true" spellcheck="false"><strong>Alpine:</strong> <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mn>15.3</mn><mtext>&nbsp;MB</mtext></mrow><annotation encoding="application/x-tex">\sim 15.3\text{ MB}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.3669em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height: 0.6833em;"></span><span class="mord">15.3</span><span class="mord text"><span class="mord">&nbsp;MB</span></span></span></span></span></span> per container.</li>
                   </ul>
                 </li>
-                <li><strong>Densità Elevata:</strong> l'intera CTF da 100 container risiede in 16 GB di RAM.</li>
-                <li><strong>CPU &amp; I/O:</strong> la CPU non satura mai l'host; il collo di bottiglia principale è limitato alle transazioni di I/O su storage.</li>
+                <li data-editable="true" spellcheck="false"><strong>Densità Elevata:</strong>&nbsp;e' possibile tenere in memoria un gran numero di container con macchine da 16GB o 32GB di RAM.</li>
+                <li data-editable="true" spellcheck="false"><strong>CPU &amp; I/O:</strong> la CPU non satura mai l'host; il collo di bottiglia principale è limitato alle transazioni di I/O su storage.</li>
               </ul>
             </div>
             <div class="img-stack">
@@ -1111,151 +1110,151 @@
           </div>
         </section>
 
-        <!-- SLIDE 26: CAPITOLO 5 - DIFESA, COMPROMESSI E SVILUPPI FUTURI -->
-        <section>
+        <!-- SLIDE 26: CAPITOLO 6 - ARCHITETTURE DI RETE ALTERNATIVE (6.1 e 6.2) -->
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
           <div class="accent-bar"></div>
-          <h2>Difesa Architetturale, Compromessi e Sviluppi Futuri</h2>
+          <h2 data-editable="true" spellcheck="false">Architetture di Rete Alternative: 6.1 e 6.2</h2>
           <div class="cols">
             <div class="card">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Difesa e Compromessi</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"></rect><rect width="6" height="6" x="2" y="16" rx="1"></rect><rect width="6" height="6" x="16" y="16" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>6.1 Bridge L2 Senza Gateway</h3>
               <ul>
-                <li><strong>Vantaggi:</strong> Debian 13 stabile, ZFS con CoW, container Incus che offrono <code>init</code> e invisibilità totale grazie ad OVN.</li>
-                <li><strong>Compromessi:</strong>
+                <li data-editable="true" spellcheck="false">Collega i container clonati a un semplice bridge L2 privo di indirizzo gateway.</li>
+                <li data-editable="true" spellcheck="false"><strong>Pro:</strong> implementazione minima e zero conflitti IP.</li>
+                <li data-editable="true" spellcheck="false"><strong>Perché scartata:</strong> nessun accesso a Internet durante la verifica (comandi come <code data-editable="true" spellcheck="false">apt</code> falliscono).</li>
+              </ul>
+            </div>
+            <div class="card-accent">
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>6.2 Interfaccia <code data-editable="true" spellcheck="false">wan1</code> Aggiuntiva</h3>
+              <ul>
+                <li data-editable="true" spellcheck="false">Aggiunge a ogni clone una seconda interfaccia <code data-editable="true" spellcheck="false">wan1</code> collegata a <code data-editable="true" spellcheck="false">incusbr0</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Pro:</strong> fornisce accesso a Internet senza gateway sul bridge.</li>
+                <li data-editable="true" spellcheck="false"><strong>Perché scartata:</strong> altera le tabelle di routing dei container e raddoppia le coppie <code data-editable="true" spellcheck="false">veth</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 27: CAPITOLO 6 - ARCHITETTURE DI RETE ALTERNATIVE (6.3 e 6.4) -->
+        <section class="past" style="display: none;" hidden="" aria-hidden="true">
+          <div class="accent-bar"></div>
+          <h2 data-editable="true" spellcheck="false">Architetture di Rete Alternative: 6.3 e 6.4</h2>
+          <div class="cols">
+            <div class="card">
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>6.3 Network Namespace Separato</h3>
+              <ul>
+                <li data-editable="true" spellcheck="false">Crea il bridge di verifica (con gateway <code data-editable="true" spellcheck="false">10.k.1.1/24</code>) dentro un nuovo Network Namespace collegato via <code data-editable="true" spellcheck="false">veth</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Perché scartata:</strong> Incus opera nel namespace root e non gestisce namespace esterni, richiedendo una gestione manuale complessa.</li>
+              </ul>
+            </div>
+            <div class="card-accent">
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="8" rx="2"></rect><circle cx="6" cy="12" r="1"></circle><circle cx="10" cy="12" r="1"></circle><line x1="14" x2="18" y1="12" y2="12"></line></svg>6.4 Router Intermedio</h3>
+              <ul>
+                <li data-editable="true" spellcheck="false">Usa un container Linux dedicato come gateway (<code data-editable="true" spellcheck="false">10.k.1.1/24</code>) che applica SNAT verso <code data-editable="true" spellcheck="false">incusbr0</code>.</li>
+                <li data-editable="true" spellcheck="false"><strong>Perché scartata:</strong> richiede di orchestrare un container aggiuntivo per ogni verifica, con maggiore complessità rispetto a OVN.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 28: CAPITOLO 6 - TABELLA RIASSUNTIVA -->
+        <section class="past" style="display: block;" hidden="" aria-hidden="true">
+          <div class="accent-bar"></div>
+          <h2 data-editable="true" spellcheck="false">Tabella Riassuntiva delle Architetture di Verifica</h2>
+          <table>
+            <thead>
+              <tr>
+                <th data-editable="true" spellcheck="false">Architettura</th>
+                <th data-editable="true" spellcheck="false">Fedeltà di Rete</th>
+                <th data-editable="true" spellcheck="false">Accesso WAN</th>
+                <th data-editable="true" spellcheck="false">Complessità Software</th>
+                <th data-editable="true" spellcheck="false">Overhead Risorse</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-editable="true" spellcheck="false"><strong>6.1 Bridge L2 (senza GW)</strong></td>
+                <td data-editable="true" spellcheck="false">Bassa (nessun default gateway)</td>
+                <td data-editable="true" spellcheck="false">Assente</td>
+                <td data-editable="true" spellcheck="false">Minima (bridge kernel)</td>
+                <td data-editable="true" spellcheck="false">Quasi nullo</td>
+              </tr>
+              <tr>
+                <td data-editable="true" spellcheck="false"><strong>6.2 Interfaccia <code data-editable="true" spellcheck="false">wan1</code></strong></td>
+                <td data-editable="true" spellcheck="false">Scadente (interfaccia anomala)</td>
+                <td data-editable="true" spellcheck="false">Presente (tramite <code data-editable="true" spellcheck="false">wan1</code>)</td>
+                <td data-editable="true" spellcheck="false">Media (routing custom container)</td>
+                <td data-editable="true" spellcheck="false">Basso</td>
+              </tr>
+              <tr>
+                <td data-editable="true" spellcheck="false"><strong>6.3 NetNS separato</strong></td>
+                <td data-editable="true" spellcheck="false">Buona (topologia speculare)</td>
+                <td data-editable="true" spellcheck="false">Presente (coppia <code data-editable="true" spellcheck="false">veth</code>)</td>
+                <td data-editable="true" spellcheck="false">Elevata (gestione manuale <code data-editable="true" spellcheck="false">veth</code>)</td>
+                <td data-editable="true" spellcheck="false">Basso</td>
+              </tr>
+              <tr>
+                <td data-editable="true" spellcheck="false"><strong>6.4 Router intermedio</strong></td>
+                <td data-editable="true" spellcheck="false">Buona (topologia identica)</td>
+                <td data-editable="true" spellcheck="false">Presente (SNAT su router)</td>
+                <td data-editable="true" spellcheck="false">Medio-alta (container dedicato)</td>
+                <td data-editable="true" spellcheck="false">Medio (+1 container)</td>
+              </tr>
+              <tr class="highlight-row">
+                <td data-editable="true" spellcheck="false"><strong>BlueAgent (OVN SDN)</strong></td>
+                <td data-editable="true" spellcheck="false">Buona (topologia identica)</td>
+                <td data-editable="true" spellcheck="false">Presente (SNAT 2 stadi)</td>
+                <td data-editable="true" spellcheck="false">Minima (delegata a Incus)</td>
+                <td data-editable="true" spellcheck="false">Basso (condiviso)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- SLIDE 29: CAPITOLO 7 - DIFESA, COMPROMESSI E SVILUPPI FUTURI -->
+        <section class="past" style="display: block;" hidden="" aria-hidden="true">
+          <div class="accent-bar"></div>
+          <h2 data-editable="true" spellcheck="false">Difesa Architetturale, Compromessi e Sviluppi Futuri</h2>
+          <div class="cols">
+            <div class="card">
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>Difesa e Compromessi</h3>
+              <ul>
+                <li data-editable="true" spellcheck="false"><strong>Vantaggi:</strong> Debian 13 stabile, ZFS con CoW, container Incus che offrono <code data-editable="true" spellcheck="false">init</code> e invisibilità totale grazie ad OVN.</li>
+                <li data-editable="true" spellcheck="false"><strong>Compromessi:</strong>
                   <ul>
-                    <li><em>UDP MTU Blackhole:</em> scarto pacchetti UDP a 1500B con DF su tunnel WireGuard.</li>
-                    <li><em>Scalabilità:</em> max 254 team (<code>10.k.x.x</code>) e locking su singolo host.</li>
+                    <li data-editable="true" spellcheck="false"><em>UDP MTU Blackhole:</em> scarto pacchetti UDP a 1500B con DF su tunnel WireGuard.</li>
+                    <li data-editable="true" spellcheck="false"><em>Scalabilità:</em> max 254 team (<code data-editable="true" spellcheck="false">10.k.x.x</code>) e locking su singolo host.</li>
                   </ul>
                 </li>
               </ul>
             </div>
             <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Sviluppi Futuri</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>Sviluppi Futuri</h3>
               <ul>
-                <li><strong>CLI <code>bluecmd</code>:</strong> gestione e debug in locale senza dipendere da CTFd.</li>
-                <li><strong>Monitoraggio SLA:</strong> controlli periodici sui container di produzione per penalizzare chi spegne i servizi.</li>
-                <li><strong>YAML Avanzato:</strong> supporto a topologie multi-tier con router dedicati.</li>
+                <li data-editable="true" spellcheck="false"><strong>CLI <code data-editable="true" spellcheck="false">bluecmd</code>:</strong> gestione e debug in locale senza dipendere da CTFd.</li>
+                <li data-editable="true" spellcheck="false"><strong>Monitoraggio SLA:</strong> controlli periodici sui container di produzione per penalizzare chi spegne i servizi.</li>
+                <li data-editable="true" spellcheck="false"><strong>YAML Avanzato:</strong> supporto a topologie multi-tier con router dedicati.</li>
               </ul>
             </div>
           </div>
-        </section>
-
-        <!-- SLIDE 27: CAPITOLO 6 - ARCHITETTURE DI RETE ALTERNATIVE (6.1 e 6.2) -->
-        <section>
-          <div class="accent-bar"></div>
-          <h2>Architetture di Rete Alternative: 6.1 e 6.2</h2>
-          <div class="cols">
-            <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>6.1 Bridge L2 Senza Gateway</h3>
-              <ul>
-                <li>Collega i container clonati a un semplice bridge L2 privo di indirizzo gateway.</li>
-                <li><strong>Pro:</strong> implementazione minima e zero conflitti IP.</li>
-                <li><strong>Perché scartata:</strong> nessun accesso a Internet durante la verifica (comandi come <code>apt</code> falliscono).</li>
-              </ul>
-            </div>
-            <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>6.2 Interfaccia <code>wan1</code> Aggiuntiva</h3>
-              <ul>
-                <li>Aggiunge a ogni clone una seconda interfaccia <code>wan1</code> collegata a <code>incusbr0</code>.</li>
-                <li><strong>Pro:</strong> fornisce accesso a Internet senza gateway sul bridge.</li>
-                <li><strong>Perché scartata:</strong> altera le tabelle di routing dei container e raddoppia le coppie <code>veth</code>.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- SLIDE 28: CAPITOLO 6 - ARCHITETTURE DI RETE ALTERNATIVE (6.3 e 6.4) -->
-        <section>
-          <div class="accent-bar"></div>
-          <h2>Architetture di Rete Alternative: 6.3 e 6.4</h2>
-          <div class="cols">
-            <div class="card">
-              <h3><svg class="slide-icon slide-icon-primary" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>6.3 Network Namespace Separato</h3>
-              <ul>
-                <li>Crea il bridge di verifica (con gateway <code>10.k.1.1/24</code>) dentro un nuovo Network Namespace collegato via <code>veth</code>.</li>
-                <li><strong>Perché scartata:</strong> Incus opera nel namespace root e non gestisce namespace esterni, richiedendo una gestione manuale complessa.</li>
-              </ul>
-            </div>
-            <div class="card-accent">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="8" rx="2"/><circle cx="6" cy="12" r="1"/><circle cx="10" cy="12" r="1"/><line x1="14" x2="18" y1="12" y2="12"/></svg>6.4 Router Intermedio</h3>
-              <ul>
-                <li>Usa un container Linux dedicato come gateway (<code>10.k.1.1/24</code>) che applica SNAT verso <code>incusbr0</code>.</li>
-                <li><strong>Perché scartata:</strong> richiede di orchestrare un container aggiuntivo per ogni verifica, con maggiore complessità rispetto a OVN.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- SLIDE 29: CAPITOLO 6 - TABELLA RIASSUNTIVA -->
-        <section>
-          <div class="accent-bar"></div>
-          <h2>Tabella Riassuntiva delle Architetture di Verifica</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Architettura</th>
-                <th>Fedeltà di Rete</th>
-                <th>Accesso WAN</th>
-                <th>Complessità Software</th>
-                <th>Overhead Risorse</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>6.1 Bridge L2 (senza GW)</strong></td>
-                <td>Bassa (nessun default gateway)</td>
-                <td>Assente</td>
-                <td>Minima (bridge kernel)</td>
-                <td>Quasi nullo</td>
-              </tr>
-              <tr>
-                <td><strong>6.2 Interfaccia <code>wan1</code></strong></td>
-                <td>Scadente (interfaccia anomala)</td>
-                <td>Presente (tramite <code>wan1</code>)</td>
-                <td>Media (routing custom container)</td>
-                <td>Basso</td>
-              </tr>
-              <tr>
-                <td><strong>6.3 NetNS separato</strong></td>
-                <td>Buona (topologia speculare)</td>
-                <td>Presente (coppia <code>veth</code>)</td>
-                <td>Elevata (gestione manuale <code>veth</code>)</td>
-                <td>Basso</td>
-              </tr>
-              <tr>
-                <td><strong>6.4 Router intermedio</strong></td>
-                <td>Buona (topologia identica)</td>
-                <td>Presente (SNAT su router)</td>
-                <td>Medio-alta (container dedicato)</td>
-                <td>Medio (+1 container)</td>
-              </tr>
-              <tr class="highlight-row">
-                <td><strong>BlueAgent (OVN SDN)</strong></td>
-                <td>Buona (topologia identica)</td>
-                <td>Presente (SNAT 2 stadi)</td>
-                <td>Minima (delegata a Incus)</td>
-                <td>Basso (condiviso)</td>
-              </tr>
-            </tbody>
-          </table>
         </section>
         <!-- SLIDE 30: CONCLUSIONI E DOMANDE -->
-        <section>
+        <section class="present" style="display: block;">
           <div class="accent-bar"></div>
-          <h2>Conclusioni e Spazio alle Domande</h2>
+          <h2 data-editable="true" spellcheck="false">Conclusioni e Spazio alle Domande</h2>
           <div class="cols" style="align-items: center; margin-top: 1.2em;">
             <div class="card" style="text-align: center; align-items: center; justify-content: center; padding: 2em 1.5em;">
               <img src="figures/davide_avatar.svg" alt="Davide Luci Avatar" style="width: 140px; height: 140px; border-radius: 50%; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.22); margin-bottom: 1.2em;">
-              <h3 style="font-size: 1.3em; margin-bottom: 0.2em;">Davide Luci</h3>
-              <p style="margin: 0; font-size: 0.9em; color: var(--blue-primary); font-weight: 600;">Matricola: 0341922</p>
-              <p style="margin-top: 0.5em; font-size: 0.85em; color: #64748b;">Ingegneria Informatica — Tor Vergata</p>
+              <h3 style="font-size: 1.3em; margin-bottom: 0.2em;" data-editable="true" spellcheck="false">Davide Luci</h3>
+              <p style="margin: 0; font-size: 0.9em; color: var(--blue-primary); font-weight: 600;" data-editable="true" spellcheck="false">Matricola: 0341922</p>
+              <p style="margin-top: 0.5em; font-size: 0.85em; color: #64748b;" data-editable="true" spellcheck="false">Informatica Triennale — Tor Vergata</p>
             </div>
             <div class="card-accent" style="justify-content: center;">
-              <h3><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Riepilogo Contributi di Tesi</h3>
+              <h3 data-editable="true" spellcheck="false"><svg class="slide-icon slide-icon-accent" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Riepilogo Contributi di Tesi</h3>
               <ul style="margin-top: 0.5em;">
-                <li>Orchestrazione leggera di system container con <strong>Incus</strong>.</li>
-                <li>Isolamento trasparente della verifica mediante <strong>OVN &amp; OpenFlow</strong>.</li>
-                <li>Clonazione istantanea ad alte prestazioni tramite snapshot <strong>ZFS CoW</strong>.</li>
-                <li>Integrazione oracolo e plugin di verifica automatica per <strong>CTFd</strong>.</li>
+                <li data-editable="true" spellcheck="false">Orchestrazione leggera di system container con <strong>Incus</strong>.</li>
+                <li data-editable="true" spellcheck="false">Isolamento trasparente della verifica mediante <strong>OVN &amp; OpenFlow</strong>.</li>
+                <li data-editable="true" spellcheck="false">Clonazione dei container tramite snapshot <strong>ZFS</strong>.</li>
+                <li data-editable="true" spellcheck="false">Integrazione di oracolo e plugin di verifica automatica in&nbsp;<strong>CTFd</strong>.</li>
               </ul>
             </div>
           </div>
@@ -1263,11 +1262,25 @@
 
 
       </div>
-    </div>
+    <div class="backgrounds"><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div></div><div class="slide-number" style="display: block;"><a href="#/29">
+					<span class="slide-number-a">30</span>
+					<span class="slide-number-delimiter">/</span>
+					<span class="slide-number-b">30</span>
+					</a></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left enabled" aria-label="previous slide"><div class="controls-arrow"></div></button>
+			<button class="navigate-right" aria-label="next slide" disabled="disabled"><div class="controls-arrow"></div></button>
+			<button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button>
+			<button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="progress" style="display: block;"><span style="transform: scaleX(1);"></span></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div class="aria-status" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">Conclusioni e Spazio alle Domande Davide Luci Matricola: 0341922 Informatica Triennale — Tor Vergata Riepilogo Contributi di Tesi Orchestrazione leggera di system container con Incus . Isolamento trasparente della verifica mediante OVN &amp; OpenFlow . Clonazione istantanea ad alte prestazioni tramite snapshot ZFS CoW . Integrazione oracolo e plugin di verifica automatica per CTFd . </div><div class="backgrounds no-transition"><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background present" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div></div><div class="slide-number" style="display: block;"><a href="#/29">
+					<span class="slide-number-a">30</span>
+					<span class="slide-number-delimiter">/</span>
+					<span class="slide-number-b">30</span>
+					</a></div><aside class="controls" style="display: block;" data-controls-layout="bottom-right" data-controls-back-arrows="faded"><button class="navigate-left enabled" aria-label="previous slide"><div class="controls-arrow"></div></button>
+			<button class="navigate-right" aria-label="next slide" disabled="disabled"><div class="controls-arrow"></div></button>
+			<button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button>
+			<button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="progress" style="display: block;"><span style="transform: scaleX(1);"></span></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div></div>
 
     <!-- Floating Editor Toolbar -->
     <div id="editor-toolbar">
-      <button id="btn-toggle-edit" title="Toggle Edit Mode (Alt+E)">
+      <button id="btn-toggle-edit" title="Toggle Edit Mode (Alt+E)" class="">
         <span id="edit-icon">✏️</span>
         <span id="edit-label">Modifica Testo: OFF</span>
       </button>
@@ -1280,7 +1293,7 @@
       <button id="btn-reset" class="btn-secondary" title="Ripristina testo originale">
         ↺ Reset
       </button>
-      <span id="editor-status">Passa il mouse e clicca per modificare</span>
+      <span id="editor-status">Modalità presentazione attiva</span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
@@ -1411,5 +1424,5 @@
         markEditableElements();
       })();
     </script>
-  </body>
-</html>
+  
+</body></html>

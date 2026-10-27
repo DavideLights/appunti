@@ -44,9 +44,7 @@ Let's focus on $\sum_{y \in \mathcal Y} q_{y}^2$:
 * $\leq \frac{1+4 \varepsilon^2}{|\mathcal Y|} - \frac{1}{|\mathcal Y|} = \frac{4 \varepsilon^2}{|\mathcal Y|}$
 * $\to \text{SD}(Y;U) \leq \frac{1}{2}\sqrt{\frac{4 \varepsilon^2}{|\mathcal Y|} |\mathcal Y|} = \varepsilon \;\; \square$
 
-
 ## Computational Security
-
 We need to find a way to deploy a provably secure and at the same time efficient crypto system.
 
 assumptions:
@@ -65,6 +63,9 @@ assumptions:
 **take away**:
 $$
 \text{Adv} \equiv \text{Probabilistic Poly. Time Turing Machine (PPT TM)}
+$$
+$$
+\text{PTT} \equiv \text{Probabilistic Poly. Time}
 $$
 
 **assumption 2**:
