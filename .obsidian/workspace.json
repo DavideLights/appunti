@@ -13,36 +13,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/cockgraphy/lez. 5.md",
+                "file": "tesi/appunti per orale.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 5"
+              "title": "appunti per orale"
             }
           },
           {
-            "id": "35211aed291144ef",
+            "id": "320a37d2ff651366",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "pdf",
               "state": {
-                "file": "Excalidraw/lez. 5 2026-10-27 17.54.26.excalidraw.md"
+                "file": "tesi/main.pdf"
               },
-              "icon": "excalidraw-icon",
-              "title": "lez. 5 2026-10-27 17.54.26.excalidraw"
-            }
-          },
-          {
-            "id": "c97f491739a31244",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/lez. 5 thmconstruction.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "lez. 5 thmconstruction.excalidraw"
+              "icon": "lucide-file-text",
+              "title": "main"
             }
           }
         ]
@@ -206,9 +194,19 @@
               "icon": "lucide-info",
               "title": "Proprietà file"
             }
+          },
+          {
+            "id": "57ce1d57ac4f4a90",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "excalidraw-sidepanel"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -231,52 +229,51 @@
   },
   "active": "2451deda4d0939f7",
   "lastOpenFiles": [
-    "Excalidraw/lez. 5 2026-10-27 17.54.26.excalidraw.md",
-    "1o anno M/cockgraphy/lez. 5.md",
-    "Excalidraw/lez. 5 thmconstruction.excalidraw.md",
-    "Excalidraw/Drawing 2026-10-27 17.25.31.excalidraw.md",
-    "Excalidraw/Drawing 2026-10-27 17.24.44.excalidraw.md",
-    "tesi/presentazione_blueagent.zip",
-    "tesi/presentazione_blueagent/presentazione_blueagent.html",
-    "tesi/presentazione_blueagent/index.html",
+    "tesi/main.pdf",
+    "tesi/appunti per orale.md",
+    "tesi/antigravity/presentazione_blueagent.html.part",
+    "tesi/latex/main.pdf",
+    "tesi/presentazione_blueagent/figures/blueagent-main.svg",
+    "tesi/antigravity/figures/blueagent-main.svg",
+    "tesi/antigravity/blueagent-main.svg",
+    "1o anno M/distributed cocks/lez. 10 exercises.md",
+    "tesi/presentazione_blueagent/figures/blueagent_architecture.svg",
+    "tesi/antigravity/figures/blueagent_architecture.svg",
+    "tesi/presentazione_blueagent/vendor/reveal/plugin/math/math.min.js",
+    "tesi/presentazione_blueagent/vendor/reveal/theme/white.min.css",
+    "tesi/presentazione_blueagent/vendor/reveal/plugin/math",
+    "tesi/presentazione_blueagent/vendor/reveal/theme",
+    "tesi/presentazione_blueagent/vendor/reveal/reveal.min.js",
+    "tesi/presentazione_blueagent/vendor/reveal/reveal.min.css",
+    "tesi/presentazione_blueagent/vendor/reveal/reset.min.css",
+    "tesi/presentazione_blueagent/src/images/verify-network.png",
+    "tesi/presentazione_blueagent/src/images/production-network.png",
     "tesi/presentazione_blueagent/src/images/graph4_lifecycle_timeline.png",
     "tesi/presentazione_blueagent/src/images/graph3_memory_scaling.png",
-    "tesi/presentazione_blueagent/figures/verify-network.png",
-    "tesi/presentazione_blueagent/src/images/verify-network.png",
-    "tesi/presentazione_blueagent/figures/production-network.png",
-    "tesi/presentazione_blueagent/src/images/production-network.png",
-    "tesi/presentazione_blueagent/figures/davide_avatar.svg",
-    "tesi/presentazione_blueagent/figures/slide_phases_vertical.png",
-    "tesi/presentazione_blueagent/figures/slide_graph2_vertical.png",
-    "tesi/presentazione_blueagent/figures/slide_graph1_vertical.png",
-    "tesi/presentazione_blueagent/figures/graph_phases_ubuntu.pdf",
-    "tesi/presentazione_blueagent/figures/graph_phases_comparison.pdf",
-    "tesi/presentazione_blueagent/figures/graph_phases_alpine.pdf",
-    "tesi/presentazione_blueagent/figures/graph5_step_cpu_iowait.pdf",
-    "tesi/presentazione_blueagent/figures/graph4_lifecycle_timeline.pdf",
-    "tesi/presentazione_blueagent/figures/graph3_memory_scaling.pdf",
-    "tesi/presentazione_blueagent/figures/graph2_microphase_breakdown.pdf",
-    "1o anno M/cockgraphy/lez. 1.md",
-    "1o anno M/cockgraphy/lez. 2.md",
-    "1o anno M/cockgraphy/lez. 4.md",
-    "1o anno M/distributed cocks/lez. 10 exercises.md",
+    "tesi/presentazione_blueagent/logo_tor_vergata.png",
+    "cybersec-thm/1. intro.md",
+    "cybersec-htb/windows/smb.md",
+    "cybersec-htb/sql/mariadb.md",
+    "cybersec-htb/nmap/nmap sheet.md",
+    "cybersec-htb/redis.md",
+    "cybersec-htb/gobuster.md",
+    "Excalidraw/lez. 5 thmconstruction.excalidraw.md",
+    "Excalidraw/lez. 5 2026-10-27 17.54.26.excalidraw.md",
+    "Excalidraw/Drawing 2026-10-27 17.25.31.excalidraw.md",
+    "Excalidraw/Drawing 2026-10-27 17.24.44.excalidraw.md",
     "1o anno M/distributed cocks/lez. 10.md",
     "1o anno M/cockgraphy/lez. 8.md",
+    "1o anno M/cockgraphy/lez. 4.md",
     "1o anno M/cockgraphy/lez. 3.md",
+    "1o anno M/cockgraphy/lez. 5.md",
+    "1o anno M/cockgraphy/lez. 2.md",
+    "1o anno M/cockgraphy/lez. 1.md",
     "1o anno M/distributed cocks/lez. 5.md",
     "1o anno M/distributed cocks/lez. 3.md",
     "GEMINI.md",
     "Excalidraw/lez. 8 2026-10-23 17.58.08.excalidraw.md",
     "Excalidraw/lez. 8 2026-10-23 18.03.08.excalidraw.md",
     "Excalidraw/lez. 8 2026-10-23 18.08.17.excalidraw.md",
-    "Excalidraw/lez. 8 2026-10-23 16.29.38.excalidraw.md",
-    "Excalidraw/lez. 8 2026-10-23 16.28.17.excalidraw.md",
-    "Excalidraw/lez. 8 2026-10-23 16.20.23.excalidraw.md",
-    "tesi/antigravity/README.md",
-    "tesi/6._Architetture_Rete__Alternative/6_Architetture_Rete_Alternative.md",
-    "tesi/6._Architetture_Rete__Alternative/6.1_AA_BridgeL2_Senza_Gateway.md",
-    "tesi/6._Architetture_Rete__Alternative/6.2_AA_Interfaccia_wan1_Aggiuntiva.md",
-    "tesi/6._Architetture_Rete__Alternative/6.3_AA_NetworkNamespace_separato.md",
     "Senza nome.canvas"
   ]
 }

@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 560" width="100%" height="100%" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#1e40af"/>
+    </marker>
+    <filter id="cardShadow" x="-4%" y="-4%" width="108%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1160" height="560" fill="#ffffff" rx="8"/>
+
+  <!-- ================================================================= -->
+  <!-- 1. GIOCATORE / TEAM (Top-Left External Actor)                     -->
+  <!-- ================================================================= -->
+  <g transform="translate(22, 54)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="106" height="96" rx="10" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+    <!-- Laptop / User Icon -->
+    <rect x="28" y="16" width="50" height="32" rx="4" fill="#e2e8f0" stroke="#1e293b" stroke-width="2"/>
+    <path d="M 38 28 L 44 33 L 38 38 M 48 38 L 58 38" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 20 50 L 86 50 L 92 56 L 14 56 Z" fill="#334155"/>
+    <text x="53" y="75" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Giocatore</text>
+    <text x="53" y="90" text-anchor="middle" font-size="11" font-weight="500" fill="#475569">(Root sui nodi)</text>
+  </g>
+
+  <!-- Tunnel VPN Pipe between Giocatore and production-k -->
+  <g>
+    <rect x="128" y="88" width="106" height="24" fill="#eff6ff" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="181" y="104" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">VPN WireGuard</text>
+    <text x="181" y="79" text-anchor="middle" font-size="10.5" fill="#475569">UDP 51820+k</text>
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 2. TOP CONTAINER: INFRASTRUTTURA HOST, INCUS, ZFS & RETI          -->
+  <!-- ================================================================= -->
+  <g transform="translate(234, 14)" filter="url(#cardShadow)">
+    <!-- Outer Box -->
+    <rect x="0" y="0" width="906" height="174" rx="10" fill="#ffffff" stroke="#60a5fa" stroke-width="1.8"/>
+    <!-- Header Bar (IMS style) -->
+    <path d="M 0 10 Q 0 0 10 0 L 896 0 Q 906 0 906 10 L 906 32 L 0 32 Z" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.8"/>
+    <text x="453" y="21" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Infrastruttura Host Linux — Runtime Incus, Pool ZFS e Reti Isolate</text>
+
+    <!-- Sub-box 1: Rete production-k -->
+    <g transform="translate(18, 46)">
+      <rect x="0" y="0" width="248" height="112" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+      <rect x="0" y="0" width="248" height="25" rx="8" fill="#e2e8f0"/>
+      <text x="124" y="17" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f172a">Rete production-k (LAN Team)</text>
+      <text x="124" y="44" text-anchor="middle" font-size="11.5" fill="#1e293b"><tspan font-weight="600">wg-k</tspan> ↔ <tspan font-weight="600">br-team-k</tspan> (10.k.1.1/24)</text>
+      <text x="124" y="64" text-anchor="middle" font-size="11" fill="#475569">Container Produzione (eth0: 10.k.1.x)</text>
+      <rect x="12" y="76" width="224" height="24" rx="5" fill="#fef2f2" stroke="#f87171" stroke-width="1"/>
+      <text x="124" y="92" text-anchor="middle" font-size="10.2" font-weight="600" fill="#b91c1c">nftables: Drop inter-team (@team_links)</text>
+    </g>
+
+    <!-- Arrow between production-k and Demone Incus/ZFS -->
+    <line x1="266" y1="102" x2="324" y2="102" stroke="#1e293b" stroke-width="1.8" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="295" y="93" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">veth / L2</text>
+
+    <!-- Sub-box 2: Demone Incus & Pool ZFS -->
+    <g transform="translate(326, 46)">
+      <rect x="0" y="0" width="234" height="112" rx="8" fill="#f3e8ff" stroke="#a855f7" stroke-width="1.6"/>
+      <text x="117" y="24" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3b0764">Demone Incus &amp; ZFS</text>
+      <text x="117" y="47" text-anchor="middle" font-size="11.5" fill="#4c1d95">System Container (systemd PID 1)</text>
+      <text x="117" y="67" text-anchor="middle" font-size="11.5" fill="#4c1d95">Storage Pool ZFS + Cgroups</text>
+      <rect x="18" y="78" width="198" height="24" rx="5" fill="#ffffff" stroke="#c084fc" stroke-width="1"/>
+      <text x="117" y="94" text-anchor="middle" font-size="11" font-weight="700" fill="#6b21a8">Snapshot &amp; Clone CoW</text>
+    </g>
+
+    <!-- Arrow between Incus/ZFS and verify-k -->
+    <line x1="560" y1="102" x2="624" y2="102" stroke="#1e293b" stroke-width="1.8" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="592" y="86" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">Clonazione</text>
+    <text x="592" y="97" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">Istantanea</text>
+
+    <!-- Sub-box 3: Rete verify-k (OVN SDN) -->
+    <g transform="translate(626, 46)">
+      <rect x="0" y="0" width="262" height="112" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.6"/>
+      <rect x="0" y="0" width="262" height="25" rx="8" fill="#dcfce7"/>
+      <text x="131" y="17" text-anchor="middle" font-size="12.5" font-weight="700" fill="#065f46">Rete verify-k (Sandbox SDN OVN)</text>
+      <text x="131" y="44" text-anchor="middle" font-size="11.5" fill="#1e293b">Logical Switch &amp; Router (10.k.1.1/24)</text>
+      <text x="131" y="64" text-anchor="middle" font-size="11" fill="#475569">Cloni CoW + Verifier Runner (.250)</text>
+      <rect x="16" y="76" width="230" height="24" rx="5" fill="#ffffff" stroke="#4ade80" stroke-width="1"/>
+      <text x="131" y="92" text-anchor="middle" font-size="10.5" font-weight="600" fill="#15803d">OpenFlow (OVS) + SNAT 2 Stadi (incusbr0)</text>
+    </g>
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- VERTICAL DOUBLE ARROWS (Yellow Pipe style from Prof's diagram)    -->
+  <!-- ================================================================= -->
+  <!-- Pipe 1: Host Network Commands (wg-k, br-team-k, nftables) -->
+  <g>
+    <polygon points="366,192 380,208 371,208 371,322 380,322 366,338 352,322 361,322 361,208 352,208" fill="#fef08a" stroke="#ca8a04" stroke-width="1.4"/>
+    <text x="342" y="255" text-anchor="end" font-size="11.5" font-weight="600" fill="#1e293b">iproute2 / wg</text>
+    <text x="342" y="271" text-anchor="end" font-size="11.5" font-weight="600" fill="#1e293b">nftables</text>
+  </g>
+
+  <!-- Pipe 2: Unix Domain Socket (/var/lib/incus/unix.socket) -->
+  <g>
+    <polygon points="677,192 691,208 682,208 682,238 691,238 677,254 663,238 672,238 672,208 663,208" fill="#fef08a" stroke="#ca8a04" stroke-width="1.4"/>
+    <text x="698" y="218" text-anchor="start" font-size="11.5" font-weight="700" fill="#1e293b">Unix Domain Socket</text>
+    <text x="698" y="233" text-anchor="start" font-size="10.5" font-family="'JetBrains Mono', monospace" fill="#475569">/var/lib/incus/unix.socket</text>
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 3. BOTTOM-LEFT CONTAINER: PIATTAFORMA CTFD + PLUGIN               -->
+  <!-- ================================================================= -->
+  <g transform="translate(22, 342)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="430" height="196" rx="10" fill="#ffffff" stroke="#ef4444" stroke-width="1.8"/>
+    <path d="M 0 10 Q 0 0 10 0 L 420 0 Q 430 0 430 10 L 430 32 L 0 32 Z" fill="#fecaca" stroke="#ef4444" stroke-width="1.8"/>
+    <text x="215" y="21" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f172a">Piattaforma CTFd &amp; Plugin BlueAgent</text>
+
+    <!-- Box: PatchChallenge -->
+    <rect x="18" y="48" width="186" height="68" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.4"/>
+    <text x="111" y="73" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">PatchChallenge</text>
+    <text x="111" y="92" text-anchor="middle" font-size="11" fill="#475569">Deploy macchine &amp; Peer</text>
+    <text x="111" y="106" text-anchor="middle" font-size="11" fill="#475569">WireGuard (.conf)</text>
+
+    <!-- Box: PatchFlag -->
+    <rect x="224" y="48" width="188" height="68" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.4"/>
+    <text x="318" y="73" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">PatchFlag (compare)</text>
+    <text x="318" y="92" text-anchor="middle" font-size="11" fill="#475569">Interroga l'Oracolo e</text>
+    <text x="318" y="106" text-anchor="middle" font-size="11" fill="#475569">assegna la Flag / Punti</text>
+
+    <!-- Box: YAML Config -->
+    <g transform="translate(85, 130)">
+      <rect x="0" y="0" width="260" height="52" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.4"/>
+      <!-- Document Icon -->
+      <path d="M 24 12 L 38 12 L 44 18 L 44 40 L 24 40 Z" fill="#ffffff" stroke="#15803d" stroke-width="1.6"/>
+      <line x1="28" y1="23" x2="40" y2="23" stroke="#15803d" stroke-width="1.5"/>
+      <line x1="28" y1="29" x2="40" y2="29" stroke="#15803d" stroke-width="1.5"/>
+      <line x1="28" y1="35" x2="35" y2="35" stroke="#15803d" stroke-width="1.5"/>
+      <text x="145" y="24" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f172a">YAML Config (Challenge)</text>
+      <text x="145" y="41" text-anchor="middle" font-size="11" fill="#166534">Topologia, Limiti &amp; Comandi</text>
+    </g>
+  </g>
+
+  <!-- Horizontal Arrow between CTFd Plugin and BlueAgent API -->
+  <g>
+    <line x1="452" y1="435" x2="554" y2="435" stroke="#1e40af" stroke-width="2.5" marker-start="url(#arrow-blue)" marker-end="url(#arrow-blue)"/>
+    <text x="503" y="413" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1e40af">API REST HTTP</text>
+    <text x="503" y="427" text-anchor="middle" font-size="10.5" fill="#475569">(Token Auth)</text>
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 4. BOTTOM-RIGHT CONTAINER: BLUEAGENT (IMS_tester style)           -->
+  <!-- ================================================================= -->
+  <g transform="translate(556, 256)" filter="url(#cardShadow)">
+    <!-- Outer Box -->
+    <rect x="0" y="0" width="584" height="286" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="1.8"/>
+    <!-- Header Bar -->
+    <path d="M 0 10 Q 0 0 10 0 L 574 0 Q 584 0 584 10 L 584 32 L 0 32 Z" fill="#dcfce7" stroke="#22c55e" stroke-width="1.8"/>
+    <text x="292" y="21" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">BlueAgent — Orchestratore Asincrono (Python + FastAPI + Uvicorn)</text>
+
+    <!-- Left Vertical Bar: API & Services Layer -->
+    <g transform="translate(18, 46)">
+      <rect x="0" y="0" width="124" height="224" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+      <text x="62" y="46" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">API Layer</text>
+      <text x="62" y="63" text-anchor="middle" font-size="11" font-family="'JetBrains Mono', monospace" fill="#b45309">(/api)</text>
+      <line x1="16" y1="80" x2="108" y2="80" stroke="#fcd34d" stroke-width="1.5"/>
+      <text x="62" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Services</text>
+      <text x="62" y="121" text-anchor="middle" font-size="11" font-family="'JetBrains Mono', monospace" fill="#b45309">(/services)</text>
+      <line x1="16" y1="138" x2="108" y2="138" stroke="#fcd34d" stroke-width="1.5"/>
+      <rect x="10" y="150" width="104" height="58" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.2"/>
+      <text x="62" y="171" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">TwoTierLock</text>
+      <text x="62" y="187" text-anchor="middle" font-size="10" fill="#475569">asyncio.Lock +</text>
+      <text x="62" y="200" text-anchor="middle" font-size="10" fill="#475569">fcntl.flock</text>
+    </g>
+
+    <!-- Module 1: ContainerEngine (IncusEngine) -->
+    <g transform="translate(226, 46)">
+      <rect x="0" y="0" width="338" height="48" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="169" y="21" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">ContainerEngine (IncusEngine — /engine)</text>
+      <text x="169" y="38" text-anchor="middle" font-size="11" fill="#1e40af">Client HTTP Asincrono (httpx) + Wait /1.0/operations/&lt;uuid&gt;/wait</text>
+    </g>
+    <line x1="142" y1="70" x2="224" y2="70" stroke="#1e293b" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="183" y="63" text-anchor="middle" font-size="10" font-style="italic" fill="#334155">Primitive</text>
+
+    <!-- Module 2: OVNVerifier (Oracolo RAII) -->
+    <g transform="translate(226, 105)">
+      <rect x="0" y="0" width="338" height="50" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="169" y="21" text-anchor="middle" font-size="13" font-weight="700" fill="#065f46">OVNVerifier — Oracolo RAII (/verifier)</text>
+      <text x="169" y="39" text-anchor="middle" font-size="11" fill="#166534">Async Context Manager: __aenter__ → run_checks → __aexit__</text>
+    </g>
+    <line x1="142" y1="130" x2="224" y2="130" stroke="#1e293b" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="183" y="123" text-anchor="middle" font-size="10" font-style="italic" fill="#334155">Verifica</text>
+
+    <!-- Module 3: NetworkManager (/network) -->
+    <g transform="translate(226, 166)">
+      <rect x="0" y="0" width="338" height="46" rx="8" fill="#fce7f3" stroke="#db2777" stroke-width="1.5"/>
+      <text x="169" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#831843">NetworkManager (/network)</text>
+      <text x="169" y="36" text-anchor="middle" font-size="11" fill="#9d174d">Gestione tunnel wg-k, bridge br-team-k e regole nftables</text>
+    </g>
+    <line x1="142" y1="189" x2="224" y2="189" stroke="#1e293b" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="183" y="182" text-anchor="middle" font-size="10" font-style="italic" fill="#334155">Setup Rete</text>
+
+    <!-- Module 4 & 5: ImageService + LifecycleManager -->
+    <g transform="translate(226, 223)">
+      <rect x="0" y="0" width="162" height="47" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="1.5"/>
+      <text x="81" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#4c1d95">ImageService (/images)</text>
+      <text x="81" y="36" text-anchor="middle" font-size="10.5" fill="#6b21a8">Distrobuilder + SHA-256</text>
+    </g>
+    <g transform="translate(402, 223)">
+      <rect x="0" y="0" width="162" height="47" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/>
+      <text x="81" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#7c2d12">LifecycleManager</text>
+      <text x="81" y="36" text-anchor="middle" font-size="10.5" fill="#9a3412">Pulizia Risorse Orfane</text>
+    </g>
+    <line x1="142" y1="246" x2="224" y2="246" stroke="#1e293b" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="183" y="239" text-anchor="middle" font-size="10" font-style="italic" fill="#334155">Build / GC</text>
+  </g>
+</svg>
