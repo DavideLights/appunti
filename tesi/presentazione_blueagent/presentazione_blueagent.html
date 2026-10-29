@@ -649,7 +649,7 @@
         background: rgba(15, 23, 42, 0.95);
       }
     </style>
-  </head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script></head>
   <body>
     <div class="reveal">
       <div class="slides">
@@ -716,8 +716,7 @@
               </div>
               <div class="card-success" style="margin-top: auto; padding: 0.7em 0.95em;">
                 <p style="margin: 0; font-size: 0.84em; color: #14532d;">
-                  <strong>Verifica Banale:</strong> il giocatore <em>non ha accesso privilegiato</em> alla macchina prima dell'exploit. Basta confrontare la stringa <code>flag{...}</code> su CTFd.
-                </p>
+                  <strong>Verifica Banale:</strong> il giocatore <em>non ha accesso privilegiato</em>. Basta confrontare la stringa <code>flag{...}</code></p>
               </div>
             </div>
 
@@ -733,8 +732,7 @@
                 <span class="flow-arrow">➔</span>
                 <div class="flow-step">
                   <strong>2. Difesa</strong>
-                  Patch + <code>systemctl</code>
-                </div>
+                  Patch</div>
                 <span class="flow-arrow">➔</span>
                 <div class="flow-step" style="border-color: #ef4444; background: #fef2f2;">
                   <strong>3. Verifica?</strong>
@@ -743,8 +741,7 @@
               </div>
               <div class="card-danger" style="margin-top: auto; padding: 0.7em 0.95em;">
                 <p style="margin: 0; font-size: 0.84em; color: #7f1d1d;">
-                  <strong>Perché è complesso:</strong> essendo già <code>root</code>, il giocatore leggerebbe qualsiasi flag statica e può intercettare i test dell'oracolo (<code>tcpdump</code>, <code>pspy</code>) per fingere la patch!
-                </p>
+                  <strong>Perché è complesso:</strong> il giocatore leggerebbe qualsiasi flag nel fs. Può intercettare i test dell'oracolo e barare.</p>
               </div>
             </div>
           </div>
@@ -762,7 +759,7 @@
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
               </div>
               <h3>1. System Container</h3>
-              <p style="font-size: 0.84em;">Ambienti multi-servizio completi basati su <strong>Incus</strong> e <strong>ZFS</strong> con <code>systemd</code> nativo (PID 1).</p>
+              <p style="font-size: 0.84em;">Ambienti completi e realistici gestiti da&nbsp;<strong>Incus</strong>&nbsp;offrendo&nbsp;<code>systemd</code></p>
               <div style="margin-top: auto; padding-top: 0.6em; border-top: 1px solid #e2e8f0; font-size: 0.78em; color: #1e40af; font-weight: 600;">
                 ✔ Persistenza delle patch<br>
                 ✔ Basso uso RAM
@@ -774,9 +771,9 @@
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
               </div>
               <h3>2. Topologie Multi-Nodo</h3>
-              <p style="font-size: 0.84em;">Rete privata dedicata per ogni team (<code>10.k.1.0/24</code>) accessibile via tunnel <strong>WireGuard</strong>.</p>
+              <p style="font-size: 0.84em;">Rete dedicata per ogni team ccessibile da&nbsp;<strong>WireGuard</strong>.</p>
               <div style="margin-top: auto; padding-top: 0.6em; border-top: 1px solid #e2e8f0; font-size: 0.78em; color: #0284c7; font-weight: 600;">
-                ✔ Nodi multipli (Web, DB, Firewall)<br>
+                ✔ Nodi multipli<br>
                 ✔ Isolamento <code>nftables</code> tra team
               </div>
             </div>
@@ -786,7 +783,7 @@
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle><line x1="3" y1="3" x2="21" y2="21"></line></svg>
               </div>
               <h3>3. Verifica Invisibile</h3>
-              <p style="font-size: 0.84em;">Oracolo automatico fuori banda su <strong>cloni Copy-on-Write</strong> in rete SDN <strong>OVN</strong> isolata.</p>
+              <p style="font-size: 0.84em;">Oracolo&nbsp; su <strong>cloni</strong>&nbsp;in una rete SDN <strong>OVN</strong> isolata.</p>
               <div style="margin-top: auto; padding-top: 0.6em; border-top: 1px solid #e2e8f0; font-size: 0.78em; color: #15803d; font-weight: 600;">
                 ✔ No leak (tcpdump)<br>
                 ✔ Nessun impatto sulla produzione
@@ -887,21 +884,21 @@
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <strong style="color: #991b1b; font-size: 0.92em;">✘ 1. Verifica Statica (<code>diff</code> / SAST)</strong>
                 </div>
-                <p style="margin: 4px 0 0 0; font-size: 0.78em; color: #7f1d1d;">Cerca pattern specifici nei file; può fallire su patch equivalenti e ignora lo stato runtime del servizio.</p>
+                <p style="margin: 4px 0 0 0; font-size: 0.78em; color: #7f1d1d;">Cerca pattern specifici nei file; può dare falsi positivi;&nbsp;</p>
               </div>
 
               <div class="card-danger" style="padding: 0.65em 0.95em;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <strong style="color: #991b1b; font-size: 0.92em;">✘ 2. Verifica Dinamica Black-Box</strong>
                 </div>
-                <p style="margin: 4px 0 0 0; font-size: 0.78em; color: #7f1d1d;">Il giocatore intercetta i payload dell'oracolo con <code>tcpdump</code> e filtra selettivamente solo l'IP del verificatore.</p>
+                <p style="margin: 4px 0 0 0; font-size: 0.78em; color: #7f1d1d;">Il giocatore intercetta i payload dell'oracolo con <code>tcpdump</code></p>
               </div>
 
               <div class="card-danger" style="padding: 0.65em 0.95em;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <strong style="color: #991b1b; font-size: 0.92em;">✘ 3. Verifica Dinamica White-Box (<code>incus exec</code>)</strong>
                 </div>
-                <p style="margin: 4px 0 0 0; font-size: 0.78em; color: #7f1d1d;">Il comando iniettato compare in <code>/proc</code>: il giocatore lo cattura in tempo reale con <code>pspy</code>.</p>
+                <p style="margin: 4px 0 0 0; font-size: 0.78em; color: #7f1d1d;">Il giocatore intercetta i payload guardando in <code>/proc</code>&nbsp;(es:&nbsp;<span style="background-color: rgb(239, 246, 255); color: rgb(30, 64, 175); font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 15.249px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 500;">pspy</span><span style="font-size: 0.78em; background-color: rgb(254, 242, 242);">).</span></p>
               </div>
             </div>
 
@@ -909,18 +906,15 @@
             <div class="card-success" style="height: 100%; justify-content: center; padding: 1.2em 1.3em;">
               <h3 style="color: #15803d; font-size: 1.12em; margin-bottom: 0.5em;">✔ Soluzione BlueAgent: Sandbox Efimera</h3>
               <p style="font-size: 0.85em; color: #14532d; margin-bottom: 0.8em;">
-                La verifica non tocca <strong>mai</strong> i container presidiati dal giocatore:
-              </p>
+                La verifica non tocca <strong>mai</strong> i container in produzione.</p>
               <div style="display: flex; flex-direction: column; gap: 9px; font-size: 0.82em;">
                 <div style="background: #ffffff; border: 1px solid #86efac; border-radius: 8px; padding: 0.55em 0.8em;">
-                  <strong>1. Snapshot ZFS Istantaneo:</strong> clona i container interessati in Copy-on-Write.
+                  <strong>1. Snapshot ZFS:</strong> clona i container interessati (CoW)</div>
+                <div style="background: #ffffff; border: 1px solid #86efac; border-radius: 8px; padding: 0.55em 0.8em;">
+                  <strong>2. Rete SDN&nbsp; Isolata:</strong> i cloni mantengono gli <em>stessi IP</em> (<code>10.k.1.0/24</code>).
                 </div>
                 <div style="background: #ffffff; border: 1px solid #86efac; border-radius: 8px; padding: 0.55em 0.8em;">
-                  <strong>2. Rete SDN OVN Isolata:</strong> i cloni mantengono gli <em>stessi IP</em> (<code>10.k.1.0/24</code>), inaccessibili tramite WireGuard.
-                </div>
-                <div style="background: #ffffff; border: 1px solid #86efac; border-radius: 8px; padding: 0.55em 0.8em;">
-                  <strong>3. Doppio Check:</strong> verifica <strong>SLA</strong> (<code>readiness_commands</code>) + <strong>Exploit</strong> (<code>verify_commands</code>) e distrugge la sandbox.
-                </div>
+                  <strong>3. Check:</strong> verifica <strong>SLA</strong> (<code>readiness_commands</code>) + <strong>Exploit</strong> (<code>verify_commands</code>).</div>
               </div>
             </div>
           </div>
@@ -932,7 +926,7 @@
         <section>
           <div class="accent-bar"></div>
           <h2>Ciclo di Vita della Sandbox: <code>OVNVerifier</code> (Pattern RAII)</h2>
-          <p style="font-size: 0.86em; margin-bottom: 0.8em;">Gestito tramite <strong>Async Context Manager</strong> Python per garantire la distruzione deterministica della sandbox anche in caso di eccezioni o timeout:</p>
+          <p style="font-size: 0.86em; margin-bottom: 0.8em;">Gestito tramite <strong>Async Context Manager</strong> Python per grantire creazione e rilascio delle risorse, anche in caso di errore.</p>
 
           <div class="cols-3">
             <!-- Step 1 -->
@@ -943,9 +937,9 @@
               </div>
               <h3>Clonazione &amp; SDN</h3>
               <ul style="font-size: 0.8em; margin-left: 1.1em;">
-                <li>Crea la rete OVN isolata <code>verify-k</code>.</li>
-                <li>Clona i container di produzione su <strong>ZFS Copy-on-Write</strong>.</li>
-                <li>Avvia i cloni e il container <code>verifier</code> opzionale su <code>verify-k</code>.</li>
+                <li>Crea la rete OVN.</li>
+                <li>Clona i container di produzione.</li>
+                <li>Avvia i cloni.</li>
               </ul>
             </div>
 
@@ -957,9 +951,9 @@
               </div>
               <h3>Esecuzione Controlli</h3>
               <ul style="font-size: 0.8em; margin-left: 1.1em;">
-                <li><strong>White-Box:</strong> iniettati nei cloni via <code>incus exec</code>.</li>
-                <li><strong>Black-Box:</strong> lanciati dal nodo <code>verifier</code> verso i cloni.</li>
-                <li>Verifica <code>readiness_commands</code> (con retry) e <code>verify_commands</code> (exit code <code>0</code>).</li>
+                <li><strong>White-Box:</strong> iniettati nei cloni.</li>
+                <li><strong>Black-Box:</strong> lanciati dal nodo <code>verifier</code>.</li>
+                <li>Verifica <code>readiness_commands</code>&nbsp; e <code>verify_commands</code></li>
               </ul>
             </div>
 
@@ -971,7 +965,7 @@
               </div>
               <h3>Pulizia Garantita</h3>
               <ul style="font-size: 0.8em; margin-left: 1.1em;">
-                <li>Elimina forzatamente tutti i cloni, il <code>verifier</code> e lo switch OVN <code>verify-k</code>.</li>
+                <li>Elimina forzatamente tutti i cloni, e la rete OVN.</li>
                 <li><code>LifecycleManager</code>: rimuove eventuali risorse orfane.</li>
               </ul>
             </div>
@@ -988,15 +982,15 @@
             <div style="display: flex; flex-direction: column; gap: 12px;">
               <div class="card" style="padding: 0.75em 1em;">
                 <h3 style="margin-bottom: 0.2em;">1. Subnet &amp; Bridge Dedicato</h3>
-                <p style="margin: 0; font-size: 0.82em;">Ogni team $k$ dispone di una LAN privata <code>10.k.1.0/24</code> attestata sul bridge Linux <code>br-team-k</code> (gateway <code>10.k.1.1</code>).</p>
+                <p style="margin: 0; font-size: 0.82em;">Ogni team <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k</span></span></span></span></span> dispone di una LAN privata <code>10.k.1.0/24</code> astratta da&nbsp;<code>br-team-k</code> (gateway <code>10.k.1.1</code>).</p>
               </div>
               <div class="card-accent" style="padding: 0.75em 1em;">
                 <h3 style="margin-bottom: 0.2em;">2. Accesso VPN WireGuard</h3>
-                <p style="margin: 0; font-size: 0.82em;">Interfaccia <code>wg-k</code> (porta UDP $51820+k$, gateway <code>10.k.0.1/24</code>) con IP peer <code>10.k.0.x/24</code> per accedere ai container via SSH/HTTP.</p>
+                <p style="margin: 0; font-size: 0.82em;">Interfaccia <code>wg-k</code> (gateway <code>10.k.0.1/24</code>) con IP peer <code>10.k.0.x/24.</code></p>
               </div>
               <div class="card-danger" style="padding: 0.75em 1em;">
                 <h3 style="margin-bottom: 0.2em; color: #b91c1c;">3. Isolamento Rigoroso Inter-Team</h3>
-                <p style="margin: 0; font-size: 0.82em; color: #7f1d1d;">Tabella <code>nftables</code> <code>inet blueagent</code> con set dinamico <code>@team_links</code>: <strong>drop totale</strong> del traffico tra team diversi.</p>
+                <p style="margin: 0; font-size: 0.82em; color: #7f1d1d;">Tabella <code>nftables</code> <code>inet blueagent</code>: <strong>drop totale</strong> del traffico tra team diversi.</p>
               </div>
             </div>
             <div>
@@ -1014,16 +1008,16 @@
           <div class="cols-text-img">
             <div style="display: flex; flex-direction: column; gap: 12px;">
               <div class="card" style="padding: 0.75em 1em;">
-                <h3 style="margin-bottom: 0.2em;">1. Switch e Router Logico OVN</h3>
-                <p style="margin: 0; font-size: 0.82em;">Incus orchestra nativamente un <strong>Logical Switch</strong> (LAN) e un <strong>Logical Router</strong> (gateway <code>10.k.1.1</code>), mantenendo gli stessi IP di produzione senza conflitti.</p>
+                <h3 style="margin-bottom: 0.2em;">1. Rete SDN</h3>
+                <p style="margin: 0; font-size: 0.82em;">Incus orchestra nativamente un <strong>Logical Switch</strong> (LAN) e un <strong>Logical Router</strong> (gateway <code>10.k.1.1</code>).</p>
               </div>
               <div class="card-accent" style="padding: 0.75em 1em;">
                 <h3 style="margin-bottom: 0.2em;">2. Pipeline OpenFlow &amp; OVS</h3>
-                <p style="margin: 0; font-size: 0.82em;">I demoni <code>ovn-northd</code> e <code>ovn-controller</code> traducono la topologia in flussi OpenFlow eseguiti da <code>openvswitch.ko</code> nel kernel, isolando il traffico senza toccare il routing dell'host.</p>
+                <p style="margin: 0; font-size: 0.82em;">I demoni <code>ovn-northd</code> e <code>ovn-controller</code> traducono la topologia in flussi OpenFlow eseguiti da <code>openvswitch.ko</code>&nbsp;</p>
               </div>
               <div class="card" style="padding: 0.75em 1em;">
                 <h3 style="margin-bottom: 0.2em;">3. Nodo Verifier Dedicato (<code>.250</code>)</h3>
-                <p style="margin: 0; font-size: 0.82em;">Runner opzionale nella stessa LAN virtuale (<code>10.k.1.250</code>) per eseguire test Black-Box (<code>curl</code>, exploit di rete) verso i container clonati.</p>
+                <p style="margin: 0; font-size: 0.82em;">Runner opzionale nella stessa LAN virtuale&nbsp;per eseguire test Black-Box (<code>curl</code>, exploit di rete).</p>
               </div>
             </div>
             <div>
@@ -1039,13 +1033,7 @@
           <div class="accent-bar"></div>
           <h2>Uscita dalla Sandbox: SNAT a Due Stadi</h2>
           <p style="font-size: 0.88em; color: #475569; margin-top: 0.3em; margin-bottom: 1.2em;">
-            Disaccoppia gli IP della sandbox (<code>10.k.1.0/24</code>) per evitare che il traffico di risposta collida con la rotta di produzione (<code>br-team-k</code>) sul kernel host.
-          </p>
-
-          <!-- 1. Flusso di Andata (Richiesta) -->
-          <div style="margin-bottom: 1.25em;">
-            <div style="display:flex; align-items:center; gap: 8px; margin-bottom: 0.4em;">
-              <span style="background: #dbeafe; color: #1e40af; font-size: 0.72em; font-weight: 700; padding: 2px 8px; border-radius: 4px;">ANDATA</span>
+            Disaccoppia gli IP della sandbox (<code>10.k.1.0/24</code>) per evitare che il traffico di risposta collida con la rotta di produzione (<code>br-team-k</code>) sul kernel host.</p><div style="margin-bottom: 1.25em;"><div style="display:flex; align-items:center; gap: 8px; margin-bottom: 0.4em;">
               <strong style="font-size: 0.84em; color: #1e293b;">Richiesta verso Internet (SNAT a due stadi)</strong>
             </div>
             <div class="flow-pipeline" style="margin: 0;">
@@ -1076,15 +1064,7 @@
               <div class="flow-step" style="border-color: #0f172a; background: #f1f5f9;">
                 <strong>3. Tratta WAN</strong>
                 <code>src: IP Host</code><br>
-                <span style="font-size:0.84em; color:#334155;">Host ➔ Internet</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Key Takeaway Callout -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid var(--blue-primary); border-radius: 8px; padding: 0.6em 0.9em; font-size: 0.8em; color: #334155;">
-            <strong>Principio di Isolamento:</strong> L'host instrada <code>172.16.0.x</code> solo sul bridge <code>incusbr0</code>. Nessun pacchetto con IP <code>10.k.1.x</code> attraversa lo stack IP dell'host per l'accesso a Internet, garantendo la totale assenza di collisioni con la produzione.
-          </div>
+                <span style="font-size:0.84em; color:#334155;">Host ➔ Internet</span></div></div></div>
         </section>
 
         <!-- ================================================================= -->
@@ -1103,7 +1083,6 @@
                 <span class="ide-title">challenge.yaml</span>
               </div>
               <div class="ide-body"><span class="yaml-key">challenge_id:</span> <span class="yaml-str">"patch-web-sqli"</span>
-<span class="yaml-key">verify_internet_access:</span> <span class="yaml-num">false</span>
 
 <span class="yaml-key">verifier:</span>                    <span class="yaml-comment"># Runner efimero per check Black-Box</span>
   <span class="yaml-key">image:</span> <span class="yaml-str">"python:3.12-slim"</span>
@@ -1136,20 +1115,20 @@
             <!-- Right: Concise structural callout cards matching Chapter 4.3 -->
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <div class="card" style="padding: 0.65em 0.95em;">
-                <h3 style="margin-bottom: 0.15em; font-size: 0.95em;">1. <code>containers</code> &amp; Risorse Cgroups</h3>
-                <p style="margin: 0; font-size: 0.78em;">Ogni nodo dichiara <code>image</code>, <code>ip_suffix</code> (ultimo ottetto statico <code>10.k.1.X</code>) e limiti hardware <code>limits_cpu</code> e <code>limits_memory</code>.</p>
+                <h3 style="margin-bottom: 0.15em; font-size: 0.95em;">1. <code>containers</code>&nbsp;</h3>
+                <p style="margin: 0px;"><span style="font-size: 0.78em;">Ogni container dichiara immagine, limiti cgroups ed ip.</span></p>
               </div>
               <div class="card-accent" style="padding: 0.65em 0.95em;">
-                <h3 style="margin-bottom: 0.15em; font-size: 0.95em;">2. <code>verifier</code> (Runner Efimero)</h3>
-                <p style="margin: 0; font-size: 0.78em;">Container di test opzionale (<code>ip_suffix: 250</code>) avviato solo nella sandbox SDN per simulare attacchi di rete Black-Box.</p>
+                <h3 style="margin-bottom: 0.15em; font-size: 0.95em;">2. <code>verifier</code>&nbsp;</h3>
+                <p style="margin: 0; font-size: 0.78em;">Container di test opzionale&nbsp;per simulare attacchi di rete Black-Box.</p>
               </div>
               <div class="card" style="padding: 0.65em 0.95em;">
                 <h3 style="margin-bottom: 0.15em; font-size: 0.95em;">3. <code>readiness_commands</code></h3>
-                <p style="margin: 0; font-size: 0.78em;">Controlli con timeout e retry eseguiti all'avvio della sandbox per attendere il bootstrap dei servizi prima della verifica.</p>
+                <p style="margin: 0; font-size: 0.78em;">Controlli con timeout e retry eseguiti all'avvio&nbsp; per attendere il bootstrap dei container.</p>
               </div>
               <div class="card-accent" style="padding: 0.65em 0.95em;">
                 <h3 style="margin-bottom: 0.15em; font-size: 0.95em;">4. <code>verify_commands</code> &amp; Template IP</h3>
-                <p style="margin: 0; font-size: 0.78em;">Combina check White-Box (<code>target: container</code>) e Black-Box (<code>target: verifier</code>), risolvendo dinamicamente <code>{{ip:&lt;name&gt;}}</code>.</p>
+                <p style="margin: 0; font-size: 0.78em;">Specifiche dei comandi, e risoluzione dinamica di&nbsp;<code>{{ip:&lt;name&gt;}}</code>.</p>
               </div>
             </div>
           </div>
@@ -1175,9 +1154,9 @@
               </div>
               <div class="card" style="padding: 0.85em 1.05em;">
                 <ul style="font-size: 0.82em; margin-left: 1.1em;">
-                  <li><strong>B2 (Deploy Challenges):</strong> penalizzato dalla decompressione del rootfs e dal primo avvio di <code>systemd</code>.</li>
-                  <li><strong>B3 (Verify Setup CoW):</strong> nonostante crei rete OVN + cloni + rotte, risulta più veloce di B2 grazie a <strong>ZFS Copy-on-Write</strong>.</li>
-                  <li><strong>B4–B5 (Cleanup &amp; Teardown):</strong> rimozione rapida (15–24 s); <strong>B1/B6 (Reti Team):</strong> trascurabili (&lt; 1.6 s).</li>
+                  <li><strong>B2 (Deploy Challenges):</strong> penalizzato dalla decompressione del rootfs e dal primo avvio.</li>
+                  <li><strong>B3 (Verify Setup CoW):</strong>&nbsp;risulta più veloce di B2 grazie a <strong>ZFS</strong></li>
+                  <li><strong>B4–B5 (Cleanup &amp; Teardown):</strong>&nbsp;tempi rapidi e trascurabili.</li>
                 </ul>
               </div>
             </div>
@@ -1207,11 +1186,11 @@
               </div>
               <div class="card-accent" style="padding: 0.85em 1.05em;">
                 <ul style="font-size: 0.82em; margin-left: 1.1em;">
-                  <li><strong>Vantaggio ZFS:</strong> evita la copia fisica dei blocchi disco, abbattendo la latenza al crescere dei container.</li>
+                  <li><strong>Vantaggio ZFS:</strong> evita la copia fisica dei blocchi disco.</li>
                   <li><strong>Confronto a parità di 50 container (100 di picco):</strong>
                     <ul>
-                      <li><code>10×5</code> ottiene uno speedup di clonazione superiore (<strong>3.6× / 3.4×</strong>) rispetto a <code>5×10</code> (<strong>2.3× / 1.8×</strong>).</li>
-                      <li>Uvicorn parallelizza le richieste dei 10 team, mentre la clonazione intra-team è sequenziale (5 vs 10 nodi/task).</li>
+                      <li><code>10×5</code> e' piu veloce rispetto a&nbsp;<span style="color: rgb(30, 64, 175); font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 16.031px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 500; background-color: rgb(239, 246, 255);">5x10</span></li>
+                      <li>Uvicorn parallelizza le richieste dei 10 team.</li>
                     </ul>
                   </li>
                 </ul>
@@ -1243,8 +1222,8 @@
               </div>
               <div class="card" style="padding: 0.85em 1.05em;">
                 <ul style="font-size: 0.82em; margin-left: 1.1em;">
-                  <li><strong>Collo di bottiglia B2 (Pannello A):</strong> oltre l'80% del tempo di deploy è assorbito dall'estrazione del filesystem (<code>Image Unpack</code>) e dal boot di <code>systemd</code>.</li>
-                  <li><strong>Composizione B3 (Pannello B):</strong> eliminato l'unpack, il tempo si divide tra clonazione ZFS, <code>NIC Rebind</code> su OVN, avvio dei cloni e rotte statiche.</li>
+                  <li><strong>Collo di bottiglia B2 (Pannello A):</strong> oltre l'80% del tempo di deploy è assorbito dall'estrazione.</li>
+                  <li><strong>Composizione B3 (Pannello B):</strong>&nbsp;la clonazione non domina totalmente il tempo d'esecuzione.</li>
                 </ul>
               </div>
             </div>
@@ -1274,8 +1253,8 @@
               </div>
               <div class="card-accent" style="padding: 0.85em 1.05em;">
                 <ul style="font-size: 0.82em; margin-left: 1.1em;">
-                  <li><strong>Crescita RAM Lineare:</strong> la condivisione del kernel Linux e della page cache ZFS permette di ospitare <strong>100 nodi</strong> in soli 5.2 GB.</li>
-                  <li><strong>Profilo CPU (I/O-bound):</strong> utilizzo contenuto tra il <strong>10% e il 45%</strong> sugli 8 core durante le fasi attive, senza mai saturare l'host.</li>
+                  <li><strong>Crescita RAM Lineare:</strong> la condivisione del kernel Linux&nbsp; permette di ospitare <strong>100 nodi</strong> in soli 5.2 GB.</li>
+                  <li><strong>Profilo CPU (I/O-bound):</strong> utilizzo contenuto tra il <strong>10% e il 45%</strong> sugli 8 core.</li>
                 </ul>
               </div>
             </div>
@@ -1331,32 +1310,32 @@
                 <span class="uc-title">UC-01 — Deploy Rete Team</span>
                 <span class="uc-endpoint">PUT /teams/{team_k}</span>
               </div>
-              <p style="margin:0; font-size:0.78em;">Crea il bridge <code>br-team-k</code> (<code>10.k.1.1/24</code>), l'interfaccia <code>wg-k</code> (UDP $51820+k$, <code>10.k.0.1/24</code>) e registra il team.</p>
+              <p style="margin:0; font-size:0.78em;">Crea il bridge <code>br-team-k</code> (<code>10.k.1.1/24</code>), l'interfaccia <code>wg-k</code>&nbsp;e registra il team.</p>
             </div>
             <div class="uc-item accent">
               <div class="uc-header">
                 <span class="uc-title">UC-02 — Deploy Challenge</span>
                 <span class="uc-endpoint">POST /teams/{team_k}/machines</span>
               </div>
-              <p style="margin:0; font-size:0.78em;">Istanzia i container del team su <code>br-team-k</code> da YAML, applica i limiti Cgroups e configura gli IP statici <code>10.k.1.X</code>.</p>
+              <p style="margin:0; font-size:0.78em;">Istanzia i container del team su <code>br-team-k</code> da YAML.</p>
             </div>
             <div class="uc-item accent">
               <div class="uc-header">
                 <span class="uc-title">UC-03 — Verifica Challenge</span>
                 <span class="uc-endpoint">POST /teams/{team_k}/verificator</span>
               </div>
-              <p style="margin:0; font-size:0.78em;">Crea la sandbox OVN <code>verify-k</code>, clona i nodi in CoW, esegue comandi di readiness e verifica (White/Black Box).</p>
+              <p style="margin:0; font-size:0.78em;">Crea la sandbox OVN <code>verify-k</code>, clona i nodi in CoW, esegue comandi verifica.</p>
             </div>
             <div class="uc-item">
               <div class="uc-header">
                 <span class="uc-title">UC-04 — Dismissione Challenge</span>
                 <span class="uc-endpoint">DELETE /teams/{team_k}/machines</span>
               </div>
-              <p style="margin:0; font-size:0.78em;">Arresta ed elimina tutte le istanze dei container associati alla challenge per il team $k$, rilasciando le risorse.</p>
+              <p style="margin:0; font-size:0.78em;">Rilascia tutte le risorse dei container associati alla challenge per il team <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height: 0.6944em;"></span><span class="mord mathnormal" style="margin-right: 0.0315em;">k.</span></span></span></span></span></p>
             </div>
           </div>
           <div style="margin-top: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 12px; font-size: 0.74em; color: #475569;">
-            <strong>Altri Use Case di supporto (Cap. 3.2):</strong> <code>UC-05</code> Compilazione Immagine con Distrobuilder (<code>PUT /images/{alias}</code>) • <code>UC-06</code> Registrazione Membro WireGuard (<code>PUT /teams/{team_k}/members/{user_id}</code>).
+            <strong>Altri Use Case di supporto:</strong> <code>UC-05</code> Compilazione Immagine con Distrobuilder (<code>PUT /images/{alias}</code>) • <code>UC-06</code> Registrazione Membro WireGuard (<code>PUT /teams/{team_k}/members/{user_id}</code>).
           </div>
         </section>
 
@@ -1370,17 +1349,17 @@
             <div class="card">
               <h3><code>TwoTierLock</code> Ibrido per Risorsa</h3>
               <ul style="font-size: 0.82em;">
-                <li><strong>1° Livello (<code>asyncio.Lock</code>):</strong> sincronizza le coroutine all'interno dello stesso worker senza bloccare l'event loop.</li>
-                <li><strong>2° Livello (<code>fcntl.flock</code>):</strong> file lock del kernel Linux (<code>/tmp/blueagent_locks/</code>) per sincronizzare worker Uvicorn multi-processo.</li>
-                <li><strong>Granularità per Team:</strong> serializza <code>team-k</code> lasciando procedere in parallelo gli altri team.</li>
+                <li><strong>1° Livello (<code>asyncio.Lock</code>):</strong> sincronizza le coroutine all'interno dello stesso worker.</li>
+                <li><strong>2° Livello (<code>fcntl.flock</code>):</strong> file lock del kernel Linux.</li>
+                <li><strong>Granularità per Team:</strong>&nbsp;lock su&nbsp;<code>team-k</code> lasciando procedere in parallelo gli altri team.</li>
               </ul>
             </div>
             <div class="card-accent">
               <h3>Pipeline Asincrona verso Incus</h3>
               <ul style="font-size: 0.82em;">
-                <li>Comunicazione HTTP su <strong>Unix Domain Socket</strong> (<code>/var/lib/incus/unix.socket</code>) tramite <code>httpx.AsyncClient</code>.</li>
-                <li>Operazioni pesanti avviate in background (<code>202 Accepted</code>) e attese con <code>/1.0/operations/&lt;uuid&gt;/wait</code>.</li>
-                <li>Esecuzione non bloccante: l'event loop elabora in parallelo le richieste degli altri team durante le attese di I/O.</li>
+                <li>Comunicazione&nbsp;<span style="color: rgb(30, 64, 175); font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 16.031px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 500;">httpx.AsyncClient</span>&nbsp;su <strong>Unix Domain Socket.</strong></li>
+                <li>Attesa su&nbsp;<code>/1.0/operations/&lt;uuid&gt;/wait</code>.</li>
+                <li>Esecuzione non bloccante.</li>
               </ul>
             </div>
           </div>
@@ -1394,10 +1373,8 @@
           <h2>Immagini Custom (<code>Distrobuilder</code>) e Caching SHA-256 <span class="backup-pill">Backup 3/4</span></h2>
           <div class="cols">
             <div class="card">
-              <h3>Build Automatica con <code>Distrobuilder</code></h3>
-              <ul style="font-size: 0.82em;">
-                <li>I container di sistema Incus richiedono un rootfs completo con <code>systemd</code> + <code>incus.tar.xz</code>.</li>
-                <li><code>ImageService</code> invoca <code>distrobuilder build-incus</code> in modo asincrono a partire da un descrittore YAML.</li>
+              <h3>Build Automatica con <code>Distrobuilder</code></h3><ul style="font-size: 0.82em;">
+                <li><code>ImageService</code> invoca <code>distrobuilder build-incus</code>&nbsp;</li>
                 <li>Inietta automaticamente pacchetti, servizi vulnerabili e script di test per il <code>verifier</code>.</li>
               </ul>
             </div>
@@ -1405,8 +1382,8 @@
               <h3>Caching Deterministico SHA-256</h3>
               <ul style="font-size: 0.82em;">
                 <li>Calcola il digest <strong>SHA-256</strong> della definizione YAML dell'immagine.</li>
-                <li>Registra nella tabella SQLite <code>images</code> l'alias, il <code>config_hash</code>, lo stato (<code>READY</code> / <code>BUILDING</code>) e i <code>build_logs</code>.</li>
-                <li><strong>Cache Hit:</strong> salta la ricompilazione se l'immagine è già presente in Incus e l'hash coincide.</li>
+                <li>Viene tenuto in memoria nel database SQLite.</li>
+                <li><strong>Hit:</strong> salta la ricompilazione se l'immagine è già presente in Incus e l'hash coincide.</li>
               </ul>
             </div>
           </div>
@@ -1478,7 +1455,7 @@
 
     <!-- Floating Editor Toolbar -->
     <div id="editor-toolbar">
-      <button id="btn-toggle-edit" title="Attiva/Disattiva Modifica (Alt+E)">
+      <button id="btn-toggle-edit" title="Attiva/Disattiva Modifica (Alt+E)" class="">
         <span id="edit-icon">✏️</span>
         <span id="edit-label">Modifica: OFF</span>
       </button>
@@ -1494,7 +1471,7 @@
       <button id="btn-hide-toolbar" class="btn-secondary" title="Nascondi barra di modifica (Alt+H)">
         👁️ Nascondi
       </button>
-      <span id="editor-status">Alt+E: Modifica • Alt+H: Barra</span>
+      <span id="editor-status">File HTML esportato!</span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
@@ -1731,5 +1708,5 @@
         markEditableElements();
       })();
     </script>
-  </body>
-</html>
+  
+</body></html>
