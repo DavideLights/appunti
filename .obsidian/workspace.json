@@ -33,7 +33,8 @@
               "title": "main"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -95,8 +96,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242,
-    "collapsed": true
+    "width": 218.12369918823242
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -227,30 +227,32 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "2451deda4d0939f7",
+  "active": "320a37d2ff651366",
   "lastOpenFiles": [
-    "tesi/main.pdf",
+    "tesi/presentazione_pptx/lu3953879pj4.tmp",
+    "tesi/presentazione_pptx/lu3953879pj1.tmp",
+    "tesi/presentazione_pptx/lu3953879piz.tmp",
+    "tesi/presentazione_pptx/lu3686773ehq.tmp",
+    "tesi/presentazione_pptx/lu349706vzx1.tmp",
+    "tesi/presentazione_pptx/lu338696oksd.tmp",
+    "tesi/presentazione_pptx/lu335706nrrh.tmp",
+    "tesi/presentazione_pptx/lu326986j7m4.tmp",
+    "tesi/presentazione_pptx/lu315636brj1.tmp",
+    "tesi/presentazione_pptx/lu3120369rj0.tmp",
+    "tesi/presentazione_pptx/lu295335v6fy.tmp",
+    "tesi/presentazione_pptx/figures/seqdiagram.png",
+    "tesi/presentazione_pptx/figures/classdiagr.png",
+    "tesi/seqdiagram.png",
+    "tesi/classdiagr.png",
+    "tesi/blueagent_class_diagram_spec.md",
     "tesi/appunti per orale.md",
-    "tesi/antigravity/presentazione_blueagent.html.part",
-    "tesi/latex/main.pdf",
     "tesi/presentazione_blueagent/figures/blueagent-main.svg",
     "tesi/antigravity/figures/blueagent-main.svg",
     "tesi/antigravity/blueagent-main.svg",
     "1o anno M/distributed cocks/lez. 10 exercises.md",
     "tesi/presentazione_blueagent/figures/blueagent_architecture.svg",
     "tesi/antigravity/figures/blueagent_architecture.svg",
-    "tesi/presentazione_blueagent/vendor/reveal/plugin/math/math.min.js",
-    "tesi/presentazione_blueagent/vendor/reveal/theme/white.min.css",
-    "tesi/presentazione_blueagent/vendor/reveal/plugin/math",
-    "tesi/presentazione_blueagent/vendor/reveal/theme",
-    "tesi/presentazione_blueagent/vendor/reveal/reveal.min.js",
-    "tesi/presentazione_blueagent/vendor/reveal/reveal.min.css",
-    "tesi/presentazione_blueagent/vendor/reveal/reset.min.css",
     "tesi/presentazione_blueagent/src/images/verify-network.png",
-    "tesi/presentazione_blueagent/src/images/production-network.png",
-    "tesi/presentazione_blueagent/src/images/graph4_lifecycle_timeline.png",
-    "tesi/presentazione_blueagent/src/images/graph3_memory_scaling.png",
-    "tesi/presentazione_blueagent/logo_tor_vergata.png",
     "cybersec-thm/1. intro.md",
     "cybersec-htb/windows/smb.md",
     "cybersec-htb/sql/mariadb.md",
@@ -273,7 +275,6 @@
     "GEMINI.md",
     "Excalidraw/lez. 8 2026-10-23 17.58.08.excalidraw.md",
     "Excalidraw/lez. 8 2026-10-23 18.03.08.excalidraw.md",
-    "Excalidraw/lez. 8 2026-10-23 18.08.17.excalidraw.md",
     "Senza nome.canvas"
   ]
 }
