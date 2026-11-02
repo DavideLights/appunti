@@ -4,37 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "241a8dccf5c7eeea",
+        "id": "1a4671c0dc089374",
         "type": "tabs",
         "children": [
           {
-            "id": "2451deda4d0939f7",
+            "id": "01ca84d6b80fcaba",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "tesi/appunti per orale.md",
-                "mode": "source",
-                "source": false
+                "file": "Excalidraw/blueagentClassDiagram.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "appunti per orale"
-            }
-          },
-          {
-            "id": "320a37d2ff651366",
-            "type": "leaf",
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "tesi/main.pdf"
-              },
-              "icon": "lucide-file-text",
-              "title": "main"
+              "icon": "excalidraw-icon",
+              "title": "blueagentClassDiagram.excalidraw"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -96,7 +81,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242
+    "width": 218.12369918823242,
+    "collapsed": true
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -227,25 +213,28 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "320a37d2ff651366",
+  "active": "01ca84d6b80fcaba",
   "lastOpenFiles": [
+    "Excalidraw/12. metriche 2026-08-27 15.16.50.excalidraw.md",
+    "Excalidraw/blueagentClassDiagram.excalidraw.md",
+    "Excalidraw/Libraries/local-library.excalidrawlib",
+    "Excalidraw/Libraries",
+    "doc-blueagent/classi.md",
+    "doc-blueagent",
+    "GEMINI.md",
+    "tesi/appunti per orale.md",
+    "tesi/main.pdf",
     "tesi/presentazione_pptx/lu3953879pj4.tmp",
     "tesi/presentazione_pptx/lu3953879pj1.tmp",
     "tesi/presentazione_pptx/lu3953879piz.tmp",
     "tesi/presentazione_pptx/lu3686773ehq.tmp",
     "tesi/presentazione_pptx/lu349706vzx1.tmp",
     "tesi/presentazione_pptx/lu338696oksd.tmp",
-    "tesi/presentazione_pptx/lu335706nrrh.tmp",
-    "tesi/presentazione_pptx/lu326986j7m4.tmp",
-    "tesi/presentazione_pptx/lu315636brj1.tmp",
-    "tesi/presentazione_pptx/lu3120369rj0.tmp",
-    "tesi/presentazione_pptx/lu295335v6fy.tmp",
     "tesi/presentazione_pptx/figures/seqdiagram.png",
     "tesi/presentazione_pptx/figures/classdiagr.png",
     "tesi/seqdiagram.png",
     "tesi/classdiagr.png",
     "tesi/blueagent_class_diagram_spec.md",
-    "tesi/appunti per orale.md",
     "tesi/presentazione_blueagent/figures/blueagent-main.svg",
     "tesi/antigravity/figures/blueagent-main.svg",
     "tesi/antigravity/blueagent-main.svg",
@@ -272,9 +261,6 @@
     "1o anno M/cockgraphy/lez. 1.md",
     "1o anno M/distributed cocks/lez. 5.md",
     "1o anno M/distributed cocks/lez. 3.md",
-    "GEMINI.md",
-    "Excalidraw/lez. 8 2026-10-23 17.58.08.excalidraw.md",
-    "Excalidraw/lez. 8 2026-10-23 18.03.08.excalidraw.md",
     "Senza nome.canvas"
   ]
 }
