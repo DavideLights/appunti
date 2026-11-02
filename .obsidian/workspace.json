@@ -11,15 +11,32 @@
             "id": "01ca84d6b80fcaba",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/blueagentClassDiagram.excalidraw.md"
+                "file": "1o anno M/network cocks/2. transport/lez. 1.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "blueagentClassDiagram.excalidraw"
+              "icon": "lucide-file",
+              "title": "lez. 1"
+            }
+          },
+          {
+            "id": "c5fce4b830aacddc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1o anno M/distributed cocks/lez. 12.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "lez. 12"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -81,8 +98,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242,
-    "collapsed": true
+    "width": 218.12369918823242
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -213,13 +229,20 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "01ca84d6b80fcaba",
+  "active": "c5fce4b830aacddc",
   "lastOpenFiles": [
-    "Excalidraw/12. metriche 2026-08-27 15.16.50.excalidraw.md",
+    "1o anno M/network cocks/2. transport/lez. 1.md",
+    "1o anno M/distributed cocks/lez. 12.md",
+    "1o anno M/distributed cocks/lez. 10.md",
     "Excalidraw/blueagentClassDiagram.excalidraw.md",
+    "girlbusAG",
+    "doc-blueagent/classi.md",
+    "1o anno M/network cocks/1. access/lez. 1.md",
+    "1o anno M/network cocks/2. transport",
+    "1o anno M/network cocks/1. access",
+    "Excalidraw/12. metriche 2026-08-27 15.16.50.excalidraw.md",
     "Excalidraw/Libraries/local-library.excalidrawlib",
     "Excalidraw/Libraries",
-    "doc-blueagent/classi.md",
     "doc-blueagent",
     "GEMINI.md",
     "tesi/appunti per orale.md",
@@ -227,9 +250,6 @@
     "tesi/presentazione_pptx/lu3953879pj4.tmp",
     "tesi/presentazione_pptx/lu3953879pj1.tmp",
     "tesi/presentazione_pptx/lu3953879piz.tmp",
-    "tesi/presentazione_pptx/lu3686773ehq.tmp",
-    "tesi/presentazione_pptx/lu349706vzx1.tmp",
-    "tesi/presentazione_pptx/lu338696oksd.tmp",
     "tesi/presentazione_pptx/figures/seqdiagram.png",
     "tesi/presentazione_pptx/figures/classdiagr.png",
     "tesi/seqdiagram.png",
@@ -252,15 +272,11 @@
     "Excalidraw/lez. 5 2026-10-27 17.54.26.excalidraw.md",
     "Excalidraw/Drawing 2026-10-27 17.25.31.excalidraw.md",
     "Excalidraw/Drawing 2026-10-27 17.24.44.excalidraw.md",
-    "1o anno M/distributed cocks/lez. 10.md",
     "1o anno M/cockgraphy/lez. 8.md",
     "1o anno M/cockgraphy/lez. 4.md",
     "1o anno M/cockgraphy/lez. 3.md",
     "1o anno M/cockgraphy/lez. 5.md",
     "1o anno M/cockgraphy/lez. 2.md",
-    "1o anno M/cockgraphy/lez. 1.md",
-    "1o anno M/distributed cocks/lez. 5.md",
-    "1o anno M/distributed cocks/lez. 3.md",
     "Senza nome.canvas"
   ]
 }
