@@ -8,7 +8,7 @@
 **D4**: what does the state represent and what it's made of? (memory,buffer)
 * **R4**: the state represents the memory of the process, including the input buffer (what i've received from other processes) and the output buffer (what's scheduled to be sent to other processes) 
 **D5**: why do you need an output buffer? 
-* **R5**: because sending a message does not mean to deliver it. (**why???**)
+* **R5**: because sending a message ($\text{Exec}$) only puts it in $\text{OutBuf}$ (in-flight); delivering it to $\text{InBuf}$ is a separate asynchronous event ($\text{Del}$) scheduled by the adversary. #gemini
 **D6**: how do you formalize a process?( $<Q,Q_{\_{}}, M>$)
 **D7**: describe $\text{InBuf}_{j}$ and $\text{OutBuf}_{j}$. (step $j$)
 **D8**: can two process have the same identical state? (id)
@@ -21,101 +21,106 @@
 **D15**: what does it mean for a process to execute infinitely many local steps and for each $m$ to be delivered? (fair, always scheduled, it has to happen)
 **D16**: why fairness is crucial? give an example (1's example)
 **D17**: what is local execution? what it implies? (local execution, extend)
+
+# intro
+**distributed system**: set of **separate entities**, each with **computational power**, that **communicate** and **coordinate** to achieve a **common goal**. #gemini
+
+> "A distributed system is one in which the failure of a computer you did not even know existed can render  your own computer unusable" Leslie Lamport.
+
+**distributed systems are complex**: coordinating entities is hard due to: #gemini
+* **asynchrony**: no global clock, message delays are unbounded, non-constant. #gemini
+* **failures**: uncertain; requires failure detection, masking, tolerance, or recovery. #gemini
+* **local view**: each process only sees its own local state and messages. #gemini
+
 # model: system and concepts
-**system**: $n$ processes (qualsiasi cosa, computer, thread, una persona)in $\Pi : \{ p_{0},p_{1},\dots,p_{n-1}  \}$
-* $n$ e' fissato, non cambia
-* $p_{i}$ e' il processo che ha come identita $i$. $i$ puo' essere un IP o un MAC addr per esempio.
+**system**: $n$ processes (qualsiasi cosa, computer, thread, una persona) in $\Pi : \{ p_{0},p_{1},\dots,p_{n-1}  \}$
+* $n$ e' fissato (static network), non cambia
+* $p_{i}$ e' il processo che ha come identita $i$ (distinta). $i$ puo' essere un IP o un MAC addr per esempio.
 
 **modellazione**: $G: (\Pi, E)$, communication graph.
 * $E$: **communication links**, tipo internet o qualsiasi altra cosa.
 * **complete**: tutti i nodi sono collegati agli altri.
 * **se non fosse complete**: per mandare messaggi avrei bisogno di inoltrare i messaggi tra piu processi.
 
-**process**: infinite state machine.
-* **input**: e' il modo in cui il processo prende informazioni dall'esterno.
-* **output**: e' il modo in cui il processo comunica con l'esterno
+**process**: 
+* every process is a (possibly infinite) state machine (I/O Automaton). #gemini
+* **input**: e' il modo in cui il processo prende informazioni dall'esterno (upper layer).
+* **output**: e' il modo in cui il processo comunica con l'esterno (upper layer).
 * **ha uno stato**: la sua memoria interna e il contenuto del buffer input e buffer output
-	* **buffer input**: e' il buffer in cui i processi ricevono messaggi dal link
-	* **buffer output**: a che serve? potrebbe essere che il messaggio venga inviato ma non posso inviarlo subito, quindi lo metto in coda nel buffer output
-		* qualcun'altro preleva il messaggio dal buffer e lo mette nel link.
-	* **link**: it's were processes travel
+	* **buffer input** ($\text{InBuf}$): e' il buffer in cui i processi ricevono messaggi dal link
+	* **buffer otuput** ($\text{OutBuf}$): contains "in-flight" messages. Those that are created and sent but still not delivered. 
+		* **adversary**: the scheduler acts as an adversary. He chooses when to deliver to the input buffer of the receiver.
+	* **link**: it's where processes messages travel
 * **Layer**: il processo e' visto a layer IO <-> PROCESS <-> BUFFER IO
 
 ![[Pasted image 20260928195503.png]]
 
-**formalizzazione processo**: robba inuile
-* $Q$ **insieme di stati interni**, e' un'insieme che conosciamo a priori
-* $Q_{\text{\_}}$ insieme stati iniziali possibili
-* **Messages**: insieme di messaggi possibili $<\text{sender, receiver, payload}>$
-* $\text{InBuf}_{j}$: multinsieme di messaggi ricevuti consumati nel prossimo local step
-* $\text{OutBuf}_{j}$: multinsieme di messaggi inviati ma non consegnati.
+**formalizzazione processo**:
+* $Q$: **insieme di stati interni**
+* $Q_{\text{in}} \subseteq Q$: insieme stati iniziali possibili
+* $M$: insieme di messaggi possibili $<\text{sender, receiver, payload}>$
+* $\text{InBuf}_{j}$: multinsieme di messaggi ricevuti, consumati nel prossimo local step ($\text{InBuf}_{j} = \emptyset$ dopo lo step)
+* $\text{OutBuf}_{j}$: multinsieme di messaggi "in-flight" (inviati ma non consegnati).
+* **transizione**: $P_j(q \in Q, \text{InBuf}_j) = (q' \in Q, \text{Send\_msg} \subset M)$, con $\text{OutBuf}_j = \text{OutBuf}_j \cup \text{Send\_msg}$ e $\text{InBuf}_j = \emptyset$. #gemini
 
 > non esistono processi con stato iniziale identico, almeno differiscono in identità (IP addr, MAC addr, e altre cose).
 
 # model: asynch executions
-* **no concept of time**
-* un'azione richiede un tempo **non prevedibile** per eseguire.
-* non previdible non vuol dire lento.
+* **no concept of time**, non ci sono bound sul ritardo dei messaggi o sul tempo di esecuzione. #gemini
+* an action executes in an unpredictable amount of time.
+* unpredictable does not mean slow.
 
-**execution**: e' una storia del sistema che esegue un algoritmo.
-* la storia include la memoria e i messaggi ricevuti ed inviati
-
-**Evento**: un avversario, ossia lo scheduler decide cosa succede sui processi, scatenando eventi ??? Tipi di eventi:
-* $\text{Del}(i,j,m)$: muovi il messaggio m da $\text{OutBuff}_{i}$ in $\text{InBuff}_{j}$
-* $\text{Exec}(i)$: il processo i esegue uno step nella sua macchina a stati finiti.
+**Evento**: un avversario, ossia lo **scheduler**, decide cosa succede sui processi schedulando eventi:
+* $\text{Del}(i,j,m)$: muovi il messaggio $m$ da $\text{OutBuf}_{i}$ in $\text{InBuf}_{j}$
+* $\text{Exec}(i)$: il processo $i$ esegue uno step del suo automa (consuma $\text{InBuf}_{i}$, aggiorna lo stato $q \to q'$, aggiunge eventuali messaggi inviati a $\text{OutBuf}_{i}$). #gemini
 
 ![[Pasted image 20260928195612.png]]
 
-> **tempo e' discreto**: che cazzo vordi???
-
-**configuration**: e' un vettore di $n$ componenti che rappresenta lo stato del sistema. il componente $j$ rappresenta lo stato del processo $j$. 
+**configuration** ($C_t$): e' un vettore di $n$ componenti che rappresenta lo stato globale del sistema allo step $t$. Il componente $j$ rappresenta lo stato del processo $j$: $C_t[j] = (q_j, \text{InBuf}_j, \text{OutBuf}_j)$. 
 
 $$
 C_{0} = (<q_{0}, \{  \}, \{  \}>, <q_{1}, \{ m \}, \{  \}>, <q_{2}, \{  \}, \{  \}>)
 $$
 
-**abilitazione degli eventi**: $e$ e' abilitato nella configurazione $C$, se in quella configurazione potrebbe accadere.
+**abilitazione degli eventi**: $e$ e' abilitato nella configurazione $C$, se in quella configurazione può accadere:
+* $\text{Del}(i,j,m)$ e' abilitato in $C$ solo se $m \in \text{OutBuf}_i$ (e' impossibile consegnare qualcosa se i buffer in output sono tutti vuoti).
+* $\text{Exec}(i)$ (local execution) e' sempre abilitato.
 
-> e' impossibile ricevere qualcosa se i buffer in output sono tutti vuoti
-
-* local execution e' sempre abilitata
-
-**execution**: e' un infinita sequenza di configurazioni ed eventi dove $e_{t}$ e' abilitato in $C_{t}$ e $C_{t}$ si ottiene applicando $e_{t-1}$ su $C_{t-1}$.
-* $e_{0} = Exec(1)$
-* $e_{1}=Del(1,2,m')$
-* ecc...
-* **scheduler**: decide gli eventi $e_{i}$
+![[Pasted image 20261103113532.png]]
+**execution** ($\mathcal{E}$): e' un'infinita sequenza alternata di configurazioni ed eventi $(C_0, e_0, C_1, e_1, C_2, e_2, \dots)$ dove $e_{t}$ e' abilitato in $C_{t}$ e $C_{t}$ si ottiene applicando $e_{t-1}$ su $C_{t-1}$.
+* $e_{0} = \text{Exec}(1)$, for example, move $m$ in process 1 from InBuffer to OutBuffer
+* $e_{1} = \text{Del}(1,2,m')$
+* **scheduler**: decides $e_{i}$
 
 **space time diagram**:
-* una riga per ogni processo
-* una riga verticale per ogni configuration
-* $e_{0}$ avviene dopo $C_{0}$
-* $e_{0} \to e_{1}$ e' il tempo per eseguire $e_{1}$
-* **asincronia**: i messaggi arrivano a cazzo di cane e possibilmente fuori ordine. nella slide $e_{2}$ arriva molto dopo, scatenando $e_{9}$.
+* una riga orizzontale per ogni processo
+* una riga verticale tratteggiata per ogni configuration $C_t$
+* **asincronia**: i messaggi hanno ritardi arbitrari e possono arrivare fuori ordine (nella slide $m''$ inviato in $e_{2}$ viene consegnato in $e_{9}$, dopo il messaggio inviato in $e_7$). #gemini
 
 ![[Pasted image 20260928195705.png]]
 
-**fair execution**: se ogni processo esegue infinitely many local steps ed ogni messaggio viene eventualmente consegnato con $\text{Del}(i,j,m)$
-* **infinitely many local steps**: vuol dire che tutti i processi devono essere schedulati, sempre. non e' possibile che un processo dopo un po di tempo non venga più schedulato.
-* **eventualmente**: vuol dire che succederà, ma non so quando.
+* we apply $e_{0}$ to $C_{0}$: send $m'$ from $p_{1}$ to $p_{2}$
+* we apply $e_{1}$ to $C_{1}$: deliver $m'$, now $p_{2}$ received $m'$
+* apply $e_{2}$ to $C_{2}$: send $m''$ from $p_{2}$ to $p_{0}$
+* $m''$ is delivered only with $e_{9}$, decided from the scheduler.
 
-**fairness**: se isolo i processi e non li schedulo mai, potrebbe succedere che messaggi importanti non vengano mai consegnati dallo scheduler. Quindi lo scheduler deve essere fair.
-* **esempio**: esiste un processo con un 1? se l'unico processo con un 1 non viene schedulato, allora gli altri processi non possono conoscerne lo stato.
+**fair execution**: if every process $p_{i}$ exectues an infinitely many amount of local steps and every message is eventually delivered using $\text{Del}(i,j,m)$.
+* **infinitely many local steps**: every processes are always exectued by the scheduler. its not possible that after a certain point in the exectuion the process is never exectuted.
+* **eventually**: it will happend, but we don't know when
 
-> **Local execution**: $E|p_{j}$ e' la sotto sequenza di eventi in $E$ che interferiscono con $p_{k}$
- * $\epsilon|p_{1}= (\text{Del(0,1,m),...})$
+**fairness**: senza fairness lo scheduler può impedire il progresso isolando processi o non consegnando mai messaggi.
+* **example**: does exists a process holding a 1?
+	* if the only process holding a 1 is nevere scheduled
+	* then we cannot solve the problem correctly
 
-Quando arriva un evento $\text{Del(i,j,m)}$ allora $j$ conosce potenzialmente lo stato di $i$ fino al momento in cui $i$ ha inviato il messaggio.
-
-> guarda l'esempio e giocaci con il cervelletto.
-
-per local execution si intende il fatto che lo stato degli altri processi deve essere propagato porcaccio cristo.
-
-guarda nella slide dopo le differenze tra i messaggi: quando arrivano, quando sono inviati.
-* $p_{1}$ non puo' distinguere le due differenti esecuzioni, perche anche se il timing e' diverso vede le stesse cose.
-* nemmeno $p_{2}$ puo' distinguere le due differenti esecuzioni
-* scheduling diverso ma i processi vedono la stessa cosa.
-* localmente non puoi capire cosa succede globalmente nello scheduling delle esecuzioni
+**local execution (local view)**: $\mathcal{E}|p_{j}$ e' la sotto-sequenza di **eventi** in $\mathcal{E}$ che riguardano $p_{j}$ (nel loro ordine originale). #gemini
+* $\mathcal{E}|p_{1}= (\text{Del}(0,1,m),\dots)$
 
 
+![[Pasted image 20261103114909.png]]
+
+**indistinguishability**: #gemini
+* esecuzioni globali diverse possono produrre la stessa local execution per un processo: se $\mathcal{E}|p_1 = \mathcal{E}'|p_1$, allora $p_1$ **non può distinguere** $\mathcal{E}$ da $\mathcal{E}'$ (anche se il timing globale degli eventi è diverso, localmente vede la stessa sequenza). #gemini
+* $\mathcal{E}$ ed $\mathcal{E}'$ sono **indistinguibili** se $\forall p_j \in \Pi, \; \mathcal{E}|p_j = \mathcal{E}'|p_j$. #gemini
+* **Theorem**: in un sistema asincrono è impossibile ricostruire l'esatta esecuzione globale. #gemini
 
