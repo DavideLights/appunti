@@ -1,190 +1,127 @@
-> registrazione di luca part 1
+# sequential consistency
+Sequential consistency property, Lamport: 
+* an exectuion is sequential consistent if the (read and write) operations by all processes on the data store were exectued in some sequential order
+	* there is a global order
+* and the operations of each indibidual process appear in this sequence in the order specified by its program.
 
-**Shared memory and registers**: we find a logical variable divided by different processes.
-* everyone holds a local copy.
+**example slide 1**: the execution is not legal but we could rearrange it.
+* the global order could not correspond to the "real time" order
+* so we can **rearrange** operations, give a "**fictional**" global order.
+* from outside the system you cannot determine the order
 
-**goal**: create a simulator using messages to create a shared variable.
+**example slide 2**:
+* *there exists a global ordering that respects the local ordering seen by each register.*
+* it means that we can rearrange order of operations but we have to respect the execution order inside the process $p_{i}$
+* we cannot violate the local order seen by the process.
 
+why do you need sequencial consistency? gemini tell me!
 
-we will implement:
-* **read operation**: $\text{read}() \to v;$ it returns .
-* **write operation** ...
+differences:
+* regular and not sequential consisten
+* not regular and sequential consisency 
+# atomicity
+**Atomicity**: each operation should appear to take effect instantaneusly at some moment between its start and completion.
 
-these operations will take a certain amount of time to complete:
-* **invocation**: a certain operations starts a write operation at a certain time.
-* **return**: the operation just return the status, when its completed, in this task `null`.
-	* the `read` operation returns the actual value.
-* there will be multiple types of registers.
+**or linearizability (synom)**: we can find a moment inside an operation afther wich everyone in the system see the change. the exact point were we read a value, were we write, or when we do something special.
 
-**atomic**: an operation is a single atomic action, and cannot be interrupted or divided.
-* the operation itself is not atomic, we need to do some work to make operations atomic
+**TODO**: look at the slides and play with linearizability!
+* **example**: asdf
 
-**assumptions**: 
-* **register**: stores positive integers, initialized to 0.
-* each written value is univocally identified (so we write down a value only one time)
-	* to solve this problem, we attach the timestamp to the value to write.
-* its not possible for the same processes to invoke operations on the same register at the same time.
+if execution is **linearisable** $\to$ **regular**.
+* linearisable execution we can find a moment in wich operation are done
+* we can fino also a regular exectuion (??)
 
-**failed operation**: an invoked operation that carashes before completing.
+slide with relations ships.
 
-**crashed operation**: an operation that crashes is concurrent with any other operations starting after.
-* because the operation that crashed did not return.
+gemini: explain what regular means and resume using a table differences.
 
+exercise: very hard
+* $\text{read}_{2}() \to 2$
+	* so $\text{write}(2)$ has been linearised before $\text{read}_2$
+	* so $\text{read}_{3}$ cannot return 1
+* **note**: $\text{read}_{5}$ can return $\{ 2,3 \}$ if $\text{read}_{3}$ reads $2$
+* **note**: $\text{read}_{5}$ can return $\{ 3 \}$ if $\text{read}_{3}$ reads $3$. 
+* **note**: $\text{write(3)}$ crashes!
 
-## register semantics
-**strictly serialised semantic**: we imagine that operations are serialized trough a lock. Operations are strictly exectued when the lock is released
-* **assume**: no failures
-* **liveness**: each operation eventually terminates
-* **safety**: each read returns the last value written
-* we cannot implement it witout losing performances, we have to take the lock, and stop other processes!
-	* serializing costs a lot in distributed systems.
+**so**: what a $\text{read}_{i}$ returns depends on what $\text{read}_{j}$ returned with $j<i$.
 
-**concurrency semantic**: what happens if we read while a write an operation is executing? what happens if we have write while someone is writing?
-* several process can access the register
-* concurretn access
-* no failures
+**tree techinque used by teacher sborz**:
+* start from the first $\text{read}_{1}$
+* children are the value that this can read
+* from the children we apply $\text{read}_{2}$ assuming what $\text{read}_{1}$ read.
+* **and so on and so forth**.
 
-**failure semantic**: what happens if a write fails and the we read?
+gemini: whats the difference between atomic and regular.
 
-**goal**: find a set of useful semantics to have a working concurrent system.
-* we will define the semantics focusing on the read operation.
-* we will restrict what read can do.
+## atomic register
 
-## (19:00) regular consistency
-
-$(X,Y)$ register: 
-* $X$ number of processes that can write
-* $Y$ number of processes that can read
-* $(1,1)$: one can write and one can read
-	* **exam trap**: you can have $(1,1)$ in a system with 1000 processes for example
-* $(N,N)$: $N$ can write and $N$ can read
-* 24:00: non ho capito
-
-$(1,N)$ register:
-* **termination**: if a correct process invokes an operation, then the operation will terminate even if other processes fail.
-* **validity**: a read operation returns eather the **last value written** or the value **concurrently written**.
-	* if the write is not concurrent i check the last value on the register.
-
-**example of not regular execution**:
-* write 5
-* then we read and returns 0 (here is the problem)
-* then we read and get 5
-
-**example of regular**:
-* write 5
-* while writing 5, we read and get 0 (last value written or concurrent write)
-
-**strange example**:
-* it is ok to start a read
-* we start **AFTER** a write with value 6
-* the read is concurrent with the write
-* the read returns 6. OK
-* we schedule another concurrent read and returns 5
-	* ok because (last value written or concurrent write)
-
-> **(29:00) Note**: if the read is not concurrent with any write, it must return the last value written. Else we can return a set of different values.
-
-> if a process crashes while writing 8, then a read can eventually return the value 8!
+$(1,N)$ register specification properties:
+1. **termination**: if a correct process invokes an operation ...
+2. **validity**: ...
+3. **ordering**: if a read returns $v_{2}$ after a read that precedes it has returned $v_{1}$, then $v_{1}$ has not been written after $v_{2}$.
+	1. **equivalent** to linearization points.
 
 
-**how we implement**?
-* every process, hold a copy of the value.
-* and we have to synch those copy of the same value.
-* say $p_{0}$ is the **only writer**, and wants to write $5$
-	* he has to write down in its local copy the value
-	* he has to broadcast 5 to everyone.
-	* everyone holds a variable with the value of the register that can be modified only by $p_{0}$
-* a write terminates when i receive an ack from all the other readers.
 
-> look at examples of execution.
-
-$\text{upon event} <\text{onrr}, \text{Init}> \text{do}$:
-1. $\text{val} := 0$
-2. $\text{correct} = \Pi$
-3. $\text{writeset} = \emptyset$
-
-> look at the algorithm on the slides!
+**gemini**: table differences between regular, atomic, sequential
 
 
-**number of messages**:
-* a write generates $2n$ messages.
-	* n for broadacst
-	* n for ACK
-* a read generates 0 messages, its local.
+**atomic register interface**: report it here.
 
 
-**44:30 resiliency (how many failures we can tollerate)**:
- we can tollerate any amount of failures
- * understand what happens if we remove $\text{writeset} := \emptyset$
- * we do not wait for ack at the next write.
+## use regular register to implement atomic register
+**fact 1**: read operation cannot be local. This read operation depends from other processes, so it needs to send messages.
+* **goal**: understand when a write has been linearized
 
-**time to complete a write**: 2 steps
-**time to complete a read**: 0 
+we want to avoid the fact that:
+* $p_{4}$ reads 5 at $t$
+* $p_{5}$ reads 7 at $t'>t$
 
+**solution**: a read operation impose a write to everyone else. **read-impose write-all**
+* we also must discard old read-impose, write messages using attaching a timestamp to the reader's write messages
+* the reader starts a write operations and waits for ACK from everyone else.
+* the reader waits 
 
-## correctness
+## read-impose write-all algorithm
+1. **reading**: i have to rember if i am the writer or the reader **upon** $\text{correct} \subseteq \text{writeset}$
+2. i have to send ACK in anycase in **upon event** $<\text{beb, Deliver} | p \dots>$
+3. the write terminates when $\text{correct} \subseteq \text{writeset}$
+	1. we set $\text{reading = FALSE}$
+	2. it just terminates when at least one correct process sends me an ACK????
 
-**termination**:
-* **read**: immediate, its local!
-* **write**: if the writer is correct, BEB, will reach other correct processes and we can detect who is not correct.
+**complexity**: $2n$ messages.
 
-**validity**;
-* **read is not concurrent**: any write started before any read has been completed because hi sent him an ack, so i have a correct copy of the value.
-* **read is concurrent**: diocane 
+**time complexity**: 2
+* one broadcast
+* then i wait for ack.
 
-what if a broadcast message is lost?
-* the a process $p_{3}$ could always read the old value, example $0$.
+## correcteness for read-impose write-all
+**termination**: as for regular register (1,N)
+**validity**: as for regular register (1,N)
 
-**example**:  is it possible to write 5, and then $p_{1}$ reads 5 and then reads 1?
-
-> registrazione luca perte 2 da ora in poi
-
-**assume**: now we have a not perfect failure detector. so we can see $p_{2}$ crashed but in reality its working.
-* we return from write witout waiting $p_{2}$ ACK
-* and $p_{2}$ can read an invalid value because he might start a read before receiving the broadcast, but at the same time the write was completed.
-
-
-## fail silent variant
-can we adapt the algorithm to be fail-silent?
-* (4:50) means that we don't need a fail detector
+**ordering proof**: it simply look at the slides
 
 
-**assumptions**:
-* $N$ processes: 1 writer and $N$ readers
-* at least $\frac{n}{2}+1$ correct processes, and $f < \frac{n}{2}$
+## implementation for fail silent
+**assumption for n of failures**: $f < \frac{n}{2}$
+* $\frac{n}{2}$ then most of the time the implementation uses quorum.
 
-**write**:
-* do BEBCast
-* wait for $\frac{n}{2}+1$ ACKS
-* so $p_{1}$ send in broadcast the value to all processes
-* the faster $\frac{n}{2}+1$ reply ACK, and $p_{1}$ terminates the write.
-* we know that a quorum contains the last value
+**writer**: waits for a quorum of ack
+**reader**: waits for a quorum of ack.
 
-**read**:
-* what if we read locally? it would not work because processes not in the quorum would read an old value while the operation concluded.
-* we have to read using messages, we ask the register value to $\frac{n}{2}+1$ processes (another quorum)
-* because two quorums intersect, we will eventually get the right value.
 
-**what happens when**:
-* half of the quorum says the value is 1 and the other half is 2? we do not have a majority
-* we need to attach a timestamp to the value.
-* the highest timestamp is the latest value.
+generally, to replace a failure detector, we use a quorum.
 
-> look at the code
+gemini: why do we have two fase? 
+* ask phase durin read/
+* impose phase during write?
 
-> **note**: with $N=4$ i can tollerate at most $1$ failure.
+gemini: why this algorithm is correct? why do we need a read to help writer to ensure that the algorithm is atomic? diocane?
 
-* `wts`: write timestamp
-* `rid=0` needed to discard ACKS from an old read request that might arrive later to other processes.
+me so rotto er cazzo della magistrale basta
 
-on $<\text{beb}, \text{Deliver} \dots>$:
-* we update the value only if the timestamp is greater of the local value.
-* then i send the ack with the timestamp
-* so the writer knows for what message is the ack.
 
-> IN QUESTO MOMENTO ALFREDO E' USCITO CON LA TIPA ROSCIA
 
-## dim.
-**validity**: write waits for $\frac{n}{2}+1$ ACKS, and read too. We have two quorums that intersects in at least one process. The intersection is the set of processes with the latest value for the register.
 
-exrcise 
+
+
