@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics Homeworks — DavideLights</title>
+  <meta name="description" content="Index of interactive web applications for Statistics Homeworks (HM2, HM3, HM4).">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Statistics Homeworks &mdash; Interactive Web Lab</h1>
+      <p>Standalone HTML/CSS/JS implementations &bull; DavideLights</p>
+    </header>
+
+    <section class="panel prose">
+      <div class="panel-title">
+        <span>Homework Index</span>
+        <span class="panel-subtitle">Select an Assignment</span>
+      </div>
+
+      <div class="stat-grid" style="grid-template-columns: 1fr;">
+        <div class="stat-card" style="background: #FFFFFF; padding: 16px;">
+          <div class="stat-label">Homework 2 (Welford)</div>
+          <div class="stat-val" style="font-size: 18px; margin-bottom: 6px;">
+            <a href="hm2/index.html" style="color: #0055FF; text-decoration: none;">Welford's Recurrence Formulas &rarr;</a>
+          </div>
+          <p style="font-size: 13px; color: #555555;">
+            Step-by-step algebraic derivation of Knuth's mean and Welford's sum of squares (<em>SS<sub>k</sub></em>) and variance recurrences, 3-line core JavaScript implementation, interactive live stream verifier, and IEEE-754 floating-point catastrophic cancellation benchmark.
+          </p>
+        </div>
+
+        <div class="stat-card" style="background: #FFFFFF; padding: 16px;">
+          <div class="stat-label">Homework 3 (Sampling Mean &amp; Variance)</div>
+          <div class="stat-val" style="font-size: 18px; margin-bottom: 6px;">
+            <a href="hm3/index.html" style="color: #0055FF; text-decoration: none;">Sampling Mean &amp; Variance Across m Hackers &amp; n Systems &rarr;</a>
+          </div>
+          <p style="font-size: 13px; color: #555555;">
+            Monte Carlo simulation of <em>m</em> hackers attempting <em>n</em> systems with discrete penetration scores in {0, &hellip;, 10}. Uses Welford's recurrence to compute sampling means and variances, compares averages against theoretical (&mu;, &sigma;<sup>2</sup>), and analyzes 1/&radic;<em>n</em> variability decay and inferential significance.
+          </p>
+        </div>
+
+        <div class="stat-card" style="background: #FFFFFF; padding: 16px;">
+          <div class="stat-label">Homework 4 (Stochastic Penetration Process: LLN &amp; CLT)</div>
+          <div class="stat-val" style="font-size: 18px; margin-bottom: 6px;">
+            <a href="hm4/index.html" style="color: #0055FF; text-decoration: none;">Stochastic Penetration Process: S_n, S_n/n &amp; S_n/&radic;n &rarr;</a>
+          </div>
+          <p style="font-size: 13px; color: #555555;">
+            Simulation of <em>n</em> systems and <em>m</em> attackers with Bernoulli {0, 1} and Rademacher {&minus;1, +1} increments. Investigates trajectory scalings, Law of Large Numbers convergence in probability of <em>S<sub>n</sub>/n</em>, log&ndash;log variance slopes (+1, 0, &minus;1), and Central Limit Theorem convergence of <em>S<sub>n</sub>/&radic;n</em> to <em>N</em>(0, 1).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Statistics Homeworks &mdash; DavideLights &mdash; Ready for GitHub Pages
+    </footer>
+  </div>
+</body>
+</html>

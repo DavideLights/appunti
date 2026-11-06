@@ -5,8 +5,7 @@
 
 **"If a process $p$ experience a $\text{crash}(p)$, then it eventually experiences also a $\text{recovery(p)}$ (an event starting again $p$)"**: it's liveness, because for every istant $t$ where $p$ crashes, there is $t'>t$ s.t. we can have a recovery for that process. it's the definition of a liveness property.
 
-**"If a process $p$ experiences a $\text{recovery}(p)$, then this recovery happens at most $k$ events after its failure"**: it's a safety property. The bad thing is recovering strictly after $k$ events: if $\text{recovery}(p)$ occurs at step $t > \text{crash} + k$, the property is violated on that finite prefix and cannot be cured. (Note: crashing and never recovering does NOT violate it!). #gemini
-
+**"If a process $p$ experiences a $\text{recovery}(p)$, then this recovery happens at most $k$ events after its failure"**: it's a safety property. The bad thing is recovering strictly after $k$ events: if $\text{recovery}(p)$ occurs at step $t > \text{crash} + k$, the property is violated on that finite prefix and cannot be cured.
 # write 3 safety and 3  liveness prop.
 $\text{SAFE1}$: No process delivers the same message more than once (No duplication). #gemini
 
@@ -22,9 +21,16 @@ $\text{LIVENESS3}$: if $p$ is correct and everyone else is not correct, then $p$
 
 
 # does time-bounded recovery imply eventual recovery
-**No**. The property states: *"If $p$ experiences a recovery, then it happens in $\leq k$ events"*. If $p$ crashes and **never** recovers, the premise is false, so the implication is vacuously true. Thus an execution where $p$ stays dead forever satisfies time-bounded recovery but violates eventual recovery. #gemini
+If recovery is time-bounded, then a process $p$ that crashed at an instant $t$ will recover before istant $k+t$ where $k$ is the bound. So if $p$ recover befor $k+t$ then we can say also that it eventually recovered.
+
 
 # improve the writing
-**Decompose into safety and liveness** (badly written because it mixes both): #gemini
-* **Liveness** (eventual progress): If a correct process $p$ outputs $O_p$, then every correct process $q$ eventually outputs a set $O_q$. #gemini
-* **Safety** (containment / consistency): For any two processes $z, t$, if $z$ outputs $O_z$ and $t$ outputs $O_t$, then either $O_z \subseteq O_t$ or $O_t \subseteq O_z$ (incomparable sets can never be output). #gemini
+If a process $p$ outputs a set of integer $O_{p}$, then any other process $q$ outputs also a set $O_{q}$. For any two processes $z$ and $t$ we have $O_{z}$ subset of $O_{t}$ or $O_{t}$ subset of $O_{z}$.
+
+The problem is that the property combines safety and liveness together, the liveness property should only target correct processes and we should use mathematical notation. #gemini
+
+* **Liveness**: if $p$ outputs a set of integer $O_{p}$, the every correct process $q$ eventually outputs a set $O_{q}$.
+* **Safety**: for any two processes $z,t$, if $z$ outputs $O_{z}$ and $t$ outputs $O_{t}$ then $O_z \subseteq O_t \lor O_t \subseteq O_z$.
+
+
+
