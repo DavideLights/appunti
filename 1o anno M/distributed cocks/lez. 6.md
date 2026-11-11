@@ -156,8 +156,16 @@ In the worst case, how many units are needed?
 # failure detection (*Time 3*)
 **note**: in asynchronous systems the only ordering is given by the happened-before relationship.
 
+**why failure detection?**: instead of abstracting time inside the link to achieve an syncrhonous system **we abstract an object that reflects if process are synchronized**.
+
+> **crash-stop abstraction**: in this abstraction a process is faulty if it crashes at some time during the excution and its correct if it never crashes and executes an infinite number of esteps.
+
+**assuming crash-stop abstraction**: we can to failuder detection using timeouts.
+
 > [!todo] MISSING FROM SLIDES (*Time 3*, slides 1–4): Recap on Timing Assumptions #gemini
 > * Why Eventual Synchrony needs **abstract timing assumptions**: Option 1 (bake timing bounds directly into links/processes — makes proofs complex and error-prone) vs **Option 2 (encapsulate timing assumptions inside separate abstractions: Failure Detectors & Leader Election)**. #gemini
+
+
 
 
 Two core abstractions that encapsulate timing assumptions:
@@ -202,6 +210,11 @@ what does this bullet list mean gemini?
 * **PFD2 (Strong Accuracy)**: If a process $p$ is detected by any process, then $p$ has actually crashed *(Safety property — never suspect a correct/alive process)*.
 
 ### perfect failure detector algorithm
+> **aka**: Exclude on timeout
+
+**uses**: $\text{PerfectPointToPointLinks}$
+
+> **note**: perfect p2p is a channel that: odes not **lose, duplicate, create spurious messages.**
 
 **upon event $<\mathcal P, \text{Init}>$ do**:
 1. $\text{alive} := \Pi$
