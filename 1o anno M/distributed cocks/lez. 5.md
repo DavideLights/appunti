@@ -46,7 +46,12 @@
 * $\to_{i}$: denotes the ordering relation **inside** $p_{i}$
 * $\to$: denotes the ordering relation **between any pair of events**
 
-two events $e$ and $e'$ are related by happened-before relation $(e \to e')$: 
+**(from lamport paper)**, two events $e$ and $e'$ are related by happened-before relation ($e \to e'$) if one of the three is true:
+* $a$ and $b$ are events in the same process and $a$ comes before $b$
+* $a$ is the sending of a message by one process and $b$ is the receipt of the same message by another process.
+* if $a \to b$ and $b\to c$, then $a\to c$
+
+(**from slides**) two events $e$ and $e'$ are related by happened-before relation $(e \to e')$: 
 1. **Local ordering**: $\exists p_i$ such that $e \to_i e'$. $e'$ starts after $e$ inside $p_{i}$
 2. **Send-receive ordering**: $\forall m, \; \text{send}(m) \to \text{receive}(m)$
 	1. $e=\text{send}(m)$
@@ -96,9 +101,85 @@ logical clock guarantees:
 * does not guarantee: IF $L(e) < L(e')$ then $e \to e'$
 * **what does this mean**? looking only at the scalar clocks, we cannot determine if two events are **concurrent** or correlated by **happened-before rel**.
 
-# vector clock
-**Vector Clock**: guarantee IF $L(e) < L(e')$ then $e \to e'$
+[!note] think about when $L(e) < L(e')$ but $e \not \to e'$, but its trivial???
 
-**intuition**: $L(e)$ describes a list of events that happened before $e$![[Pasted image 20261106002111.png]]
+# vector clock (from the book)
+**how to track causality**? using vector clocks
+* is simple if we assign each event a unique name
+* this name will be the combination of a process ID and a locally incrementing counter $p_{k}$.
+* $p_{k}$ is the $k^{th}$ event that happened in process $p$
 
-now we append the last event received to my historu
+**Assume**: 
+* let event $p_{k}$ for some $k$ in $P$ describing that: $P$ sends a message to $Q$
+* let $q_{1}$ the event in $Q$ describing the arrival of the message.
+
+**How to track causality**?
+* $P$ also send his local history
+* assume $P$'s history is made of $\{ p_{1},p_{2} \}$ extended with $p_{3}$ (describing the send event)
+* assume $Q$'s history is made of $\{ q_{1} \}$
+* on arrival $Q$ records:
+	* $P$'s history $\{ p_{1},p_{2},p_{3} \}$ 
+	* the deliver event $q_{2}$ 
+	* so he merges the two histories together obtaining $\{ p_{1},p_{2},p_{3},q_{1},q_{2} \}$
+
+How to chec if $p$ causally precedes $q$?
+$$
+\text{check } H(p) \subset H(q)
+$$
+How we represent $H(p)$?
+* assign a sequential index to each process
+* use a vector $\text{VC}_{j}$ inside process $P_{j}$
+* its just the logical clock at process $P_{j}$
+* each entry of the vector describes what $P_{j}$ **knows** about the logical clock of $P_{i}$
+ $$
+ \text{VC}_{j}[i]= \text{number of events that have occurred so far at } P_{j}
+$$
+
+**property**: if $\text{VC}_{i}[j]=k$ then $P_{i}$ knows that $k$ events occourred at $P_{j}$
+
+**how to use a vector clock**:
+1. before executing an event
+	1. $P_{i}$ executes $\text{VC}_{i}[i] \gets \text{VC}_{i}[i] + 1$
+	2. **note**: we just recorded that a new event happened
+2. when $P_{i}$ sends a message $m$ to $P_{j}$
+	1. $m$'s timestamp $ts(m)$ is set to $\text{VC}_{i}$
+	2. **note**: done after increment
+3. when $P_{j}$ receives the message
+	1. $\forall k \text{VC}_{j}[k] \gets \max \{  \text{VC}_{j}[k], \text{ts}(m)[k] \}$
+	2. **note**: just maximize for each entry of the vector clock the values.
+
+**note**: for an event $a$ with timestamp $\text{ts}(a)$ then $\text{ts}(a)[i]-1$ is the number of events processed at $P_{i}$ preceding $a$.
+
+**conseguence**: $P_{j}$ receiving $ts(a)$ know the number of events that caused $a$ inside $P_{i}$
+
+## slides
+we introduced vector clocks talking about history of an event looking at this example:
+![[Pasted image 20261106195204.png]]
+
+we noted that:
+* $L(e) = [\text{History}_{p_{0}}: [e_{0}], \text{History}_{p_{1}}: [e_{1},e_{3}], \dots]$ describes the history of events behing $e$ for all processes in the system 
+* we need two rules: update send rule and update rcv rule.
+* $L(e_{i}) > L(e_{j})$ iff two conditions hold
+	* $\forall k: L(e_{j})_{\text{History}_{k}} \subseteq L(e_{i})_{\text{History}_{k}}$
+	* $\exists x: L(e_{j})_{\text{History}_{x}} \subset L(e_{i})_{\text{History}_{x}}$
+* if $e \to e'$ then $L(e) < L(e')$ because one "contains" the other.
+* if $L(e) < L(e')$ then $e \to e'$ because $L(e')$ contains e and a causal path from $e$ to $e'$
+
+![[Pasted image 20261106195737.png]]
+
+* $\text{History}_{x} \subset \text{History'}_{x} \to \text{History}_{x}$ is a prefix for $\text{History'}_{x}$ 
+* $\text{History}_{x} \subset \text{History'}_{x} \to \text{len}(\text{History}_{x}) < \text{len}(\text{History'}_{x})$
+
+
+## vector clock implementation, example and properties from slides
+
+**properties**: let $V, V'$ be two vector clocks
+* $V=V'$ iff $V[j]=V'[j] \;\; \forall j \in \{ 1,\dots,N \}$
+* $V \leq V'$ iff $V[j] \leq V'[j] \;\; \forall j \in \{ 1,\dots,N \}$
+* $V < V'$ iff $V \leq V' \land \exists j: V[j] < V'[j]$
+
+
+![[Pasted image 20261106213940.png]]![[Pasted image 20261106214842.png]]![[Pasted image 20261106214847.png]]
+
+**what problem does vector clock solve**? causal broadcast.![[Pasted image 20261106214954.png]]![[Pasted image 20261106215007.png]]![[Pasted image 20261106215014.png]]
+
