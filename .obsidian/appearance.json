@@ -1,5 +1,6 @@
 {
   "cssTheme": "Typomagical",
   "baseFontSize": 22,
-  "theme": "moonstone"
+  "theme": "moonstone",
+  "showRibbon": true
 }

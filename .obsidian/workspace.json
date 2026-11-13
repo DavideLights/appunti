@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "74aa56b306074ad7",
+        "id": "16d38e5ecaa9756f",
         "type": "tabs",
         "children": [
           {
-            "id": "ebeaaa644e9c487d",
+            "id": "e8bac418cc717f2d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/distributed cocks/lez. 8.md",
+                "file": "1o anno M/cockgraphy/lez. 8.md",
                 "mode": "source",
                 "source": false
               },
@@ -83,7 +83,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242
+    "width": 218.12369918823242,
+    "collapsed": true
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -214,10 +215,31 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "ebeaaa644e9c487d",
+  "active": "e8bac418cc717f2d",
   "lastOpenFiles": [
-    "1o anno M/distributed cocks/lez. 7 portatile.md",
+    "1o anno M/cockgraphy/lez. 10 ??.md",
+    "1o anno M/cockgraphy/lez. 1.md",
+    "1o anno M/cockgraphy/lez. 8.md",
+    "Excalidraw/lez. 8 2026-10-23 16.29.38.excalidraw.md",
+    "1o anno M/cockgraphy/lez. 7.md",
+    "1o anno M/stacocks/websites/hm6/script.js",
+    "1o anno M/stacocks/websites/hm6/index.html",
+    "1o anno M/stacocks/websites/hm6/style.css",
+    "1o anno M/stacocks/websites/hm6",
+    "1o anno M/stacocks/hm6.md",
+    "1o anno M/distributed cocks/lez. 15.md",
+    "1o anno M/distributed cocks/lez. 14.md",
+    "1o anno M/distributed cocks/lez. 13.md",
+    "1o anno M/distributed cocks/lez. 12.md",
+    "1o anno M/distributed cocks/lez. 11.md",
+    "1o anno M/distributed cocks/lez. 10.md",
+    "1o anno M/cockgraphy/lez. 6.md",
+    "1o anno M/distributed cocks/lez. 1.md",
+    "1o anno M/network cocks/3. labs/lab. 5.md",
+    "1o anno M/network cocks/3. labs/Kathara VPN.pdf",
     "1o anno M/distributed cocks/lez. 8.md",
+    "1o anno M/network cocks/3. labs",
+    "1o anno M/distributed cocks/lez. 7 portatile.md",
     "Pasted image 20261111225410.png",
     "1o anno M/stacocks/websites/hm5/script.js",
     "1o anno M/stacocks/websites/hm5/index.html",
@@ -227,41 +249,20 @@
     "Pasted image 20261111222412.png",
     "Pasted image 20261111184934.png",
     "1o anno M/distributed cocks/lez. 6 ex.md",
-    "1o anno M/distributed cocks/lez. 15.md",
-    "1o anno M/distributed cocks/lez. 12.md",
     "Pasted image 20261111141934.png",
     "Pasted image 20261111141905.png",
     "Pasted image 20261111140535.png",
     "Pasted image 20261111135145.png",
     "Pasted image 20261111135114.png",
-    "1o anno M/distributed cocks/lez. 10.md",
-    "1o anno M/distributed cocks/lez. 11.md",
     "1o anno M/distributed cocks/lez. 6.md",
-    "1o anno M/cockgraphy/lez. 7.md",
-    "1o anno M/cockgraphy/lez. 6.md",
     "1o anno M/cockgraphy/lez. 6 owf book.md",
-    "1o anno M/cockgraphy/lez. 10 ??.md",
     "GEMINI.md",
     "Excalidraw/lez. 5 2026-11-07 16.30.35.excalidraw.md",
     "Excalidraw/lez. 5 2026-10-27 17.54.26.excalidraw.md",
     "1o anno M/cockgraphy/lez. 5 structured.md",
     "1o anno M/cockgraphy/lez. 5.md",
-    "1o anno M/cockgraphy/lez. 4.md",
-    "1o anno M/cockgraphy/lez. 5 hybrids book.md",
     "Pasted image 20261107150640.png",
-    "1o anno M/distributed cocks/lez. 5.md",
     "Pasted image 20261106002111.png",
-    "1o anno M/distributed cocks/lez. 4.md",
-    "1o anno M/distributed cocks/3-4. Time in Distributed Systems I.md",
-    "1o anno M/distributed cocks/lez. 3.md",
-    "1o anno M/stacocks/hm1 ex2.md",
-    "1o anno M/stacocks/websites/publish.sh",
-    "1o anno M/stacocks/websites/hm4/style.css",
-    "1o anno M/stacocks/websites/hm3/style.css",
-    "1o anno M/stacocks/websites/hm2/style.css",
-    "1o anno M/stacocks/websites/index.html",
-    "1o anno M/stacocks/websites/hm4/script.js",
-    "1o anno M/stacocks/hm4.md",
     "Senza nome.canvas"
   ]
 }
