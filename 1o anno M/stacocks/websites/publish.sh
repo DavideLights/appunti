@@ -47,4 +47,14 @@ else
 fi
 gh api -X POST repos/DavideLights/hm5/pages -f build_type=workflow 2>/dev/null || true
 
+echo "=== Publishing HM6 as hm6 ==="
+cd "$DIR/hm6"
+if ! gh repo view DavideLights/hm6 >/dev/null 2>&1; then
+  gh repo create hm6 --public --source=. --remote=origin --push
+else
+  git remote set-url origin https://github.com/DavideLights/hm6.git 2>/dev/null || git remote add origin https://github.com/DavideLights/hm6.git
+  git push -u origin main
+fi
+gh api -X POST repos/DavideLights/hm6/pages -f build_type=workflow 2>/dev/null || true
+
 echo "=== All homeworks published and GitHub Pages workflows triggered! ==="

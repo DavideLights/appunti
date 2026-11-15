@@ -1,169 +1,202 @@
-# Block ciphers
-**note**: the name is actually misleading, because they are note ciphers on their own. Actually they are pesudorandom permutations.
+> [!info] References #gemini
+> * **Course Slides**: Daniele Venturi, [Lecture 8 — Constructing PRFs from OWFs (GGM)](https://dventuri83.github.io/assets/pdf/crypto_lecture08_2627.pdf) #gemini
+> * **Reference Notes**: Simone Bianco, [Cryptography.pdf](https://github.com/Exyss/university-notes/raw/main/Master/Cryptography/Cryptography.pdf), Section 4.2.1 (*The GGM Tree*, pp. 35–38) #gemini
+> * **Textbook**: Katz & Lindell, *Introduction to Modern Cryptography* — 3rd ed. Section 8.5 (Theorem 8.21) / 2nd ed. Section 7.5 #gemini
 
-**examples**: DES, AES, ...
+How to build a PRF?
+* from any OWF
+* from any PRG *(today)* 
 
-**invertible**: b.c  are used often as an instatiation of a PRF, but they are more, as they are **invertible**. How do we make a PRF invertible?
+**GGM**: 
+* assume $G: \{ 0,1 \}^\lambda \to \{ 0,1 \}^{2\lambda}$
+* we want to build $F_{k}: \{ 0,1 \}^n \to \{ 0,1 \}^\lambda$
+* think of $G(k)=(G_{0}(k), G_{1}(k))$ 
+	* $G_{0}$ outputs first $\lambda$ bits of $G(k)$ 
+	* $G_{1}$ outputs last $\lambda$ bits of $G(k)$
+	* $|G_{0}(k)|=|G_{1}(k)|=|k|=\lambda$ 
 
-**feistel network**: design at IBM by feistel and is the inspiration of many block ciphers.
+Then we can define (for $n=2$): 
+* $F_{k}(00)=G_{0}(G_{0}(k))$
+* $F_{k}(01)=G_{1}(G_{0}(k))$
+* $F_{k}(10)=G_{0}(G_{1}(k))$
+* $F_{k}(11)=G_{1}(G_{1}(k))$
 
-$$\Psi_{F}(x,y) = (y, x \oplus F(y)) = (x',y')$$
+these four strings are pseudorandom, even when viewed together:
+* **intuition**: $G_{0}(k)||G_{1}(k)$ is pseudorandom and indistinguishable from $k_{0}||k_{1}$ (two independent uniform keys) 
+* and so is $F_{k}(00)||F_{k}(01)||F_{k}(10)||F_{k}(11)$ 
+* since $G$ is a PRG (applying $G$ independently to pseudorandom seeds $k_0, k_1$ keeps the outputs pseudorandom). 
 
-![[lez. 8 2026-10-23 16.28.17.excalidraw]]
+**GGM Tree (Fig. 7.2, $n=3$)**: 
+* Each input bit $x_i$ chooses whether to take the left branch ($0 \to G_0$) or the right branch ($1 \to G_1$) starting from the root key $k$. 
+* Evaluating $F_k(x)$ only traverses **one root-to-leaf path** (equals to $n$ calls to $G$)
+* So it runs in poly-time without ever materializing all $2^n$ leaves (
+* below, green highlights $F_k(011) = G_1(G_1(G_0(k)))$. 
 
-$$\Psi^{-1}_F(x',y') = (F(x') \oplus y', x')$$
-
-**Q**: is thus a PRP, assuming $F$ a PRF? 
-**R**: No, because 1st output half equals 2nd half of the input.
-
-**Stackable**: i can stack $\Psi$ and iterate. So we can solve the problem exposed in $Q$.
-
-
-![[lez. 8 2026-10-23 16.29.38.excalidraw]]
-* $F,F'$ are independent random functions. 
-* $F$ has its own key, and $F'$ has a different key.
-* **keys**: block ciphers use different keys inside their algorithm.
-
-**Q**: Did we get a PRP?
-**R**: No.
-
-**Observation**: 
-$$
-\Psi_{F,F'}(x,y) \oplus \Psi_{F,F'}(x',y) = \left( x \oplus x', \dots \right)
-$$
-* we make two different queries.
-* it turns out this is the "only problem".
-
-**Fix**: add one more round. We'll get a PRF this time.
-
-$F$, in the real word:
-* $F$ is heuristic
-* all the keys are derived from single $k$ using an heuristic PRP.
-
-**Lemma**: for every unbounded attacker making $q=\text{poly}(\lambda)$ queries, then the following are undistinguishible:
-1. $S: \Psi_{F,F'}(x,y)'; F,F \gets \mathbb R(n,n)$
-	1. $F,F'$ are just two random functions
-2. $R: R(x,y); R \gets \mathbb R(2n, 2n)$
-* **important assumption**: So as long the queries made by $\mathcal A$ are $y\text{-unique}$ ($y$ are all different).
-
-> gemini check this: $\mathbb R(n,n)$ set of functions going from a set of $n$ elements to another set of $n$ elements.
-
-## the proof that i did not understand at all
-**proof**: let $H_{i}$ be the experiment were we reply to the first $i$ queries as in  $S$, and all other as in $R$.
-* we switch from $S$ (its feistel) and then we switch to $R$ (random).
-* $H_{0} \equiv R \text{ and } H_{q} \equiv S$.
-
-
-Let's look ath $H_{i}$:
-* $x_{j} \oplus F(Y_{j}); y_{i} \oplus F'(x_{j} \oplus F(y_{j}))$ for $j=1,\dots,i-1$
-* $x_{i} \oplus F(y_{i}); y_{i} \oplus F'(x_{i} \oplus F(y_{i}))$, $\dots$
-* we want to show that $H_{i}$ is indistinguishable from $H_{i-1}$.
-
-**since $y_{i}$ are all different** from all $y_{j}$, then $F(y_{i})$ is random (since $F$ is random) and also independent of $F(y_{1}),\dots,F(y_{i-1})$ and everything else. So:
+```mermaid
+flowchart TD
+    K(["k"]) -->|0: G_0| N0(["G_0(k)"])
+    K -->|1: G_1| N1(["G_1(k)"])
+    N0 -->|0: G_0| N00(["G_0(G_0(k))"])
+    N0 -->|1: G_1| N01(["G_1(G_0(k))"])
+    N1 -->|0: G_0| N10(["G_0(G_1(k))"])
+    N1 -->|1: G_1| N11(["G_1(G_1(k))"])
+    N00 -->|0| L000["F_k(000)"]
+    N00 -->|1| L001["F_k(001)"]
+    N01 -->|0| L010["F_k(010)"]
+    N01 -->|1| L011["F_k(011) = G_1(G_1(G_0(k)))"]
+    N10 -->|0| L100["F_k(100)"]
+    N10 -->|1| L101["F_k(101)"]
+    N11 -->|0| L110["F_k(110)"]
+    N11 -->|1| L111["F_k(111)"]
+    style K stroke:#2ecc71,stroke-width:2px
+    style N0 stroke:#2ecc71,stroke-width:2px
+    style N01 stroke:#2ecc71,stroke-width:2px
+    style L011 stroke:#2ecc71,stroke-width:2px
+```
 
 $$
-(\dots)_{j=1,\dots, i-1} \to \text{same as before}
+F_{k}(x) = G_{x_{n}}(G_{x_{n-1}}(\dots G_{x_{1}}(k)\dots))
+$$
+$$
+x=x_{1}\dots x_{n} \in \{ 0,1 \}^n
+$$
+**what we are doing**: constructing a PRF on $n$-bit inputs using only a length-doubling PRG $G$ (and $n$ sequential evaluations of $G$).
+
+> [!note] question for venturi
+> why we cannot use a PRG as a PRF?
+
+**Thm**: assuming $G$ is a PRG 
+* with expansion factor $\ell(\lambda)=2\lambda$ (in Katz & Lindell notation: $\ell(n)=2n$) 
+* so $G_{0},G_{1}: \{0,1\}^\lambda \to \{0,1\}^\lambda$ 
+$$
+\mathcal F = \{ F_{k}: \{ 0,1 \}^n \to \{ 0,1 \}^\lambda\} \text{ is a PRF.}
+$$
+**intuition (Slides 3–4)**:
+* $k$ is random
+* so $(G_{0}(k), G_{1}(k)) \approx_{C} (U_{\lambda}, U_{\lambda})$, and ideally we could replace all $2^n$ leaves of the tree with uniform strings. 
+* **goal of the proof**: to show that $\mathcal F$ is a PRF we have to show that all the levaves of the GGM tree look truly like independent uniform strings.
+* **Why that naive idea fails**: replacing all $2^n$ leaves one by one requires **exponentially many hybrids** ($2^n$) 
+* So we would need to build $H_{0},H_{1},\dots,H_{T}$ hybrids with $T=2^n$
+* But to use hybrids, and to have a polinomial attacker we don't want an exponential number of hybrids! So we need another idea.
+
+**lemma**: for any $t(\lambda)=\text{poly}(\lambda)$ 
+$$
+(G(k_{1}),\dots,G(k_{t})) \approx_{C} (U_{2\lambda}, \dots, U_{2\lambda})
+$$
+* where $k_{i} \gets U_{\lambda}$
+
+**proof**: requires hybrids (Slides 4–5, Bianco Lemma 4.1). 
+* $H_0 \equiv (G(k_1), G(k_2), \dots, G(k_t))$
+* $H_1 \equiv (U_{2\lambda}, G(k_2), \dots, G(k_t))$ 
+* $H_i \equiv (\underbrace{U_{2\lambda}, \dots, U_{2\lambda}}_{i}, G(k_{i+1}), \dots, G(k_t))$ 
+* $H_t \equiv (U_{2\lambda}, U_{2\lambda}, \dots, U_{2\lambda})$ 
+
+
+**we want to prove that**: 
+$$
+H_{0} \approx_{C} H_{1} \approx_{C} \dots \approx_{C} H_{t-1} \approx_{C} H_{t} \implies H_{0} \approx_{C} H_{t}
+$$
+> **means**: it's impossible to distinguish in polynomial time between $t$ random strings of size $2\lambda$ from $t$ pseudorandom strings of size $2\lambda$
+
+
+**let's see $H_{0} \approx_{C} H_{1}$ (Slides 5–6)**
+```mermaid
+sequenceDiagram
+    participant A as PPT Adversary A
+    participant B as Reduction B
+    participant C as PRG Challenger C
+    Note over C: Samples z_1 ← G(U_λ) or z_1 ← U_{2λ}
+    C->>B: z_1 ∈ {0,1}^{2λ}
+    Note over B: Samples k_2, ..., k_t ← U_λ
+    B->>A: (z_1, G(k_2), ..., G(k_t))
+    A->>B: b' ∈ {0,1}
+    B->>C: b'
+```
+* **Goal of $\mathcal{A}$**: distinguish $H_0$ from $H_1$
+	* understand whether the first $2\lambda$-bit block is $G(k_1)$ 
+	* or uniform $U_{2\lambda}$ 
+* **Goal of $\mathcal{B}$**: break the PRG security of $G$
+	* understand whether $\mathcal{C}$ gave $z_1 = G(k_1)$ or $z_1 \gets U_{2\lambda}$)
+* **Algorithm of $\mathcal{B}$**: on input $z_1 \in \{0,1\}^{2\lambda}$ from $\mathcal{C}$, $\mathcal{B}$ samples $k_2, \dots, k_t \gets U_\lambda$, 
+	* computes $(z_1, G(k_2), \dots, G(k_t))$, 
+		* so $\mathcal B$ knows $G$ that $\mathcal C$ is using.
+	* calls $\mathcal{A}$ **once** on this tuple, 
+	* and outputs $\mathcal{A}$'s bit $b'$ to $\mathcal{C}$. 
+	* (For a general step $H_{i-1} \approx_C H_i$, $\mathcal{B}$ puts $i-1$ uniform $U_{2\lambda}$ blocks before $z_i$ and $G(k_{i+1}), \dots, G(k_t)$ after it.) 
+* **contraddiction**: $\mathcal A$ can break $C$ by reduction, but $PRG$ by definition is unbreakable. so $\not \exists A\square$
+
+now we still have to prove the following:
+**Thm**: assuming $G$ is a PRG 
+* with expansion factor $\ell(\lambda)=2\lambda$ 
+* so $G_{0},G_{1}: \{0,1\}^\lambda \to \{0,1\}^\lambda$ 
+$$
+\mathcal F = \{ F_{k}: \{ 0,1 \}^n \to \{ 0,1 \}^\lambda\} \text{ is a PRF.}
 $$
 
-$$
-x_{i}\oplus r, y_{i} \oplus F'(x_{i} \oplus r)
-$$
-* with random a $r$
-* **essentially**: i can replace $y_{i}$  with $r$ because they are all different by assumption. (???)
+**proof**: induction on $n(\lambda)=\text{poly}(\lambda)$ *(in Slides 6–12 written with $m(\lambda) = \text{poly}(\lambda)$)* 
+* let $F'_{k}: \{ 0,1 \}^{n-1} \to \{ 0,1 \}^{\lambda}$
+* let $F_{k}: \{ 0,1 \}^{n} \to \{ 0,1 \}^{\lambda}$ 
+* $F_{k}(x,y)=G_{x}(F'_{k}(y))$
+	* *this just a way to build $F_{k}$ using $F'_{k}$ that takes $n-1$ bits instead of $n$*
+	* $x \in \{ 0,1 \}$ and $y \in \{ 0,1 \}^{n-1}$
 
-**question**: can i replace $F'(x_{i} \oplus r)$ with $F'(r)$? so the input is completly random looking (???)
+* **Base case ($n = 1$, Slide 7)**: 
+	* $F_k(0) = G_0(k)$ so it calls just $G_{0}$,
+	* $F_k(1) = G_1(k)$ is the same
+	* all of this $\implies (G_{0}(k), G_{1}(k)) \approx_{C} (U_{\lambda}, U_{\lambda})$ 
+		* why? b.c. **G is PRG**.
+* **Inductive step (Slides 8–9)**: 
+	* Assume $F'_k$ is a PRF for length $n-1$. 
+	* **goal**: show $F_{k}$ is a PRF for length $n$
+	* Define three games for $\mathcal{A}$ querying $(x, y)$: 
+		* $\text{Game}_0(\lambda)$: oracle returns $F_k(x,y) = G_x(F'_k(y))$
+		* $\text{Game}_1(\lambda)$: oracle returns $H(x,y) = G_x(R'(y))$, where $R' \gets \mathcal{R}(n-1, \lambda)$ 
+		* $\text{Game}_2(\lambda)$: oracle returns $R(x,y)$, where $R \gets \mathcal{R}(n, \lambda)$
 
-what's the probability that $x_{i} \oplus r = x_{j} \oplus F(y_{j})$? it is negligible, at most $(i-1) 2^{-n}$
-* assuming it does not happen...
-* we get $(x_{i} \oplus r, y_{i} \oplus r')$ and they are random!
+```mermaid
+sequenceDiagram
+    participant A as PPT Adversary A
+    participant C as Challenger C
+    Note over C: Game_0: k ← U_λ (F_k)<br/>Game_1: R' ← R(n-1, λ)<br/>Game_2: R ← R(n, λ)
+    loop poly(λ) queries
+        A->>C: (x, y) ∈ {0,1} × {0,1}^{n-1}
+        alt Game_0(λ)
+            C->>A: F_k(x, y) = G_x(F'_k(y))
+        else Game_1(λ)
+            C->>A: H(x, y) = G_x(R'(y))
+        else Game_2(λ)
+            C->>A: R(x, y)
+        end
+    end
+    A->>C: b' ∈ {0,1}
+```
 
-what happened: i got form $H_{i}$ to $H_{i-1}$. PORCACCIODIDDIOPORCODDIO.
+* **Lemma 1 ($\text{Game}_0(\lambda) \approx_C \text{Game}_1(\lambda)$, Slides 9–10, Bianco Claim 1)**: 
+	* $\mathcal A$ wants to distinguish $\text{Game}_0(\lambda)$ from $\text{Game}_1(\lambda)$ 
+		* **goal**: distinguish $G_x(F'_k(y))$ from $G_x(R'(y))$ 
+	* $\mathcal B$ wants to break the PRF security of $F'$ 
+		* **goal**: distinguish $F'_k$ from $R'$ 
+	* **how the reduction works (for each query $(x, y)$ from $\mathcal{A}$)**: 
+		* $\mathcal{B}$ forwards **$y \in \{0,1\}^{n-1}$** to $\mathcal{C}$, who returns $w = F'_k(y)$ or $w = R'(y)$ 
+			* (note: $\mathcal{C}$ evaluates on query $y$, NOT on $k$) 
+		* **$\mathcal B$ sends $G_{x}(w)$ to $\mathcal A$** 
+			* if $w = F'_k(y)$: $\mathcal{A}$ receives $G_x(F'_k(y)) = F_k(x,y)$ ($\text{Game}_0(\lambda)$) 
+			* if $w = R'(y)$: $\mathcal{A}$ receives $G_x(R'(y)) = H(x,y)$ ($\text{Game}_1(\lambda)$) 
+		* when $\mathcal{A}$ outputs $b'$, $\mathcal{B}$ forwards $b'$ to $\mathcal{C}$ (perfect reduction)
 
-By the hybrid argument: $SD(S;R) \leq \sum_{i} (i-1)2^{-n} \leq q^2 2^{-n} = \text{negl}(\lambda)$.
-
-
-## feistel proof
-
-**THM**: assuming $\mathcal F$ a PRF family, then 3 rounds of feistel with independent keys is a PRP.
-
-**proof**: consider the following systems (what box the adversary can query).
-1. $T: \Psi_{F_{k_{3}}}(\Psi_{F_{k_{2}}}(\Psi_{F_{k_{1}}}(x,y))$
-2. $S: \Psi_{F,F'}(\Psi_{F_{F''}}(x,y))$
-3. $R: R(x,y); R \gets \mathbb R(2n, 2n)$
-	1. $\mathbb R$ is a random function
-4. $P: P(x,y); P \gets \mathbb P(2n, 2n)$
-	1. $\mathbb P$ is a random permutation
-
-> **note**: a pesudorandom function is indistingushable from a random function.
-> * a pseudorandom function cannot be efficiently inverted given the key
-> * a random function can be inverted easily.
-
-proof for 1-4.
-1. $T \approx_{c} S$. Why? By PRF theorem, $F \approx \text{PRF}$
-2. $S \approx_{S} R$. for $\text{poly}(\lambda)$ queries. **IDEA**: 1 round gives you $y\text{-uniques}$,  $\Psi_{F''}(x_i, y_{i})$ satisfies $y\text{-uniques}$
-	1. take $(x_{i}, y_{i}) \neq (x_{j}, y_{j})$
-	2. we want to compute the $\text{Pr}$ so that the two does not satisfie $y\text{-uniques}$
-	3. **case 1**: $y_{i}=y_{j}$, then $x_{i} \neq x_{j}$
-		1. $y_{i}'' = x_{i} \oplus F''(y_{i}) = x_{i} \oplus F''(y_{j})$
-		2. $\neq x_{j} \oplus F''(y_{j}) = y_{j}''$
-		3. so they are always different.
-	4. **case 2**: let $y_{i} \neq y_{j}$, then we would need
-		1. $x_{i} \oplus F''(y_{i}) = x_{j} \oplus F''(y_{j})$
-		2. or $x_{i} \oplus x_{j} = F''(y_{i}) \oplus F''(y_{j})$
-		3. this happens with $\text{pr} \leq 2^{-n}$
-	5. so: $\text{Pr}[\lnot y\text{-unique}] \leq \binom{q}{2} - 2^{-n} = \text{negl}(\lambda)$, then $S \equiv_{s} R$ by the lemma.
-3. $R \approx_{S} P$. A random functions is already is already ... from a random permutation assuming ... ???
-
-But one question remains: we can do SKE beating Shannon assumming any PRF.
-
-$$
-C = (r, F_{k}(r) \oplus m), \text{ with } r \text{ random}
-$$
-
-What about **very long messages**: $m = m_{1},\dots,m_{t}$ with $m_{i} \in \{ 0,1 \}^n$?
-
-**Mode of operation/Domain Extension**: descrive how do we use cypher $X$ to encrypt a long message? 
-* **ECB**: (Elettronic CodeBook), perhaps the simplest idea is to just do 
-	* $m_{1} \to F_{k} \to c_{1}$
-	* ...
-	* $m_{t} \to F_{k} \to c_{t}$.
-* Its unsecure, because $F_{k}$ is deterministic
-* Nobody uses ECB.
-
-**CBC**:
-![[lez. 8 2026-10-23 17.58.08.excalidraw]]
-
-
-**CFB and OFB**:
-![[lez. 8 2026-10-23 18.03.08.excalidraw]]
-> think about of decryption works given the encryption.
-
-
-**note**: in some constructions you can parallelize computation. understand wich one as exercise.
-
-**CTR**: is fully parallelizable.
-![[lez. 8 2026-10-23 18.08.17.excalidraw]]
-
-**thm**: CTR is CPA (for variable input length!) secure assuming F is a PRF. 
-* Note that adversary can choose input length
-
-> **note**: all modes (expect the first one) are secure.
-
-**Proof**: we need to proof that no adversary can distinguish encryption of $m_{0}$ from $m_{1}$ were they have arbitrary length.
-
-We design a game, it works like this:
-* $\mathcal A$ makes a query to $C$ and gets a response.
-* $\mathcal A \to m=m_{1},\dots,m_{t} \to \mathcal C$
-* $\mathcal A \gets c = c_{0},\dots,c_{t} \gets C$
-* **note**: $t$ can be different in every query
-* $\mathcal A \to m^*=m_{1}^*,\dots,m^*_{t^*} \to \mathcal C$
-* $\mathcal A \gets c = c_{0},\dots,c_{t} \gets C$
-* **note**: $\mathcal A$ can make a how many requests he wants.
-* $\mathcal A \to b$: outputs $b$.
-
-Let $G_{0}$ be the above game with $b=0$ and using **CTR** for encryption. Same for $G_{1}$ with $b=1$. We need to show $G_{0} \approx_{c} G_{1}$. 
-* CTR means that $c_{0} =r, c_{1}=F_{k}(r) \oplus m_{1}, \dots, c_{t} = F_{k}(r + t-1)+m_{t}$
-
-By security of $F$ we can replace $F_{k}$ with $R \gets \mathbb R(n,n)$, let us call this $H_{0}, H_{1}$. So $G_{0} \approx_{c} H_{0}$ and $G_{1} \approx_{c} H_{1}$. We finally introduce $H_{2}$ s.t. $c_{0}^*, c_{1}^*, \dots c_{t}^*$ is uniformly random. We will show that $H_{0} \approx_{S} H_{2}$ and $H_{1} \approx_{S} H_{2}$ assuming $\#$ queries is $q=\text{poly}(\lambda)$.
-
-Look 
+```mermaid
+sequenceDiagram
+    participant A as PPT Adversary A
+    participant B as Reduction B
+    participant C as PRF Challenger C (for F')
+    Note over C: Picks F'_k (k←U_λ) or R'←R(n-1,λ)
+    loop poly(λ) queries
+        A->>B: (x, y) ∈ {0,1} × {0,1}^{n-1}
+        B->>C: y
+        C->>B: w (F'_k(y) or R'(y))
+        B->>A: G_x(w)
+    end
+    A->>B: b' ∈ {0,1}
+    B->>C: b'
+```
+* **Lemma 2 ($\text{Game}_1(\lambda) \approx_C \text{Game}_2(\lambda)$, Slides 10–12, Bianco Claim 2)**: #gemini

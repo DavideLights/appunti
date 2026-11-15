@@ -7,8 +7,8 @@
 
 
 we will implement:
-* **read operation**: $\text{read}() \to v;$ it returns .
-* **write operation** ...
+* **read operation**: $\text{read}() \to v;$ returns the value $v$ stored in the register. #gemini
+* **write operation**: $\text{write}(v) \to \text{WriteReturn};$ updates the register value to $v$ and returns confirmation. #gemini
 
 these operations will take a certain amount of time to complete:
 * **invocation**: a certain operations starts a write operation at a certain time.
@@ -58,15 +58,15 @@ $(X,Y)$ register:
 * $(1,1)$: one can write and one can read
 	* **exam trap**: you can have $(1,1)$ in a system with 1000 processes for example
 * $(N,N)$: $N$ can write and $N$ can read
-* 24:00: non ho capito
+* *24:00 (`#gemini`)*: in $(1,1)$ and $(1,N)$ registers, it is **known a priori** which process(es) can write and which can read (and in $(1,N)$, the writer is also included among the $N$ readers). #gemini
 
-$(1,N)$ register:
-* **termination**: if a correct process invokes an operation, then the operation will terminate even if other processes fail.
-* **validity**: a read operation returns eather the **last value written** or the value **concurrently written**.
-	* if the write is not concurrent i check the last value on the register.
+**Module 4.1 — `(1, N)-RegularRegister` (`onrr`)**: #gemini
+* **Events**: Requests `<onrr, Read>`, `<onrr, Write | v>`; Indications `<onrr, ReadReturn | v>`, `<onrr, WriteReturn>`. #gemini
+* **ONRR1 (Termination)**: if a correct process invokes an operation, then the operation eventually completes (even if other processes fail). #gemini
+* **ONRR2 (Validity)**: a read that is not concurrent with a write returns the **last value written**; a read concurrent with a write returns either the **last value written** or the value **concurrently being written**. #gemini
 
 **example of not regular execution**:
-* write 5
+* write 5 (completes)
 * then we read and returns 0 (here is the problem)
 * then we read and get 5
 
@@ -76,7 +76,7 @@ $(1,N)$ register:
 
 **strange example**:
 * it is ok to start a read
-* we start **AFTER** a write with value 6
+* we start **AFTER** a write with value 6 (after 5 was written)
 * the read is concurrent with the write
 * the read returns 6. OK
 * we schedule another concurrent read and returns 5
@@ -84,7 +84,7 @@ $(1,N)$ register:
 
 > **(29:00) Note**: if the read is not concurrent with any write, it must return the last value written. Else we can return a set of different values.
 
-> if a process crashes while writing 8, then a read can eventually return the value 8!
+> if a process crashes while writing 8 (after 5), `write(8)` never returns, so it is **concurrent with every subsequent read forever**: any future read can legally return either $5$ or $8$ (and even alternate between them)! #gemini
 
 
 **how we implement**?
@@ -98,25 +98,46 @@ $(1,N)$ register:
 
 > look at examples of execution.
 
-$\text{upon event} <\text{onrr}, \text{Init}> \text{do}$:
-1. $\text{val} := 0$
-2. $\text{correct} = \Pi$
-3. $\text{writeset} = \emptyset$
+**Read-One-Write-All `(1,N)` Regular Register (Algorithm 4.1)**: #gemini
+```text
+Uses: BestEffortBroadcast beb, PerfectPointToPointLinks pl, PerfectFailureDetector P.
 
-> look at the algorithm on the slides!
+upon event <onrr, Init> do
+    val := ⊥; correct := Π; writeset := ∅;
 
+upon event <P, Crash | p> do
+    correct := correct \ {p};
+
+upon event <onrr, Read> do
+    trigger <onrr, ReadReturn | val>;
+
+upon event <onrr, Write | v> do
+    trigger <beb, Broadcast | [WRITE, v]>;
+
+upon event <beb, Deliver | q, [WRITE, v]> do
+    val := v;
+    trigger <pl, Send | q, ACK>;
+
+upon event <pl, Deliver | p, ACK> do
+    writeset := writeset ∪ {p};
+
+upon correct ⊆ writeset do
+    writeset := ∅;
+    trigger <onrr, WriteReturn>;
+```
+*(`#gemini`: algorithm from Distributed Registers I slides / Alg. 4.1)*
 
 **number of messages**:
-* a write generates $2n$ messages.
-	* n for broadacst
-	* n for ACK
-* a read generates 0 messages, its local.
+* a write generates at most $2n$ point-to-point messages: #gemini
+	* $n$ for broadcast (`beb`)
+	* at most $n$ for `ACK` #gemini
+* a read generates 0 messages, it's local.
 
 
-**44:30 resiliency (how many failures we can tollerate)**:
- we can tollerate any amount of failures
+**44:30 resiliency (how many failures we can tolerate)**:
+ we can tolerate any amount of failures ($f < n$) #gemini
  * understand what happens if we remove $\text{writeset} := \emptyset$
- * we do not wait for ack at the next write.
+ * we do not wait for acks at the next write (`correct \subseteq writeset` triggers immediately on stale ACKs from the previous write, returning before processes update `val`, violating Validity). #gemini
 
 **time to complete a write**: 2 steps
 **time to complete a read**: 0 
@@ -125,17 +146,17 @@ $\text{upon event} <\text{onrr}, \text{Init}> \text{do}$:
 ## correctness
 
 **termination**:
-* **read**: immediate, its local!
-* **write**: if the writer is correct, BEB, will reach other correct processes and we can detect who is not correct.
+* **read**: immediate, it's local!
+* **write**: if the writer is correct, BEB will reach other correct processes and $\mathcal{P}$ completeness detects crashed ones. #gemini
 
-**validity**;
-* **read is not concurrent**: any write started before any read has been completed because hi sent him an ack, so i have a correct copy of the value.
-* **read is concurrent**: diocane 
+**validity**:
+* **read is not concurrent**: any write preceding the read has completed, meaning every correct process (including the reader) updated its copy and sent an `ACK`. #gemini
+* **read is concurrent**: by the no-creation property of the channels, the returned value is either the last value written or the one concurrently being written. #gemini
 
-what if a broadcast message is lost?
-* the a process $p_{3}$ could always read the old value, example $0$.
+what if a broadcast message is lost? (Impossible with reliable `pl` + `beb` unless sender crashes; if `p3` never receives `WRITE`, it keeps the old value, e.g., $0$). #gemini
 
-**example**:  is it possible to write 5, and then $p_{1}$ reads 5 and then reads 1?
+**example**: is it possible to write 5 (after 1), and then $p_{1}$ reads 5 and then reads 1?
+* **Answer**: * [INSERT HERE] (check if `(1,N)`-regular allows new-old inversion during a concurrent `write(5)`). #gemini
 
 > registrazione luca perte 2 da ora in poi
 
@@ -170,21 +191,63 @@ can we adapt the algorithm to be fail-silent?
 * we need to attach a timestamp to the value.
 * the highest timestamp is the latest value.
 
-> look at the code
+**Majority Voting `(1,N)` Regular Register (Algorithm 4.2)**: #gemini
+```text
+Uses: BestEffortBroadcast beb, PerfectPointToPointLinks pl.
 
-> **note**: with $N=4$ i can tollerate at most $1$ failure.
+upon event <onrr, Init> do
+    (ts, val) := (0, ⊥); wts := 0; acks := 0;
+    rid := 0; readlist := [⊥]^N;
 
-* `wts`: write timestamp
-* `rid=0` needed to discard ACKS from an old read request that might arrive later to other processes.
+upon event <onrr, Write | v> do
+    wts := wts + 1;
+    acks := 0;
+    trigger <beb, Broadcast | [WRITE, wts, v]>;
 
-on $<\text{beb}, \text{Deliver} \dots>$:
-* we update the value only if the timestamp is greater of the local value.
-* then i send the ack with the timestamp
-* so the writer knows for what message is the ack.
+upon event <beb, Deliver | p, [WRITE, ts', v']> do
+    if ts' > ts then (ts, val) := (ts', v');
+    trigger <pl, Send | p, [ACK, ts']>;
+
+upon event <pl, Deliver | q, [ACK, ts']> such that ts' = wts do
+    acks := acks + 1;
+    if acks > N/2 then
+        acks := 0;
+        trigger <onrr, WriteReturn>;
+
+upon event <onrr, Read> do
+    rid := rid + 1;
+    readlist := [⊥]^N;
+    trigger <beb, Broadcast | [READ, rid]>;
+
+upon event <beb, Deliver | p, [READ, r]> do
+    trigger <pl, Send | p, [VALUE, r, ts, val]>;
+
+upon event <pl, Deliver | q, [VALUE, r, ts', v']> such that r = rid do
+    readlist[q] := (ts', v');
+    if #(readlist) > N/2 then
+        v := highestval(readlist);
+        readlist := [⊥]^N;
+        trigger <onrr, ReadReturn | v>;
+```
+*(`#gemini`: algorithm from Distributed Registers I slides / Alg. 4.2)*
+
+> **note**: with $N=4$ i can tolerate at most $1$ failure ($f < N/2$). #gemini
+
+* `wts`: write timestamp (to distinguish newer writes and match `[ACK, ts']` on the writer). #gemini
+* `rid=0`: read identifier, needed to discard stale `[VALUE, r, ts', v']` messages from an old read request when they arrive late. #gemini
+
+on $<\text{beb}, \text{Deliver} \mid p, [\text{WRITE}, ts', v']>$: #gemini
+* we update `(ts, val)` only if `ts' > ts` (avoids overwriting a newer value with a delayed out-of-order write). #gemini
+* then i send `[ACK, ts']` in any case so the writer knows which write is acknowledged. #gemini
 
 > IN QUESTO MOMENTO ALFREDO E' USCITO CON LA TIPA ROSCIA
 
 ## dim.
-**validity**: write waits for $\frac{n}{2}+1$ ACKS, and read too. We have two quorums that intersects in at least one process. The intersection is the set of processes with the latest value for the register.
+**termination**: from properties of `pl`/`beb` and majority of correct processes ($> N/2$ respond). #gemini
+**validity**: write waits for $> N/2$ ACKs, and read waits for $> N/2$ `VALUE` replies. Any two quorums intersect in at least one process, which holds a timestamp $\geq$ the timestamp of the latest completed write; `highestval(readlist)` thus returns either the latest completed value or a concurrently written one. #gemini
 
-exrcise 
+> [!warning] Exercise & Complexity #gemini
+> Trace the `(1,3)` regular register execution scenario and verify: #gemini
+> * **Message complexity**: write = * [INSERT HERE], read = * [INSERT HERE] #gemini
+> * **Communication steps**: write = * [INSERT HERE], read = * [INSERT HERE] #gemini
+> * **Resiliency**: how many faults $f$ can be tolerated? * [INSERT HERE] (ref: *Distributed Registers I* slides) #gemini

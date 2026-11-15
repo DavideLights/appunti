@@ -27,10 +27,10 @@
 
 > "A distributed system is one in which the failure of a computer you did not even know existed can render  your own computer unusable" Leslie Lamport.
 
-**distributed systems are complex**: coordinating entities is hard due to: #gemini
-* **asynchrony**: no global clock, message delays are unbounded, non-constant. #gemini
-* **failures**: uncertain; requires failure detection, masking, tolerance, or recovery. #gemini
-* **local view**: each process only sees its own local state and messages. #gemini
+**distributed systems are complex**: coordinating entities is hard due to: 
+* **asynchrony**: no global clock, message delays are unbounded, non-constant. 
+* **failures**: uncertain; requires failure detection, masking, tolerance, or recovery. 
+* **local view**: each process only sees its own local state and messages. 
 
 # model: system and concepts
 **system**: $n$ processes (qualsiasi cosa, computer, thread, una persona) in $\Pi : \{ p_{0},p_{1},\dots,p_{n-1}  \}$
@@ -43,7 +43,7 @@
 * **se non fosse complete**: per mandare messaggi avrei bisogno di inoltrare i messaggi tra piu processi.
 
 **process**: 
-* every process is a (possibly infinite) state machine (I/O Automaton). #gemini
+* every process is a (possibly infinite) state machine. 
 * **input**: e' il modo in cui il processo prende informazioni dall'esterno (upper layer).
 * **output**: e' il modo in cui il processo comunica con l'esterno (upper layer).
 * **ha uno stato**: la sua memoria interna e il contenuto del buffer input e buffer output
@@ -67,8 +67,8 @@
 
 # model: asynch executions
 * **no concept of time**, non ci sono bound sul ritardo dei messaggi o sul tempo di esecuzione. #gemini
-* an action executes in an unpredictable amount of time.
-* unpredictable does not mean slow.
+* **unpredictable time of exectution**: an action executes in an unpredictable amount of time.
+* $\text{unpredictable} \neq \text{slow}$.
 
 **Evento**: un avversario, ossia lo **scheduler**, decide cosa succede sui processi schedulando eventi:
 * $\text{Del}(i,j,m)$: muovi il messaggio $m$ da $\text{OutBuf}_{i}$ in $\text{InBuf}_{j}$
