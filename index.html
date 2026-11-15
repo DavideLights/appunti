@@ -398,7 +398,7 @@
     .card-body {
       flex: 1;
       overflow-y: auto;
-      padding: 22px 26px 28px;
+      padding: 16px 20px 22px;
       position: relative;
     }
 
@@ -406,15 +406,15 @@
     .manuscript-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 2px;
     }
 
     .manuscript-line {
       display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 10px;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 8px;
       border: 1px solid transparent;
       cursor: pointer;
       transition: all 0.14s ease;
@@ -447,7 +447,7 @@
       font-size: 11px;
       font-weight: 600;
       color: var(--ink-muted);
-      padding-top: 4px;
+      padding-top: 3px;
       user-select: none;
     }
 
@@ -457,43 +457,17 @@
 
     .line-prose {
       font-family: var(--font-serif);
-      font-size: 18px;
-      line-height: 1.65;
+      font-size: 17px;
+      line-height: 1.48;
       color: var(--ink);
     }
 
     .line-meta-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 8px;
+      gap: 6px;
+      margin-top: 4px;
       flex-wrap: wrap;
-    }
-
-    .line-action-hint {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      color: var(--ink-muted);
-      opacity: 0;
-      transition: opacity 0.12s ease;
-    }
-
-    .manuscript-line:hover .line-action-hint {
-      opacity: 1;
-    }
-
-    .citation-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--emerald-soft);
-      color: var(--emerald);
-      border: 1px solid var(--emerald-border);
     }
 
     .difficulty-pill {
@@ -503,11 +477,25 @@
       font-family: var(--font-mono);
       font-size: 10.5px;
       font-weight: 600;
-      padding: 2px 8px;
+      padding: 1px 7px;
       border-radius: 4px;
       background: var(--cobalt-soft);
       color: var(--cobalt);
       border: 1px solid var(--cobalt-border);
+    }
+
+    .updated-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid var(--emerald-border);
     }
 
     /* Original Source Verbatim Sheet */
@@ -516,23 +504,10 @@
       border: 1px solid var(--border);
       border-left: 3.5px solid var(--ink);
       border-radius: 8px;
-      padding: 20px 22px;
+      padding: 18px 20px;
       font-family: var(--font-serif);
-      font-size: 17px;
-      line-height: 1.68;
-    }
-
-    .source-ref-badge {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--amber-soft);
-      color: var(--amber);
-      border: 1px solid var(--amber-border);
-      padding: 2px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 10px;
+      font-size: 16.5px;
+      line-height: 1.55;
     }
 
     .source-mark {
@@ -1063,20 +1038,20 @@
     <!-- Minimal Header Row -->
     <header class="canvas-header">
       <div class="header-left">
-        <span class="status-dot active" id="statusDot" title="Block Verification Status"></span>
+        <span class="status-dot active" id="statusDot"></span>
         <h1 class="block-title" id="blockTitle">3.2 IND-CPA Security</h1>
-        <div class="block-dots" title="Switch Micro-Block">
-          <button class="dot-btn done" id="dot-0" onclick="switchBlock(0)" title="3.1 Negligible Functions (Verified)">1</button>
-          <button class="dot-btn current" id="dot-1" onclick="switchBlock(1)" title="3.2 IND-CPA Security (Active)">2</button>
-          <button class="dot-btn" id="dot-2" onclick="switchBlock(2)" title="3.3 CPA from PRFs">3</button>
+        <div class="block-dots">
+          <button class="dot-btn done" id="dot-0" onclick="switchBlock(0)">1</button>
+          <button class="dot-btn current" id="dot-1" onclick="switchBlock(1)">2</button>
+          <button class="dot-btn" id="dot-2" onclick="switchBlock(2)">3</button>
         </div>
-        <span class="status-tag" id="statusTag">Studying Block</span>
+        <span class="status-tag hidden" id="statusTag"></span>
       </div>
 
       <!-- Mastery Slider Above Right Card -->
       <div class="header-right">
-        <div class="mastery-control" title="Calibrated by Diagnostic Pretest — Drag to adjust block scaffolding depth">
-          <span class="mastery-label">Mastery Slider</span>
+        <div class="mastery-control">
+          <span class="mastery-label">Mastery</span>
           <input
             type="range"
             min="1"
@@ -1092,14 +1067,14 @@
       </div>
     </header>
 
-    <!-- Main Two-Panel Workspace (Occupies ~92% of Screen) -->
+    <!-- Main Two-Panel Workspace -->
     <main class="panels-grid">
       <!-- LEFT CARD: AI EXPLANATION / ORIGINAL SOURCE -->
       <section class="folio-card left-card">
         <div class="card-top">
           <div class="card-kicker">
             <span id="leftCardHeaderTitle">HERE GOES AI EXPLANATION</span>
-            <span style="color:var(--ink-muted);" id="leftWordCount">• 132w • Click any line for feedback</span>
+            <span style="color:var(--ink-muted);" id="leftWordCount">• 132w</span>
           </div>
 
           <div class="card-top-actions">
@@ -1107,15 +1082,13 @@
               class="switcher-btn"
               id="blindToggleChip"
               onclick="toggleBlindWrite()"
-              title="Toggle Blind-Write Auto-Blur"
             >
-              <span id="blindChipLabel">Blind-Write: Auto</span>
+              <span id="blindChipLabel">Blind-Write</span>
             </button>
             <button
               class="switcher-btn"
               id="sourceSwitcherBtn"
               onclick="toggleLeftSource()"
-              title="AI Explanation / Original Source Switcher"
             >
               <span class="switcher-icon-box"><span class="switcher-icon-pip"></span></span>
               <span id="switcherLabel">AI ⇄ Source</span>
@@ -1125,16 +1098,13 @@
 
         <div class="card-body" id="leftCardBody"></div>
 
-        <!-- Blind-Write Blur Veil (Automatically activates when typing in Right Card) -->
+        <!-- Blind-Write Blur Veil -->
         <div class="blind-veil hidden" id="blindVeil">
           <div class="blind-badge-box">
-            <h4>Closed-Book Recall</h4>
-            <p>
-              Left card is blurred while you write your explanation to prevent passive transcription.
-            </p>
-            <div style="display:flex; gap:8px; justify-content:center;">
+            <h4>Blind-Write</h4>
+            <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
               <button class="switcher-btn" style="background:var(--amber-soft); border-color:var(--amber); color:var(--amber);" onclick="peekLeftCard()">
-                👁 Peek Source (Marks Unverified)
+                👁 Peek
               </button>
             </div>
           </div>
@@ -1146,7 +1116,7 @@
         <div class="card-top">
           <div class="card-kicker">
             <span id="rightCardHeaderTitle">HERE GOES USER EXPLANATION</span>
-            <span style="color:var(--ink-muted);" id="rightModeSub">• Markdown + LaTeX</span>
+            <span style="color:var(--ink-muted);" id="rightModeSub"></span>
           </div>
 
           <div class="card-top-actions" id="rightTopActions"></div>
@@ -1170,21 +1140,21 @@
   <div class="corner-dock">
     <div class="corner-drawer hidden" id="cornerDrawer">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <strong>FOLIO // Lab &amp; Student Model (§6.2)</strong>
+        <strong>FOLIO // Lab &amp; Student Model</strong>
         <button class="jump-chip" onclick="resetPrototype()">↺ Reset</button>
       </div>
       <div class="corner-jumps">
-        <button class="jump-chip" onclick="openPretestModal()">1. Pretest Popup</button>
-        <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=false; renderAll();">2. Study Block</button>
-        <button class="jump-chip" onclick="openLineFeedback('s2')">3. Line Feedback Popup</button>
+        <button class="jump-chip" onclick="openPretestModal()">1. Pretest</button>
+        <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=false; renderAll();">2. Study</button>
+        <button class="jump-chip" onclick="openLineFeedback('s2')">3. Feedback</button>
         <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=true; renderAll();">4. Blind-Write</button>
-        <button class="jump-chip" onclick="triggerSubmitReview()">5. Review Qs Popup</button>
-        <button class="jump-chip" onclick="enterDiffMode()">6. IDE Inline Diffs</button>
+        <button class="jump-chip" onclick="triggerSubmitReview()">5. Review Qs</button>
+        <button class="jump-chip" onclick="enterDiffMode()">6. Inline Diffs</button>
       </div>
       <pre class="json-pre" id="telemetryPre"></pre>
     </div>
     <button class="corner-pill-btn" onclick="toggleCornerDrawer()">
-      <span>⚙ Demo &amp; Telemetry</span>
+      <span>⚙ Demo &amp; JSON</span>
       <span id="cornerStatusDot" class="status-dot active" style="width:8px; height:8px;"></span>
     </button>
   </div>
@@ -1280,9 +1250,9 @@
     };
 
     const INACCURATE_CITED_REWRITES = {
-      s1: "By Definition 3.22, $\\mathcal{A}$ has adaptive oracle access to $\\mathsf{Enc}_k(\\cdot)$ under fixed $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ in both pre- and post-challenge phases.",
+      s1: "$\\mathcal{A}$ has adaptive oracle access to $\\mathsf{Enc}_k(\\cdot)$ under fixed $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ in both pre- and post-challenge phases.",
       s2: "The challenge plaintexts $(m_0, m_1)$ must satisfy $|m_0| = |m_1|$ (equal length is mandatory since CPA does not hide plaintext length), and $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$.",
-      s3: "Formally, $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$; Theorem 3.24 proves no deterministic scheme satisfies this."
+      s3: "Formally, $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$; no deterministic scheme satisfies this."
     };
 
     const PRETEST_QUESTIONS = [
@@ -1380,7 +1350,6 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
       telemetry: {
         topic_id: "crypto_ch3_ind_cpa",
         block_id: "mod_3_2",
-        source_refs: ["Cryptography.pdf#p42-def3.22", "Cryptography.pdf#p43-thm3.24"],
         initial_mastery: "intermediate",
         left_feedback_flags: [],
         question_card_attempts: 0,
@@ -1507,13 +1476,13 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
       const note = noteEl ? noteEl.value.trim() : "";
       state.lineOverrides[lineId] = {
         text: INACCURATE_CITED_REWRITES[lineId],
-        cited: "Ref: Cryptography.pdf, p. 42, Def 3.22",
+        corrected: true,
         difficultyLabel: null
       };
       state.telemetry.left_feedback_flags.push({
         line: lineId,
         type: "inaccurate",
-        note: note || "Verify against source"
+        note: note || "Updated"
       });
       state.justUpdatedLineId = lineId;
       closeModal();
@@ -1522,10 +1491,10 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
     function onLineDifficultySlide(lineId, val) {
       const num = parseInt(val, 10);
       state.feedbackSliderVal = num;
-      const labels = { 1: "Simplified Trace", 2: "Balanced Depth", 3: "Formal Notation" };
+      const labels = { 1: "Simpler", 2: "Balanced", 3: "Formal" };
       state.lineOverrides[lineId] = {
         text: LINE_SLIDER_VARIANTS[lineId][num],
-        cited: null,
+        corrected: false,
         difficultyLabel: labels[num]
       };
       state.telemetry.left_feedback_flags.push({
@@ -1752,7 +1721,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         dot.className = cls;
       });
 
-      // Status Dot & Tag
+      // Status Dot & Tag (show text badge only when verified or unverified)
       const sDot = document.getElementById("statusDot");
       const sTag = document.getElementById("statusTag");
       const cDot = document.getElementById("cornerStatusDot");
@@ -1761,17 +1730,17 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         sDot.className = "status-dot verified";
         cDot.className = "status-dot verified";
         sTag.className = "status-tag verified";
-        sTag.textContent = "✓ Verified Block";
+        sTag.textContent = "✓ Verified";
       } else if (state.telemetry.override_used || state.telemetry.verification_status === "unverified") {
         sDot.className = "status-dot unverified";
         cDot.className = "status-dot unverified";
         sTag.className = "status-tag unverified";
-        sTag.textContent = `⚠ Unverified (${state.telemetry.override_reasons[0] || "override"})`;
+        sTag.textContent = "⚠ Unverified";
       } else {
         sDot.className = "status-dot active";
         cDot.className = "status-dot active";
-        sTag.className = "status-tag";
-        sTag.textContent = state.mode === "diff" ? "Reviewing Inline Diffs" : "Studying Block";
+        sTag.className = "status-tag hidden";
+        sTag.textContent = "";
       }
 
       // Mastery Slider
@@ -1792,18 +1761,17 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
       const body = document.getElementById("leftCardBody");
 
       switcherBtn.classList.toggle("source-active", state.leftSourceMode);
-      switcherLabel.textContent = state.leftSourceMode ? "Source PDF ⇄ AI" : "AI ⇄ Source PDF";
-      blindChipLabel.textContent = state.blindAutoEnabled ? "Blind-Write: Auto" : "Blind-Write: Off";
+      switcherLabel.textContent = state.leftSourceMode ? "Source ⇄ AI" : "AI ⇄ Source";
+      blindChipLabel.textContent = state.blindAutoEnabled ? "Blind-Write: On" : "Blind-Write: Off";
       blindVeil.classList.toggle("hidden", !state.blindActive);
 
       if (state.leftSourceMode) {
-        headerTitle.textContent = "ORIGINAL SOURCE EXCERPT";
-        wordCount.textContent = "• Cryptography.pdf (p. 42, §3.2.2)";
+        headerTitle.textContent = "ORIGINAL SOURCE";
+        wordCount.textContent = "";
         body.innerHTML = `
           <div class="source-sheet">
-            <span class="source-ref-badge">ANCHOR // Cryptography.pdf • Page 42 • Definition 3.22</span>
-            <p style="margin-top:6px;">
-              <strong>Definition 3.22 (IND-CPA Security).</strong> A private-key encryption scheme $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ has <em>indistinguishable encryptions under a chosen-plaintext attack</em> if for all probabilistic polynomial-time adversaries $\\mathcal{A}$, there exists a negligible function $\\mathsf{negl}$ such that:
+            <p style="margin-top:0;">
+              <strong>IND-CPA Security.</strong> A private-key encryption scheme $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ has <em>indistinguishable encryptions under a chosen-plaintext attack</em> if for all probabilistic polynomial-time adversaries $\\mathcal{A}$, there exists a negligible function $\\mathsf{negl}$ such that:
             </p>
             <p style="text-align:center;">
               $$\\Pr\\left[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1\\right] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$$
@@ -1811,8 +1779,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
             <p>
               where $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ provides $\\mathcal{A}$ with persistent oracle access to $\\mathsf{Enc}_k(\\cdot)$ and requires challenge plaintexts $(m_0, m_1)$ to satisfy <span class="source-mark">$|m_0| = |m_1|$</span>.
             </p>
-            <hr style="border:none; border-top:1px dashed var(--border); margin:16px 0;" />
-            <span class="source-ref-badge">ANCHOR // Cryptography.pdf • Page 43 • Theorem 3.24</span>
+            <hr style="border:none; border-top:1px dashed var(--border); margin:14px 0;" />
             <p style="margin:4px 0 0;">
               <strong>Proposition.</strong> <span class="source-mark">No deterministic encryption scheme can be CPA-secure.</span> Specifically, $\\mathcal{A}$ can query $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct $m_0 \\neq m_1$ and test whether $c^* = c_0$.
             </p>
@@ -1824,7 +1791,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
 
       headerTitle.textContent = "HERE GOES AI EXPLANATION";
       const wCounts = { 1: "138w", 2: "132w", 3: "118w" };
-      wordCount.textContent = `• ${wCounts[state.mastery]} • Click any line for Feedback`;
+      wordCount.textContent = `• ${wCounts[state.mastery]}`;
 
       const sentences = LEFT_SENTENCES[state.mastery];
       const html = sentences.map((s, idx) => {
@@ -1832,6 +1799,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         const text = ov ? ov.text : s.text;
         const isActive = state.activeFeedbackLineId === s.id;
         const isFlash = state.justUpdatedLineId === s.id;
+        const hasBadge = Boolean(ov && (ov.corrected || ov.difficultyLabel));
 
         return `
           <div
@@ -1841,11 +1809,12 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
             <span class="line-num">0${idx + 1}</span>
             <div>
               <div class="line-prose">${formatMd(text)}</div>
-              <div class="line-meta-row">
-                ${ov && ov.cited ? `<span class="citation-pill">✓ ${escapeHtml(ov.cited)}</span>` : ""}
-                ${ov && ov.difficultyLabel ? `<span class="difficulty-pill">⇄ ${escapeHtml(ov.difficultyLabel)}</span>` : ""}
-                <span class="line-action-hint">Click line → Feedback [Inaccurate | Difficulty Slider]</span>
-              </div>
+              ${hasBadge ? `
+                <div class="line-meta-row">
+                  ${ov.corrected ? `<span class="updated-pill">✓ Updated</span>` : ""}
+                  ${ov.difficultyLabel ? `<span class="difficulty-pill">⇄ ${escapeHtml(ov.difficultyLabel)}</span>` : ""}
+                </div>
+              ` : ""}
             </div>
           </div>
         `;
@@ -1864,9 +1833,9 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
       // Non-3.2 blocks (Read-only preview of 3.1 or 3.3)
       if (state.currentBlockIdx !== 1) {
         const blk = BLOCKS[state.currentBlockIdx];
-        modeSub.textContent = `• Block ${blk.id} (${blk.status})`;
+        modeSub.textContent = "";
         topActions.innerHTML = `
-          <button class="switcher-btn" onclick="switchBlock(1)">Return to Active Block 3.2 →</button>
+          <button class="switcher-btn" onclick="switchBlock(1)">Back to 3.2 →</button>
         `;
         body.innerHTML = `
           <div class="ide-diff-document">
@@ -1880,15 +1849,14 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
       // --- MODE A: IDE / CODEX / ANTIGRAVITY INLINE DIFF REVIEW ---
       if (state.mode === "diff") {
         const resolvedCount = state.diffs.filter(d => d.status !== "pending").length;
-        modeSub.textContent = `• ${resolvedCount}/${state.diffs.length} Inline Patches Resolved`;
+        modeSub.textContent = `• ${resolvedCount}/${state.diffs.length}`;
 
         topActions.innerHTML = `
           <button
             class="circle-submit-btn commit-mode"
             onclick="commitBlock()"
-            title="Commit Finalized Block to Notebook"
           >
-            <span>✓ Commit Block</span>
+            <span>✓ Commit</span>
           </button>
         `;
 
@@ -1897,7 +1865,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
             return `
               <div class="ide-hunk accepted">
                 <div class="ide-hunk-bar">
-                  <span class="ide-hunk-reason" style="color:var(--emerald);">✓ Accepted Patch — ${escapeHtml(d.reason)}</span>
+                  <span class="ide-hunk-reason" style="color:var(--emerald);">✓ Accepted</span>
                   <div class="ide-hunk-actions">
                     <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'pending')">Undo</button>
                   </div>
@@ -1912,7 +1880,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
             return `
               <div class="ide-hunk accepted">
                 <div class="ide-hunk-bar">
-                  <span class="ide-hunk-reason" style="color:var(--cobalt);">✎ Custom Edited Patch</span>
+                  <span class="ide-hunk-reason" style="color:var(--cobalt);">✎ Edited</span>
                   <div class="ide-hunk-actions">
                     <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">Edit</button>
                   </div>
@@ -1927,7 +1895,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
             return `
               <div class="ide-hunk rejected">
                 <div class="ide-hunk-bar">
-                  <span class="ide-hunk-reason">✕ Rejected Patch (Kept Original)</span>
+                  <span class="ide-hunk-reason">✕ Rejected</span>
                   <div class="ide-hunk-actions">
                     <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'pending')">Restore</button>
                   </div>
@@ -1942,17 +1910,11 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
           return `
             <div class="ide-hunk">
               <div class="ide-hunk-bar">
-                <span class="ide-hunk-reason">⚡ ${escapeHtml(d.reason)}</span>
+                <span class="ide-hunk-reason">${escapeHtml(d.reason)}</span>
                 <div class="ide-hunk-actions">
-                  <button class="hunk-btn accept" onclick="handleDiffAction('${d.id}', 'accepted')">
-                    ✓ Accept <span class="kbd-hint">⌘Y</span>
-                  </button>
-                  <button class="hunk-btn reject" onclick="handleDiffAction('${d.id}', 'rejected')">
-                    ✕ Reject <span class="kbd-hint">⌘N</span>
-                  </button>
-                  <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">
-                    ✎ Edit
-                  </button>
+                  <button class="hunk-btn accept" onclick="handleDiffAction('${d.id}', 'accepted')">✓ Accept</button>
+                  <button class="hunk-btn reject" onclick="handleDiffAction('${d.id}', 'rejected')">✕ Reject</button>
+                  <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">✎ Edit</button>
                 </div>
               </div>
               <div class="ide-diff-lines">
@@ -1972,10 +1934,10 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         body.innerHTML = `
           <div class="notebook-canvas">
             <div class="diff-banner">
-              <span><strong>2 Surgical Inline Patches</strong> generated from your Review Question answers</span>
+              <span><strong>${state.diffs.length} Inline Diffs</strong></span>
               <div style="display:flex; gap:6px;">
                 <button class="hunk-btn accept" onclick="acceptAllDiffs()">✓ Accept All</button>
-                <button class="hunk-btn" onclick="state.mode='write'; renderAll();">← Edit Raw</button>
+                <button class="hunk-btn" onclick="state.mode='write'; renderAll();">← Raw</button>
               </div>
             </div>
             <div class="ide-diff-document">
@@ -1995,18 +1957,15 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
 
       // --- MODE B: COMMITTED FINALIZED NOTE ---
       if (state.mode === "committed") {
-        modeSub.textContent = state.telemetry.override_used
-          ? "• Committed (Unverified — Override Logged)"
-          : "• Committed & Verified";
+        modeSub.textContent = "";
         topActions.innerHTML = `
-          <button class="switcher-btn" onclick="state.mode='write'; renderAll();">✎ Edit Note</button>
-          <button class="switcher-btn" onclick="switchBlock(2)">Next Block 3.3 →</button>
+          <button class="switcher-btn" onclick="state.mode='write'; renderAll();">✎ Edit</button>
+          <button class="switcher-btn" onclick="switchBlock(2)">Next →</button>
         `;
         body.innerHTML = `
           <div class="notebook-canvas">
             <div class="diff-banner" style="background:${state.telemetry.override_used ? 'var(--amber-soft)' : 'var(--emerald-soft)'}; border-color:${state.telemetry.override_used ? 'var(--amber-border)' : 'var(--emerald-border)'};">
-              <strong>${state.telemetry.override_used ? '⚠ Saved to Notebook as Unverified (Queued for early FSRS review)' : '✓ Block 3.2 Verified & Committed to Session Notebook'}</strong>
-              <span class="citation-pill">Grounded: p. 42, Def 3.22</span>
+              <strong>${state.telemetry.override_used ? '⚠ Unverified' : '✓ Verified'}</strong>
             </div>
             <div class="ide-diff-document">
               ${formatMd(state.userDraft)}
@@ -2018,12 +1977,11 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
       }
 
       // --- MODE C: WRITING EXPLANATION (DEFAULT) ---
-      modeSub.textContent = "• Write your explanation/proof in Markdown + LaTeX";
+      modeSub.textContent = "";
       topActions.innerHTML = `
         <button
           class="circle-submit-btn"
           onclick="triggerSubmitReview()"
-          title="Submit Explanation for Diagnostic Review"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2038,12 +1996,10 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
               class="editor-textarea"
               onfocus="onEditorFocusInput(this)"
               oninput="onEditorFocusInput(this)"
-              placeholder="Explain why deterministic encryption fails IND-CPA security..."
             >${escapeHtml(state.userDraft)}</textarea>
             <div class="live-math-preview">
               <div class="preview-header">
-                <span>Live Rendered Note Preview (KaTeX)</span>
-                <span>Click top-right ➔ button to review</span>
+                <span>Preview</span>
               </div>
               <div id="liveMathPreview">${formatMd(state.userDraft)}</div>
             </div>
@@ -2073,7 +2029,7 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         slot.innerHTML = `
           <div class="feedback-popup-card">
             <div class="popup-header">
-              <h3 class="popup-title">Feedback (Line ${lid.replace('s', '0')})</h3>
+              <h3 class="popup-title">Feedback</h3>
               <button class="hunk-btn" onclick="closeModal()">✕</button>
             </div>
 
@@ -2081,20 +2037,19 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
               class="inaccurate-btn ${state.feedbackInaccurateOpen ? 'active' : ''}"
               onclick="toggleInaccurateNote()"
             >
-              Inaccurate (Force Source Check)
+              Inaccurate
             </button>
 
             ${state.feedbackInaccurateOpen ? `
               <div class="note-drawer">
-                <input id="inaccurateNoteInput" type="text" placeholder="Optional 1-line note (e.g., check |m0|=|m1|)..." />
-                <button class="hunk-btn accept" onclick="submitInaccurateLine('${lid}')">Cite</button>
+                <input id="inaccurateNoteInput" type="text" placeholder="Optional note..." />
+                <button class="hunk-btn accept" onclick="submitInaccurateLine('${lid}')">Apply</button>
               </div>
             ` : ""}
 
             <div class="difficulty-box">
               <label>
                 <span>make it:</span>
-                <span style="color:var(--cobalt);">Difficulty Selector</span>
               </label>
               <input
                 type="range"
@@ -2107,9 +2062,9 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
                 onchange="onLineDifficultySlide('${lid}', this.value)"
               />
               <div class="slider-Scale">
-                <span>1 • Worked Intuition</span>
-                <span>2 • Balanced</span>
-                <span>3 • Terse Formal</span>
+                <span>Simpler</span>
+                <span>Balanced</span>
+                <span>Formal</span>
               </div>
             </div>
           </div>
@@ -2126,9 +2081,6 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         <div class="question-popup-card">
           <div class="popup-header">
             <span class="q-step-kicker">${escapeHtml(item.title)}</span>
-            <button class="hunk-btn" onclick="fillModalSampleAnswer()" title="Fill sample response for fast testing">
-              ⚡ Auto-Fill Demo Answer
-            </button>
           </div>
 
           <div class="q-prompt" id="modalQuestionPrompt">${formatMd(item.prompt)}</div>
@@ -2136,20 +2088,16 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
           <textarea
             id="modalAnswerInput"
             class="q-answer-box"
-            placeholder="${escapeHtml(item.placeholder)}"
+            placeholder="User Answer Here"
             onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); nextModalQuestion(); }"
           >${escapeHtml(currentAns)}</textarea>
 
           <div class="q-footer">
-            <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--ink-muted);">
-              Press Enter ↵ to continue
-            </span>
+            <span></span>
             <div style="display:flex; align-items:center; gap:12px;">
-              <button class="skip-link" onclick="skipModalQuestion()">
-                skip (${state.modal.flow === 'pretest' ? 'default mastery' : 'marks unverified'})
-              </button>
+              <button class="skip-link" onclick="skipModalQuestion()">skip</button>
               <button class="switcher-btn" style="background:var(--ink); color:var(--paper-elevated);" onclick="nextModalQuestion()">
-                ${state.modal.idx + 1 < list.length ? "Next Question →" : (state.modal.flow === "pretest" ? "Calibrate Block →" : "Generate Inline Diffs →")}
+                ${state.modal.idx + 1 < list.length ? "Next →" : "Done →"}
               </button>
             </div>
           </div>
