@@ -166,8 +166,6 @@ In the worst case, how many units are needed?
 > * Why Eventual Synchrony needs **abstract timing assumptions**: Option 1 (bake timing bounds directly into links/processes — makes proofs complex and error-prone) vs **Option 2 (encapsulate timing assumptions inside separate abstractions: Failure Detectors & Leader Election)**. #gemini
 
 
-
-
 Two core abstractions that encapsulate timing assumptions:
 * **Failure Detector (FD)**
 * **Leader Election (LE)**
@@ -184,13 +182,12 @@ Two core abstractions that encapsulate timing assumptions:
 
 ### Perfect Failure Detector ($\mathcal{P}$)
 
-what does this bullet list mean gemini?
 **system model**:
-* **Synchronous system**
+* **Synchronous system** *(bounded processing speed and known channel delay bounds)* #gemini
 * **Crash failures** (crash-stop)
 * **Perfect Synchronous Point-to-Point Link**: Perfect P2P link + **synchronous delivery** 
 	* if a correct process $p$ sends $m$ at time $t$
-	* ifthe destination does not crash by $t+\text{max\_delay}$
+	* and the destination does not crash by $t+\text{max\_delay}$
 	* then $m$ is delivered by at most $t+\text{max\_delay}$
 
 **can we do so in asynch**?
@@ -201,9 +198,7 @@ what does this bullet list mean gemini?
 
 **idea**: start a timer $\Delta$ and send a heartbeat request to $p_{2}$; $p_{2}$ replies immediately:
 * if $p_{2}$ doesn't answer within $\Delta \ge 2\cdot\text{max\_delay}$ (where $\text{max\_delay}$ is the max one-way channel delay), then $p_2$ is dead. This works in **synchronous** systems.
-* **what about asynchronous systems?** In async you **cannot distinguish** between a slow message/process and a crashed process: any timeout-based detector may falsely suspect a slow process.
-
-**gemini**: what is the teacher trying to say? can we do failure detection in asynch models or no?
+* **what about asynchronous systems?** In a purely **asynchronous** model, **no accurate failure detector ($\mathcal{P}$ or even $\diamond\mathcal{P}$) can be implemented**: because message delays are unbounded, you **cannot distinguish** between a slow process/link and a crashed process (any timeout will eventually falsely suspect a live process). #gemini
 
 **Perfect Failure Detector ($\mathcal{P}$) specification** (Indication event: $\langle \mathcal{P}, \text{Crash} \mid p \rangle$):
 * **PFD1 (Strong Completeness)**: Eventually, every process that crashes is permanently detected by every correct process *(Liveness property)*.
@@ -214,42 +209,26 @@ what does this bullet list mean gemini?
 
 **uses**: $\text{PerfectPointToPointLinks}$
 
-> **note**: perfect p2p is a channel that: odes not **lose, duplicate, create spurious messages.**
+> **note**: perfect p2p is a channel that does not **lose, duplicate, or create spurious messages.**
 
-**upon event $<\mathcal P, \text{Init}>$ do**:
+**upon event $\langle\mathcal P, \text{Init}\rangle$ do**:
 1. $\text{alive} := \Pi$
-2. $\text{detected} = \emptyset$
+2. $\text{detected} := \emptyset$
 3. $\text{starttimer}(\Delta)$
 
-**upon event $<\text{Timeout}>$ do**:
+**upon event $\langle\text{Timeout}\rangle$ do**:
 1. **forall $p \in \Pi$ do**
-	1. if $(p \notin alive ) \land (p \not\in \text{detected})$
-		1. $\text{detected} = \text{detected} \cup \{ p \}$
-		2. **trigger** $<\mathcal P, \text{Crash}|p>$
-	2. **trigger** $<\text{pl, Send}|p,[\text{HeartbeatRequest}]>$
-2. $\text{alive} = \emptyset$
+	1. **if** $(p \notin \text{alive}) \land (p \not\in \text{detected})$ **then**
+		1. $\text{detected} := \text{detected} \cup \{ p \}$
+		2. **trigger** $\langle\mathcal P, \text{Crash}\mid p\rangle$
+	2. **trigger** $\langle\text{pl, Send}\mid p,[\text{HeartbeatRequest}]\rangle$
+2. $\text{alive} := \emptyset$
 3. $\text{starttimer}(\Delta)$
 
-**upon event $<\text{pl, Deliver}|q, [\text{HeartbeatRequest}]>$ do**:
-1. **trigger** $<pl, \text{Deliver}|p,[\text{HeartbeatReply}]>$
+**upon event $\langle\text{pl, Deliver}\mid q, [\text{HeartbeatRequest}]\rangle$ do**:
+1. **trigger** $\langle\text{pl, Send}\mid q,[\text{HeartbeatReply}]\rangle$ #gemini
 
-**upon event $<\text{pl, Deliver}|q, [\text{HeartbeatReply}]>$ do**:
-1. $\text{alive} = \text{alive}\cup \{ p \}$
+**upon event $\langle\text{pl, Deliver}\mid p, [\text{HeartbeatReply}]\rangle$ do**:
+1. $\text{alive} := \text{alive}\cup \{ p \}$ #gemini
 
-
-> [!todo] MISSING FROM SLIDES (*Time 3*, slides 10–25 — after PFD specification) #gemini
-> 1. **Algorithm 2.5 (`Exclude on Timeout`) pseudocode**: #gemini
-> 	* Sets `alive := \Pi`, `detected := \emptyset`, periodic `starttimer(\Delta)`. #gemini
-> 	* On `Timeout`: any $p \notin \text{alive} \land p \notin \text{detected}$ is added to `detected` and triggers $\langle \mathcal{P}, \text{Crash} \mid p \rangle$; then sends `HEARTBEAT REQUEST` to all $p \in \Pi$, resets `alive := \emptyset`, and restarts timer $\Delta$. #gemini
-> 	* On delivering `HEARTBEAT REQUEST`: replies with `HEARTBEAT REPLY`; on delivering `HEARTBEAT REPLY` from $p$: adds $p$ to `alive`. #gemini
-> 2. **Correctness Proofs of `Exclude on Timeout`**: #gemini
-> 	* **Strong Completeness**: if $p_1$ crashes at $t$, $p_0$ detects it at most by $t + 2\Delta$. #gemini
-> 	* **Strong Accuracy**: holds iff $\Delta \ge 2\cdot\text{max\_delay}$ (proof by contradiction: if $p$ is alive, both `REQ` and `REPLY` arrive within $\text{max\_delay}$ each). #gemini
-> 3. **Key Conceptual Questions on $\mathcal{P}$ (slides 13–20)**: #gemini
-> 	* Can different processes detect $p_3$ at different instants? **Yes** (`PFD1` only requires *eventual* detection; the exact bound $t + 2\Delta$ comes from the specific implementation). #gemini
-> 	* If $p \notin \text{detected}$ at time $t$, can we conclude $p$ is alive at time $t$? **NO** — processes only observe the system via messages with delay $d$ (state at $t-d$); no FD can know if a process is alive at the exact current instant $t$. #gemini
-> 4. **Improving $\mathcal{P}$ — Round-Based Failure Detector $\mathcal{P}$ & Round Model (slides 21–28)**: #gemini
-> 	* *"In synchronous networks, silences are expressive"*: cut messages in half by sending one-way `BEAT` messages at the start of each round (no `REQUEST` needed). #gemini
-> 	* Requires synchronized clocks with global skew $\delta$ and round length $T$ (Algorithm 3: `Round-Based P` + Algorithm 4: `Max Clock Synchronizer`; Homework: minimum $T$). #gemini
-> 	* **Equivalence `Synchronous = Round-Based`**: abstracting synchronous execution into discrete rounds $r, r+1$ where processes switch rounds together and messages sent at the start of round $r$ are delivered by the end of round $r$. #gemini
-> 5. **Next part of *Time 3* (if covered in Lez. 6/7)**: Fault-Tolerant patch to Lamport's ME using $\mathcal{P}$ (Algorithm 15 — why ignoring late `REQ`s from `Crashed` is required!) and Simple ME using $\mathcal{P} + \text{LE}$. #gemini
+**next lecture**: [[lez. 7]] #gemini

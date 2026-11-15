@@ -114,14 +114,21 @@ $$
 **1:00:0 How to prove thm1?** by reduction. Assume not true
 * Then there is $\text{PPT}$ $\mathcal A$ that breaks $G^l$
 * Then we can build a PPT $\mathcal B$ that breaks $G$.
+* **gemini**: contextualize $G^l(U_{\lambda}) \not\approx U_{\lambda-l}$ as assumption
 * $\mathcal A$ expects from $\mathcal B$, a value $z' \in \{ 0,1 \}^{\lambda+l}$
 * but $\mathcal B$ gets $z\in \{ 0,1 \}^{\lambda+1}$ from the **Challenger**.
 * how do we convert a challenge for $\mathcal B$ into a challenge for $\mathcal A$ breaking $G^l$?
 
+> [!note] From $\mathcal A$ we want to build $\mathcal B$
+
 Reduction looks like this:
 ![[lez. 5 2026-10-27 17.54.26.excalidraw]]
 gemini explain the idea behind the difficulty with the reduction:
-* **Why a direct reduction fails**: $\mathcal{A}$ only distinguishes the two extremes $G^l(U_\lambda)$ ($H_0$) and $U_{\lambda+l}$ ($H_l$). However, $\mathcal{B}$ receives only a single $(\lambda+1)$-bit challenge $z = (b_1, s_1)$ from $\mathcal{C}$ (representing **one** evaluation of $G$ vs $U_{\lambda+1}$). If $\mathcal{B}$ expands $s_1$ via $G^{l-1}(s_1)$, then when $z \gets G(U_\lambda)$ the result is $H_0$, **but** when $z \gets U_{\lambda+1}$ the result is $H_1$ (where bits $b_2, \dots, b_l, s_l$ are still pseudorandom, not truly uniform $U_{\lambda+l}$!). Thus $\mathcal{B}$ cannot simulate both $G^l(U_\lambda)$ and $U_{\lambda+l}$ in a single jump. #gemini
+* **Why a direct reduction fails**: $\mathcal{A}$ only distinguishes the two extremes $G^l(U_\lambda)$ ($H_0$) and $U_{\lambda+l}$ ($H_l$). 
+* However, $\mathcal{B}$ receives only a single $(\lambda+1)$-bit challenge $z = (b_1, s_1)$ from $\mathcal{C}$ (representing **one** evaluation of $G$ vs $U_{\lambda+1}$). 
+* If $\mathcal{B}$ expands $s_1$ via $G^{l-1}(s_1)$, then when $z \gets G(U_\lambda)$ the result is $H_0$, **but** when $z \gets U_{\lambda+1}$ the result is $H_1$ 
+	* where bits $b_2, \dots, b_l, s_l$ are still pseudorandom, not truly uniform $U_{\lambda+l}$!. 
+* Thus $\mathcal{B}$ cannot simulate both $G^l(U_\lambda)$ and $U_{\lambda+l}$ in a single jump. 
 
 > [!note] what is an hybrid?
 > Its just a distribution $\{ H_{n}^i \}_{n=1,\dots}$, that we are building ($H_{n}^i \equiv H_{i}$) by using $G$ and $\hat{G}$ 
@@ -143,12 +150,14 @@ How do we find $H_{i}$? idea:
 * $H_{l}: b_{1},\dots,b_{l}, s_{l}$ will all be uniform. 
 * its like a chain of distributions where at step $H_i$ the first $i$ calls to $G$ are replaced with truly uniform bits, and the remaining $l-i$ calls still use $G$. #gemini
 
+> 
+
 **formalization** (**critto 5 parte 2 0:00**):
 * $H_{0} \equiv G^l(U_{\lambda})$; $H_{l} \equiv U_{l+\lambda}$
 	* $H_{0}$ is equivalent to $G^l$ with input $U_{\lambda}$
 	* $H_{l}$ is equivalent to $U_{\lambda+\ell}$
 * $H_{i}$: 
-	* let $b_{1}, \dots, b_{i} \gets \{ 0,1 \}$
+	* let $b_{1}, \dots, b_{i-1} \gets \{ 0,1 \}$ ($\equiv$ filps $i-1$ unbiased coins locally)
 	* $s_{i} \gets U_{\lambda}$
 	* $(b_{i+1}, \dots, b_{l}, s_{l}) = G^{l-i}(s_{i})$
 * $H_{1}$: i pick $b_{1}$ uniformly, $s_{1}$ uniformly
@@ -177,7 +186,9 @@ $$
 $$
 \text{Pr}[\mathcal B(z)=1: z \gets U_{\lambda+1}]= \text{Pr}[\mathcal A(b_{1},\dots,b_{l},s_{l})=1:b_{1},\dots, b_{l}, s_{l} \gets H_{1}]
 $$
-so $\mathcal B$ distinguishes w.p $\geq \frac{1}{p(\lambda)}$, and by **very similar proof**: $\forall i, \; H_{i} \approx_{C} H_{i+1}$.
+so $\mathcal B$ distinguishes w.p $\geq \frac{1}{p(\lambda)}$, and by **very similar proof**: $\forall i, \; H_{i} \approx_{C} H_{i+1}$
+
+
 
 **How do we get (24:00) $G: \{ 0,1 \}^\lambda \to \{ 0,1 \}^{\lambda+1}$ in the first place?** In theory i can do it starting with any owf, but not very efficiently. Using number theory, lattices, and other things we can make it more efficient. 
 
