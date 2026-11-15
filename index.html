@@ -1045,7 +1045,6 @@
           <button class="dot-btn current" id="dot-1" onclick="switchBlock(1)">2</button>
           <button class="dot-btn" id="dot-2" onclick="switchBlock(2)">3</button>
         </div>
-        <span class="status-tag hidden" id="statusTag"></span>
       </div>
 
       <!-- Mastery Slider Above Right Card -->
@@ -1721,26 +1720,16 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         dot.className = cls;
       });
 
-      // Status Dot & Tag (show text badge only when verified or unverified)
+      // Status Dot
       const sDot = document.getElementById("statusDot");
-      const sTag = document.getElementById("statusTag");
       const cDot = document.getElementById("cornerStatusDot");
 
-      if (state.telemetry.verification_status === "verified" || blk.status === "verified") {
+      if (blk.status === "verified") {
         sDot.className = "status-dot verified";
         cDot.className = "status-dot verified";
-        sTag.className = "status-tag verified";
-        sTag.textContent = "✓ Verified";
-      } else if (state.telemetry.override_used || state.telemetry.verification_status === "unverified") {
-        sDot.className = "status-dot unverified";
-        cDot.className = "status-dot unverified";
-        sTag.className = "status-tag unverified";
-        sTag.textContent = "⚠ Unverified";
       } else {
         sDot.className = "status-dot active";
         cDot.className = "status-dot active";
-        sTag.className = "status-tag hidden";
-        sTag.textContent = "";
       }
 
       // Mastery Slider
@@ -1964,8 +1953,8 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with
         `;
         body.innerHTML = `
           <div class="notebook-canvas">
-            <div class="diff-banner" style="background:${state.telemetry.override_used ? 'var(--amber-soft)' : 'var(--emerald-soft)'}; border-color:${state.telemetry.override_used ? 'var(--amber-border)' : 'var(--emerald-border)'};">
-              <strong>${state.telemetry.override_used ? '⚠ Unverified' : '✓ Verified'}</strong>
+            <div class="diff-banner" style="background:var(--emerald-soft); border-color:var(--emerald-border);">
+              <strong>✓ Saved</strong>
             </div>
             <div class="ide-diff-document">
               ${formatMd(state.userDraft)}
