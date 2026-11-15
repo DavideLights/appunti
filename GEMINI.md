@@ -23,3 +23,4 @@ here you have all the resource and lecture slides to use as reference for checki
 
 * **Distributed Systems**: https://sites.google.com/view/distributedsystems-202627/lectures?pli=1&authuser=0
 * **Cryptography**: https://dventuri83.github.io/teaching/1_crypto/
+	* **main ref**: https://github.com/Exyss/university-notes/raw/main/Master/Cryptography/Cryptography.pdf
