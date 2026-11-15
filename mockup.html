@@ -3,44 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Non-Chat AI Study Notebook — UX Mockup (IND-CPA Cryptography)</title>
+  <title>FOLIO // Non-Chat AI Study Notebook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
   <style>
     :root {
-      --bg: #f6f7f9;
-      --surface: #ffffff;
-      --surface-muted: #f1f3f6;
-      --surface-subtle: #fafbfc;
-      --border: #dfe3ea;
-      --border-strong: #c5ccd6;
-      --text: #161b22;
-      --text-secondary: #4d5766;
-      --text-muted: #768191;
-      --accent: #2563eb;
-      --accent-soft: #eff6ff;
-      --accent-border: #bfdbfe;
-      --green: #15803d;
-      --green-soft: #ecfdf3;
-      --green-border: #bbf7d0;
-      --amber: #b45309;
-      --amber-soft: #fffbeb;
-      --amber-border: #fde68a;
-      --red: #b91c1c;
-      --red-soft: #fef2f2;
-      --red-border: #fecaca;
-      --purple: #6d28d9;
-      --purple-soft: #f5f3ff;
-      --purple-border: #ddd6fe;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
-      --font-serif: "Source Serif 4", Georgia, Cambria, "Times New Roman", serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
-      --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.09);
-      --shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.14);
-      --radius: 10px;
-      --radius-sm: 6px;
+      /* Tactile Swiss-Academic Paper & Carbon Ink Palette */
+      --canvas-bg: #EFECE6;
+      --canvas-dot: #D5D0C5;
+      --paper: #FAF8F4;
+      --paper-elevated: #FFFFFF;
+      --paper-subtle: #F3F0E8;
+      --ink: #181715;
+      --ink-secondary: #4A4740;
+      --ink-muted: #858075;
+      --border: #D4CFC4;
+      --border-strong: #181715;
+
+      /* Semantic Accents */
+      --cobalt: #1E40AF;
+      --cobalt-soft: #DBEAFE;
+      --cobalt-border: #93C5FD;
+      --emerald: #15803D;
+      --emerald-soft: #DCFCE7;
+      --emerald-tint: rgba(22, 163, 74, 0.10);
+      --emerald-border: #86EFAC;
+      --amber: #B45309;
+      --amber-soft: #FEF3C7;
+      --amber-border: #FCD34D;
+      --crimson: #B91C1C;
+      --crimson-soft: #FEE2E2;
+      --crimson-tint: rgba(220, 38, 38, 0.09);
+      --crimson-border: #FCA5A5;
+
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Tactile Shadows */
+      --shadow-card: 0 2px 10px rgba(24, 23, 21, 0.05), 0 1px 2px rgba(24, 23, 21, 0.06);
+      --shadow-tactile: 3px 3px 0px #181715;
+      --shadow-tactile-sm: 2px 2px 0px #181715;
+      --shadow-modal: 6px 6px 0px #181715, 0 24px 48px rgba(24, 23, 21, 0.22);
     }
 
     * { box-sizing: border-box; }
@@ -48,1114 +58,1328 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .app-shell {
-      display: flex;
-      flex-direction: column;
+      width: 100%;
       height: 100vh;
       overflow: hidden;
+      background-color: var(--canvas-bg);
+      background-image: radial-gradient(var(--canvas-dot) 1px, transparent 1px);
+      background-size: 18px 18px;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Header & Stepper */
-    .topbar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 18px;
+    /* Full-Viewport Minimal Frame */
+    .studio-canvas {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      flex-shrink: 0;
-      z-index: 20;
+      width: 100%;
+      height: 100vh;
+      padding: 12px 18px 16px;
+      gap: 10px;
+      transition: filter 0.2s ease;
     }
 
-    .topbar-row {
+    .studio-canvas.modal-blurred {
+      filter: blur(6px) saturate(0.85);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Top Minimal Strip (Block Title on Left | Mastery Slider on Right) */
+    .canvas-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      gap: 16px;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    .header-left {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
     }
 
-    .brand-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      border: 1.5px solid var(--ink);
+      display: inline-block;
+      flex-shrink: 0;
     }
+    .status-dot.verified { background: #16A34A; }
+    .status-dot.unverified { background: #F59E0B; }
+    .status-dot.active { background: #2563EB; }
 
-    .brand-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 700;
-      font-size: 13px;
+    .block-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
       letter-spacing: -0.01em;
-      color: var(--text);
-      background: var(--surface-muted);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 999px;
+      color: var(--ink);
+      margin: 0;
     }
 
-    .zero-chat-pill {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--purple);
-      background: var(--purple-soft);
-      border: 1px solid var(--purple-border);
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    .breadcrumb {
-      font-size: 12.5px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .breadcrumb strong { color: var(--text); font-weight: 600; }
-
-    .topbar-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .module-stepper {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .module-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--surface-subtle);
-      color: var(--text-secondary);
-      cursor: default;
-    }
-
-    .module-pill.active {
-      background: var(--accent-soft);
-      border-color: var(--accent-border);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .module-pill.done {
-      background: var(--green-soft);
-      border-color: var(--green-border);
-      color: var(--green);
-      font-weight: 600;
-    }
-
-    .module-pill.unlocked {
-      background: var(--surface);
-      border-color: var(--accent-border);
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .demo-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding-top: 6px;
-      border-top: 1px dashed var(--border);
-      flex-wrap: wrap;
-    }
-
-    .demo-steps {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
-    .demo-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      margin-right: 4px;
-    }
-
-    .step-btn {
-      font-size: 11.5px;
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.12s ease;
-    }
-
-    .step-btn:hover { border-color: var(--border-strong); color: var(--text); }
-    .step-btn.active {
-      background: var(--text);
-      color: #fff;
-      border-color: var(--text);
-      font-weight: 600;
-    }
-
-    /* Badges & Buttons */
-    .badge {
+    .block-dots {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 3px 9px;
+      padding: 3px 8px;
+      background: var(--paper);
+      border: 1px solid var(--border);
       border-radius: 999px;
-      border: 1px solid transparent;
+      margin-left: 4px;
     }
-    .badge-neutral { background: var(--surface-muted); color: var(--text-secondary); border-color: var(--border); }
-    .badge-blue { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-border); }
-    .badge-green { background: var(--green-soft); color: var(--green); border-color: var(--green-border); }
-    .badge-amber { background: var(--amber-soft); color: var(--amber); border-color: var(--amber-border); }
-    .badge-red { background: var(--red-soft); color: var(--red); border-color: var(--red-border); }
 
-    .btn {
+    .dot-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 7px 13px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-size: 12.5px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.14s ease;
-      font-family: inherit;
+      padding: 0;
+      transition: all 0.12s ease;
     }
 
-    .btn:hover:not(:disabled) { border-color: var(--border-strong); background: var(--surface-subtle); }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .btn-sm { padding: 4px 9px; font-size: 11.5px; }
-    .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .btn-primary:hover:not(:disabled) { background: #1d4ed8; border-color: #1d4ed8; }
-    .btn-green { background: var(--green); border-color: var(--green); color: #fff; }
-    .btn-green:hover:not(:disabled) { background: #166534; border-color: #166534; }
-    .btn-amber { background: var(--amber-soft); border-color: var(--amber-border); color: var(--amber); }
-    .btn-amber:hover:not(:disabled) { background: #fef3c7; }
-    .btn-red { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
+    .dot-btn:hover { color: var(--ink); background: var(--paper-subtle); }
+    .dot-btn.current {
+      background: var(--ink);
+      color: var(--paper-elevated);
+    }
+    .dot-btn.done {
+      color: var(--emerald);
+      border-color: var(--emerald-border);
+      background: var(--emerald-soft);
+    }
 
-    /* Dual-Pane Workspace */
-    .workspace {
+    .status-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--paper);
+      color: var(--ink-secondary);
+    }
+    .status-tag.verified { background: var(--emerald-soft); border-color: var(--emerald-border); color: var(--emerald); }
+    .status-tag.unverified { background: var(--amber-soft); border-color: var(--amber-border); color: var(--amber); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    /* Sleek Tactile Mastery Slider above Right Card */
+    .mastery-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .mastery-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-secondary);
+    }
+
+    .mastery-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cobalt);
+      min-width: 86px;
+      text-align: right;
+    }
+
+    input[type="range"].tactile-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 110px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"].tactile-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--paper-elevated);
+      border: 2px solid var(--ink);
+      box-shadow: 1px 1px 0px var(--ink);
+      cursor: grab;
+      transition: transform 0.1s ease;
+    }
+
+    input[type="range"].tactile-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.12);
+    }
+
+    /* Main Two-Panel Grid Occupying 92%+ of Viewport */
+    .panels-grid {
       flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 16px;
       min-height: 0;
-      overflow: hidden;
     }
 
-    .pane {
+    .folio-card {
+      background: var(--paper);
+      border: 1.5px solid var(--ink);
+      border-radius: 14px;
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       min-height: 0;
       position: relative;
-      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .pane-left { border-right: 1px solid var(--border); }
-    .pane-right { background: var(--surface-subtle); }
+    .folio-card.right-card {
+      background: var(--paper-elevated);
+    }
 
-    .pane-header {
-      padding: 10px 18px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
+    .folio-card.right-card:focus-within {
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    /* Card Top Bar */
+    .card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      padding: 12px 18px 10px;
+      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+      background: rgba(250, 248, 244, 0.7);
     }
 
-    .pane-title {
-      font-size: 12px;
-      font-weight: 700;
+    .card-kicker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-secondary);
+      color: var(--ink-secondary);
+    }
+
+    .card-top-actions {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .segmented-toggle {
+    /* Switcher Icon Button [AI Explanation <-> Original Source] */
+    .switcher-btn {
       display: inline-flex;
-      background: var(--surface-muted);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 2px;
-    }
-
-    .segmented-toggle button {
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 600;
+      align-items: center;
+      gap: 6px;
       padding: 4px 10px;
-      border-radius: 4px;
+      border-radius: 6px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
       cursor: pointer;
+      box-shadow: var(--shadow-tactile-sm);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
-    .segmented-toggle button.active {
-      background: var(--surface);
-      color: var(--text);
-      box-shadow: var(--shadow-sm);
+    .switcher-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--ink);
     }
 
-    .pane-body {
+    .switcher-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px var(--ink);
+    }
+
+    .switcher-icon-box {
+      width: 16px;
+      height: 11px;
+      border: 1.5px solid var(--ink);
+      border-radius: 2px;
+      display: inline-flex;
+      padding: 1px;
+    }
+
+    .switcher-icon-pip {
+      width: 6px;
+      height: 100%;
+      background: var(--ink);
+      transition: transform 0.15s ease;
+    }
+
+    .switcher-btn.source-active .switcher-icon-pip {
+      transform: translateX(6px);
+      background: var(--cobalt);
+    }
+
+    /* Circular Submit / Commit Action Button (Top-Right of Right Card) */
+    .circle-submit-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-tactile-sm);
+      transition: all 0.14s ease;
+      position: relative;
+    }
+
+    .circle-submit-btn:hover {
+      background: var(--ink);
+      color: var(--paper-elevated);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--cobalt);
+    }
+
+    .circle-submit-btn.commit-mode {
+      background: var(--emerald);
+      border-color: var(--ink);
+      color: #ffffff;
+      width: auto;
+      border-radius: 999px;
+      padding: 0 14px;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .circle-submit-btn.commit-mode:hover {
+      background: #166534;
+      box-shadow: 3px 3px 0px var(--ink);
+    }
+
+    /* Card Content Body */
+    .card-body {
       flex: 1;
       overflow-y: auto;
-      padding: 20px 24px 36px;
+      padding: 22px 26px 28px;
       position: relative;
     }
 
-    /* Left Pane Micro-Explanation Blocks */
-    .meta-strip {
+    /* Left Card: Manuscript Sentences with Margin Numbers */
+    .manuscript-list {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .micro-unit-title {
-      margin: 0 0 12px;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .explain-block {
-      position: relative;
+    .manuscript-line {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
       padding: 12px 14px;
-      margin-bottom: 10px;
-      border-radius: var(--radius);
+      border-radius: 10px;
       border: 1px solid transparent;
-      font-family: var(--font-serif);
-      font-size: 15.5px;
-      line-height: 1.65;
-      color: var(--text);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.14s ease;
+      position: relative;
     }
 
-    .explain-block:hover {
-      background: var(--surface-subtle);
+    .manuscript-line:hover {
+      background: var(--paper-elevated);
       border-color: var(--border);
+      box-shadow: var(--shadow-card);
     }
 
-    .explain-block.selected {
-      background: var(--accent-soft);
-      border-color: var(--accent-border);
+    .manuscript-line.active-line {
+      background: var(--paper-elevated);
+      border-color: var(--ink);
+      box-shadow: var(--shadow-tactile-sm);
     }
 
-    .explain-block.just-updated {
-      animation: blockFlash 1.2s ease;
+    .manuscript-line.updated-flash {
+      animation: linePulse 1.3s ease;
     }
 
-    @keyframes blockFlash {
-      0% { background: #dbeafe; border-color: var(--accent); }
-      100% { background: transparent; border-color: transparent; }
+    @keyframes linePulse {
+      0% { background: var(--cobalt-soft); }
+      100% { background: transparent; }
     }
 
-    .block-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-family: var(--font-sans);
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    .block-citation {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+    .line-num {
       font-family: var(--font-mono);
-      font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      margin-top: 6px;
-      background: var(--green-soft);
-      color: var(--green);
-      border: 1px solid var(--green-border);
-    }
-
-    .block-flag-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font-sans);
       font-size: 11px;
       font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 4px;
-      margin-top: 6px;
-      margin-left: 6px;
-      background: var(--purple-soft);
-      color: var(--purple);
-      border: 1px solid var(--purple-border);
+      color: var(--ink-muted);
+      padding-top: 4px;
+      user-select: none;
     }
 
-    /* Inline Flag Popover (Edit-and-Stop) */
-    .flag-popover {
-      margin: 8px 0 14px;
-      padding: 12px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-md);
-      font-family: var(--font-sans);
+    .manuscript-line:hover .line-num {
+      color: var(--ink);
     }
 
-    .flag-popover-header {
+    .line-prose {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .line-meta-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .flag-actions {
-      display: flex;
-      gap: 6px;
+      gap: 8px;
+      margin-top: 8px;
       flex-wrap: wrap;
-      margin-bottom: 8px;
     }
 
-    .flag-note-input {
-      width: 100%;
-      padding: 6px 10px;
+    .line-action-hint {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-muted);
+      opacity: 0;
+      transition: opacity 0.12s ease;
+    }
+
+    .manuscript-line:hover .line-action-hint {
+      opacity: 1;
+    }
+
+    .citation-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid var(--emerald-border);
+    }
+
+    .difficulty-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--cobalt-soft);
+      color: var(--cobalt);
+      border: 1px solid var(--cobalt-border);
+    }
+
+    /* Original Source Verbatim Sheet */
+    .source-sheet {
+      background: var(--paper-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 12.5px;
-      font-family: inherit;
-    }
-
-    /* Original Source View */
-    .source-card {
-      background: #fdfcf7;
-      border: 1px solid #e7e1cc;
-      border-radius: var(--radius);
-      padding: 18px 20px;
+      border-left: 3.5px solid var(--ink);
+      border-radius: 8px;
+      padding: 20px 22px;
       font-family: var(--font-serif);
-      line-height: 1.65;
+      font-size: 17px;
+      line-height: 1.68;
     }
 
-    .source-anchor {
+    .source-ref-badge {
       font-family: var(--font-mono);
       font-size: 11px;
-      background: #fef3c7;
-      color: #92400e;
-      border: 1px solid #fde68a;
-      padding: 2px 7px;
+      font-weight: 600;
+      background: var(--amber-soft);
+      color: var(--amber);
+      border: 1px solid var(--amber-border);
+      padding: 2px 8px;
       border-radius: 4px;
       display: inline-block;
       margin-bottom: 10px;
     }
 
-    .source-highlight {
-      background: #fef9c3;
-      padding: 1px 3px;
+    .source-mark {
+      background: #FEF08A;
+      padding: 1px 4px;
       border-radius: 3px;
     }
 
-    /* Blind-Write Dimmer Overlay */
-    .blind-overlay {
+    /* Blind-Write Veil Inside Left Card */
+    .blind-veil {
       position: absolute;
       inset: 0;
-      background: rgba(246, 247, 249, 0.84);
+      background: rgba(250, 248, 244, 0.72);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      z-index: 15;
-    }
-
-    .blind-card {
-      max-width: 390px;
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow-lg);
+      z-index: 10;
       text-align: center;
     }
 
-    .blind-card h3 { margin: 0 0 6px; font-size: 16px; }
-    .blind-card p { margin: 0 0 14px; font-size: 13px; color: var(--text-secondary); }
-
-    /* Right Pane: Notebook & Code-Review Editor */
-    .notebook-block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      box-shadow: var(--shadow-sm);
+    .blind-badge-box {
+      background: var(--paper-elevated);
+      border: 1.5px solid var(--ink);
+      border-radius: 12px;
+      padding: 18px 22px;
+      max-width: 320px;
+      box-shadow: var(--shadow-tactile);
     }
 
-    .notebook-block.unverified {
-      border-left: 4px solid var(--amber);
+    .blind-badge-box h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      margin: 0 0 6px;
     }
 
-    .notebook-block.verified {
-      border-left: 4px solid var(--green);
-    }
-
-    .notebook-block-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-
-    .notebook-block-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .notebook-block-body {
-      font-family: var(--font-serif);
-      font-size: 14.5px;
-      line-height: 1.6;
-      color: var(--text);
-    }
-
-    .source-ref-mono {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* Separate Diagnostic Question Card */
-    .question-card {
-      background: var(--surface);
-      border: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      margin-bottom: 14px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .question-card-collapsed {
-      background: var(--accent-soft);
-      border: 1px solid var(--accent-border);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+    .blind-badge-box p {
       font-size: 12.5px;
+      color: var(--ink-secondary);
+      margin: 0 0 14px;
+      line-height: 1.45;
     }
 
-    .q-item {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-
-    .q-item label {
-      display: block;
-      font-weight: 600;
-      font-size: 13px;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    .q-item textarea {
-      width: 100%;
-      min-height: 56px;
-      padding: 8px 10px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: var(--font-sans);
-      font-size: 13px;
-      resize: vertical;
-    }
-
-    /* Active Editor */
-    .editor-card {
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .editor-toolbar {
-      padding: 9px 14px;
-      background: var(--surface-muted);
-      border-bottom: 1px solid var(--border);
+    /* Right Card: User Notebook & Antigravity/Codex-Style Inline Diffs */
+    .notebook-canvas {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      height: 100%;
+      gap: 14px;
     }
 
-    .editor-split {
-      display: grid;
-      grid-template-columns: 1fr;
+    .editor-surface {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--paper-subtle);
+      overflow: hidden;
     }
 
     .editor-textarea {
       width: 100%;
-      min-height: 150px;
-      padding: 14px 16px;
+      flex: 1;
+      min-height: 165px;
       border: none;
-      border-bottom: 1px solid var(--border);
+      background: var(--paper-elevated);
+      padding: 16px 18px;
       font-family: var(--font-mono);
-      font-size: 12.5px;
-      line-height: 1.55;
-      color: var(--text);
-      resize: vertical;
-      outline: none;
-      background: var(--surface);
-    }
-
-    .editor-preview {
-      padding: 14px 16px;
-      background: var(--surface-subtle);
-      font-family: var(--font-serif);
-      font-size: 15px;
+      font-size: 13px;
       line-height: 1.65;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      border-bottom: 1px solid var(--border);
     }
 
-    .preview-label {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+    .live-math-preview {
+      padding: 14px 18px;
+      background: var(--paper);
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--ink);
+      min-height: 120px;
+      max-height: 44%;
+      overflow-y: auto;
     }
 
-    .editor-footer {
-      padding: 10px 14px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
+    .preview-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* Surgical Inline Diff View */
-    .diff-prose {
-      padding: 16px 18px;
-      font-family: var(--font-serif);
-      font-size: 15.5px;
-      line-height: 1.8;
-      background: var(--surface);
-    }
-
-    .diff-hunk {
-      display: inline;
-      background: #fff8eb;
-      border: 1px solid var(--amber-border);
-      border-radius: 5px;
-      padding: 2px 5px;
-      margin: 0 2px;
-    }
-
-    .diff-hunk.resolved-accepted {
-      background: var(--green-soft);
-      border-color: var(--green-border);
-    }
-
-    .diff-hunk.resolved-rejected {
-      background: var(--surface-muted);
-      border-color: var(--border);
-    }
-
-    .diff-del {
-      background: var(--red-soft);
-      color: var(--red);
-      text-decoration: line-through;
-      padding: 1px 4px;
-      border-radius: 3px;
-      margin-right: 4px;
-    }
-
-    .diff-ins {
-      background: var(--green-soft);
-      color: var(--green);
-      padding: 1px 4px;
-      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 10px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
     }
 
-    .diff-controls-list {
-      padding: 12px 16px;
-      background: var(--surface-subtle);
-      border-top: 1px solid var(--border);
+    /* IDE / Antigravity / Codex-Inspired Surgical Inline Diff Widget */
+    .diff-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--paper-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+
+    .ide-diff-document {
+      flex: 1;
+      background: var(--paper-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      font-family: var(--font-serif);
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-y: auto;
+    }
+
+    /* Inline Widget Hunk (Codex / Antigravity IDE Style) */
+    .ide-hunk {
+      display: block;
+      margin: 12px 0;
+      border: 1.5px solid var(--ink);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow-tactile-sm);
+      overflow: hidden;
+      font-family: var(--font-sans);
+      transition: all 0.15s ease;
+    }
+
+    .ide-hunk.accepted {
+      border-color: var(--emerald);
+      box-shadow: none;
+      background: var(--emerald-tint);
+    }
+
+    .ide-hunk.rejected {
+      border-color: var(--border);
+      box-shadow: none;
+      opacity: 0.75;
+    }
+
+    .ide-hunk-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 10px;
+      background: var(--paper-subtle);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .ide-hunk-reason {
+      color: var(--ink-secondary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ide-hunk-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hunk-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.1s ease;
+    }
+
+    .hunk-btn:hover { border-color: var(--ink); }
+    .hunk-btn.accept { background: var(--emerald-soft); border-color: var(--emerald-border); color: var(--emerald); }
+    .hunk-btn.accept:hover { background: var(--emerald); color: #fff; }
+    .hunk-btn.reject:hover { background: var(--crimson-soft); border-color: var(--crimson-border); color: var(--crimson); }
+
+    .kbd-hint {
+      font-size: 9.5px;
+      opacity: 0.7;
+      padding: 0 3px;
+      border-radius: 3px;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .ide-diff-lines {
+      padding: 8px 12px;
+      font-family: var(--font-serif);
+      font-size: 16.5px;
+      line-height: 1.55;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 4px;
     }
 
-    .diff-control-row {
+    .diff-line-del {
+      background: var(--crimson-tint);
+      color: var(--crimson);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border-left: 3px solid var(--crimson);
+      text-decoration: line-through;
+    }
+
+    .diff-line-ins {
+      background: var(--emerald-tint);
+      color: #065F46;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border-left: 3px solid var(--emerald);
+      font-weight: 500;
+    }
+
+    .ide-edit-row {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+      background: var(--paper-elevated);
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      flex-wrap: wrap;
+      gap: 6px;
     }
 
-    .diff-edit-box {
+    .ide-edit-row input {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 8px;
+      border: 1px solid var(--ink);
+      border-radius: 4px;
+      background: var(--paper);
+    }
+
+    /* Centered Modal Backdrop (Used for UI 1 Line Feedback & UI 2 Questions) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(24, 23, 21, 0.18);
+    }
+
+    /* UI 1 Centered Feedback Popup Card */
+    .feedback-popup-card {
       width: 100%;
+      max-width: 360px;
+      background: var(--paper-elevated);
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow-modal);
+      animation: popIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* UI 2 Centered Question Popup Card */
+    .question-popup-card {
+      width: 100%;
+      max-width: 500px;
+      background: var(--paper-elevated);
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      padding: 24px 26px 20px;
+      box-shadow: var(--shadow-modal);
+      animation: popIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(6px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .popup-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .inaccurate-btn {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-tactile-sm);
+      transition: all 0.12s ease;
+      text-align: center;
+    }
+
+    .inaccurate-btn:hover, .inaccurate-btn.active {
+      background: var(--crimson-soft);
+      border-color: var(--crimson);
+      color: var(--crimson);
+    }
+
+    .note-drawer {
       margin-top: 8px;
       display: flex;
       gap: 6px;
     }
 
-    .diff-edit-box input {
+    .note-drawer input {
       flex: 1;
-      padding: 6px 8px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      border: 1px solid var(--border-strong);
-      border-radius: 4px;
+      padding: 6px 10px;
+      border: 1.5px solid var(--ink);
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      background: var(--paper);
     }
 
-    /* Modals for State 1 (Ingest) and State 2 (Pretest) */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.52);
-      backdrop-filter: blur(3px);
+    .difficulty-box {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .difficulty-box label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .slider-Scale {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-muted);
+      margin-top: 6px;
+    }
+
+    /* UI 2 Question Box Styles */
+    .q-step-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cobalt);
+    }
+
+    .q-prompt {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--ink);
+      margin: 10px 0 16px;
+    }
+
+    .q-answer-box {
+      width: 100%;
+      min-height: 92px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--ink);
+      border-radius: 12px;
+      background: var(--paper);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink);
+      resize: vertical;
+      outline: none;
+    }
+
+    .q-answer-box:focus {
+      background: var(--paper-elevated);
+      box-shadow: var(--shadow-tactile-sm);
+    }
+
+    .q-footer {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 50;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 680px;
-      max-height: 90vh;
-      overflow-y: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
+      margin-top: 14px;
     }
 
-    .modal-header h2 { margin: 0 0 4px; font-size: 19px; }
-    .modal-sub { font-size: 13px; color: var(--text-secondary); margin: 0; }
+    .skip-link {
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--amber);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 4px 6px;
+    }
 
-    .chunk-list {
+    .skip-link:hover { color: var(--crimson); }
+
+    /* Tiny Bottom-Right Lab / Telemetry Pill */
+    .corner-dock {
+      position: fixed;
+      bottom: 12px;
+      right: 18px;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .corner-pill-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      box-shadow: var(--shadow-tactile-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .corner-drawer {
+      width: 380px;
+      max-height: 360px;
+      background: #181715;
+      color: #F4F2EC;
+      border: 1.5px solid var(--ink);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-modal);
+      font-family: var(--font-mono);
+      font-size: 11px;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin: 14px 0 18px;
     }
 
-    .chunk-item {
+    .corner-jumps {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 11px 14px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--surface-subtle);
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
-    .chunk-item.active {
-      background: var(--accent-soft);
-      border-color: var(--accent-border);
-    }
-
-    .pretest-q {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-bottom: 12px;
-      background: var(--surface-subtle);
-    }
-
-    .pretest-q p { margin: 0 0 8px; font-weight: 600; font-size: 13.5px; }
-
-    .pretest-opt {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 5px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .pretest-opt:hover { background: var(--surface); }
-
-    /* Telemetry Bottom Drawer */
-    .telemetry-drawer {
-      background: #0f172a;
-      color: #e2e8f0;
-      border-top: 2px solid #334155;
-      flex-shrink: 0;
-      z-index: 30;
-    }
-
-    .telemetry-header {
-      padding: 7px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 12px;
-      background: #1e293b;
-    }
-
-    .telemetry-body {
-      max-height: 220px;
-      overflow-y: auto;
-      padding: 12px 18px;
+    .jump-chip {
       font-family: var(--font-mono);
-      font-size: 12px;
-      line-height: 1.5;
-      white-space: pre-wrap;
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid #3F3C36;
+      background: #262420;
+      color: #D5D0C5;
+      cursor: pointer;
+    }
+
+    .jump-chip:hover { background: #3F3C36; color: #fff; }
+
+    .json-pre {
+      margin: 0;
+      padding: 8px;
+      background: #0F0E0C;
+      border-radius: 6px;
+      overflow-y: auto;
+      max-height: 190px;
+      font-size: 10.5px;
+      line-height: 1.45;
+      color: #A7F3D0;
     }
 
     .hidden { display: none !important; }
 
-    @media (max-width: 920px) {
-      .workspace { grid-template-columns: 1fr; overflow-y: auto; }
-      .pane-left { border-right: none; border-bottom: 1px solid var(--border); min-height: 46vh; }
-      .pane-right { min-height: 54vh; }
+    @media (max-width: 900px) {
+      html, body { overflow: auto; height: auto; }
+      .studio-canvas { height: auto; min-height: 100vh; }
+      .canvas-header { grid-template-columns: 1fr; gap: 8px; }
+      .header-right { justify-content: flex-start; }
+      .panels-grid { grid-template-columns: 1fr; }
+      .folio-card { min-height: 440px; }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <!-- TOP BAR -->
-    <header class="topbar">
-      <div class="topbar-row">
-        <div class="brand-breadcrumb">
-          <span class="brand-tag">
-            <span>Code-Review Study Notebook</span>
-            <span class="zero-chat-pill">Zero-Chat v1</span>
-          </span>
-          <div class="breadcrumb">
-            <span>Cryptography.pdf</span>
-            <span>›</span>
-            <span>Ch. 3: Private-Key Encryption</span>
-            <span>›</span>
-            <strong id="activeTopicLabel">3.2 EAV &amp; IND-CPA</strong>
-          </div>
-        </div>
 
-        <div class="topbar-controls">
-          <div class="module-stepper" id="moduleStepper"></div>
-          <span class="badge badge-blue" id="masteryBadge">Mastery: Intermediate</span>
-          <button class="btn btn-sm" id="exportBtn" onclick="exportNotebookMd()" disabled>Export .md</button>
-          <button class="btn btn-sm" id="telemetryToggleBtn" onclick="toggleTelemetry()">
-            Student Model JSON <span id="telemetryStatusPill" class="badge badge-neutral">draft</span>
-          </button>
+  <!-- ===================================================================== -->
+  <!-- UI 1: STUDYING A BLOCK (FULL-VIEWPORT TWO-PANEL STUDIO)               -->
+  <!-- ===================================================================== -->
+  <div class="studio-canvas" id="studioCanvas">
+    <!-- Minimal Header Row -->
+    <header class="canvas-header">
+      <div class="header-left">
+        <span class="status-dot active" id="statusDot" title="Block Verification Status"></span>
+        <h1 class="block-title" id="blockTitle">3.2 IND-CPA Security</h1>
+        <div class="block-dots" title="Switch Micro-Block">
+          <button class="dot-btn done" id="dot-0" onclick="switchBlock(0)" title="3.1 Negligible Functions (Verified)">1</button>
+          <button class="dot-btn current" id="dot-1" onclick="switchBlock(1)" title="3.2 IND-CPA Security (Active)">2</button>
+          <button class="dot-btn" id="dot-2" onclick="switchBlock(2)" title="3.3 CPA from PRFs">3</button>
         </div>
+        <span class="status-tag" id="statusTag">Studying Block</span>
       </div>
 
-      <!-- DEMO QUICK-JUMP CONTROLLER -->
-      <div class="demo-bar">
-        <div class="demo-steps" id="demoSteps">
-          <span class="demo-label">Study Loop:</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <span class="demo-label">Simulate Mastery:</span>
-          <button class="step-btn" onclick="setMastery('novice', true)">Novice</button>
-          <button class="step-btn" onclick="setMastery('intermediate', true)">Intermediate</button>
-          <button class="step-btn" onclick="setMastery('advanced', true)">Advanced</button>
-          <button class="step-btn" onclick="resetDemo()">↺ Reset</button>
+      <!-- Mastery Slider Above Right Card -->
+      <div class="header-right">
+        <div class="mastery-control" title="Calibrated by Diagnostic Pretest — Drag to adjust block scaffolding depth">
+          <span class="mastery-label">Mastery Slider</span>
+          <input
+            type="range"
+            min="1"
+            max="3"
+            step="1"
+            value="2"
+            id="masterySlider"
+            class="tactile-slider"
+            oninput="onMasterySliderChange(this.value)"
+          />
+          <span class="mastery-value" id="masteryLabel">Intermediate</span>
         </div>
       </div>
     </header>
 
-    <!-- MAIN DUAL-PANE WORKSPACE -->
-    <main class="workspace">
-      <!-- LEFT PANE: REFERENCE & ADAPTIVE GUIDE -->
-      <section class="pane pane-left">
-        <div class="pane-header">
-          <div class="pane-title">
-            <span>Left Pane — Reference &amp; Adaptive Guide</span>
+    <!-- Main Two-Panel Workspace (Occupies ~92% of Screen) -->
+    <main class="panels-grid">
+      <!-- LEFT CARD: AI EXPLANATION / ORIGINAL SOURCE -->
+      <section class="folio-card left-card">
+        <div class="card-top">
+          <div class="card-kicker">
+            <span id="leftCardHeaderTitle">HERE GOES AI EXPLANATION</span>
+            <span style="color:var(--ink-muted);" id="leftWordCount">• 132w • Click any line for feedback</span>
           </div>
-          <div class="segmented-toggle" role="tablist">
-            <button id="tabAdaptive" class="active" onclick="setLeftTab('adaptive')">Adaptive Explanation</button>
-            <button id="tabSource" onclick="setLeftTab('source')">Original Source</button>
+
+          <div class="card-top-actions">
+            <button
+              class="switcher-btn"
+              id="blindToggleChip"
+              onclick="toggleBlindWrite()"
+              title="Toggle Blind-Write Auto-Blur"
+            >
+              <span id="blindChipLabel">Blind-Write: Auto</span>
+            </button>
+            <button
+              class="switcher-btn"
+              id="sourceSwitcherBtn"
+              onclick="toggleLeftSource()"
+              title="AI Explanation / Original Source Switcher"
+            >
+              <span class="switcher-icon-box"><span class="switcher-icon-pip"></span></span>
+              <span id="switcherLabel">AI ⇄ Source</span>
+            </button>
           </div>
         </div>
 
-        <div class="pane-body" id="leftPaneBody"></div>
+        <div class="card-body" id="leftCardBody"></div>
 
-        <!-- Blind-Write Dimmer Overlay -->
-        <div class="blind-overlay hidden" id="blindOverlay">
-          <div class="blind-card">
-            <h3>Blind-Write Recall Active</h3>
+        <!-- Blind-Write Blur Veil (Automatically activates when typing in Right Card) -->
+        <div class="blind-veil hidden" id="blindVeil">
+          <div class="blind-badge-box">
+            <h4>Closed-Book Recall</h4>
             <p>
-              Left pane is dimmed while you write in the notebook to enforce closed-book recall instead of transcription.
+              Left card is blurred while you write your explanation to prevent passive transcription.
             </p>
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              <button class="btn btn-amber" onclick="triggerBlindPeek()">
-                ⚠ Peek at Left Pane (Soft Override — Marks Unverified)
-              </button>
-              <button class="btn btn-sm" onclick="toggleBlindWrite(false)">
-                Turn Off Blind-Write Mode
+            <div style="display:flex; gap:8px; justify-content:center;">
+              <button class="switcher-btn" style="background:var(--amber-soft); border-color:var(--amber); color:var(--amber);" onclick="peekLeftCard()">
+                👁 Peek Source (Marks Unverified)
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- RIGHT PANE: USER NOTEBOOK -->
-      <section class="pane pane-right">
-        <div class="pane-header">
-          <div class="pane-title">
-            <span>Right Pane — User Notebook (Markdown + LaTeX)</span>
-            <span id="draftVerificationBadge" class="badge badge-neutral">In Progress</span>
+      <!-- RIGHT CARD: USER EXPLANATION & CODEX/ANTIGRAVITY INLINE DIFFS -->
+      <section class="folio-card right-card">
+        <div class="card-top">
+          <div class="card-kicker">
+            <span id="rightCardHeaderTitle">HERE GOES USER EXPLANATION</span>
+            <span style="color:var(--ink-muted);" id="rightModeSub">• Markdown + LaTeX</span>
           </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button class="btn btn-sm" id="blindToggleBtn" onclick="toggleBlindWrite()">
-              Blind-Write: <strong id="blindStateText">OFF</strong>
-            </button>
-          </div>
+
+          <div class="card-top-actions" id="rightTopActions"></div>
         </div>
 
-        <div class="pane-body" id="rightPaneBody"></div>
+        <div class="card-body" id="rightCardBody"></div>
       </section>
     </main>
-
-    <!-- COLLAPSIBLE TELEMETRY DRAWER -->
-    <aside class="telemetry-drawer">
-      <div class="telemetry-header">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <strong>Student Model &amp; Idea-A Telemetry (out.md §6.2)</strong>
-          <span style="color:#94a3b8;">FSRS &amp; Anti-Debt Scheduling Hooks</span>
-        </div>
-        <button class="btn btn-sm" style="background:#334155; color:#f8fafc; border-color:#475569;" onclick="toggleTelemetry()">
-          <span id="telemetryChevron">▲ Show JSON</span>
-        </button>
-      </div>
-      <div class="telemetry-body hidden" id="telemetryJson"></div>
-    </aside>
   </div>
 
-  <!-- MODAL FOR STATE 1 (INGEST) & STATE 2 (DIAGNOSTIC PRETEST) -->
-  <div class="modal-backdrop hidden" id="modalBackdrop">
-    <div class="modal-card" id="modalContent"></div>
+  <!-- ===================================================================== -->
+  <!-- CENTERED MODAL OVERLAY (UI 1 LINE FEEDBACK & UI 2 POPUP QUESTIONS)    -->
+  <!-- ===================================================================== -->
+  <div class="modal-overlay hidden" id="modalOverlay" onclick="onOverlayClick(event)">
+    <div id="modalSlot" onclick="event.stopPropagation()"></div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- TINY FLOATING BOTTOM-RIGHT PILL (DEMO SHORTCUTS & TELEMETRY JSON)     -->
+  <!-- ===================================================================== -->
+  <div class="corner-dock">
+    <div class="corner-drawer hidden" id="cornerDrawer">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong>FOLIO // Lab &amp; Student Model (§6.2)</strong>
+        <button class="jump-chip" onclick="resetPrototype()">↺ Reset</button>
+      </div>
+      <div class="corner-jumps">
+        <button class="jump-chip" onclick="openPretestModal()">1. Pretest Popup</button>
+        <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=false; renderAll();">2. Study Block</button>
+        <button class="jump-chip" onclick="openLineFeedback('s2')">3. Line Feedback Popup</button>
+        <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=true; renderAll();">4. Blind-Write</button>
+        <button class="jump-chip" onclick="triggerSubmitReview()">5. Review Qs Popup</button>
+        <button class="jump-chip" onclick="enterDiffMode()">6. IDE Inline Diffs</button>
+      </div>
+      <pre class="json-pre" id="telemetryPre"></pre>
+    </div>
+    <button class="corner-pill-btn" onclick="toggleCornerDrawer()">
+      <span>⚙ Demo &amp; Telemetry</span>
+      <span id="cornerStatusDot" class="status-dot active" style="width:8px; height:8px;"></span>
+    </button>
   </div>
 
   <script>
     // =========================================================================
-    // 1. SAMPLE DATA (CRYPTOGRAPHY: SEMANTIC SECURITY & IND-CPA)
+    // 1. CRYPTOGRAPHY MODULE DATA (IND-CPA & SEMANTIC SECURITY)
     // =========================================================================
-    const MODULES = [
-      { id: "3.1", title: "3.1 Negligible & Indistinguishability", status: "verified" },
-      { id: "3.2", title: "3.2 EAV & IND-CPA Game", status: "active" },
-      { id: "3.3", title: "3.3 CPA-Secure from PRFs", status: "locked" }
+    const BLOCKS = [
+      {
+        id: "3.1",
+        title: "3.1 Negligible Functions",
+        status: "verified",
+        userNote: `A function $\\varepsilon(\\lambda)$ is **negligible** if for every polynomial $p(\\cdot)$, there exists $N$ such that for all $\\lambda > N$, $\\varepsilon(\\lambda) < \\frac{1}{p(\\lambda)}$.\n\nThis guarantees that even a PPT adversary running $q(\\lambda)$ trials accumulates at most $q(\\lambda)\\cdot\\mathsf{negl}(\\lambda) = \\mathsf{negl}'(\\lambda)$ advantage.`
+      },
+      {
+        id: "3.2",
+        title: "3.2 IND-CPA Security",
+        status: "active",
+        userNote: ""
+      },
+      {
+        id: "3.3",
+        title: "3.3 CPA Ciphers from PRFs",
+        status: "locked",
+        userNote: `To encrypt $m \\in \\{0,1\\}^n$ using a PRF $F_k$, sample fresh randomness $r \\leftarrow \\{0,1\\}^n$ and output:\n$$c = \\langle r,\\; F_k(r) \\oplus m \\rangle$$\nFresh $r$ ensures repeated encryptions of $m_0$ yield independent-looking ciphertexts.`
+      }
     ];
 
-    const ADAPTIVE_EXPLANATIONS = {
-      novice: {
-        wordCount: 138,
-        label: "Novice Scaffolding (Worked Trace)",
-        paragraphs: [
-          {
-            id: "p1",
-            text: "In chosen-plaintext attacks (**IND-CPA**), the adversary $\\mathcal{A}$ is not passive: before picking challenge messages, $\\mathcal{A}$ can ask a Challenger $\\mathcal{C}$ for encryptions of arbitrary plaintexts using the hidden key $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$."
-          },
-          {
-            id: "p2",
-            text: "Think of the game $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ as a blindfolded challenge: $\\mathcal{A}$ sends two equal-length messages $m_0, m_1$. Challenger $\\mathcal{C}$ flips a uniform coin $b \\leftarrow \\{0,1\\}$ and returns $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$."
-          },
-          {
-            id: "p3",
-            text: "Crucially, $\\mathcal{A}$ may keep querying the encryption oracle $\\mathsf{Enc}_k(\\cdot)$ *even after* receiving $c^*$. Scheme $\\Pi$ is CPA-secure if $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$."
-          }
-        ]
+    // 3 Clickable Sentences per Mastery Level (1 = Novice, 2 = Intermediate, 3 = Advanced)
+    const LEFT_SENTENCES = {
+      1: [
+        {
+          id: "s1",
+          text: "In a **Chosen-Plaintext Attack (IND-CPA)**, the adversary $\\mathcal{A}$ can ask the Challenger $\\mathcal{C}$ to encrypt arbitrary test messages under the hidden key $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ before and after seeing the challenge."
+        },
+        {
+          id: "s2",
+          text: "During the challenge phase of $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$, $\\mathcal{A}$ submits two equal-length plaintexts $(m_0, m_1)$, receives $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for a secret coin $b \\leftarrow \\{0,1\\}$, and guesses $b'$."
+        },
+        {
+          id: "s3",
+          text: "Because a blind coin flip already wins with probability $\\frac{1}{2}$, scheme $\\Pi$ is CPA-secure if $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$."
+        }
+      ],
+      2: [
+        {
+          id: "s1",
+          text: "Unlike passive EAV-security, **IND-CPA** grants PPT adversary $\\mathcal{A}$ adaptive oracle access $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ throughout the experiment under $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$."
+        },
+        {
+          id: "s2",
+          text: "$\\mathcal{A}$ outputs equal-length $(m_0, m_1)$, receives challenge ciphertext $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$, continues querying $\\mathsf{Enc}_k(\\cdot)$, and outputs bit $b'$."
+        },
+        {
+          id: "s3",
+          text: "Scheme $\\Pi$ is CPA-secure iff $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for all PPT $\\mathcal{A}$; hence any CPA-secure $\\mathsf{Enc}_k$ must be probabilistic."
+        }
+      ],
+      3: [
+        {
+          id: "s1",
+          text: "Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$. Experiment $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ samples $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ and provides persistent oracle $\\mathcal{O}_k(\\cdot) := \\mathsf{Enc}_k(\\cdot)$."
+        },
+        {
+          id: "s2",
+          text: "$\\mathcal{A}^{\\mathcal{O}_k}(1^\\lambda) \\to (m_0, m_1)_{|m_0|=|m_1|};\\; b \\xleftarrow{\\$} \\{0,1\\};\\; c^* \\leftarrow \\mathsf{Enc}_k(m_b);\\; b' \\leftarrow \\mathcal{A}^{\\mathcal{O}_k}(c^*)$, returning $1 \\iff b'=b$."
+        },
+        {
+          id: "s3",
+          text: "$\\Pi$ is **IND-CPA** $\\iff \\forall\\text{ PPT }\\mathcal{A},\\; \\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$. Derive why deterministic $\\mathsf{Enc}$ fails."
+        }
+      ]
+    };
+
+    // Sentence-specific rewrites when dragging the popup "make it:" slider (1 = Simpler, 2 = Balanced, 3 = Formal)
+    const LINE_SLIDER_VARIANTS = {
+      s1: {
+        1: "**Worked Intuition:** Imagine Eve can trick Alice's server into encrypting any message Eve chooses—watching the outputs—while Alice's secret key $k$ stays fixed.",
+        2: "Unlike passive EAV-security, **IND-CPA** grants PPT adversary $\\mathcal{A}$ adaptive oracle access $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ throughout the experiment.",
+        3: "Fix $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ and equip PPT $\\mathcal{A}$ with persistent adaptive encryption oracle $\\mathcal{O}_k : m \\mapsto \\mathsf{Enc}_k(m)$."
       },
-      intermediate: {
-        wordCount: 132,
-        label: "Intermediate (Formal Def + Intuition)",
-        paragraphs: [
-          {
-            id: "p1",
-            text: "EAV-security only models a passive eavesdropper seeing a single ciphertext. **CPA-security** strengthens the adversary $\\mathcal{A}$ by granting oracle access $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ to encrypt chosen plaintexts under the secret key $k$."
-          },
-          {
-            id: "p2",
-            text: "In $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$, $\\mathcal{A}$ outputs equal-length $(m_0, m_1)$, receives the challenge ciphertext $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for random $b \\leftarrow \\{0,1\\}$, continues querying $\\mathsf{Enc}_k(\\cdot)$, and outputs a guess $b'$."
-          },
-          {
-            id: "p3",
-            text: "Scheme $\\Pi$ has indistinguishable encryptions under a chosen-plaintext attack if for all PPT $\\mathcal{A}$, $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$. Consequently, encryption must be randomized."
-          }
-        ]
+      s2: {
+        1: "**Step-by-Step Game:** (1) $\\mathcal{A}$ picks two messages $m_0, m_1$ of identical length. (2) Challenger flips secret coin $b \\in \\{0,1\\}$ and sends $c^* = \\mathsf{Enc}_k(m_b)$. (3) $\\mathcal{A}$ guesses $b'$.",
+        2: "$\\mathcal{A}$ outputs equal-length $(m_0, m_1)$, receives challenge ciphertext $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$, continues querying $\\mathsf{Enc}_k(\\cdot)$, and outputs $b'$.",
+        3: "$\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda) \\to (m_0, m_1)_{|m_0|=|m_1|},\\; c^* \\leftarrow \\mathsf{Enc}_k(m_b)\\text{ for }b \\xleftarrow{\\$} \\{0,1\\},\\; b' \\leftarrow \\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(c^*)$."
       },
-      advanced: {
-        wordCount: 118,
-        label: "Advanced (Terse Formal Prompt)",
-        paragraphs: [
-          {
-            id: "p1",
-            text: "Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$. In $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$, $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ is sampled and PPT $\\mathcal{A}$ receives oracle access $\\mathsf{Enc}_k(\\cdot)$ throughout both stages."
-          },
-          {
-            id: "p2",
-            text: "$\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ outputs $(m_0, m_1)$ with $|m_0|=|m_1|$; the challenger samples $b \\leftarrow \\{0,1\\}$, computes $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$, and $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(c^*)$ outputs $b'$ (winning iff $b'=b$)."
-          },
-          {
-            id: "p3",
-            text: "$\\Pi$ is **IND-CPA secure** iff $\\forall$ PPT $\\mathcal{A}$, $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$. Prove why deterministic $\\mathsf{Enc}$ violates this bound."
-          }
-        ]
+      s3: {
+        1: "**Why $1/2$?** Guessing randomly wins $50\\%$ of the time. CPA security means $\\mathcal{A}$ cannot beat $\\frac{1}{2}$ by more than a tiny negligible margin $\\mathsf{negl}(\\lambda)$.",
+        2: "Scheme $\\Pi$ is CPA-secure iff $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for all PPT $\\mathcal{A}$; hence $\\mathsf{Enc}_k$ must be randomized.",
+        3: "$\\mathsf{Adv}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) := \\left|\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] - \\frac{1}{2}\\right| \\le \\mathsf{negl}(\\lambda) \\implies \\mathsf{Enc}_k\\text{ is probabilistic}$."
       }
     };
 
-    const EDIT_STOP_REVISIONS = {
-      inaccurate: {
-        p1: "Under **IND-CPA**, the PPT adversary $\\mathcal{A}$ is given oracle access to $\\mathsf{Enc}_k(\\cdot)$ where $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ is fixed for the entire experiment—unlike EAV-security, where $\\mathcal{A}$ observes only a single challenge ciphertext.",
-        p2: "Formally, $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ submits $(m_0, m_1)$ with $|m_0| = |m_1|$ to the LR-challenge, receives $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for $b \\leftarrow \\{0,1\\}$, and retains $\\mathsf{Enc}_k(\\cdot)$ oracle access before outputting $b'$.",
-        p3: "Definition 3.22 requires $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$. Notice the $\\frac{1}{2}$ baseline corresponds to blind guessing; no deterministic scheme can achieve this."
-      },
-      too_complex: {
-        p1: "**Step-by-step intuition:** Imagine Eve wants to break Alice's cipher. Instead of just listening on the wire, Eve can trick Alice into encrypting messages Eve chooses (like \"ATTACK AT DAWN\") and watch the resulting ciphertexts.",
-        p2: "**Game Trace:** (1) $\\mathcal{C}$ picks secret key $k$. (2) $\\mathcal{A}$ asks $\\mathcal{C}$ to encrypt test messages. (3) $\\mathcal{A}$ sends two distinct messages $m_0, m_1$ of equal length; $\\mathcal{C}$ hides $b \\in \\{0,1\\}$ and returns $c^* = \\mathsf{Enc}_k(m_b)$. (4) $\\mathcal{A}$ guesses $b'$.",
-        p3: "**Winning Margin:** Since flipping a coin succeeds with probability $\\frac{1}{2}$, a cipher is CPA-secure if $\\mathcal{A}$'s success rate $\\Pr[b'=b]$ exceeds $\\frac{1}{2}$ by at most a negligible function $\\mathsf{negl}(\\lambda)$."
-      },
-      too_easy: {
-        p1: "Grant $\\mathcal{A}$ poly-time adaptive oracle access $\\mathcal{O}_k(\\cdot) := \\mathsf{Enc}_k(\\cdot)$ for $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$.",
-        p2: "$\\mathcal{A}^{\\mathcal{O}_k}(1^\\lambda) \\to (m_0, m_1)_{|m_0|=|m_1|} \\implies c^* \\leftarrow \\mathsf{Enc}_k(m_b),\\; b \\xleftarrow{\\$} \\{0,1\\} \\implies b' \\leftarrow \\mathcal{A}^{\\mathcal{O}_k}(c^*)$.",
-        p3: "IND-CPA $\\iff \\forall\\text{ PPT }\\mathcal{A},\\; \\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$."
-      }
+    const INACCURATE_CITED_REWRITES = {
+      s1: "By Definition 3.22, $\\mathcal{A}$ has adaptive oracle access to $\\mathsf{Enc}_k(\\cdot)$ under fixed $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ in both pre- and post-challenge phases.",
+      s2: "The challenge plaintexts $(m_0, m_1)$ must satisfy $|m_0| = |m_1|$ (equal length is mandatory since CPA does not hide plaintext length), and $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$.",
+      s3: "Formally, $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$; Theorem 3.24 proves no deterministic scheme satisfies this."
     };
 
-    const SAMPLE_FLAWED_DRAFT = `Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ be any deterministic private-key encryption scheme.
+    const PRETEST_QUESTIONS = [
+      {
+        title: "Diagnostic Pretest (1 / 3)",
+        prompt: "What is the baseline winning probability of a random-guessing adversary in the $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ game?",
+        placeholder: "Type your answer (e.g., 1/2 because b is a uniform bit)...",
+        sampleAnswer: "1/2, because the challenger samples b uniformly from {0,1}."
+      },
+      {
+        title: "Diagnostic Pretest (2 / 3)",
+        prompt: "When is a function $\\varepsilon(\\lambda)$ considered negligible relative to any polynomial $p(\\lambda)$?",
+        placeholder: "Type your answer...",
+        sampleAnswer: "When ε(λ) < 1/p(λ) for all sufficiently large λ."
+      },
+      {
+        title: "Diagnostic Pretest (3 / 3)",
+        prompt: "Why does deterministic encryption $\\mathsf{Enc}_k(m)$ fail when an adversary can query the encryption oracle?",
+        placeholder: "Type your answer...",
+        sampleAnswer: "Encrypting the same m_0 twice produces identical ciphertexts, allowing A to match c* = Enc_k(m_b)."
+      }
+    ];
+
+    const REVIEW_QUESTIONS = [
+      {
+        title: "Review Question (1 / 2)",
+        prompt: "In your draft inequality $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$, what baseline probability is missing on the right-hand side?",
+        placeholder: "Explain the missing baseline term...",
+        sampleAnswer: "A random guess wins with probability 1/2, so the RHS must be 1/2 + negl(λ)."
+      },
+      {
+        title: "Review Question (2 / 2)",
+        prompt: "When $\\mathcal{A}$ queries the oracle on $m_0$ and submits $(m_0, m_1)$, what condition on $(m_0, m_1)$ and $\\mathsf{Enc}_k$ ensures $c^* = c_0 \\iff b = 0$?",
+        placeholder: "Specify the condition on m_0, m_1 and determinism...",
+        sampleAnswer: "We need distinct equal-length messages m_0 != m_1 (|m_0|=|m_1|) and deterministic Enc_k."
+      }
+    ];
+
+    const DEFAULT_USER_DRAFT = `Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ be any deterministic encryption scheme.
 For $\\Pi$ to be CPA-secure, every PPT adversary $\\mathcal{A}$ must satisfy:
 $$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$$
-However, $\\mathcal{A}$ can break $\\Pi$ in two queries: $\\mathcal{A}$ queries the oracle on $m_0$, receives $c_0$, then submits $(m_0, m_1)$ to get challenge $c^*$.
-If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$; otherwise $b' = 1$, winning with probability $1$.`;
-
-    const COMMITTED_MODULE_3_1 = {
-      id: "mod_3_1_block_1",
-      title: "3.1 Negligible Functions & Indistinguishability",
-      status: "verified",
-      sourceRefs: ["Cryptography.pdf#p39-def3.4"],
-      content: `A function $\\varepsilon(\\lambda)$ is **negligible** if for every positive polynomial $p(\\cdot)$, there exists $N$ such that for all $\\lambda > N$, $\\varepsilon(\\lambda) < 1/p(\\lambda)$. In asymptotic security proofs, negligible success margins ensure that polynomial-time adversaries gain no practical advantage even across polynomially many trials.`
-    };
+However, $\\mathcal{A}$ can break $\\Pi$ by querying the oracle on $m_0$ to get $c_0$, and then submitting $(m_0, m_1)$ to receive challenge $c^*$.
+If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with probability $1$.`;
 
     // =========================================================================
-    // 2. APPLICATION STATE MACHINE
+    // 2. STATE
     // =========================================================================
-    const STATES = [
-      { id: "INGEST", label: "1. Ingest" },
-      { id: "PRETEST", label: "2. Pretest" },
-      { id: "STUDY_LEFT", label: "3. Study Left" },
-      { id: "WRITE_RIGHT", label: "4. Blind-Write" },
-      { id: "QUESTION_CARD", label: "5. Q-Card" },
-      { id: "DIFF_REVIEW", label: "6. Inline Diff" },
-      { id: "COMMITTED", label: "7. Commit" }
-    ];
+    let state = {
+      currentBlockIdx: 1, // 0 = 3.1, 1 = 3.2 (Active), 2 = 3.3
+      mastery: 2, // 1 = Novice, 2 = Intermediate, 3 = Advanced
+      leftSourceMode: false, // false = AI Explanation, true = Original Source
+      blindAutoEnabled: true,
+      blindActive: false,
+      mode: "write", // "write" | "diff" | "committed"
+      userDraft: DEFAULT_USER_DRAFT,
 
-    let appState = {
-      step: "INGEST", // current workflow state
-      leftTab: "adaptive",
-      mastery: "intermediate",
-      selectedParagraph: null,
-      justUpdatedParagraph: null,
-      paragraphOverrides: {}, // { p1: { text, flag, note, citation } }
-      blindWrite: false,
-      peekedDuringBlindWrite: false,
-      draftText: SAMPLE_FLAWED_DRAFT,
-      qCardAnswers: { q1: "", q2: "" },
-      qCardSubmitted: false,
+      // Line Overrides in Left Card: { s1: { text, cited, difficultyLabel } }
+      lineOverrides: {},
+      activeFeedbackLineId: null,
+      feedbackInaccurateOpen: false,
+      feedbackSliderVal: 2,
+      justUpdatedLineId: null,
+
+      // UI 2 Modal State: null | { flow: 'pretest' | 'review', idx: 0, answers: [] }
+      modal: null,
+
+      // Codex / Antigravity IDE Inline Diffs
       diffs: [
         {
           id: "d1",
-          label: "Diff #1 — Security Bound Baseline",
-          delLatex: "$\\le \\mathsf{negl}(\\lambda)$",
-          insLatex: "$\\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$",
-          delRaw: "\\le \\mathsf{negl}(\\lambda)",
-          insRaw: "\\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)",
+          reason: "Fix IND-CPA random-guess baseline (from Q1)",
+          delRaw: "\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)",
+          insRaw: "\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)",
+          delRender: "$$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$$",
+          insRender: "$$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$$",
           status: "pending", // pending | accepted | rejected | edited
-          editedRaw: ""
+          editing: false,
+          customText: ""
         },
         {
           id: "d2",
-          label: "Diff #2 — Oracle Query & Determinism",
-          delLatex: "queries the oracle on $m_0$",
-          insLatex: "queries $\\mathsf{Enc}_k(m_0)$ for distinct equal-length $m_0 \\neq m_1$, exploiting deterministic $\\mathsf{Enc}_k$",
-          delRaw: "queries the oracle on $m_0$",
-          insRaw: "queries $\\mathsf{Enc}_k(m_0)$ for distinct equal-length $m_0 \\neq m_1$, exploiting deterministic $\\mathsf{Enc}_k$",
+          reason: "Specify distinct equal-length plaintexts & determinism (from Q2)",
+          delRaw: "querying the oracle on $m_0$ to get $c_0$",
+          insRaw: "querying $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct equal-length $m_0 \\neq m_1$ (exploiting deterministic $\\mathsf{Enc}_k$)",
+          delRender: "querying the oracle on $m_0$ to get $c_0$",
+          insRender: "querying $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct equal-length $m_0 \\neq m_1$ (exploiting deterministic $\\mathsf{Enc}_k$)",
           status: "pending",
-          editedRaw: ""
+          editing: false,
+          customText: ""
         }
       ],
-      editingDiffId: null,
-      committedBlocks: [COMMITTED_MODULE_3_1],
-      telemetryOpen: false,
-      startTimeMs: Date.now(),
-      studentModel: {
+
+      cornerOpen: false,
+      startTime: Date.now(),
+      telemetry: {
         topic_id: "crypto_ch3_ind_cpa",
-        block_id: "mod_3_2_block_1",
+        block_id: "mod_3_2",
         source_refs: ["Cryptography.pdf#p42-def3.22", "Cryptography.pdf#p43-thm3.24"],
         initial_mastery: "intermediate",
         left_feedback_flags: [],
@@ -1166,19 +1390,13 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$; otherwise $b' = 1$, winning wit
         override_reasons: [],
         verification_status: "in_progress",
         time_spent_sec: 0,
-        fsrs_state: {
-          difficulty_D: 5.2,
-          stability_S: 3.8,
-          retrievability_R: 0.94,
-          next_review_at: "2026-11-18T10:00:00Z (Queued for Phase 2)"
-        }
+        fsrs_state: { D: 5.1, S: 3.9, R: 0.94, next_review: "Phase 2 Queue" }
       }
     };
 
-    // Live timer for Student Model telemetry
     setInterval(() => {
-      appState.studentModel.time_spent_sec = Math.floor((Date.now() - appState.startTimeMs) / 1000);
-      if (appState.telemetryOpen) renderTelemetry();
+      state.telemetry.time_spent_sec = Math.floor((Date.now() - state.startTime) / 1000);
+      if (state.cornerOpen) renderTelemetry();
     }, 1000);
 
     // =========================================================================
@@ -1193,17 +1411,17 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$; otherwise $b' = 1$, winning wit
         .replace(/'/g, "&#39;");
     }
 
-    function formatBasicMarkdown(text) {
-      let safe = escapeHtml(text);
-      safe = safe.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-      safe = safe.replace(/\*([^*]+)\*/g, "<em>$1</em>");
-      safe = safe.replace(/\n/g, "<br/>");
-      return safe;
+    function formatMd(str) {
+      let s = escapeHtml(str);
+      s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+      s = s.replace(/\n/g, "<br/>");
+      return s;
     }
 
-    function renderMath(container) {
-      if (typeof renderMathInElement === "function" && container) {
-        renderMathInElement(container, {
+    function typesetMath(el) {
+      if (typeof renderMathInElement === "function" && el) {
+        renderMathInElement(el, {
           delimiters: [
             { left: "$$", right: "$$", display: true },
             { left: "$", right: "$", display: false }
@@ -1213,772 +1431,741 @@ If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$; otherwise $b' = 1$, winning wit
       }
     }
 
-    function recordOverride(reason) {
-      appState.studentModel.override_used = true;
-      if (!appState.studentModel.override_reasons.includes(reason)) {
-        appState.studentModel.override_reasons.push(reason);
+    function logOverride(reason) {
+      state.telemetry.override_used = true;
+      if (!state.telemetry.override_reasons.includes(reason)) {
+        state.telemetry.override_reasons.push(reason);
       }
+      state.telemetry.verification_status = "unverified";
     }
 
     // =========================================================================
-    // 4. STATE TRANSITIONS & ACTIONS
+    // 4. INTERACTION HANDLERS
     // =========================================================================
-    function jumpToState(stepId) {
-      appState.step = stepId;
-      if (stepId === "WRITE_RIGHT") {
-        appState.blindWrite = true;
-      }
-      if (stepId === "QUESTION_CARD") {
-        appState.blindWrite = false;
-        appState.studentModel.question_card_attempts = Math.max(1, appState.studentModel.question_card_attempts);
-      }
-      if (stepId === "DIFF_REVIEW") {
-        appState.blindWrite = false;
-        appState.qCardSubmitted = true;
-        appState.studentModel.question_card_attempts = Math.max(1, appState.studentModel.question_card_attempts);
-        appState.studentModel.diffs_proposed = appState.diffs.length;
-      }
-      if (stepId === "COMMITTED") {
-        appState.blindWrite = false;
-        ensureCommittedBlock(false);
-      }
+    function switchBlock(idx) {
+      state.currentBlockIdx = idx;
+      state.blindActive = false;
       renderAll();
     }
 
-    function resetDemo() {
-      appState = {
-        ...appState,
-        step: "INGEST",
-        leftTab: "adaptive",
-        mastery: "intermediate",
-        selectedParagraph: null,
-        justUpdatedParagraph: null,
-        paragraphOverrides: {},
-        blindWrite: false,
-        peekedDuringBlindWrite: false,
-        draftText: SAMPLE_FLAWED_DRAFT,
-        qCardAnswers: { q1: "", q2: "" },
-        qCardSubmitted: false,
-        editingDiffId: null,
-        committedBlocks: [COMMITTED_MODULE_3_1],
-        startTimeMs: Date.now()
-      };
-      appState.diffs.forEach(d => { d.status = "pending"; d.editedRaw = ""; });
-      MODULES[1].status = "active";
-      MODULES[2].status = "locked";
-      appState.studentModel = {
-        ...appState.studentModel,
-        initial_mastery: "intermediate",
-        left_feedback_flags: [],
-        question_card_attempts: 0,
-        diffs_proposed: 0,
-        diffs_accepted_vs_edited: { accepted: 0, rejected: 0, edited: 0 },
-        override_used: false,
-        override_reasons: [],
-        verification_status: "in_progress",
-        time_spent_sec: 0
-      };
+    function onMasterySliderChange(val) {
+      const num = parseInt(val, 10);
+      state.mastery = num;
+      const names = { 1: "Novice", 2: "Intermediate", 3: "Advanced" };
+      state.telemetry.initial_mastery = names[num].toLowerCase();
+      state.lineOverrides = {};
       renderAll();
     }
 
-    function setMastery(level, stayInWorkspace = false) {
-      appState.mastery = level;
-      appState.studentModel.initial_mastery = level;
-      appState.paragraphOverrides = {};
-      appState.selectedParagraph = null;
-      if (stayInWorkspace && (appState.step === "INGEST" || appState.step === "PRETEST")) {
-        appState.step = "STUDY_LEFT";
+    function toggleLeftSource() {
+      state.leftSourceMode = !state.leftSourceMode;
+      renderAll();
+    }
+
+    function toggleBlindWrite() {
+      state.blindAutoEnabled = !state.blindAutoEnabled;
+      if (!state.blindAutoEnabled) state.blindActive = false;
+      renderAll();
+    }
+
+    function onEditorFocusInput(textarea) {
+      state.userDraft = textarea.value;
+      if (state.blindAutoEnabled && !state.blindActive && state.currentBlockIdx === 1) {
+        state.blindActive = true;
+        renderLeftCard();
       }
+      const preview = document.getElementById("liveMathPreview");
+      if (preview) {
+        preview.innerHTML = formatMd(state.userDraft);
+        typesetMath(preview);
+      }
+    }
+
+    function peekLeftCard() {
+      state.blindActive = false;
+      state.blindAutoEnabled = false;
+      logOverride("blind_write_peek");
       renderAll();
     }
 
-    function setLeftTab(tab) {
-      appState.leftTab = tab;
-      appState.selectedParagraph = null;
+    // --- UI 1: Centered Line Feedback Popup ---
+    function openLineFeedback(lineId) {
+      state.activeFeedbackLineId = lineId;
+      state.feedbackInaccurateOpen = false;
+      state.feedbackSliderVal = state.mastery;
+      state.modal = { flow: "feedback", lineId };
       renderAll();
     }
 
-    function selectParagraph(pid) {
-      appState.selectedParagraph = appState.selectedParagraph === pid ? null : pid;
-      renderLeftPane();
+    function toggleInaccurateNote() {
+      state.feedbackInaccurateOpen = !state.feedbackInaccurateOpen;
+      renderModal();
     }
 
-    function applyInlineFlag(pid, flagType) {
-      const noteInput = document.getElementById(`flagNote-${pid}`);
-      const noteVal = noteInput ? noteInput.value.trim() : "";
-      const revisedText = EDIT_STOP_REVISIONS[flagType][pid];
-      const citation = flagType === "inaccurate" ? "Verified against Cryptography.pdf, p. 42, Def 3.22" : null;
-      const flagLabels = {
-        inaccurate: "Flagged: Inaccurate (Re-verified)",
-        too_complex: "Adapted: Simplified Trace",
-        too_easy: "Adapted: Condensed Notation"
+    function submitInaccurateLine(lineId) {
+      const noteEl = document.getElementById("inaccurateNoteInput");
+      const note = noteEl ? noteEl.value.trim() : "";
+      state.lineOverrides[lineId] = {
+        text: INACCURATE_CITED_REWRITES[lineId],
+        cited: "Ref: Cryptography.pdf, p. 42, Def 3.22",
+        difficultyLabel: null
       };
-
-      appState.paragraphOverrides[pid] = {
-        text: revisedText,
-        flag: flagType,
-        flagLabel: flagLabels[flagType],
-        note: noteVal,
-        citation
-      };
-      appState.studentModel.left_feedback_flags.push({
-        paragraph_id: pid,
-        flag: flagType,
-        note: noteVal || "(no note)",
-        resolved: true
+      state.telemetry.left_feedback_flags.push({
+        line: lineId,
+        type: "inaccurate",
+        note: note || "Verify against source"
       });
-      appState.selectedParagraph = null;
-      appState.justUpdatedParagraph = pid;
-      renderLeftPane();
-      renderTelemetry();
+      state.justUpdatedLineId = lineId;
+      closeModal();
     }
 
-    function toggleBlindWrite(forceVal) {
-      appState.blindWrite = typeof forceVal === "boolean" ? forceVal : !appState.blindWrite;
+    function onLineDifficultySlide(lineId, val) {
+      const num = parseInt(val, 10);
+      state.feedbackSliderVal = num;
+      const labels = { 1: "Simplified Trace", 2: "Balanced Depth", 3: "Formal Notation" };
+      state.lineOverrides[lineId] = {
+        text: LINE_SLIDER_VARIANTS[lineId][num],
+        cited: null,
+        difficultyLabel: labels[num]
+      };
+      state.telemetry.left_feedback_flags.push({
+        line: lineId,
+        type: `difficulty_${num}`,
+        note: labels[num]
+      });
+      state.justUpdatedLineId = lineId;
+      closeModal();
+    }
+
+    // --- UI 2: Centered POPUP Questions (Pretest & Post-Submit Review) ---
+    function openPretestModal() {
+      state.modal = {
+        flow: "pretest",
+        idx: 0,
+        answers: ["", "", ""]
+      };
       renderAll();
     }
 
-    function triggerBlindPeek() {
-      appState.blindWrite = false;
-      appState.peekedDuringBlindWrite = true;
-      recordOverride("blind_write_peek");
-      appState.studentModel.verification_status = "unverified";
+    function triggerSubmitReview() {
+      state.blindActive = false;
+      state.telemetry.question_card_attempts += 1;
+      state.modal = {
+        flow: "review",
+        idx: 0,
+        answers: ["", ""]
+      };
       renderAll();
     }
 
-    function loadSampleDraft() {
-      appState.draftText = SAMPLE_FLAWED_DRAFT;
-      renderRightPane();
+    function fillModalSampleAnswer() {
+      if (!state.modal) return;
+      const list = state.modal.flow === "pretest" ? PRETEST_QUESTIONS : REVIEW_QUESTIONS;
+      const item = list[state.modal.idx];
+      state.modal.answers[state.modal.idx] = item.sampleAnswer;
+      const box = document.getElementById("modalAnswerInput");
+      if (box) box.value = item.sampleAnswer;
     }
 
-    function updateDraftText(val) {
-      appState.draftText = val;
-      const previewEl = document.getElementById("liveLatexPreview");
-      if (previewEl) {
-        previewEl.innerHTML = formatBasicMarkdown(val);
-        renderMath(previewEl);
+    function nextModalQuestion() {
+      if (!state.modal) return;
+      const box = document.getElementById("modalAnswerInput");
+      if (box) state.modal.answers[state.modal.idx] = box.value.trim();
+
+      const list = state.modal.flow === "pretest" ? PRETEST_QUESTIONS : REVIEW_QUESTIONS;
+      if (state.modal.idx + 1 < list.length) {
+        state.modal.idx += 1;
+        renderModal();
+      } else {
+        if (state.modal.flow === "pretest") {
+          // Score non-empty answers to calibrate Mastery Slider
+          const answeredCount = state.modal.answers.filter(a => a.length > 3).length;
+          const calibrated = answeredCount <= 1 ? 1 : answeredCount === 2 ? 2 : 3;
+          onMasterySliderChange(calibrated);
+          closeModal();
+        } else {
+          closeModal();
+          enterDiffMode();
+        }
       }
     }
 
-    function submitForReview() {
-      appState.blindWrite = false;
-      appState.step = "QUESTION_CARD";
-      appState.studentModel.question_card_attempts += 1;
+    function skipModalQuestion() {
+      if (!state.modal) return;
+      if (state.modal.flow === "pretest") {
+        state.telemetry.override_reasons.push("pretest_skipped");
+        onMasterySliderChange(2);
+        closeModal();
+      } else {
+        logOverride("skipped_review_question");
+        closeModal();
+        enterDiffMode();
+      }
+    }
+
+    function closeModal() {
+      state.modal = null;
+      state.activeFeedbackLineId = null;
       renderAll();
     }
 
-    function fillSampleQCardAnswers() {
-      appState.qCardAnswers.q1 = "A blind guess succeeds with probability 1/2, so the security bound must be <= 1/2 + negl(lambda).";
-      appState.qCardAnswers.q2 = "Enc_k is deterministic, so encrypting the same m_0 twice produces identical ciphertexts when b = 0 (provided m_0 != m_1 and |m_0|=|m_1|).";
-      renderRightPane();
+    function onOverlayClick(e) {
+      if (e.target.id === "modalOverlay") {
+        closeModal();
+      }
     }
 
-    function submitQuestionCard() {
-      appState.qCardSubmitted = true;
-      appState.step = "DIFF_REVIEW";
-      appState.studentModel.diffs_proposed = appState.diffs.length;
+    // --- Codex / Antigravity IDE Inline Diff Actions ---
+    function enterDiffMode() {
+      state.currentBlockIdx = 1;
+      state.mode = "diff";
+      state.blindActive = false;
+      state.telemetry.diffs_proposed = state.diffs.length;
       renderAll();
     }
 
-    function skipQuestionCardForceCommit() {
-      recordOverride("skipped_question_card");
-      ensureCommittedBlock(true);
-      appState.step = "COMMITTED";
-      renderAll();
-    }
-
-    function forceCommitFromEditor() {
-      recordOverride("skipped_review_and_diff");
-      ensureCommittedBlock(true);
-      appState.step = "COMMITTED";
-      renderAll();
-    }
-
-    function setDiffStatus(diffId, status) {
-      const d = appState.diffs.find(x => x.id === diffId);
+    function handleDiffAction(diffId, action) {
+      const d = state.diffs.find(x => x.id === diffId);
       if (!d) return;
-      d.status = status;
-      if (status !== "edited") appState.editingDiffId = null;
-      recomputeDiffTelemetry();
-      renderRightPane();
-      renderTelemetry();
-    }
-
-    function startEditDiff(diffId) {
-      appState.editingDiffId = diffId;
-      renderRightPane();
-    }
-
-    function saveEditedDiff(diffId) {
-      const input = document.getElementById(`editDiffInput-${diffId}`);
-      const d = appState.diffs.find(x => x.id === diffId);
-      if (d && input) {
-        d.editedRaw = input.value.trim() || d.insRaw;
-        d.status = "edited";
+      if (action === "edit") {
+        d.editing = true;
+      } else {
+        d.status = action; // 'accepted' | 'rejected'
+        d.editing = false;
       }
-      appState.editingDiffId = null;
-      recomputeDiffTelemetry();
-      renderRightPane();
+      syncDiffCounts();
+      renderRightCard();
       renderTelemetry();
     }
 
-    function recomputeDiffTelemetry() {
+    function saveDiffEdit(diffId) {
+      const d = state.diffs.find(x => x.id === diffId);
+      const inp = document.getElementById(`diffEditInput-${diffId}`);
+      if (d && inp) {
+        d.customText = inp.value.trim() || d.insRaw;
+        d.status = "edited";
+        d.editing = false;
+      }
+      syncDiffCounts();
+      renderRightCard();
+      renderTelemetry();
+    }
+
+    function acceptAllDiffs() {
+      state.diffs.forEach(d => {
+        if (d.status === "pending") d.status = "accepted";
+      });
+      syncDiffCounts();
+      renderRightCard();
+      renderTelemetry();
+    }
+
+    function syncDiffCounts() {
       const counts = { accepted: 0, rejected: 0, edited: 0 };
-      appState.diffs.forEach(d => {
+      state.diffs.forEach(d => {
         if (d.status === "accepted") counts.accepted++;
         if (d.status === "rejected") counts.rejected++;
         if (d.status === "edited") counts.edited++;
       });
-      appState.studentModel.diffs_accepted_vs_edited = counts;
+      state.telemetry.diffs_accepted_vs_edited = counts;
     }
 
-    function commitFinalizedBlock() {
-      const unresolved = appState.diffs.some(d => d.status === "pending");
-      if (unresolved) {
-        recordOverride("committed_with_unresolved_diffs");
+    function commitBlock() {
+      const hasPending = state.diffs.some(d => d.status === "pending");
+      const allRejected = state.diffs.every(d => d.status === "rejected");
+      if (hasPending || allRejected) {
+        logOverride("committed_without_resolving_diffs");
       }
-      ensureCommittedBlock(unresolved || appState.studentModel.override_used);
-      appState.step = "COMMITTED";
-      renderAll();
-    }
 
-    function ensureCommittedBlock(isOverride) {
-      const existing = appState.committedBlocks.find(b => b.id === "mod_3_2_block_1");
-      if (existing) return;
-
-      let finalProse = appState.draftText;
-      appState.diffs.forEach(d => {
-        if (d.status === "accepted" || (!isOverride && d.status === "pending")) {
-          if (d.status === "accepted") {
-            finalProse = finalProse.replace(d.delRaw, d.insRaw);
-          }
+      // Apply accepted/edited diffs into finalized prose
+      let finalNote = state.userDraft;
+      state.diffs.forEach(d => {
+        if (d.status === "accepted") {
+          finalNote = finalNote.replace(d.delRaw, d.insRaw);
         } else if (d.status === "edited") {
-          finalProse = finalProse.replace(d.delRaw, d.editedRaw);
+          finalNote = finalNote.replace(d.delRaw, d.customText);
         }
       });
 
-      const unverified = Boolean(isOverride || appState.studentModel.override_used);
-      appState.studentModel.verification_status = unverified ? "unverified" : "verified";
-
-      appState.committedBlocks.push({
-        id: "mod_3_2_block_1",
-        title: "3.2 EAV-Security & Why Deterministic Encryption Fails IND-CPA",
-        status: unverified ? "unverified" : "verified",
-        overrideReasons: [...appState.studentModel.override_reasons],
-        sourceRefs: ["Cryptography.pdf#p42-def3.22", "Cryptography.pdf#p43-thm3.24"],
-        content: finalProse
-      });
-
-      MODULES[1].status = unverified ? "active" : "done";
-      MODULES[2].status = "unlocked";
-    }
-
-    function submitPretest() {
-      const q1 = document.querySelector('input[name="pq1"]:checked')?.value;
-      const q2 = document.querySelector('input[name="pq2"]:checked')?.value;
-      const q3 = document.querySelector('input[name="pq3"]:checked')?.value;
-      let score = 0;
-      if (q1 === "correct") score++;
-      if (q2 === "correct") score++;
-      if (q3 === "correct") score++;
-
-      const level = score <= 1 ? "novice" : score === 2 ? "intermediate" : "advanced";
-      setMastery(level, false);
-      appState.step = "STUDY_LEFT";
+      state.userDraft = finalNote;
+      state.mode = "committed";
+      if (!state.telemetry.override_used) {
+        state.telemetry.verification_status = "verified";
+        BLOCKS[1].status = "verified";
+      } else {
+        state.telemetry.verification_status = "unverified";
+        BLOCKS[1].status = "unverified";
+      }
+      BLOCKS[1].userNote = finalNote;
       renderAll();
     }
 
-    function toggleTelemetry() {
-      appState.telemetryOpen = !appState.telemetryOpen;
-      const body = document.getElementById("telemetryJson");
-      const chev = document.getElementById("telemetryChevron");
-      body.classList.toggle("hidden", !appState.telemetryOpen);
-      chev.textContent = appState.telemetryOpen ? "▼ Hide JSON" : "▲ Show JSON";
+    function toggleCornerDrawer() {
+      state.cornerOpen = !state.cornerOpen;
+      document.getElementById("cornerDrawer").classList.toggle("hidden", !state.cornerOpen);
       renderTelemetry();
     }
 
-    function exportNotebookMd() {
-      const lines = [
-        "# Study Session Notebook — Cryptography (Ch. 3)",
-        "",
-        ...appState.committedBlocks.flatMap(b => [
-          `## ${b.title} [${b.status.toUpperCase()}]`,
-          `> Sources: ${b.sourceRefs.join(", ")}`,
-          "",
-          b.content,
-          ""
-        ])
-      ];
-      const blob = new Blob([lines.join("\n")], { type: "text/markdown;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "crypto-ind-cpa-notebook.md";
-      a.click();
-      URL.revokeObjectURL(url);
+    function resetPrototype() {
+      state.currentBlockIdx = 1;
+      state.mastery = 2;
+      state.leftSourceMode = false;
+      state.blindAutoEnabled = true;
+      state.blindActive = false;
+      state.mode = "write";
+      state.userDraft = DEFAULT_USER_DRAFT;
+      state.lineOverrides = {};
+      state.modal = null;
+      state.diffs.forEach(d => { d.status = "pending"; d.editing = false; d.customText = ""; });
+      state.telemetry.left_feedback_flags = [];
+      state.telemetry.question_card_attempts = 0;
+      state.telemetry.diffs_proposed = 0;
+      state.telemetry.diffs_accepted_vs_edited = { accepted: 0, rejected: 0, edited: 0 };
+      state.telemetry.override_used = false;
+      state.telemetry.override_reasons = [];
+      state.telemetry.verification_status = "in_progress";
+      BLOCKS[1].status = "active";
+      renderAll();
     }
 
     // =========================================================================
     // 5. RENDERING
     // =========================================================================
     function renderAll() {
-      renderTopBar();
-      renderLeftPane();
-      renderRightPane();
+      renderHeader();
+      renderLeftCard();
+      renderRightCard();
       renderModal();
       renderTelemetry();
     }
 
-    function renderTopBar() {
-      // Module Stepper
-      const stepper = document.getElementById("moduleStepper");
-      stepper.innerHTML = MODULES.map(m => {
-        let cls = "module-pill";
-        let icon = "○";
-        if (m.status === "verified" || m.status === "done") { cls += " done"; icon = "✓"; }
-        else if (m.status === "active") { cls += " active"; icon = "●"; }
-        else if (m.status === "unlocked") { cls += " unlocked"; icon = "→"; }
-        else { icon = "🔒"; }
-        return `<span class="${cls}">${icon} ${escapeHtml(m.title)}</span>`;
-      }).join("");
+    function renderHeader() {
+      const blk = BLOCKS[state.currentBlockIdx];
+      document.getElementById("blockTitle").textContent = blk.title;
 
-      // Mastery Badge
-      const mBadge = document.getElementById("masteryBadge");
-      const mMap = { novice: "Novice (Worked Trace)", intermediate: "Intermediate", advanced: "Advanced (Terse)" };
-      mBadge.textContent = `Mastery: ${mMap[appState.mastery]}`;
+      // Dots
+      BLOCKS.forEach((b, i) => {
+        const dot = document.getElementById(`dot-${i}`);
+        let cls = "dot-btn";
+        if (i === state.currentBlockIdx) cls += " current";
+        else if (b.status === "verified") cls += " done";
+        dot.className = cls;
+      });
 
-      // Demo Quick-Jump Steps
-      const demoSteps = document.getElementById("demoSteps");
-      demoSteps.innerHTML = `<span class="demo-label">Study Loop:</span>` + STATES.map(s => {
-        const active = appState.step === s.id ? "active" : "";
-        return `<button class="step-btn ${active}" onclick="jumpToState('${s.id}')">${s.label}</button>`;
-      }).join("");
+      // Status Dot & Tag
+      const sDot = document.getElementById("statusDot");
+      const sTag = document.getElementById("statusTag");
+      const cDot = document.getElementById("cornerStatusDot");
 
-      // Blind-Write Header Button
-      document.getElementById("blindStateText").textContent = appState.blindWrite ? "ON" : "OFF";
-      const blindBtn = document.getElementById("blindToggleBtn");
-      blindBtn.className = appState.blindWrite ? "btn btn-sm btn-primary" : "btn btn-sm";
-
-      // Draft Verification Badge
-      const vBadge = document.getElementById("draftVerificationBadge");
-      if (appState.studentModel.verification_status === "verified") {
-        vBadge.className = "badge badge-green";
-        vBadge.textContent = "✓ Verified";
-      } else if (appState.studentModel.override_used || appState.studentModel.verification_status === "unverified") {
-        vBadge.className = "badge badge-amber";
-        vBadge.textContent = "⚠ Unverified (Override Logged)";
+      if (state.telemetry.verification_status === "verified" || blk.status === "verified") {
+        sDot.className = "status-dot verified";
+        cDot.className = "status-dot verified";
+        sTag.className = "status-tag verified";
+        sTag.textContent = "✓ Verified Block";
+      } else if (state.telemetry.override_used || state.telemetry.verification_status === "unverified") {
+        sDot.className = "status-dot unverified";
+        cDot.className = "status-dot unverified";
+        sTag.className = "status-tag unverified";
+        sTag.textContent = `⚠ Unverified (${state.telemetry.override_reasons[0] || "override"})`;
       } else {
-        vBadge.className = "badge badge-neutral";
-        vBadge.textContent = "In Progress";
+        sDot.className = "status-dot active";
+        cDot.className = "status-dot active";
+        sTag.className = "status-tag";
+        sTag.textContent = state.mode === "diff" ? "Reviewing Inline Diffs" : "Studying Block";
       }
 
-      // Export Button
-      document.getElementById("exportBtn").disabled = appState.committedBlocks.length < 2;
-
-      // Telemetry Status Pill
-      const tPill = document.getElementById("telemetryStatusPill");
-      tPill.textContent = appState.studentModel.verification_status;
-      tPill.className = appState.studentModel.verification_status === "verified"
-        ? "badge badge-green"
-        : appState.studentModel.verification_status === "unverified"
-          ? "badge badge-amber"
-          : "badge badge-neutral";
+      // Mastery Slider
+      const slider = document.getElementById("masterySlider");
+      const label = document.getElementById("masteryLabel");
+      slider.value = state.mastery;
+      const mNames = { 1: "Novice", 2: "Intermediate", 3: "Advanced" };
+      label.textContent = mNames[state.mastery];
     }
 
-    function renderLeftPane() {
-      document.getElementById("tabAdaptive").classList.toggle("active", appState.leftTab === "adaptive");
-      document.getElementById("tabSource").classList.toggle("active", appState.leftTab === "source");
+    function renderLeftCard() {
+      const switcherBtn = document.getElementById("sourceSwitcherBtn");
+      const switcherLabel = document.getElementById("switcherLabel");
+      const headerTitle = document.getElementById("leftCardHeaderTitle");
+      const wordCount = document.getElementById("leftWordCount");
+      const blindChipLabel = document.getElementById("blindChipLabel");
+      const blindVeil = document.getElementById("blindVeil");
+      const body = document.getElementById("leftCardBody");
 
-      const blindOverlay = document.getElementById("blindOverlay");
-      blindOverlay.classList.toggle("hidden", !appState.blindWrite);
+      switcherBtn.classList.toggle("source-active", state.leftSourceMode);
+      switcherLabel.textContent = state.leftSourceMode ? "Source PDF ⇄ AI" : "AI ⇄ Source PDF";
+      blindChipLabel.textContent = state.blindAutoEnabled ? "Blind-Write: Auto" : "Blind-Write: Off";
+      blindVeil.classList.toggle("hidden", !state.blindActive);
 
-      const body = document.getElementById("leftPaneBody");
-      if (appState.leftTab === "source") {
+      if (state.leftSourceMode) {
+        headerTitle.textContent = "ORIGINAL SOURCE EXCERPT";
+        wordCount.textContent = "• Cryptography.pdf (p. 42, §3.2.2)";
         body.innerHTML = `
-          <div class="meta-strip">
-            <span class="badge badge-neutral">Cryptography.pdf • Chapter 3, pp. 42–43</span>
-            <span class="source-ref-mono">Anchor: #p42-def3.22</span>
-          </div>
-          <div class="source-card">
-            <span class="source-anchor">[Source Ref: p. 42, §3.2.2 — Definition 3.22]</span>
-            <p>
-              <strong>Definition 3.22 (IND-CPA Security).</strong> A private-key encryption scheme $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ has <em>indistinguishable encryptions under a chosen-plaintext attack</em> (is CPA-secure) if for all probabilistic polynomial-time adversaries $\\mathcal{A}$, there exists a negligible function $\\mathsf{negl}$ such that:
+          <div class="source-sheet">
+            <span class="source-ref-badge">ANCHOR // Cryptography.pdf • Page 42 • Definition 3.22</span>
+            <p style="margin-top:6px;">
+              <strong>Definition 3.22 (IND-CPA Security).</strong> A private-key encryption scheme $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ has <em>indistinguishable encryptions under a chosen-plaintext attack</em> if for all probabilistic polynomial-time adversaries $\\mathcal{A}$, there exists a negligible function $\\mathsf{negl}$ such that:
             </p>
             <p style="text-align:center;">
-              $$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$$
+              $$\\Pr\\left[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1\\right] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$$
             </p>
             <p>
-              where the experiment $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ grants $\\mathcal{A}$ adaptive oracle access to $\\mathsf{Enc}_k(\\cdot)$ both before and after receiving the challenge ciphertext $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for <span class="source-highlight">equal-length $m_0, m_1$</span>.
+              where $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ provides $\\mathcal{A}$ with persistent oracle access to $\\mathsf{Enc}_k(\\cdot)$ and requires challenge plaintexts $(m_0, m_1)$ to satisfy <span class="source-mark">$|m_0| = |m_1|$</span>.
             </p>
-            <hr style="border:none; border-top:1px solid #e7e1cc; margin:14px 0;"/>
-            <span class="source-anchor">[Source Ref: p. 43, §3.2.3 — Theorem 3.24]</span>
-            <p>
-              <strong>Observation.</strong> <span class="source-highlight">No deterministic encryption scheme can be CPA-secure</span>, since $\\mathcal{A}$ can query $\\mathsf{Enc}_k(m_0)$ and compare the response with $c^*$ when $(m_0, m_1)$ has $m_0 \\neq m_1$.
+            <hr style="border:none; border-top:1px dashed var(--border); margin:16px 0;" />
+            <span class="source-ref-badge">ANCHOR // Cryptography.pdf • Page 43 • Theorem 3.24</span>
+            <p style="margin:4px 0 0;">
+              <strong>Proposition.</strong> <span class="source-mark">No deterministic encryption scheme can be CPA-secure.</span> Specifically, $\\mathcal{A}$ can query $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct $m_0 \\neq m_1$ and test whether $c^* = c_0$.
             </p>
           </div>
         `;
-        renderMath(body);
+        typesetMath(body);
         return;
       }
 
-      const data = ADAPTIVE_EXPLANATIONS[appState.mastery];
-      const blocksHtml = data.paragraphs.map((p, idx) => {
-        const override = appState.paragraphOverrides[p.id];
-        const displayText = override ? override.text : p.text;
-        const isSelected = appState.selectedParagraph === p.id;
-        const isFlash = appState.justUpdatedParagraph === p.id;
+      headerTitle.textContent = "HERE GOES AI EXPLANATION";
+      const wCounts = { 1: "138w", 2: "132w", 3: "118w" };
+      wordCount.textContent = `• ${wCounts[state.mastery]} • Click any line for Feedback`;
 
-        let popoverHtml = "";
-        if (isSelected) {
-          popoverHtml = `
-            <div class="flag-popover" onclick="event.stopPropagation()">
-              <div class="flag-popover-header">
-                <span>Inline Block Feedback (Edit &amp; Stop — No Chat)</span>
-                <button class="btn btn-sm" onclick="selectParagraph('${p.id}')">✕</button>
-              </div>
-              <div class="flag-actions">
-                <button class="btn btn-sm btn-red" onclick="applyInlineFlag('${p.id}', 'inaccurate')">
-                  Inaccurate / Wrong (Cite Source)
-                </button>
-                <button class="btn btn-sm btn-amber" onclick="applyInlineFlag('${p.id}', 'too_complex')">
-                  Too Complex (Worked Trace)
-                </button>
-                <button class="btn btn-sm btn-primary" onclick="applyInlineFlag('${p.id}', 'too_easy')">
-                  Too Easy (Condense)
-                </button>
-              </div>
-              <input id="flagNote-${p.id}" class="flag-note-input" type="text" placeholder="Optional 1-line note (e.g., 'Check exact oracle syntax')..." />
-            </div>
-          `;
-        }
+      const sentences = LEFT_SENTENCES[state.mastery];
+      const html = sentences.map((s, idx) => {
+        const ov = state.lineOverrides[s.id];
+        const text = ov ? ov.text : s.text;
+        const isActive = state.activeFeedbackLineId === s.id;
+        const isFlash = state.justUpdatedLineId === s.id;
 
         return `
-          <div class="explain-block ${isSelected ? "selected" : ""} ${isFlash ? "just-updated" : ""}" onclick="selectParagraph('${p.id}')">
-            <div>${formatBasicMarkdown(displayText)}</div>
+          <div
+            class="manuscript-line ${isActive ? "active-line" : ""} ${isFlash ? "updated-flash" : ""}"
+            onclick="openLineFeedback('${s.id}')"
+          >
+            <span class="line-num">0${idx + 1}</span>
             <div>
-              ${override && override.citation ? `<span class="block-citation">✓ ${escapeHtml(override.citation)}</span>` : ""}
-              ${override ? `<span class="block-flag-tag">${escapeHtml(override.flagLabel)}</span>` : `<span class="block-hint">Block ${idx + 1}/3 • Click to flag [Inaccurate | Too Complex | Too Easy]</span>`}
+              <div class="line-prose">${formatMd(text)}</div>
+              <div class="line-meta-row">
+                ${ov && ov.cited ? `<span class="citation-pill">✓ ${escapeHtml(ov.cited)}</span>` : ""}
+                ${ov && ov.difficultyLabel ? `<span class="difficulty-pill">⇄ ${escapeHtml(ov.difficultyLabel)}</span>` : ""}
+                <span class="line-action-hint">Click line → Feedback [Inaccurate | Difficulty Slider]</span>
+              </div>
             </div>
           </div>
-          ${popoverHtml}
         `;
       }).join("");
 
-      appState.justUpdatedParagraph = null;
-
-      body.innerHTML = `
-        <div class="meta-strip">
-          <span class="badge badge-blue">${escapeHtml(data.label)}</span>
-          <span class="badge badge-neutral">~${data.wordCount} words (120–150w budget)</span>
-        </div>
-        <h2 class="micro-unit-title">Module 3.2: EAV-Security &amp; The IND-CPA Game</h2>
-        ${blocksHtml}
-        <div style="margin-top:18px; padding-top:14px; border-top:1px dashed var(--border); display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-          <span style="font-size:12px; color:var(--text-secondary);">Ready to explain why deterministic schemes fail IND-CPA?</span>
-          <button class="btn btn-primary" onclick="jumpToState('WRITE_RIGHT')">
-            Start Blind-Write Recall →
-          </button>
-        </div>
-      `;
-      renderMath(body);
+      state.justUpdatedLineId = null;
+      body.innerHTML = `<div class="manuscript-list">${html}</div>`;
+      typesetMath(body);
     }
 
-    function renderRightPane() {
-      const body = document.getElementById("rightPaneBody");
+    function renderRightCard() {
+      const topActions = document.getElementById("rightTopActions");
+      const modeSub = document.getElementById("rightModeSub");
+      const body = document.getElementById("rightCardBody");
 
-      // 1. Render Committed Notebook Blocks
-      const committedHtml = appState.committedBlocks.map(block => {
-        const badgeHtml = block.status === "verified"
-          ? `<span class="badge badge-green">✓ Verified</span>`
-          : `<span class="badge badge-amber">⚠ Unverified (${escapeHtml((block.overrideReasons || ["override"]).join(", "))})</span>`;
-        return `
-          <article class="notebook-block ${block.status}">
-            <div class="notebook-block-header">
-              <span class="notebook-block-title">${escapeHtml(block.title)}</span>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span class="source-ref-mono">${escapeHtml(block.sourceRefs.join(" • "))}</span>
-                ${badgeHtml}
-              </div>
-            </div>
-            <div class="notebook-block-body">${formatBasicMarkdown(block.content)}</div>
-          </article>
+      // Non-3.2 blocks (Read-only preview of 3.1 or 3.3)
+      if (state.currentBlockIdx !== 1) {
+        const blk = BLOCKS[state.currentBlockIdx];
+        modeSub.textContent = `• Block ${blk.id} (${blk.status})`;
+        topActions.innerHTML = `
+          <button class="switcher-btn" onclick="switchBlock(1)">Return to Active Block 3.2 →</button>
         `;
-      }).join("");
-
-      // 2. If Module 3.2 is committed, show completion panel
-      if (appState.step === "COMMITTED") {
         body.innerHTML = `
-          ${committedHtml}
-          <div class="notebook-block" style="background:var(--accent-soft); border-color:var(--accent-border);">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-              <div>
-                <strong>Module 3.2 Committed to Session Notebook</strong>
-                <div style="font-size:12.5px; color:var(--text-secondary); margin-top:2px;">
-                  Module 3.3 (<em>Constructing CPA-Secure Ciphers from PRFs</em>) is now unlocked in the top stepper.
-                </div>
-              </div>
-              <div style="display:flex; gap:8px;">
-                <button class="btn btn-sm" onclick="exportNotebookMd()">Download Session .md</button>
-                <button class="btn btn-sm btn-primary" onclick="resetDemo()">Replay Loop</button>
-              </div>
-            </div>
+          <div class="ide-diff-document">
+            ${formatMd(blk.userNote)}
           </div>
         `;
-        renderMath(body);
+        typesetMath(body);
         return;
       }
 
-      // 3. Separate Diagnostic Question Card (State 5 or Collapsed Summary in State 6)
-      let qCardHtml = "";
-      if (appState.step === "QUESTION_CARD") {
-        qCardHtml = `
-          <section class="question-card">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
-              <div>
-                <span class="badge badge-blue">Separate Diagnostic Question Card</span>
-                <h3 style="margin:6px 0 2px; font-size:15px;">Clarifying Questions Before Inline Diffs</h3>
-              </div>
-              <button class="btn btn-sm" onclick="fillSampleQCardAnswers()">Fill Sample Answers</button>
-            </div>
-            <div class="q-item">
-              <label>Q1 (Security Bound): In your inequality $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$, what probability would a blind random-guessing adversary achieve? How should the RHS reflect this?</label>
-              <textarea id="qCardA1" oninput="appState.qCardAnswers.q1 = this.value" placeholder="Type your answer...">${escapeHtml(appState.qCardAnswers.q1)}</textarea>
-            </div>
-            <div class="q-item">
-              <label>Q2 (Oracle Precision): When $\\mathcal{A}$ queries the LR-challenge on $(m_0, m_1)$ and also queries $\\mathsf{Enc}_k(m_0)$, what conditions on $(m_0, m_1)$ and $\\mathsf{Enc}_k$ guarantee a valid distinguishing attack when $b=0$?</label>
-              <textarea id="qCardA2" oninput="appState.qCardAnswers.q2 = this.value" placeholder="Type your answer...">${escapeHtml(appState.qCardAnswers.q2)}</textarea>
-            </div>
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-top:10px;">
-              <button class="btn btn-sm btn-amber" onclick="skipQuestionCardForceCommit()">
-                ⚠ Skip Question Card → Force Commit (Unverified)
-              </button>
-              <button class="btn btn-primary" onclick="submitQuestionCard()">
-                Submit Answers → Propose Minimal Diff
-              </button>
-            </div>
-          </section>
-        `;
-      } else if (appState.step === "DIFF_REVIEW") {
-        qCardHtml = `
-          <div class="question-card-collapsed">
-            <div>
-              <strong>✓ Diagnostic Question Card Answered (2/2)</strong>
-              <span style="color:var(--text-secondary); margin-left:6px;">Used to generate 2 surgical inline diffs below (no full rewrite).</span>
-            </div>
-            <button class="btn btn-sm" onclick="jumpToState('QUESTION_CARD')">Edit Answers</button>
-          </div>
-        `;
-      }
+      // --- MODE A: IDE / CODEX / ANTIGRAVITY INLINE DIFF REVIEW ---
+      if (state.mode === "diff") {
+        const resolvedCount = state.diffs.filter(d => d.status !== "pending").length;
+        modeSub.textContent = `• ${resolvedCount}/${state.diffs.length} Inline Patches Resolved`;
 
-      // 4. Active Editor OR Surgical Inline Diff Reviewer
-      let activeBoxHtml = "";
-      if (appState.step === "DIFF_REVIEW") {
-        const d1 = appState.diffs[0];
-        const d2 = appState.diffs[1];
-        const renderHunk = (d) => {
+        topActions.innerHTML = `
+          <button
+            class="circle-submit-btn commit-mode"
+            onclick="commitBlock()"
+            title="Commit Finalized Block to Notebook"
+          >
+            <span>✓ Commit Block</span>
+          </button>
+        `;
+
+        const renderIdeHunk = (d) => {
           if (d.status === "accepted") {
-            return `<span class="diff-hunk resolved-accepted"><span class="diff-ins">${d.insLatex}</span></span>`;
-          }
-          if (d.status === "edited") {
-            return `<span class="diff-hunk resolved-accepted"><span class="diff-ins">${formatBasicMarkdown(d.editedRaw)}</span></span>`;
-          }
-          if (d.status === "rejected") {
-            return `<span class="diff-hunk resolved-rejected">${d.delLatex}</span>`;
-          }
-          return `<span class="diff-hunk"><span class="diff-del">${d.delLatex}</span><span class="diff-ins">${d.insLatex}</span></span>`;
-        };
-
-        const pendingCount = appState.diffs.filter(d => d.status === "pending").length;
-
-        const diffControlsHtml = appState.diffs.map(d => {
-          const statusTag = d.status === "pending"
-            ? `<span class="badge badge-amber">Pending</span>`
-            : d.status === "accepted"
-              ? `<span class="badge badge-green">Accepted</span>`
-              : d.status === "edited"
-                ? `<span class="badge badge-blue">Edited</span>`
-                : `<span class="badge badge-neutral">Rejected</span>`;
-
-          const editBox = appState.editingDiffId === d.id ? `
-            <div class="diff-edit-box">
-              <input id="editDiffInput-${d.id}" type="text" value="${escapeHtml(d.editedRaw || d.insRaw)}" />
-              <button class="btn btn-sm btn-primary" onclick="saveEditedDiff('${d.id}')">Save</button>
-            </div>
-          ` : "";
-
-          return `
-            <div class="diff-control-row">
-              <div>
-                <div style="font-weight:700; font-size:12.5px;">${escapeHtml(d.label)} ${statusTag}</div>
-                <div style="font-size:12px; color:var(--text-secondary); margin-top:3px;">
-                  Replace <code>${escapeHtml(d.delRaw)}</code> → <code>${escapeHtml(d.insRaw)}</code>
+            return `
+              <div class="ide-hunk accepted">
+                <div class="ide-hunk-bar">
+                  <span class="ide-hunk-reason" style="color:var(--emerald);">✓ Accepted Patch — ${escapeHtml(d.reason)}</span>
+                  <div class="ide-hunk-actions">
+                    <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'pending')">Undo</button>
+                  </div>
+                </div>
+                <div class="ide-diff-lines">
+                  <div class="diff-line-ins">${d.insRender}</div>
                 </div>
               </div>
-              <div style="display:flex; gap:5px;">
-                <button class="btn btn-sm btn-green" onclick="setDiffStatus('${d.id}', 'accepted')">✓ Accept</button>
-                <button class="btn btn-sm" onclick="setDiffStatus('${d.id}', 'rejected')">✕ Reject</button>
-                <button class="btn btn-sm" onclick="startEditDiff('${d.id}')">✎ Edit</button>
+            `;
+          }
+          if (d.status === "edited") {
+            return `
+              <div class="ide-hunk accepted">
+                <div class="ide-hunk-bar">
+                  <span class="ide-hunk-reason" style="color:var(--cobalt);">✎ Custom Edited Patch</span>
+                  <div class="ide-hunk-actions">
+                    <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">Edit</button>
+                  </div>
+                </div>
+                <div class="ide-diff-lines">
+                  <div class="diff-line-ins">${formatMd(d.customText)}</div>
+                </div>
               </div>
-              ${editBox}
+            `;
+          }
+          if (d.status === "rejected") {
+            return `
+              <div class="ide-hunk rejected">
+                <div class="ide-hunk-bar">
+                  <span class="ide-hunk-reason">✕ Rejected Patch (Kept Original)</span>
+                  <div class="ide-hunk-actions">
+                    <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'pending')">Restore</button>
+                  </div>
+                </div>
+                <div class="ide-diff-lines">
+                  <div style="padding:2px 6px; color:var(--ink-secondary);">${d.delRender}</div>
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="ide-hunk">
+              <div class="ide-hunk-bar">
+                <span class="ide-hunk-reason">⚡ ${escapeHtml(d.reason)}</span>
+                <div class="ide-hunk-actions">
+                  <button class="hunk-btn accept" onclick="handleDiffAction('${d.id}', 'accepted')">
+                    ✓ Accept <span class="kbd-hint">⌘Y</span>
+                  </button>
+                  <button class="hunk-btn reject" onclick="handleDiffAction('${d.id}', 'rejected')">
+                    ✕ Reject <span class="kbd-hint">⌘N</span>
+                  </button>
+                  <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">
+                    ✎ Edit
+                  </button>
+                </div>
+              </div>
+              <div class="ide-diff-lines">
+                <div class="diff-line-del">− ${d.delRender}</div>
+                <div class="diff-line-ins">+ ${d.insRender}</div>
+              </div>
+              ${d.editing ? `
+                <div class="ide-edit-row">
+                  <input id="diffEditInput-${d.id}" type="text" value="${escapeHtml(d.customText || d.insRaw)}" />
+                  <button class="hunk-btn accept" onclick="saveDiffEdit('${d.id}')">Save</button>
+                </div>
+              ` : ""}
             </div>
           `;
-        }).join("");
+        };
 
-        activeBoxHtml = `
-          <div class="editor-card">
-            <div class="editor-toolbar">
-              <strong style="font-size:12.5px;">Surgical Inline Diff Proposal (Module 3.2)</strong>
-              <span class="badge badge-neutral">${2 - pendingCount}/2 Diffs Resolved</span>
-            </div>
-            <div class="diff-prose">
-              Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ be any deterministic private-key encryption scheme.<br/>
-              For $\\Pi$ to be CPA-secure, every PPT adversary $\\mathcal{A}$ must satisfy:<br/>
-              $$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1]$$ ${renderHunk(d1)}<br/>
-              However, $\\mathcal{A}$ can break $\\Pi$ in two queries: $\\mathcal{A}$ ${renderHunk(d2)}, receives $c_0$, then submits $(m_0, m_1)$ to get challenge $c^*$.<br/>
-              If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$; otherwise $b' = 1$, winning with probability $1$.
-            </div>
-            <div class="diff-controls-list">
-              ${diffControlsHtml}
-            </div>
-            <div class="editor-footer">
-              <button class="btn btn-sm" onclick="jumpToState('WRITE_RIGHT')">← Back to Raw Editor</button>
-              ${pendingCount === 0
-                ? `<button class="btn btn-green" onclick="commitFinalizedBlock()">Commit Finalized Block to Notebook ✓</button>`
-                : `<button class="btn btn-amber" onclick="commitFinalizedBlock()">⚠ Commit with Unresolved Diffs (Marks Unverified)</button>`}
-            </div>
-          </div>
-        `;
-      } else {
-        activeBoxHtml = `
-          <div class="editor-card">
-            <div class="editor-toolbar">
-              <strong style="font-size:12.5px;">Active Block — 3.2 Proof: Deterministic Schemes Fail IND-CPA</strong>
-              <button class="btn btn-sm" onclick="loadSampleDraft()">Load Sample Draft Proof</button>
-            </div>
-            <div class="editor-split">
-              <textarea class="editor-textarea" oninput="updateDraftText(this.value)" placeholder="Write your explanation/proof in Markdown + LaTeX...">${escapeHtml(appState.draftText)}</textarea>
-              <div class="editor-preview">
-                <div class="preview-label">Live KaTeX Preview</div>
-                <div id="liveLatexPreview">${formatBasicMarkdown(appState.draftText)}</div>
+        body.innerHTML = `
+          <div class="notebook-canvas">
+            <div class="diff-banner">
+              <span><strong>2 Surgical Inline Patches</strong> generated from your Review Question answers</span>
+              <div style="display:flex; gap:6px;">
+                <button class="hunk-btn accept" onclick="acceptAllDiffs()">✓ Accept All</button>
+                <button class="hunk-btn" onclick="state.mode='write'; renderAll();">← Edit Raw</button>
               </div>
             </div>
-            <div class="editor-footer">
-              <button class="btn btn-sm btn-amber" onclick="forceCommitFromEditor()">
-                ⚠ Force Commit (Soft Override — Unverified)
-              </button>
-              <button class="btn btn-primary" onclick="submitForReview()">
-                Submit Explanation for Review →
-              </button>
+            <div class="ide-diff-document">
+              Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ be any deterministic encryption scheme.<br/>
+              For $\\Pi$ to be CPA-secure, every PPT adversary $\\mathcal{A}$ must satisfy:
+              ${renderIdeHunk(state.diffs[0])}
+              However, $\\mathcal{A}$ can break $\\Pi$ by
+              ${renderIdeHunk(state.diffs[1])}
+              and then submitting $(m_0, m_1)$ to receive challenge $c^*$.<br/>
+              If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with probability $1$.
             </div>
           </div>
         `;
+        typesetMath(body);
+        return;
       }
 
-      body.innerHTML = `
-        ${committedHtml}
-        ${qCardHtml}
-        ${activeBoxHtml}
+      // --- MODE B: COMMITTED FINALIZED NOTE ---
+      if (state.mode === "committed") {
+        modeSub.textContent = state.telemetry.override_used
+          ? "• Committed (Unverified — Override Logged)"
+          : "• Committed & Verified";
+        topActions.innerHTML = `
+          <button class="switcher-btn" onclick="state.mode='write'; renderAll();">✎ Edit Note</button>
+          <button class="switcher-btn" onclick="switchBlock(2)">Next Block 3.3 →</button>
+        `;
+        body.innerHTML = `
+          <div class="notebook-canvas">
+            <div class="diff-banner" style="background:${state.telemetry.override_used ? 'var(--amber-soft)' : 'var(--emerald-soft)'}; border-color:${state.telemetry.override_used ? 'var(--amber-border)' : 'var(--emerald-border)'};">
+              <strong>${state.telemetry.override_used ? '⚠ Saved to Notebook as Unverified (Queued for early FSRS review)' : '✓ Block 3.2 Verified & Committed to Session Notebook'}</strong>
+              <span class="citation-pill">Grounded: p. 42, Def 3.22</span>
+            </div>
+            <div class="ide-diff-document">
+              ${formatMd(state.userDraft)}
+            </div>
+          </div>
+        `;
+        typesetMath(body);
+        return;
+      }
+
+      // --- MODE C: WRITING EXPLANATION (DEFAULT) ---
+      modeSub.textContent = "• Write your explanation/proof in Markdown + LaTeX";
+      topActions.innerHTML = `
+        <button
+          class="circle-submit-btn"
+          onclick="triggerSubmitReview()"
+          title="Submit Explanation for Diagnostic Review"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       `;
-      renderMath(body);
+
+      body.innerHTML = `
+        <div class="notebook-canvas">
+          <div class="editor-surface">
+            <textarea
+              class="editor-textarea"
+              onfocus="onEditorFocusInput(this)"
+              oninput="onEditorFocusInput(this)"
+              placeholder="Explain why deterministic encryption fails IND-CPA security..."
+            >${escapeHtml(state.userDraft)}</textarea>
+            <div class="live-math-preview">
+              <div class="preview-header">
+                <span>Live Rendered Note Preview (KaTeX)</span>
+                <span>Click top-right ➔ button to review</span>
+              </div>
+              <div id="liveMathPreview">${formatMd(state.userDraft)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      typesetMath(body);
     }
 
     function renderModal() {
-      const backdrop = document.getElementById("modalBackdrop");
-      const content = document.getElementById("modalContent");
+      const canvas = document.getElementById("studioCanvas");
+      const overlay = document.getElementById("modalOverlay");
+      const slot = document.getElementById("modalSlot");
 
-      if (appState.step !== "INGEST" && appState.step !== "PRETEST") {
-        backdrop.classList.add("hidden");
+      if (!state.modal) {
+        canvas.classList.remove("modal-blurred");
+        overlay.classList.add("hidden");
         return;
       }
 
-      backdrop.classList.remove("hidden");
+      canvas.classList.add("modal-blurred");
+      overlay.classList.remove("hidden");
 
-      if (appState.step === "INGEST") {
-        content.innerHTML = `
-          <div class="modal-header">
-            <div>
-              <span class="badge badge-blue">Step 1 — Ingestion &amp; Semantic Chunking</span>
-              <h2 style="margin-top:8px;">Cryptography.pdf (Ch. 3: Private-Key Encryption)</h2>
-              <p class="modal-sub">Source grounded (pp. 38–46) into 5–10 min atomic micro-modules with 120–150w progressive steps.</p>
+      // 1. UI 1 Centered Line Feedback Popup
+      if (state.modal.flow === "feedback") {
+        const lid = state.modal.lineId;
+        slot.innerHTML = `
+          <div class="feedback-popup-card">
+            <div class="popup-header">
+              <h3 class="popup-title">Feedback (Line ${lid.replace('s', '0')})</h3>
+              <button class="hunk-btn" onclick="closeModal()">✕</button>
             </div>
-            <button class="btn btn-sm" onclick="jumpToState('STUDY_LEFT')">Skip to Workspace</button>
-          </div>
-          <div class="chunk-list">
-            <div class="chunk-item">
-              <div>
-                <strong>Module 3.1: Negligible Functions &amp; Indistinguishability</strong>
-                <div style="font-size:12px; color:var(--text-secondary);">Source anchor: pp. 38–41 • Pre-committed in notebook</div>
-              </div>
-              <span class="badge badge-green">✓ Verified</span>
-            </div>
-            <div class="chunk-item active">
-              <div>
-                <strong>Module 3.2: EAV-Security &amp; The IND-CPA Game</strong>
-                <div style="font-size:12px; color:var(--text-secondary);">Source anchor: pp. 42–43 (Def 3.22, Thm 3.24) • 132w unit</div>
-              </div>
-              <span class="badge badge-blue">Active Module</span>
-            </div>
-            <div class="chunk-item">
-              <div>
-                <strong>Module 3.3: Constructing CPA-Secure Ciphers from PRFs</strong>
-                <div style="font-size:12px; color:var(--text-secondary);">Source anchor: pp. 44–46 • Unlocks after 3.2</div>
-              </div>
-              <span class="badge badge-neutral">🔒 Locked</span>
-            </div>
-          </div>
-          <div style="display:flex; justify-content:flex-end; gap:8px;">
-            <button class="btn btn-primary" onclick="jumpToState('PRETEST')">
-              Start Topic Diagnostic Pretest (3 Questions) →
+
+            <button
+              class="inaccurate-btn ${state.feedbackInaccurateOpen ? 'active' : ''}"
+              onclick="toggleInaccurateNote()"
+            >
+              Inaccurate (Force Source Check)
             </button>
+
+            ${state.feedbackInaccurateOpen ? `
+              <div class="note-drawer">
+                <input id="inaccurateNoteInput" type="text" placeholder="Optional 1-line note (e.g., check |m0|=|m1|)..." />
+                <button class="hunk-btn accept" onclick="submitInaccurateLine('${lid}')">Cite</button>
+              </div>
+            ` : ""}
+
+            <div class="difficulty-box">
+              <label>
+                <span>make it:</span>
+                <span style="color:var(--cobalt);">Difficulty Selector</span>
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="3"
+                step="1"
+                value="${state.feedbackSliderVal}"
+                style="width:100%;"
+                class="tactile-slider"
+                onchange="onLineDifficultySlide('${lid}', this.value)"
+              />
+              <div class="slider-Scale">
+                <span>1 • Worked Intuition</span>
+                <span>2 • Balanced</span>
+                <span>3 • Terse Formal</span>
+              </div>
+            </div>
           </div>
         `;
-      } else if (appState.step === "PRETEST") {
-        content.innerHTML = `
-          <div class="modal-header">
-            <div>
-              <span class="badge badge-blue">Step 2 — Once-Per-Topic Diagnostic Pretest</span>
-              <h2 style="margin-top:8px;">Calibrate Left-Pane Scaffolding (IND-CPA)</h2>
-              <p class="modal-sub">Primes attention and prevents Expertise Reversal (worked examples for novices vs. terse prompts for advanced learners).</p>
-            </div>
-          </div>
-
-          <div class="pretest-q">
-            <p>1. When is $\\varepsilon(\\lambda)$ negligible?</p>
-            <label class="pretest-opt"><input type="radio" name="pq1" value="correct" checked /> For every polynomial $p(\\lambda)$, $\\varepsilon(\\lambda) &lt; 1/p(\\lambda)$ for sufficiently large $\\lambda$.</label>
-            <label class="pretest-opt"><input type="radio" name="pq1" value="wrong" /> $\\varepsilon(\\lambda) &lt; 2^{-10}$ for all $\\lambda \\ge 1$.</label>
-          </div>
-
-          <div class="pretest-q">
-            <p>2. What is the winning probability of a blind random-guessing adversary in $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$?</p>
-            <label class="pretest-opt"><input type="radio" name="pq2" value="wrong" /> $0$ (or $\\mathsf{negl}(\\lambda)$).</label>
-            <label class="pretest-opt"><input type="radio" name="pq2" value="correct" checked /> $\\frac{1}{2}$.</label>
-          </div>
-
-          <div class="pretest-q">
-            <p>3. Why can't a deterministic scheme be CPA-secure?</p>
-            <label class="pretest-opt"><input type="radio" name="pq3" value="correct" /> Encrypting $m_0$ twice yields identical ciphertexts, letting $\\mathcal{A}$ distinguish $c^* = \\mathsf{Enc}_k(m_b)$.</label>
-            <label class="pretest-opt"><input type="radio" name="pq3" value="wrong" /> Because deterministic schemes cannot decrypt uniquely.</label>
-          </div>
-
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-top:14px;">
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              <button class="btn btn-sm" onclick="setMastery('novice', true)">Quick: Novice</button>
-              <button class="btn btn-sm" onclick="setMastery('intermediate', true)">Quick: Intermediate</button>
-              <button class="btn btn-sm" onclick="setMastery('advanced', true)">Quick: Advanced</button>
-            </div>
-            <button class="btn btn-primary" onclick="submitPretest()">
-              Calibrate &amp; Open Workspace →
-            </button>
-          </div>
-        `;
+        return;
       }
-      renderMath(content);
+
+      // 2. UI 2 Centered POPUP Questions (Pretest & Post-Submit Review)
+      const list = state.modal.flow === "pretest" ? PRETEST_QUESTIONS : REVIEW_QUESTIONS;
+      const item = list[state.modal.idx];
+      const currentAns = state.modal.answers[state.modal.idx] || "";
+
+      slot.innerHTML = `
+        <div class="question-popup-card">
+          <div class="popup-header">
+            <span class="q-step-kicker">${escapeHtml(item.title)}</span>
+            <button class="hunk-btn" onclick="fillModalSampleAnswer()" title="Fill sample response for fast testing">
+              ⚡ Auto-Fill Demo Answer
+            </button>
+          </div>
+
+          <div class="q-prompt" id="modalQuestionPrompt">${formatMd(item.prompt)}</div>
+
+          <textarea
+            id="modalAnswerInput"
+            class="q-answer-box"
+            placeholder="${escapeHtml(item.placeholder)}"
+            onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); nextModalQuestion(); }"
+          >${escapeHtml(currentAns)}</textarea>
+
+          <div class="q-footer">
+            <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--ink-muted);">
+              Press Enter ↵ to continue
+            </span>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <button class="skip-link" onclick="skipModalQuestion()">
+                skip (${state.modal.flow === 'pretest' ? 'default mastery' : 'marks unverified'})
+              </button>
+              <button class="switcher-btn" style="background:var(--ink); color:var(--paper-elevated);" onclick="nextModalQuestion()">
+                ${state.modal.idx + 1 < list.length ? "Next Question →" : (state.modal.flow === "pretest" ? "Calibrate Block →" : "Generate Inline Diffs →")}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      typesetMath(slot);
+      setTimeout(() => {
+        const inp = document.getElementById("modalAnswerInput");
+        if (inp) inp.focus();
+      }, 40);
     }
 
     function renderTelemetry() {
-      const el = document.getElementById("telemetryJson");
-      if (el && !el.classList.contains("hidden")) {
-        el.textContent = JSON.stringify(appState.studentModel, null, 2);
+      const pre = document.getElementById("telemetryPre");
+      if (pre && state.cornerOpen) {
+        pre.textContent = JSON.stringify(state.telemetry, null, 2);
       }
     }
 
