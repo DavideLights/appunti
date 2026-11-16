@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="100%" height="100%" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.10" />
+    </filter>
+    <filter id="modalShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.22" />
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="760" fill="#f8fafc" />
+
+  <!-- =================================================================== -->
+  <!-- PANEL 1 (TOP-LEFT): UI 1 — Studying a Block + Line Feedback Popup    -->
+  <!-- =================================================================== -->
+  <g transform="translate(24, 20)">
+    <text x="4" y="16" font-size="13" font-weight="700" fill="#0f172a">1. UI 1 — Studying a Block (+ Centered Line Feedback Popup on Click)</text>
+    <rect x="0" y="26" width="560" height="330" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)" />
+
+    <!-- Top Row: Block Title + Status Dot + Pagination Dots | Mastery Slider -->
+    <circle cx="24" cy="54" r="5" fill="#16a34a" />
+    <text x="36" y="58" font-size="12" font-weight="700" fill="#0f172a">3.2 IND-CPA Security</text>
+    <!-- Minimal Prev/Next Dots -->
+    <circle cx="176" cy="54" r="3.5" fill="#94a3b8" />
+    <circle cx="190" cy="54" r="4.5" fill="#2563eb" />
+    <circle cx="204" cy="54" r="3.5" fill="#cbd5e1" />
+
+    <!-- Mastery Slider above Right Card -->
+    <text x="348" y="46" font-size="10.5" font-weight="600" fill="#475569">Mastery Slider (Block Depth)</text>
+    <line x1="348" y1="56" x2="468" y2="56" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <circle cx="408" cy="56" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" />
+
+    <!-- LEFT CARD: AI Explanation -->
+    <rect x="18" y="72" width="254" height="258" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="32" y="96" font-size="11" font-weight="700" fill="#334155" letter-spacing="0.03em">AI EXPLANATION (130w)</text>
+    <!-- Top-right Switcher Icon [AI <-> Source] + Peek Icon -->
+    <rect x="214" y="81" width="20" height="14" rx="3" fill="#ffffff" stroke="#475569" stroke-width="1.2" />
+    <rect x="216" y="83" width="8" height="10" rx="1" fill="#2563eb" />
+    <rect x="240" y="81" width="20" height="14" rx="3" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
+    <circle cx="250" cy="88" r="3" fill="#64748b" />
+
+    <!-- Sentences inside Left Card (Line 2 selected) -->
+    <text x="32" y="124" font-size="11" fill="#475569">In IND-CPA, adversary A has oracle</text>
+    <text x="32" y="140" font-size="11" fill="#475569">access Enc_k(.) throughout the game.</text>
+
+    <!-- Highlighted clicked line -->
+    <rect x="28" y="154" width="234" height="36" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+    <text x="32" y="169" font-size="11" font-weight="600" fill="#1e40af">A outputs (m_0, m_1), receives c* =</text>
+    <text x="32" y="183" font-size="11" font-weight="600" fill="#1e40af">Enc_k(m_b), and guesses b' in {0,1}.</text>
+
+    <text x="32" y="212" font-size="11" fill="#475569">Security requires Pr[PrivK = 1] &lt;=</text>
+    <text x="32" y="228" font-size="11" fill="#475569">1/2 + negl(λ) for all PPT A.</text>
+
+    <!-- RIGHT CARD: User Explanation -->
+    <rect x="286" y="72" width="256" height="258" rx="12" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="300" y="96" font-size="11" font-weight="700" fill="#334155" letter-spacing="0.03em">USER EXPLANATION (MD+LaTeX)</text>
+    <!-- Circular Submit Button in Top-Right of Right Card -->
+    <circle cx="522" cy="90" r="11" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" />
+    <path d="M 518 90 L 526 90 M 523 87 L 526 90 L 523 93" stroke="#2563eb" stroke-width="1.6" fill="none" stroke-linecap="round" />
+
+    <text x="300" y="124" font-size="11" fill="#334155">If Π is deterministic, A breaks CPA:</text>
+    <text x="300" y="144" font-size="11" font-family="monospace" fill="#0f172a">Pr[PrivK = 1] &lt;= negl(λ)</text>
+    <text x="300" y="166" font-size="11" fill="#334155">A queries the oracle on m_0 to get</text>
+    <text x="300" y="182" font-size="11" fill="#334155">c_0 and compares c_0 with c*.</text>
+
+    <!-- CENTERED LINE FEEDBACK POPUP (Over Blurred Background) -->
+    <rect x="175" y="185" width="210" height="122" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="1.8" filter="url(#modalShadow)" />
+    <text x="190" y="206" font-size="11.5" font-weight="700" fill="#0f172a">Feedback (Selected Line)</text>
+    <!-- Inaccurate Button + Optional Note -->
+    <rect x="190" y="214" width="180" height="26" rx="6" fill="#fef2f2" stroke="#f87171" stroke-width="1.2" />
+    <text x="280" y="231" font-size="11" font-weight="600" fill="#b91c1c" text-anchor="middle">Inaccurate (+ 1-line note)</text>
+    <!-- make it: difficulty slider -->
+    <text x="190" y="258" font-size="10.5" font-weight="600" fill="#475569">make it: (Simpler ↔ Formal)</text>
+    <line x1="196" y1="274" x2="364" y2="274" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <circle cx="255" cy="274" r="7.5" fill="#ffffff" stroke="#0f172a" stroke-width="2" />
+    <text x="196" y="294" font-size="9.5" fill="#64748b">Simpler</text>
+    <text x="364" y="294" font-size="9.5" fill="#64748b" text-anchor="end">More Formal</text>
+
+    <!-- Arrow from clicked line to Feedback Popup -->
+    <path d="M 140 190 Q 150 225 170 232" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#arrow)" />
+  </g>
+
+  <!-- =================================================================== -->
+  <!-- PANEL 2 (TOP-RIGHT): UI 2 — POPUP Questions (Pretest & Review)       -->
+  <!-- =================================================================== -->
+  <g transform="translate(616, 20)">
+    <text x="4" y="16" font-size="13" font-weight="700" fill="#0f172a">2. UI 2 — POPUP Questions (Pretest 1..3 &amp; Post-Submit Review 1..2)</text>
+    <!-- Dimmed/Blurred Canvas Behind Modal -->
+    <rect x="0" y="26" width="560" height="330" rx="14" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="18" y="72" width="254" height="258" rx="12" fill="#e2e8f0" opacity="0.55" />
+    <rect x="286" y="72" width="256" height="258" rx="12" fill="#e2e8f0" opacity="0.55" />
+
+    <!-- Centered Question Modal -->
+    <rect x="95" y="74" width="370" height="232" rx="14" fill="#ffffff" stroke="#0f172a" stroke-width="1.8" filter="url(#modalShadow)" />
+    <text x="118" y="102" font-size="11" font-weight="700" fill="#2563eb">REVIEW QUESTION 1 OF 2</text>
+    <text x="118" y="124" font-size="12.5" font-weight="600" fill="#0f172a">In Pr[PrivK = 1] &lt;= negl(λ), what is the</text>
+    <text x="118" y="142" font-size="12.5" font-weight="600" fill="#0f172a">winning probability of a blind random guess?</text>
+
+    <!-- User Answer Here Box -->
+    <rect x="118" y="160" width="324" height="84" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.4" />
+    <text x="132" y="184" font-size="11.5" fill="#334155">A random guess wins with probability 1/2,</text>
+    <text x="132" y="202" font-size="11.5" fill="#334155">so the bound must be 1/2 + negl(λ).</text>
+    <text x="432" y="234" font-size="10" fill="#64748b" text-anchor="end">Press Enter ↵</text>
+
+    <!-- Bottom-Right Skip Button -->
+    <text x="348" y="282" font-size="11.5" font-weight="600" fill="#b45309">skip (unverified)</text>
+    <rect x="394" y="266" width="48" height="24" rx="6" fill="#2563eb" />
+    <text x="418" y="282" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Next</text>
+  </g>
+
+  <!-- =================================================================== -->
+  <!-- PANEL 3 (BOTTOM-LEFT): UI 1 — Blind-Write Mode (Left Card Blurred)  -->
+  <!-- =================================================================== -->
+  <g transform="translate(24, 390)">
+    <text x="4" y="16" font-size="13" font-weight="700" fill="#0f172a">3. UI 1 — Blind-Write Recall (Typing in Right Card Blurs Left Card)</text>
+    <rect x="0" y="26" width="560" height="330" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)" />
+
+    <circle cx="24" cy="54" r="5" fill="#94a3b8" />
+    <text x="36" y="58" font-size="12" font-weight="700" fill="#0f172a">3.2 IND-CPA Security</text>
+
+    <!-- Left Card Blurred -->
+    <rect x="18" y="72" width="254" height="258" rx="12" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="32" y="96" font-size="11" font-weight="700" fill="#64748b">AI EXPLANATION (BLIND-WRITE)</text>
+    <!-- Blurred bars simulating hidden prose -->
+    <rect x="32" y="120" width="210" height="10" rx="5" fill="#cbd5e1" opacity="0.6" />
+    <rect x="32" y="138" width="190" height="10" rx="5" fill="#cbd5e1" opacity="0.6" />
+    <rect x="32" y="164" width="220" height="10" rx="5" fill="#cbd5e1" opacity="0.6" />
+    <rect x="32" y="182" width="175" height="10" rx="5" fill="#cbd5e1" opacity="0.6" />
+    <!-- Peek Soft-Override Pill -->
+    <rect x="65" y="218" width="160" height="30" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.2" />
+    <text x="145" y="237" font-size="11" font-weight="600" fill="#b45309" text-anchor="middle">👁 Peek (Marks Unverified)</text>
+
+    <!-- Right Card Focused for Writing -->
+    <rect x="286" y="72" width="256" height="258" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <text x="300" y="96" font-size="11" font-weight="700" fill="#2563eb">USER EXPLANATION (TYPING...)</text>
+    <circle cx="522" cy="90" r="11" fill="#2563eb" />
+    <path d="M 518 90 L 526 90 M 523 87 L 526 90 L 523 93" stroke="#ffffff" stroke-width="1.6" fill="none" stroke-linecap="round" />
+    <text x="300" y="128" font-size="11.5" fill="#0f172a">Let Π = (Gen, Enc, Dec) be deterministic.</text>
+    <text x="300" y="148" font-size="11.5" fill="#0f172a">For CPA security, ∀ PPT A:</text>
+    <text x="300" y="170" font-size="11.5" font-family="monospace" fill="#1e40af">Pr[PrivK_A,Π(λ)=1] &lt;= negl(λ) |</text>
+  </g>
+
+  <!-- =================================================================== -->
+  <!-- PANEL 4 (BOTTOM-RIGHT): UI 1 — Surgical Inline Diffs & Commit        -->
+  <!-- =================================================================== -->
+  <g transform="translate(616, 390)">
+    <text x="4" y="16" font-size="13" font-weight="700" fill="#0f172a">4. UI 1 — Surgical Inline Diffs Inside Right Card &amp; Circular Commit</text>
+    <rect x="0" y="26" width="560" height="330" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)" />
+
+    <circle cx="24" cy="54" r="5" fill="#16a34a" />
+    <text x="36" y="58" font-size="12" font-weight="700" fill="#0f172a">3.2 IND-CPA Security • Ready to Commit</text>
+
+    <!-- Left Card Visible for Comparison -->
+    <rect x="18" y="72" width="254" height="258" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="32" y="96" font-size="11" font-weight="700" fill="#334155">AI EXPLANATION</text>
+    <text x="32" y="124" font-size="11" fill="#475569">Scheme Π is CPA-secure iff</text>
+    <text x="32" y="142" font-size="11" font-weight="600" fill="#0f172a">Pr[PrivK = 1] &lt;= 1/2 + negl(λ).</text>
+    <text x="32" y="168" font-size="11" fill="#475569">Deterministic Enc_k fails because</text>
+    <text x="32" y="186" font-size="11" fill="#475569">repeated queries on m_0 match c*.</text>
+
+    <!-- Right Card in Inline Diff Review Mode -->
+    <rect x="286" y="72" width="256" height="258" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" />
+    <text x="300" y="96" font-size="11" font-weight="700" fill="#15803d">USER EXPLANATION (2 INLINE DIFFS)</text>
+    <!-- Top-Right Circular Button turns into Green Check Commit -->
+    <circle cx="522" cy="90" r="11" fill="#16a34a" />
+    <path d="M 517 90 L 520.5 93.5 L 527 86.5" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round" />
+
+    <text x="300" y="124" font-size="11" fill="#334155">If Π is deterministic, A breaks CPA:</text>
+
+    <!-- Inline Diff #1 -->
+    <rect x="298" y="134" width="232" height="24" rx="5" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" />
+    <text x="304" y="150" font-size="10.5" font-family="monospace" fill="#b91c1c" text-decoration="line-through">&lt;= negl(λ)</text>
+    <text x="378" y="150" font-size="10.5" font-family="monospace" font-weight="700" fill="#15803d">&lt;= 1/2 + negl(λ)</text>
+
+    <!-- Floating Accept / Reject / Edit Pill on Diff #1 -->
+    <rect x="330" y="164" width="166" height="26" rx="6" fill="#0f172a" filter="url(#shadow)" />
+    <text x="358" y="181" font-size="10.5" font-weight="600" fill="#4ade80" text-anchor="middle">✓ Accept</text>
+    <text x="416" y="181" font-size="10.5" font-weight="600" fill="#f87171" text-anchor="middle">✕ Reject</text>
+    <text x="468" y="181" font-size="10.5" font-weight="600" fill="#93c5fd" text-anchor="middle">✎ Edit</text>
+
+    <!-- Inline Diff #2 -->
+    <text x="300" y="214" font-size="11" fill="#334155">A queries </text>
+    <rect x="352" y="201" width="176" height="20" rx="4" fill="#ecfdf5" stroke="#86efac" stroke-width="1" />
+    <text x="358" y="215" font-size="10.5" font-weight="600" fill="#15803d">Enc_k(m_0) for m_0 != m_1</text>
+    <text x="300" y="236" font-size="11" fill="#334155">and compares c_0 with challenge c*.</text>
+
+    <!-- Tiny Bottom-Right Demo Pill -->
+    <rect x="442" y="332" width="108" height="18" rx="9" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" />
+    <text x="496" y="344" font-size="9.5" font-weight="600" fill="#475569" text-anchor="middle">⚙ Demo / JSON</text>
+  </g>
+</svg>

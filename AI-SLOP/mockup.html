@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FOLIO // Non-Chat AI Study Notebook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      /* Tactile Swiss-Academic Paper & Carbon Ink Palette */
+      --canvas-bg: #EFECE6;
+      --canvas-dot: #D5D0C5;
+      --paper: #FAF8F4;
+      --paper-elevated: #FFFFFF;
+      --paper-subtle: #F3F0E8;
+      --ink: #181715;
+      --ink-secondary: #4A4740;
+      --ink-muted: #858075;
+      --border: #D4CFC4;
+      --border-strong: #181715;
+
+      /* Semantic Accents */
+      --cobalt: #1E40AF;
+      --cobalt-soft: #DBEAFE;
+      --cobalt-border: #93C5FD;
+      --emerald: #15803D;
+      --emerald-soft: #DCFCE7;
+      --emerald-tint: rgba(22, 163, 74, 0.10);
+      --emerald-border: #86EFAC;
+      --amber: #B45309;
+      --amber-soft: #FEF3C7;
+      --amber-border: #FCD34D;
+      --crimson: #B91C1C;
+      --crimson-soft: #FEE2E2;
+      --crimson-tint: rgba(220, 38, 38, 0.09);
+      --crimson-border: #FCA5A5;
+
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Tactile Shadows */
+      --shadow-card: 0 2px 10px rgba(24, 23, 21, 0.05), 0 1px 2px rgba(24, 23, 21, 0.06);
+      --shadow-tactile: 3px 3px 0px #181715;
+      --shadow-tactile-sm: 2px 2px 0px #181715;
+      --shadow-modal: 6px 6px 0px #181715, 0 24px 48px rgba(24, 23, 21, 0.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--canvas-bg);
+      background-image: radial-gradient(var(--canvas-dot) 1px, transparent 1px);
+      background-size: 18px 18px;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Full-Viewport Minimal Frame */
+    .studio-canvas {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+      padding: 12px 18px 16px;
+      gap: 10px;
+      transition: filter 0.2s ease;
+    }
+
+    .studio-canvas.modal-blurred {
+      filter: blur(6px) saturate(0.85);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Top Minimal Strip (Block Title on Left | Mastery Slider on Right) */
+    .canvas-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      gap: 16px;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      border: 1.5px solid var(--ink);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .status-dot.verified { background: #16A34A; }
+    .status-dot.unverified { background: #F59E0B; }
+    .status-dot.active { background: #2563EB; }
+
+    .block-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .block-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin-left: 4px;
+    }
+
+    .dot-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.12s ease;
+    }
+
+    .dot-btn:hover { color: var(--ink); background: var(--paper-subtle); }
+    .dot-btn.current {
+      background: var(--ink);
+      color: var(--paper-elevated);
+    }
+    .dot-btn.done {
+      color: var(--emerald);
+      border-color: var(--emerald-border);
+      background: var(--emerald-soft);
+    }
+
+    .status-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--paper);
+      color: var(--ink-secondary);
+    }
+    .status-tag.verified { background: var(--emerald-soft); border-color: var(--emerald-border); color: var(--emerald); }
+    .status-tag.unverified { background: var(--amber-soft); border-color: var(--amber-border); color: var(--amber); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    /* Sleek Tactile Mastery Slider above Right Card */
+    .mastery-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .mastery-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-secondary);
+    }
+
+    .mastery-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cobalt);
+      min-width: 86px;
+      text-align: right;
+    }
+
+    input[type="range"].tactile-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 110px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"].tactile-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--paper-elevated);
+      border: 2px solid var(--ink);
+      box-shadow: 1px 1px 0px var(--ink);
+      cursor: grab;
+      transition: transform 0.1s ease;
+    }
+
+    input[type="range"].tactile-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.12);
+    }
+
+    /* Main Two-Panel Grid Occupying 92%+ of Viewport */
+    .panels-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .folio-card {
+      background: var(--paper);
+      border: 1.5px solid var(--ink);
+      border-radius: 14px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .folio-card.right-card {
+      background: var(--paper-elevated);
+    }
+
+    .folio-card.right-card:focus-within {
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    /* Card Top Bar */
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px 10px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      background: rgba(250, 248, 244, 0.7);
+    }
+
+    .card-kicker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+    }
+
+    .card-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Switcher Icon Button [AI Explanation <-> Original Source] */
+    .switcher-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-tactile-sm);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .switcher-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--ink);
+    }
+
+    .switcher-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px var(--ink);
+    }
+
+    .switcher-icon-box {
+      width: 16px;
+      height: 11px;
+      border: 1.5px solid var(--ink);
+      border-radius: 2px;
+      display: inline-flex;
+      padding: 1px;
+    }
+
+    .switcher-icon-pip {
+      width: 6px;
+      height: 100%;
+      background: var(--ink);
+      transition: transform 0.15s ease;
+    }
+
+    .switcher-btn.source-active .switcher-icon-pip {
+      transform: translateX(6px);
+      background: var(--cobalt);
+    }
+
+    /* Circular Submit / Commit Action Button (Top-Right of Right Card) */
+    .circle-submit-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-tactile-sm);
+      transition: all 0.14s ease;
+      position: relative;
+    }
+
+    .circle-submit-btn:hover {
+      background: var(--ink);
+      color: var(--paper-elevated);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--cobalt);
+    }
+
+    .circle-submit-btn.commit-mode {
+      background: var(--emerald);
+      border-color: var(--ink);
+      color: #ffffff;
+      width: auto;
+      border-radius: 999px;
+      padding: 0 14px;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .circle-submit-btn.commit-mode:hover {
+      background: #166534;
+      box-shadow: 3px 3px 0px var(--ink);
+    }
+
+    /* Card Content Body */
+    .card-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px 22px;
+      position: relative;
+    }
+
+    /* Left Card: Manuscript Sentences with Margin Numbers */
+    .manuscript-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .manuscript-line {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      position: relative;
+    }
+
+    .manuscript-line:hover {
+      background: var(--paper-elevated);
+      border-color: var(--border);
+      box-shadow: var(--shadow-card);
+    }
+
+    .manuscript-line.active-line {
+      background: var(--paper-elevated);
+      border-color: var(--ink);
+      box-shadow: var(--shadow-tactile-sm);
+    }
+
+    .manuscript-line.updated-flash {
+      animation: linePulse 1.3s ease;
+    }
+
+    @keyframes linePulse {
+      0% { background: var(--cobalt-soft); }
+      100% { background: transparent; }
+    }
+
+    .line-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      padding-top: 3px;
+      user-select: none;
+    }
+
+    .manuscript-line:hover .line-num {
+      color: var(--ink);
+    }
+
+    .line-prose {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.48;
+      color: var(--ink);
+    }
+
+    .line-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .difficulty-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: var(--cobalt-soft);
+      color: var(--cobalt);
+      border: 1px solid var(--cobalt-border);
+    }
+
+    .updated-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid var(--emerald-border);
+    }
+
+    /* Original Source Verbatim Sheet */
+    .source-sheet {
+      background: var(--paper-elevated);
+      border: 1px solid var(--border);
+      border-left: 3.5px solid var(--ink);
+      border-radius: 8px;
+      padding: 18px 20px;
+      font-family: var(--font-serif);
+      font-size: 16.5px;
+      line-height: 1.55;
+    }
+
+    .source-mark {
+      background: #FEF08A;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+
+    /* Blind-Write Veil Inside Left Card */
+    .blind-veil {
+      position: absolute;
+      inset: 0;
+      background: rgba(250, 248, 244, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .blind-badge-box {
+      background: var(--paper-elevated);
+      border: 1.5px solid var(--ink);
+      border-radius: 12px;
+      padding: 18px 22px;
+      max-width: 320px;
+      box-shadow: var(--shadow-tactile);
+    }
+
+    .blind-badge-box h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      margin: 0 0 6px;
+    }
+
+    .blind-badge-box p {
+      font-size: 12.5px;
+      color: var(--ink-secondary);
+      margin: 0 0 14px;
+      line-height: 1.45;
+    }
+
+    /* Right Card: User Notebook & Antigravity/Codex-Style Inline Diffs */
+    .notebook-canvas {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 14px;
+    }
+
+    .editor-surface {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--paper-subtle);
+      overflow: hidden;
+    }
+
+    .editor-textarea {
+      width: 100%;
+      flex: 1;
+      min-height: 165px;
+      border: none;
+      background: var(--paper-elevated);
+      padding: 16px 18px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .live-math-preview {
+      padding: 14px 18px;
+      background: var(--paper);
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--ink);
+      min-height: 120px;
+      max-height: 44%;
+      overflow-y: auto;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+
+    /* IDE / Antigravity / Codex-Inspired Surgical Inline Diff Widget */
+    .diff-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--paper-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+
+    .ide-diff-document {
+      flex: 1;
+      background: var(--paper-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      font-family: var(--font-serif);
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-y: auto;
+    }
+
+    /* Inline Widget Hunk (Codex / Antigravity IDE Style) */
+    .ide-hunk {
+      display: block;
+      margin: 12px 0;
+      border: 1.5px solid var(--ink);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow-tactile-sm);
+      overflow: hidden;
+      font-family: var(--font-sans);
+      transition: all 0.15s ease;
+    }
+
+    .ide-hunk.accepted {
+      border-color: var(--emerald);
+      box-shadow: none;
+      background: var(--emerald-tint);
+    }
+
+    .ide-hunk.rejected {
+      border-color: var(--border);
+      box-shadow: none;
+      opacity: 0.75;
+    }
+
+    .ide-hunk-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 10px;
+      background: var(--paper-subtle);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .ide-hunk-reason {
+      color: var(--ink-secondary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ide-hunk-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hunk-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.1s ease;
+    }
+
+    .hunk-btn:hover { border-color: var(--ink); }
+    .hunk-btn.accept { background: var(--emerald-soft); border-color: var(--emerald-border); color: var(--emerald); }
+    .hunk-btn.accept:hover { background: var(--emerald); color: #fff; }
+    .hunk-btn.reject:hover { background: var(--crimson-soft); border-color: var(--crimson-border); color: var(--crimson); }
+
+    .kbd-hint {
+      font-size: 9.5px;
+      opacity: 0.7;
+      padding: 0 3px;
+      border-radius: 3px;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .ide-diff-lines {
+      padding: 8px 12px;
+      font-family: var(--font-serif);
+      font-size: 16.5px;
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .diff-line-del {
+      background: var(--crimson-tint);
+      color: var(--crimson);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border-left: 3px solid var(--crimson);
+      text-decoration: line-through;
+    }
+
+    .diff-line-ins {
+      background: var(--emerald-tint);
+      color: #065F46;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border-left: 3px solid var(--emerald);
+      font-weight: 500;
+    }
+
+    .ide-edit-row {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+      background: var(--paper-elevated);
+      display: flex;
+      gap: 6px;
+    }
+
+    .ide-edit-row input {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 8px;
+      border: 1px solid var(--ink);
+      border-radius: 4px;
+      background: var(--paper);
+    }
+
+    /* Centered Modal Backdrop (Used for UI 1 Line Feedback & UI 2 Questions) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(24, 23, 21, 0.18);
+    }
+
+    /* UI 1 Centered Feedback Popup Card */
+    .feedback-popup-card {
+      width: 100%;
+      max-width: 360px;
+      background: var(--paper-elevated);
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow-modal);
+      animation: popIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* UI 2 Centered Question Popup Card */
+    .question-popup-card {
+      width: 100%;
+      max-width: 500px;
+      background: var(--paper-elevated);
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      padding: 24px 26px 20px;
+      box-shadow: var(--shadow-modal);
+      animation: popIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(6px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .popup-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .inaccurate-btn {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-tactile-sm);
+      transition: all 0.12s ease;
+      text-align: center;
+    }
+
+    .inaccurate-btn:hover, .inaccurate-btn.active {
+      background: var(--crimson-soft);
+      border-color: var(--crimson);
+      color: var(--crimson);
+    }
+
+    .note-drawer {
+      margin-top: 8px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .note-drawer input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1.5px solid var(--ink);
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      background: var(--paper);
+    }
+
+    .difficulty-box {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .difficulty-box label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .slider-Scale {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-muted);
+      margin-top: 6px;
+    }
+
+    /* UI 2 Question Box Styles */
+    .q-step-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cobalt);
+    }
+
+    .q-prompt {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--ink);
+      margin: 10px 0 16px;
+    }
+
+    .q-answer-box {
+      width: 100%;
+      min-height: 92px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--ink);
+      border-radius: 12px;
+      background: var(--paper);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink);
+      resize: vertical;
+      outline: none;
+    }
+
+    .q-answer-box:focus {
+      background: var(--paper-elevated);
+      box-shadow: var(--shadow-tactile-sm);
+    }
+
+    .q-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+
+    .skip-link {
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--amber);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 4px 6px;
+    }
+
+    .skip-link:hover { color: var(--crimson); }
+
+    /* Tiny Bottom-Right Lab / Telemetry Pill */
+    .corner-dock {
+      position: fixed;
+      bottom: 12px;
+      right: 18px;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .corner-pill-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-elevated);
+      color: var(--ink);
+      box-shadow: var(--shadow-tactile-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .corner-drawer {
+      width: 380px;
+      max-height: 360px;
+      background: #181715;
+      color: #F4F2EC;
+      border: 1.5px solid var(--ink);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-modal);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .corner-jumps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .jump-chip {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid #3F3C36;
+      background: #262420;
+      color: #D5D0C5;
+      cursor: pointer;
+    }
+
+    .jump-chip:hover { background: #3F3C36; color: #fff; }
+
+    .json-pre {
+      margin: 0;
+      padding: 8px;
+      background: #0F0E0C;
+      border-radius: 6px;
+      overflow-y: auto;
+      max-height: 190px;
+      font-size: 10.5px;
+      line-height: 1.45;
+      color: #A7F3D0;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      html, body { overflow: auto; height: auto; }
+      .studio-canvas { height: auto; min-height: 100vh; }
+      .canvas-header { grid-template-columns: 1fr; gap: 8px; }
+      .header-right { justify-content: flex-start; }
+      .panels-grid { grid-template-columns: 1fr; }
+      .folio-card { min-height: 440px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================================== -->
+  <!-- UI 1: STUDYING A BLOCK (FULL-VIEWPORT TWO-PANEL STUDIO)               -->
+  <!-- ===================================================================== -->
+  <div class="studio-canvas" id="studioCanvas">
+    <!-- Minimal Header Row -->
+    <header class="canvas-header">
+      <div class="header-left">
+        <span class="status-dot active" id="statusDot"></span>
+        <h1 class="block-title" id="blockTitle">3.2 IND-CPA Security</h1>
+        <div class="block-dots">
+          <button class="dot-btn done" id="dot-0" onclick="switchBlock(0)">1</button>
+          <button class="dot-btn current" id="dot-1" onclick="switchBlock(1)">2</button>
+          <button class="dot-btn" id="dot-2" onclick="switchBlock(2)">3</button>
+        </div>
+      </div>
+
+      <!-- Mastery Slider Above Right Card -->
+      <div class="header-right">
+        <div class="mastery-control">
+          <span class="mastery-label">Mastery</span>
+          <input
+            type="range"
+            min="1"
+            max="3"
+            step="1"
+            value="2"
+            id="masterySlider"
+            class="tactile-slider"
+            oninput="onMasterySliderChange(this.value)"
+          />
+          <span class="mastery-value" id="masteryLabel">Intermediate</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Two-Panel Workspace -->
+    <main class="panels-grid">
+      <!-- LEFT CARD: AI EXPLANATION / ORIGINAL SOURCE -->
+      <section class="folio-card left-card">
+        <div class="card-top">
+          <div class="card-kicker">
+            <span id="leftCardHeaderTitle">HERE GOES AI EXPLANATION</span>
+            <span style="color:var(--ink-muted);" id="leftWordCount">• 132w</span>
+          </div>
+
+          <div class="card-top-actions">
+            <button
+              class="switcher-btn"
+              id="blindToggleChip"
+              onclick="toggleBlindWrite()"
+            >
+              <span id="blindChipLabel">Blind-Write</span>
+            </button>
+            <button
+              class="switcher-btn"
+              id="sourceSwitcherBtn"
+              onclick="toggleLeftSource()"
+            >
+              <span class="switcher-icon-box"><span class="switcher-icon-pip"></span></span>
+              <span id="switcherLabel">AI ⇄ Source</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body" id="leftCardBody"></div>
+
+        <!-- Blind-Write Blur Veil -->
+        <div class="blind-veil hidden" id="blindVeil">
+          <div class="blind-badge-box">
+            <h4>Blind-Write</h4>
+            <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
+              <button class="switcher-btn" style="background:var(--amber-soft); border-color:var(--amber); color:var(--amber);" onclick="peekLeftCard()">
+                👁 Peek
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT CARD: USER EXPLANATION & CODEX/ANTIGRAVITY INLINE DIFFS -->
+      <section class="folio-card right-card">
+        <div class="card-top">
+          <div class="card-kicker">
+            <span id="rightCardHeaderTitle">HERE GOES USER EXPLANATION</span>
+            <span style="color:var(--ink-muted);" id="rightModeSub"></span>
+          </div>
+
+          <div class="card-top-actions" id="rightTopActions"></div>
+        </div>
+
+        <div class="card-body" id="rightCardBody"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- CENTERED MODAL OVERLAY (UI 1 LINE FEEDBACK & UI 2 POPUP QUESTIONS)    -->
+  <!-- ===================================================================== -->
+  <div class="modal-overlay hidden" id="modalOverlay" onclick="onOverlayClick(event)">
+    <div id="modalSlot" onclick="event.stopPropagation()"></div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- TINY FLOATING BOTTOM-RIGHT PILL (DEMO SHORTCUTS & TELEMETRY JSON)     -->
+  <!-- ===================================================================== -->
+  <div class="corner-dock">
+    <div class="corner-drawer hidden" id="cornerDrawer">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong>FOLIO // Lab &amp; Student Model</strong>
+        <button class="jump-chip" onclick="resetPrototype()">↺ Reset</button>
+      </div>
+      <div class="corner-jumps">
+        <button class="jump-chip" onclick="openPretestModal()">1. Pretest</button>
+        <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=false; renderAll();">2. Study</button>
+        <button class="jump-chip" onclick="openLineFeedback('s2')">3. Feedback</button>
+        <button class="jump-chip" onclick="closeModal(); state.mode='write'; state.blindActive=true; renderAll();">4. Blind-Write</button>
+        <button class="jump-chip" onclick="triggerSubmitReview()">5. Review Qs</button>
+        <button class="jump-chip" onclick="enterDiffMode()">6. Inline Diffs</button>
+      </div>
+      <pre class="json-pre" id="telemetryPre"></pre>
+    </div>
+    <button class="corner-pill-btn" onclick="toggleCornerDrawer()">
+      <span>⚙ Demo &amp; JSON</span>
+      <span id="cornerStatusDot" class="status-dot active" style="width:8px; height:8px;"></span>
+    </button>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. CRYPTOGRAPHY MODULE DATA (IND-CPA & SEMANTIC SECURITY)
+    // =========================================================================
+    const BLOCKS = [
+      {
+        id: "3.1",
+        title: "3.1 Negligible Functions",
+        status: "verified",
+        userNote: `A function $\\varepsilon(\\lambda)$ is **negligible** if for every polynomial $p(\\cdot)$, there exists $N$ such that for all $\\lambda > N$, $\\varepsilon(\\lambda) < \\frac{1}{p(\\lambda)}$.\n\nThis guarantees that even a PPT adversary running $q(\\lambda)$ trials accumulates at most $q(\\lambda)\\cdot\\mathsf{negl}(\\lambda) = \\mathsf{negl}'(\\lambda)$ advantage.`
+      },
+      {
+        id: "3.2",
+        title: "3.2 IND-CPA Security",
+        status: "active",
+        userNote: ""
+      },
+      {
+        id: "3.3",
+        title: "3.3 CPA Ciphers from PRFs",
+        status: "locked",
+        userNote: `To encrypt $m \\in \\{0,1\\}^n$ using a PRF $F_k$, sample fresh randomness $r \\leftarrow \\{0,1\\}^n$ and output:\n$$c = \\langle r,\\; F_k(r) \\oplus m \\rangle$$\nFresh $r$ ensures repeated encryptions of $m_0$ yield independent-looking ciphertexts.`
+      }
+    ];
+
+    // 3 Clickable Sentences per Mastery Level (1 = Novice, 2 = Intermediate, 3 = Advanced)
+    const LEFT_SENTENCES = {
+      1: [
+        {
+          id: "s1",
+          text: "In a **Chosen-Plaintext Attack (IND-CPA)**, the adversary $\\mathcal{A}$ can ask the Challenger $\\mathcal{C}$ to encrypt arbitrary test messages under the hidden key $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ before and after seeing the challenge."
+        },
+        {
+          id: "s2",
+          text: "During the challenge phase of $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$, $\\mathcal{A}$ submits two equal-length plaintexts $(m_0, m_1)$, receives $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for a secret coin $b \\leftarrow \\{0,1\\}$, and guesses $b'$."
+        },
+        {
+          id: "s3",
+          text: "Because a blind coin flip already wins with probability $\\frac{1}{2}$, scheme $\\Pi$ is CPA-secure if $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$."
+        }
+      ],
+      2: [
+        {
+          id: "s1",
+          text: "Unlike passive EAV-security, **IND-CPA** grants PPT adversary $\\mathcal{A}$ adaptive oracle access $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ throughout the experiment under $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$."
+        },
+        {
+          id: "s2",
+          text: "$\\mathcal{A}$ outputs equal-length $(m_0, m_1)$, receives challenge ciphertext $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$, continues querying $\\mathsf{Enc}_k(\\cdot)$, and outputs bit $b'$."
+        },
+        {
+          id: "s3",
+          text: "Scheme $\\Pi$ is CPA-secure iff $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for all PPT $\\mathcal{A}$; hence any CPA-secure $\\mathsf{Enc}_k$ must be probabilistic."
+        }
+      ],
+      3: [
+        {
+          id: "s1",
+          text: "Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$. Experiment $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ samples $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ and provides persistent oracle $\\mathcal{O}_k(\\cdot) := \\mathsf{Enc}_k(\\cdot)$."
+        },
+        {
+          id: "s2",
+          text: "$\\mathcal{A}^{\\mathcal{O}_k}(1^\\lambda) \\to (m_0, m_1)_{|m_0|=|m_1|};\\; b \\xleftarrow{\\$} \\{0,1\\};\\; c^* \\leftarrow \\mathsf{Enc}_k(m_b);\\; b' \\leftarrow \\mathcal{A}^{\\mathcal{O}_k}(c^*)$, returning $1 \\iff b'=b$."
+        },
+        {
+          id: "s3",
+          text: "$\\Pi$ is **IND-CPA** $\\iff \\forall\\text{ PPT }\\mathcal{A},\\; \\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$. Derive why deterministic $\\mathsf{Enc}$ fails."
+        }
+      ]
+    };
+
+    // Sentence-specific rewrites when dragging the popup "make it:" slider (1 = Simpler, 2 = Balanced, 3 = Formal)
+    const LINE_SLIDER_VARIANTS = {
+      s1: {
+        1: "**Worked Intuition:** Imagine Eve can trick Alice's server into encrypting any message Eve chooses—watching the outputs—while Alice's secret key $k$ stays fixed.",
+        2: "Unlike passive EAV-security, **IND-CPA** grants PPT adversary $\\mathcal{A}$ adaptive oracle access $\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda)$ throughout the experiment.",
+        3: "Fix $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ and equip PPT $\\mathcal{A}$ with persistent adaptive encryption oracle $\\mathcal{O}_k : m \\mapsto \\mathsf{Enc}_k(m)$."
+      },
+      s2: {
+        1: "**Step-by-Step Game:** (1) $\\mathcal{A}$ picks two messages $m_0, m_1$ of identical length. (2) Challenger flips secret coin $b \\in \\{0,1\\}$ and sends $c^* = \\mathsf{Enc}_k(m_b)$. (3) $\\mathcal{A}$ guesses $b'$.",
+        2: "$\\mathcal{A}$ outputs equal-length $(m_0, m_1)$, receives challenge ciphertext $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$, continues querying $\\mathsf{Enc}_k(\\cdot)$, and outputs $b'$.",
+        3: "$\\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(1^\\lambda) \\to (m_0, m_1)_{|m_0|=|m_1|},\\; c^* \\leftarrow \\mathsf{Enc}_k(m_b)\\text{ for }b \\xleftarrow{\\$} \\{0,1\\},\\; b' \\leftarrow \\mathcal{A}^{\\mathsf{Enc}_k(\\cdot)}(c^*)$."
+      },
+      s3: {
+        1: "**Why $1/2$?** Guessing randomly wins $50\\%$ of the time. CPA security means $\\mathcal{A}$ cannot beat $\\frac{1}{2}$ by more than a tiny negligible margin $\\mathsf{negl}(\\lambda)$.",
+        2: "Scheme $\\Pi$ is CPA-secure iff $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for all PPT $\\mathcal{A}$; hence $\\mathsf{Enc}_k$ must be randomized.",
+        3: "$\\mathsf{Adv}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) := \\left|\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] - \\frac{1}{2}\\right| \\le \\mathsf{negl}(\\lambda) \\implies \\mathsf{Enc}_k\\text{ is probabilistic}$."
+      }
+    };
+
+    const INACCURATE_CITED_REWRITES = {
+      s1: "$\\mathcal{A}$ has adaptive oracle access to $\\mathsf{Enc}_k(\\cdot)$ under fixed $k \\leftarrow \\mathsf{Gen}(1^\\lambda)$ in both pre- and post-challenge phases.",
+      s2: "The challenge plaintexts $(m_0, m_1)$ must satisfy $|m_0| = |m_1|$ (equal length is mandatory since CPA does not hide plaintext length), and $c^* \\leftarrow \\mathsf{Enc}_k(m_b)$ for uniform $b \\leftarrow \\{0,1\\}$.",
+      s3: "Formally, $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)=1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$ for every PPT $\\mathcal{A}$; no deterministic scheme satisfies this."
+    };
+
+    const PRETEST_QUESTIONS = [
+      {
+        title: "Diagnostic Pretest (1 / 3)",
+        prompt: "What is the baseline winning probability of a random-guessing adversary in the $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ game?",
+        placeholder: "Type your answer (e.g., 1/2 because b is a uniform bit)...",
+        sampleAnswer: "1/2, because the challenger samples b uniformly from {0,1}."
+      },
+      {
+        title: "Diagnostic Pretest (2 / 3)",
+        prompt: "When is a function $\\varepsilon(\\lambda)$ considered negligible relative to any polynomial $p(\\lambda)$?",
+        placeholder: "Type your answer...",
+        sampleAnswer: "When ε(λ) < 1/p(λ) for all sufficiently large λ."
+      },
+      {
+        title: "Diagnostic Pretest (3 / 3)",
+        prompt: "Why does deterministic encryption $\\mathsf{Enc}_k(m)$ fail when an adversary can query the encryption oracle?",
+        placeholder: "Type your answer...",
+        sampleAnswer: "Encrypting the same m_0 twice produces identical ciphertexts, allowing A to match c* = Enc_k(m_b)."
+      }
+    ];
+
+    const REVIEW_QUESTIONS = [
+      {
+        title: "Review Question (1 / 2)",
+        prompt: "In your draft inequality $\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$, what baseline probability is missing on the right-hand side?",
+        placeholder: "Explain the missing baseline term...",
+        sampleAnswer: "A random guess wins with probability 1/2, so the RHS must be 1/2 + negl(λ)."
+      },
+      {
+        title: "Review Question (2 / 2)",
+        prompt: "When $\\mathcal{A}$ queries the oracle on $m_0$ and submits $(m_0, m_1)$, what condition on $(m_0, m_1)$ and $\\mathsf{Enc}_k$ ensures $c^* = c_0 \\iff b = 0$?",
+        placeholder: "Specify the condition on m_0, m_1 and determinism...",
+        sampleAnswer: "We need distinct equal-length messages m_0 != m_1 (|m_0|=|m_1|) and deterministic Enc_k."
+      }
+    ];
+
+    const DEFAULT_USER_DRAFT = `Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ be any deterministic encryption scheme.
+For $\\Pi$ to be CPA-secure, every PPT adversary $\\mathcal{A}$ must satisfy:
+$$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$$
+However, $\\mathcal{A}$ can break $\\Pi$ by querying the oracle on $m_0$ to get $c_0$, and then submitting $(m_0, m_1)$ to receive challenge $c^*$.
+If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with probability $1$.`;
+
+    // =========================================================================
+    // 2. STATE
+    // =========================================================================
+    let state = {
+      currentBlockIdx: 1, // 0 = 3.1, 1 = 3.2 (Active), 2 = 3.3
+      mastery: 2, // 1 = Novice, 2 = Intermediate, 3 = Advanced
+      leftSourceMode: false, // false = AI Explanation, true = Original Source
+      blindAutoEnabled: true,
+      blindActive: false,
+      mode: "write", // "write" | "diff" | "committed"
+      userDraft: DEFAULT_USER_DRAFT,
+
+      // Line Overrides in Left Card: { s1: { text, cited, difficultyLabel } }
+      lineOverrides: {},
+      activeFeedbackLineId: null,
+      feedbackInaccurateOpen: false,
+      feedbackSliderVal: 2,
+      justUpdatedLineId: null,
+
+      // UI 2 Modal State: null | { flow: 'pretest' | 'review', idx: 0, answers: [] }
+      modal: null,
+
+      // Codex / Antigravity IDE Inline Diffs
+      diffs: [
+        {
+          id: "d1",
+          reason: "Fix IND-CPA random-guess baseline (from Q1)",
+          delRaw: "\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)",
+          insRaw: "\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)",
+          delRender: "$$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\mathsf{negl}(\\lambda)$$",
+          insRender: "$$\\Pr[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$$",
+          status: "pending", // pending | accepted | rejected | edited
+          editing: false,
+          customText: ""
+        },
+        {
+          id: "d2",
+          reason: "Specify distinct equal-length plaintexts & determinism (from Q2)",
+          delRaw: "querying the oracle on $m_0$ to get $c_0$",
+          insRaw: "querying $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct equal-length $m_0 \\neq m_1$ (exploiting deterministic $\\mathsf{Enc}_k$)",
+          delRender: "querying the oracle on $m_0$ to get $c_0$",
+          insRender: "querying $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct equal-length $m_0 \\neq m_1$ (exploiting deterministic $\\mathsf{Enc}_k$)",
+          status: "pending",
+          editing: false,
+          customText: ""
+        }
+      ],
+
+      cornerOpen: false,
+      startTime: Date.now(),
+      telemetry: {
+        topic_id: "crypto_ch3_ind_cpa",
+        block_id: "mod_3_2",
+        initial_mastery: "intermediate",
+        left_feedback_flags: [],
+        question_card_attempts: 0,
+        diffs_proposed: 0,
+        diffs_accepted_vs_edited: { accepted: 0, rejected: 0, edited: 0 },
+        override_used: false,
+        override_reasons: [],
+        verification_status: "in_progress",
+        time_spent_sec: 0,
+        fsrs_state: { D: 5.1, S: 3.9, R: 0.94, next_review: "Phase 2 Queue" }
+      }
+    };
+
+    setInterval(() => {
+      state.telemetry.time_spent_sec = Math.floor((Date.now() - state.startTime) / 1000);
+      if (state.cornerOpen) renderTelemetry();
+    }, 1000);
+
+    // =========================================================================
+    // 3. HELPERS & MATH RENDERING
+    // =========================================================================
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatMd(str) {
+      let s = escapeHtml(str);
+      s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+      s = s.replace(/\n/g, "<br/>");
+      return s;
+    }
+
+    function typesetMath(el) {
+      if (typeof renderMathInElement === "function" && el) {
+        renderMathInElement(el, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function logOverride(reason) {
+      state.telemetry.override_used = true;
+      if (!state.telemetry.override_reasons.includes(reason)) {
+        state.telemetry.override_reasons.push(reason);
+      }
+      state.telemetry.verification_status = "unverified";
+    }
+
+    // =========================================================================
+    // 4. INTERACTION HANDLERS
+    // =========================================================================
+    function switchBlock(idx) {
+      state.currentBlockIdx = idx;
+      state.blindActive = false;
+      renderAll();
+    }
+
+    function onMasterySliderChange(val) {
+      const num = parseInt(val, 10);
+      state.mastery = num;
+      const names = { 1: "Novice", 2: "Intermediate", 3: "Advanced" };
+      state.telemetry.initial_mastery = names[num].toLowerCase();
+      state.lineOverrides = {};
+      renderAll();
+    }
+
+    function toggleLeftSource() {
+      state.leftSourceMode = !state.leftSourceMode;
+      renderAll();
+    }
+
+    function toggleBlindWrite() {
+      state.blindAutoEnabled = !state.blindAutoEnabled;
+      if (!state.blindAutoEnabled) state.blindActive = false;
+      renderAll();
+    }
+
+    function onEditorFocusInput(textarea) {
+      state.userDraft = textarea.value;
+      if (state.blindAutoEnabled && !state.blindActive && state.currentBlockIdx === 1) {
+        state.blindActive = true;
+        renderLeftCard();
+      }
+      const preview = document.getElementById("liveMathPreview");
+      if (preview) {
+        preview.innerHTML = formatMd(state.userDraft);
+        typesetMath(preview);
+      }
+    }
+
+    function peekLeftCard() {
+      state.blindActive = false;
+      state.blindAutoEnabled = false;
+      logOverride("blind_write_peek");
+      renderAll();
+    }
+
+    // --- UI 1: Centered Line Feedback Popup ---
+    function openLineFeedback(lineId) {
+      state.activeFeedbackLineId = lineId;
+      state.feedbackInaccurateOpen = false;
+      state.feedbackSliderVal = state.mastery;
+      state.modal = { flow: "feedback", lineId };
+      renderAll();
+    }
+
+    function toggleInaccurateNote() {
+      state.feedbackInaccurateOpen = !state.feedbackInaccurateOpen;
+      renderModal();
+    }
+
+    function submitInaccurateLine(lineId) {
+      const noteEl = document.getElementById("inaccurateNoteInput");
+      const note = noteEl ? noteEl.value.trim() : "";
+      state.lineOverrides[lineId] = {
+        text: INACCURATE_CITED_REWRITES[lineId],
+        corrected: true,
+        difficultyLabel: null
+      };
+      state.telemetry.left_feedback_flags.push({
+        line: lineId,
+        type: "inaccurate",
+        note: note || "Updated"
+      });
+      state.justUpdatedLineId = lineId;
+      closeModal();
+    }
+
+    function onLineDifficultySlide(lineId, val) {
+      const num = parseInt(val, 10);
+      state.feedbackSliderVal = num;
+      const labels = { 1: "Simpler", 2: "Balanced", 3: "Formal" };
+      state.lineOverrides[lineId] = {
+        text: LINE_SLIDER_VARIANTS[lineId][num],
+        corrected: false,
+        difficultyLabel: labels[num]
+      };
+      state.telemetry.left_feedback_flags.push({
+        line: lineId,
+        type: `difficulty_${num}`,
+        note: labels[num]
+      });
+      state.justUpdatedLineId = lineId;
+      closeModal();
+    }
+
+    // --- UI 2: Centered POPUP Questions (Pretest & Post-Submit Review) ---
+    function openPretestModal() {
+      state.modal = {
+        flow: "pretest",
+        idx: 0,
+        answers: ["", "", ""]
+      };
+      renderAll();
+    }
+
+    function triggerSubmitReview() {
+      state.blindActive = false;
+      state.telemetry.question_card_attempts += 1;
+      state.modal = {
+        flow: "review",
+        idx: 0,
+        answers: ["", ""]
+      };
+      renderAll();
+    }
+
+    function fillModalSampleAnswer() {
+      if (!state.modal) return;
+      const list = state.modal.flow === "pretest" ? PRETEST_QUESTIONS : REVIEW_QUESTIONS;
+      const item = list[state.modal.idx];
+      state.modal.answers[state.modal.idx] = item.sampleAnswer;
+      const box = document.getElementById("modalAnswerInput");
+      if (box) box.value = item.sampleAnswer;
+    }
+
+    function nextModalQuestion() {
+      if (!state.modal) return;
+      const box = document.getElementById("modalAnswerInput");
+      if (box) state.modal.answers[state.modal.idx] = box.value.trim();
+
+      const list = state.modal.flow === "pretest" ? PRETEST_QUESTIONS : REVIEW_QUESTIONS;
+      if (state.modal.idx + 1 < list.length) {
+        state.modal.idx += 1;
+        renderModal();
+      } else {
+        if (state.modal.flow === "pretest") {
+          // Score non-empty answers to calibrate Mastery Slider
+          const answeredCount = state.modal.answers.filter(a => a.length > 3).length;
+          const calibrated = answeredCount <= 1 ? 1 : answeredCount === 2 ? 2 : 3;
+          onMasterySliderChange(calibrated);
+          closeModal();
+        } else {
+          closeModal();
+          enterDiffMode();
+        }
+      }
+    }
+
+    function skipModalQuestion() {
+      if (!state.modal) return;
+      if (state.modal.flow === "pretest") {
+        state.telemetry.override_reasons.push("pretest_skipped");
+        onMasterySliderChange(2);
+        closeModal();
+      } else {
+        logOverride("skipped_review_question");
+        closeModal();
+        enterDiffMode();
+      }
+    }
+
+    function closeModal() {
+      state.modal = null;
+      state.activeFeedbackLineId = null;
+      renderAll();
+    }
+
+    function onOverlayClick(e) {
+      if (e.target.id === "modalOverlay") {
+        closeModal();
+      }
+    }
+
+    // --- Codex / Antigravity IDE Inline Diff Actions ---
+    function enterDiffMode() {
+      state.currentBlockIdx = 1;
+      state.mode = "diff";
+      state.blindActive = false;
+      state.telemetry.diffs_proposed = state.diffs.length;
+      renderAll();
+    }
+
+    function handleDiffAction(diffId, action) {
+      const d = state.diffs.find(x => x.id === diffId);
+      if (!d) return;
+      if (action === "edit") {
+        d.editing = true;
+      } else {
+        d.status = action; // 'accepted' | 'rejected'
+        d.editing = false;
+      }
+      syncDiffCounts();
+      renderRightCard();
+      renderTelemetry();
+    }
+
+    function saveDiffEdit(diffId) {
+      const d = state.diffs.find(x => x.id === diffId);
+      const inp = document.getElementById(`diffEditInput-${diffId}`);
+      if (d && inp) {
+        d.customText = inp.value.trim() || d.insRaw;
+        d.status = "edited";
+        d.editing = false;
+      }
+      syncDiffCounts();
+      renderRightCard();
+      renderTelemetry();
+    }
+
+    function acceptAllDiffs() {
+      state.diffs.forEach(d => {
+        if (d.status === "pending") d.status = "accepted";
+      });
+      syncDiffCounts();
+      renderRightCard();
+      renderTelemetry();
+    }
+
+    function syncDiffCounts() {
+      const counts = { accepted: 0, rejected: 0, edited: 0 };
+      state.diffs.forEach(d => {
+        if (d.status === "accepted") counts.accepted++;
+        if (d.status === "rejected") counts.rejected++;
+        if (d.status === "edited") counts.edited++;
+      });
+      state.telemetry.diffs_accepted_vs_edited = counts;
+    }
+
+    function commitBlock() {
+      const hasPending = state.diffs.some(d => d.status === "pending");
+      const allRejected = state.diffs.every(d => d.status === "rejected");
+      if (hasPending || allRejected) {
+        logOverride("committed_without_resolving_diffs");
+      }
+
+      // Apply accepted/edited diffs into finalized prose
+      let finalNote = state.userDraft;
+      state.diffs.forEach(d => {
+        if (d.status === "accepted") {
+          finalNote = finalNote.replace(d.delRaw, d.insRaw);
+        } else if (d.status === "edited") {
+          finalNote = finalNote.replace(d.delRaw, d.customText);
+        }
+      });
+
+      state.userDraft = finalNote;
+      state.mode = "committed";
+      if (!state.telemetry.override_used) {
+        state.telemetry.verification_status = "verified";
+        BLOCKS[1].status = "verified";
+      } else {
+        state.telemetry.verification_status = "unverified";
+        BLOCKS[1].status = "unverified";
+      }
+      BLOCKS[1].userNote = finalNote;
+      renderAll();
+    }
+
+    function toggleCornerDrawer() {
+      state.cornerOpen = !state.cornerOpen;
+      document.getElementById("cornerDrawer").classList.toggle("hidden", !state.cornerOpen);
+      renderTelemetry();
+    }
+
+    function resetPrototype() {
+      state.currentBlockIdx = 1;
+      state.mastery = 2;
+      state.leftSourceMode = false;
+      state.blindAutoEnabled = true;
+      state.blindActive = false;
+      state.mode = "write";
+      state.userDraft = DEFAULT_USER_DRAFT;
+      state.lineOverrides = {};
+      state.modal = null;
+      state.diffs.forEach(d => { d.status = "pending"; d.editing = false; d.customText = ""; });
+      state.telemetry.left_feedback_flags = [];
+      state.telemetry.question_card_attempts = 0;
+      state.telemetry.diffs_proposed = 0;
+      state.telemetry.diffs_accepted_vs_edited = { accepted: 0, rejected: 0, edited: 0 };
+      state.telemetry.override_used = false;
+      state.telemetry.override_reasons = [];
+      state.telemetry.verification_status = "in_progress";
+      BLOCKS[1].status = "active";
+      renderAll();
+    }
+
+    // =========================================================================
+    // 5. RENDERING
+    // =========================================================================
+    function renderAll() {
+      renderHeader();
+      renderLeftCard();
+      renderRightCard();
+      renderModal();
+      renderTelemetry();
+    }
+
+    function renderHeader() {
+      const blk = BLOCKS[state.currentBlockIdx];
+      document.getElementById("blockTitle").textContent = blk.title;
+
+      // Dots
+      BLOCKS.forEach((b, i) => {
+        const dot = document.getElementById(`dot-${i}`);
+        let cls = "dot-btn";
+        if (i === state.currentBlockIdx) cls += " current";
+        else if (b.status === "verified") cls += " done";
+        dot.className = cls;
+      });
+
+      // Status Dot
+      const sDot = document.getElementById("statusDot");
+      const cDot = document.getElementById("cornerStatusDot");
+
+      if (blk.status === "verified") {
+        sDot.className = "status-dot verified";
+        cDot.className = "status-dot verified";
+      } else {
+        sDot.className = "status-dot active";
+        cDot.className = "status-dot active";
+      }
+
+      // Mastery Slider
+      const slider = document.getElementById("masterySlider");
+      const label = document.getElementById("masteryLabel");
+      slider.value = state.mastery;
+      const mNames = { 1: "Novice", 2: "Intermediate", 3: "Advanced" };
+      label.textContent = mNames[state.mastery];
+    }
+
+    function renderLeftCard() {
+      const switcherBtn = document.getElementById("sourceSwitcherBtn");
+      const switcherLabel = document.getElementById("switcherLabel");
+      const headerTitle = document.getElementById("leftCardHeaderTitle");
+      const wordCount = document.getElementById("leftWordCount");
+      const blindChipLabel = document.getElementById("blindChipLabel");
+      const blindVeil = document.getElementById("blindVeil");
+      const body = document.getElementById("leftCardBody");
+
+      switcherBtn.classList.toggle("source-active", state.leftSourceMode);
+      switcherLabel.textContent = state.leftSourceMode ? "Source ⇄ AI" : "AI ⇄ Source";
+      blindChipLabel.textContent = state.blindAutoEnabled ? "Blind-Write: On" : "Blind-Write: Off";
+      blindVeil.classList.toggle("hidden", !state.blindActive);
+
+      if (state.leftSourceMode) {
+        headerTitle.textContent = "ORIGINAL SOURCE";
+        wordCount.textContent = "";
+        body.innerHTML = `
+          <div class="source-sheet">
+            <p style="margin-top:0;">
+              <strong>IND-CPA Security.</strong> A private-key encryption scheme $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ has <em>indistinguishable encryptions under a chosen-plaintext attack</em> if for all probabilistic polynomial-time adversaries $\\mathcal{A}$, there exists a negligible function $\\mathsf{negl}$ such that:
+            </p>
+            <p style="text-align:center;">
+              $$\\Pr\\left[\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda) = 1\\right] \\le \\frac{1}{2} + \\mathsf{negl}(\\lambda)$$
+            </p>
+            <p>
+              where $\\mathsf{PrivK}^{\\mathsf{cpa}}_{\\mathcal{A},\\Pi}(\\lambda)$ provides $\\mathcal{A}$ with persistent oracle access to $\\mathsf{Enc}_k(\\cdot)$ and requires challenge plaintexts $(m_0, m_1)$ to satisfy <span class="source-mark">$|m_0| = |m_1|$</span>.
+            </p>
+            <hr style="border:none; border-top:1px dashed var(--border); margin:14px 0;" />
+            <p style="margin:4px 0 0;">
+              <strong>Proposition.</strong> <span class="source-mark">No deterministic encryption scheme can be CPA-secure.</span> Specifically, $\\mathcal{A}$ can query $c_0 \\leftarrow \\mathsf{Enc}_k(m_0)$ for distinct $m_0 \\neq m_1$ and test whether $c^* = c_0$.
+            </p>
+          </div>
+        `;
+        typesetMath(body);
+        return;
+      }
+
+      headerTitle.textContent = "HERE GOES AI EXPLANATION";
+      const wCounts = { 1: "138w", 2: "132w", 3: "118w" };
+      wordCount.textContent = `• ${wCounts[state.mastery]}`;
+
+      const sentences = LEFT_SENTENCES[state.mastery];
+      const html = sentences.map((s, idx) => {
+        const ov = state.lineOverrides[s.id];
+        const text = ov ? ov.text : s.text;
+        const isActive = state.activeFeedbackLineId === s.id;
+        const isFlash = state.justUpdatedLineId === s.id;
+        const hasBadge = Boolean(ov && (ov.corrected || ov.difficultyLabel));
+
+        return `
+          <div
+            class="manuscript-line ${isActive ? "active-line" : ""} ${isFlash ? "updated-flash" : ""}"
+            onclick="openLineFeedback('${s.id}')"
+          >
+            <span class="line-num">0${idx + 1}</span>
+            <div>
+              <div class="line-prose">${formatMd(text)}</div>
+              ${hasBadge ? `
+                <div class="line-meta-row">
+                  ${ov.corrected ? `<span class="updated-pill">✓ Updated</span>` : ""}
+                  ${ov.difficultyLabel ? `<span class="difficulty-pill">⇄ ${escapeHtml(ov.difficultyLabel)}</span>` : ""}
+                </div>
+              ` : ""}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      state.justUpdatedLineId = null;
+      body.innerHTML = `<div class="manuscript-list">${html}</div>`;
+      typesetMath(body);
+    }
+
+    function renderRightCard() {
+      const topActions = document.getElementById("rightTopActions");
+      const modeSub = document.getElementById("rightModeSub");
+      const body = document.getElementById("rightCardBody");
+
+      // Non-3.2 blocks (Read-only preview of 3.1 or 3.3)
+      if (state.currentBlockIdx !== 1) {
+        const blk = BLOCKS[state.currentBlockIdx];
+        modeSub.textContent = "";
+        topActions.innerHTML = `
+          <button class="switcher-btn" onclick="switchBlock(1)">Back to 3.2 →</button>
+        `;
+        body.innerHTML = `
+          <div class="ide-diff-document">
+            ${formatMd(blk.userNote)}
+          </div>
+        `;
+        typesetMath(body);
+        return;
+      }
+
+      // --- MODE A: IDE / CODEX / ANTIGRAVITY INLINE DIFF REVIEW ---
+      if (state.mode === "diff") {
+        const resolvedCount = state.diffs.filter(d => d.status !== "pending").length;
+        modeSub.textContent = `• ${resolvedCount}/${state.diffs.length}`;
+
+        topActions.innerHTML = `
+          <button
+            class="circle-submit-btn commit-mode"
+            onclick="commitBlock()"
+          >
+            <span>✓ Commit</span>
+          </button>
+        `;
+
+        const renderIdeHunk = (d) => {
+          if (d.status === "accepted") {
+            return `
+              <div class="ide-hunk accepted">
+                <div class="ide-hunk-bar">
+                  <span class="ide-hunk-reason" style="color:var(--emerald);">✓ Accepted</span>
+                  <div class="ide-hunk-actions">
+                    <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'pending')">Undo</button>
+                  </div>
+                </div>
+                <div class="ide-diff-lines">
+                  <div class="diff-line-ins">${d.insRender}</div>
+                </div>
+              </div>
+            `;
+          }
+          if (d.status === "edited") {
+            return `
+              <div class="ide-hunk accepted">
+                <div class="ide-hunk-bar">
+                  <span class="ide-hunk-reason" style="color:var(--cobalt);">✎ Edited</span>
+                  <div class="ide-hunk-actions">
+                    <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">Edit</button>
+                  </div>
+                </div>
+                <div class="ide-diff-lines">
+                  <div class="diff-line-ins">${formatMd(d.customText)}</div>
+                </div>
+              </div>
+            `;
+          }
+          if (d.status === "rejected") {
+            return `
+              <div class="ide-hunk rejected">
+                <div class="ide-hunk-bar">
+                  <span class="ide-hunk-reason">✕ Rejected</span>
+                  <div class="ide-hunk-actions">
+                    <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'pending')">Restore</button>
+                  </div>
+                </div>
+                <div class="ide-diff-lines">
+                  <div style="padding:2px 6px; color:var(--ink-secondary);">${d.delRender}</div>
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="ide-hunk">
+              <div class="ide-hunk-bar">
+                <span class="ide-hunk-reason">${escapeHtml(d.reason)}</span>
+                <div class="ide-hunk-actions">
+                  <button class="hunk-btn accept" onclick="handleDiffAction('${d.id}', 'accepted')">✓ Accept</button>
+                  <button class="hunk-btn reject" onclick="handleDiffAction('${d.id}', 'rejected')">✕ Reject</button>
+                  <button class="hunk-btn" onclick="handleDiffAction('${d.id}', 'edit')">✎ Edit</button>
+                </div>
+              </div>
+              <div class="ide-diff-lines">
+                <div class="diff-line-del">− ${d.delRender}</div>
+                <div class="diff-line-ins">+ ${d.insRender}</div>
+              </div>
+              ${d.editing ? `
+                <div class="ide-edit-row">
+                  <input id="diffEditInput-${d.id}" type="text" value="${escapeHtml(d.customText || d.insRaw)}" />
+                  <button class="hunk-btn accept" onclick="saveDiffEdit('${d.id}')">Save</button>
+                </div>
+              ` : ""}
+            </div>
+          `;
+        };
+
+        body.innerHTML = `
+          <div class="notebook-canvas">
+            <div class="diff-banner">
+              <span><strong>${state.diffs.length} Inline Diffs</strong></span>
+              <div style="display:flex; gap:6px;">
+                <button class="hunk-btn accept" onclick="acceptAllDiffs()">✓ Accept All</button>
+                <button class="hunk-btn" onclick="state.mode='write'; renderAll();">← Raw</button>
+              </div>
+            </div>
+            <div class="ide-diff-document">
+              Let $\\Pi = (\\mathsf{Gen}, \\mathsf{Enc}, \\mathsf{Dec})$ be any deterministic encryption scheme.<br/>
+              For $\\Pi$ to be CPA-secure, every PPT adversary $\\mathcal{A}$ must satisfy:
+              ${renderIdeHunk(state.diffs[0])}
+              However, $\\mathcal{A}$ can break $\\Pi$ by
+              ${renderIdeHunk(state.diffs[1])}
+              and then submitting $(m_0, m_1)$ to receive challenge $c^*$.<br/>
+              If $c^* = c_0$, $\\mathcal{A}$ outputs $b' = 0$ (else $b' = 1$), succeeding with probability $1$.
+            </div>
+          </div>
+        `;
+        typesetMath(body);
+        return;
+      }
+
+      // --- MODE B: COMMITTED FINALIZED NOTE ---
+      if (state.mode === "committed") {
+        modeSub.textContent = "";
+        topActions.innerHTML = `
+          <button class="switcher-btn" onclick="state.mode='write'; renderAll();">✎ Edit</button>
+          <button class="switcher-btn" onclick="switchBlock(2)">Next →</button>
+        `;
+        body.innerHTML = `
+          <div class="notebook-canvas">
+            <div class="ide-diff-document">
+              ${formatMd(state.userDraft)}
+            </div>
+          </div>
+        `;
+        typesetMath(body);
+        return;
+      }
+
+      // --- MODE C: WRITING EXPLANATION (DEFAULT) ---
+      modeSub.textContent = "";
+      topActions.innerHTML = `
+        <button
+          class="circle-submit-btn"
+          onclick="triggerSubmitReview()"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      `;
+
+      body.innerHTML = `
+        <div class="notebook-canvas">
+          <div class="editor-surface">
+            <textarea
+              class="editor-textarea"
+              onfocus="onEditorFocusInput(this)"
+              oninput="onEditorFocusInput(this)"
+            >${escapeHtml(state.userDraft)}</textarea>
+            <div class="live-math-preview">
+              <div class="preview-header">
+                <span>Preview</span>
+              </div>
+              <div id="liveMathPreview">${formatMd(state.userDraft)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      typesetMath(body);
+    }
+
+    function renderModal() {
+      const canvas = document.getElementById("studioCanvas");
+      const overlay = document.getElementById("modalOverlay");
+      const slot = document.getElementById("modalSlot");
+
+      if (!state.modal) {
+        canvas.classList.remove("modal-blurred");
+        overlay.classList.add("hidden");
+        return;
+      }
+
+      canvas.classList.add("modal-blurred");
+      overlay.classList.remove("hidden");
+
+      // 1. UI 1 Centered Line Feedback Popup
+      if (state.modal.flow === "feedback") {
+        const lid = state.modal.lineId;
+        slot.innerHTML = `
+          <div class="feedback-popup-card">
+            <div class="popup-header">
+              <h3 class="popup-title">Feedback</h3>
+              <button class="hunk-btn" onclick="closeModal()">✕</button>
+            </div>
+
+            <button
+              class="inaccurate-btn ${state.feedbackInaccurateOpen ? 'active' : ''}"
+              onclick="toggleInaccurateNote()"
+            >
+              Inaccurate
+            </button>
+
+            ${state.feedbackInaccurateOpen ? `
+              <div class="note-drawer">
+                <input id="inaccurateNoteInput" type="text" placeholder="Optional note..." />
+                <button class="hunk-btn accept" onclick="submitInaccurateLine('${lid}')">Apply</button>
+              </div>
+            ` : ""}
+
+            <div class="difficulty-box">
+              <label>
+                <span>make it:</span>
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="3"
+                step="1"
+                value="${state.feedbackSliderVal}"
+                style="width:100%;"
+                class="tactile-slider"
+                onchange="onLineDifficultySlide('${lid}', this.value)"
+              />
+              <div class="slider-Scale">
+                <span>Simpler</span>
+                <span>Balanced</span>
+                <span>Formal</span>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // 2. UI 2 Centered POPUP Questions (Pretest & Post-Submit Review)
+      const list = state.modal.flow === "pretest" ? PRETEST_QUESTIONS : REVIEW_QUESTIONS;
+      const item = list[state.modal.idx];
+      const currentAns = state.modal.answers[state.modal.idx] || "";
+
+      slot.innerHTML = `
+        <div class="question-popup-card">
+          <div class="popup-header">
+            <span class="q-step-kicker">${escapeHtml(item.title)}</span>
+          </div>
+
+          <div class="q-prompt" id="modalQuestionPrompt">${formatMd(item.prompt)}</div>
+
+          <textarea
+            id="modalAnswerInput"
+            class="q-answer-box"
+            placeholder="User Answer Here"
+            onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); nextModalQuestion(); }"
+          >${escapeHtml(currentAns)}</textarea>
+
+          <div class="q-footer">
+            <span></span>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <button class="skip-link" onclick="skipModalQuestion()">skip</button>
+              <button class="switcher-btn" style="background:var(--ink); color:var(--paper-elevated);" onclick="nextModalQuestion()">
+                ${state.modal.idx + 1 < list.length ? "Next →" : "Done →"}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      typesetMath(slot);
+      setTimeout(() => {
+        const inp = document.getElementById("modalAnswerInput");
+        if (inp) inp.focus();
+      }, 40);
+    }
+
+    function renderTelemetry() {
+      const pre = document.getElementById("telemetryPre");
+      if (pre && state.cornerOpen) {
+        pre.textContent = JSON.stringify(state.telemetry, null, 2);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderAll();
+    });
+  </script>
+</body>
+</html>
