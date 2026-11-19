@@ -100,7 +100,7 @@ $$\Pr[\tau' = \text{Tag}(K,m') \mid \tau = \text{Tag}(K,m)] \leq \varepsilon$$
 * $\mathcal{A} \to m \in \mathcal{M} \to \mathcal{C}$
 * $\mathcal{A} \gets \tau = \text{Tag}(k,m) \gets \mathcal{C}$
 * $\mathcal{A} \to m', \tau' \to \mathcal{C}$
-* $\mathcal{A} wins (\text{WIN}) if $m' \neq m$ and $\text{Tag}(k,m')=\tau'$
+* $\mathcal{A} wins (\text{WIN})$ if $m' \neq m$ and $\text{Tag}(k,m')=\tau'$
 
 ```mermaid
 sequenceDiagram
@@ -117,10 +117,12 @@ sequenceDiagram
 > [!warning] Exam trap: $\tau'$ vs. $\tau$ in the MAC game #gemini
 > The winning condition checks $\text{Tag}(k,m') = \tau'$ (the **forged** tag $\tau'$, not the old $\tau$) together with $m' \neq m$ (replaying $(m,\tau)$ does not count as a forgery).
 
+how to construct a MAC? use hash functions.
+
 **definition**: a family $\mathcal{H} = \{ h_{k}: \mathcal{M} \to \mathcal{T} \}_{k\in \mathcal{K}}$ is **pairwise independent** if for every $m \neq m'$ then $(h(K,m), h(K,m'))$ is uniform over $\mathcal{T}^2$.
 * $\mathcal{T}^2 = \mathcal{T} \times \mathcal{T}$ (so $\forall \tau, \tau' \in \mathcal{T}: \Pr[h_K(m)=\tau \land h_K(m')=\tau'] = \frac{1}{|\mathcal{T}|^2}$).
 * with $K$ uniform over $\mathcal{K}$, each $h_K(m)$ is also individually uniform over $\mathcal{T}$.
-* (source, gemini) if not uniform over $\mathcal{T}^2$, either single outputs $h_K(m)$ are biased or $h_K(m')$ depends on $h_K(m)$, letting Eve predict some $\tau'$ from $(m,\tau)$ with prob. $> \frac{1}{|\mathcal{T}|}$ (not simply $h_{k} = h_{k'}$). #gemini
+* if not uniform over $\mathcal{T}^2$, either single outputs $h_K(m)$ are biased or $h_K(m')$ depends on $h_K(m)$, letting Eve predict some $\tau'$ from $(m,\tau)$ with prob. $> \frac{1}{|\mathcal{T}|}$ (not simply $h_{k} = h_{k'}$). #gemini
 
 **so we want**: $\text{Tag}(k,m)=h(k,m)=h_{k}(m)$ (gives a one-time $\frac{1}{|\mathcal{T}|}$-statistically secure MAC).
 

@@ -1,4 +1,4 @@
-**previous lecture**: [[lez. 7]] — **next lecture**: [[lez. 10]] — **homeworks**: [[lez. 8 hm]] #gemini
+**previous lecture**: [[lez. 7]] — **next lecture**: [[1o anno M/distributed cocks/lez. 10]] — **homeworks**: [[lez. 8 hm]] #gemini
 
 # alive - leader election
 how to know who is alive?

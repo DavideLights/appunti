@@ -89,7 +89,7 @@ graph LR
 	* for every $m \in \mathcal{M}$
 	* for every $c \in \mathcal{C}$ with $\Pr[C = c] > 0$
 * with $\Pr[M=m]$, **a priori probability**: probability that the message sent by Alice is $m$, even before Alice **wakes up**
-* $\Pr[M=m] = \Pr[M = m \mid C=c]$.
+* **perfect secrecy holds iff**: $\Pr[M=m] = \Pr[M = m \mid C=c]$.
 * with $\Pr[M=m \mid C=c]$, **a posteriori probability**: probability that the plaintext is $m$ given $c$.
 	* ciphertext tells us nothing about the plaintext
 
@@ -98,10 +98,13 @@ graph LR
 **thm**: the following statements are equivalent:
 1. perfect secrecy
 2. $M, C$ independent distributions, $I(M; C)=0$
-	1. $\forall m \in \mathcal{M}, \forall c \in \mathcal{C}: \Pr[M=m \land C=c] = \Pr[M=m]\cdot\Pr[C=c]$, so knowing $C$ gives zero mutual information on $M$ (no statistical relation between $M$ and $C$). #gemini
+	1. $\forall m \in \mathcal{M}, \forall c \in \mathcal{C}: \Pr[M=m \land C=c] = \Pr[M=m]\cdot\Pr[C=c]$
+	2. **means that**:  knowing $C$ gives zero mutual information on $M$ 
+	3. **statistically**: no relation between $M$ and $C$). 
 3. $\forall m,m' \in \mathcal{M}, \forall c \in \mathcal{C}$ then $\Pr[\text{Enc}(K,m)=c] = \Pr[\text{Enc}(K,m')=c]$
-	1. every $m \in \mathcal{M}$ has the same probability of **producing** the ciphertext $c$.
-	2. prob. taken over $K$ u.r. (random over $\mathcal{K}$)
+	1. **meaning 1**: every $m \in \mathcal{M}$ has the same probability of **producing** the ciphertext $c$.
+	2. **meaning 2**: over $K$, two different messages must have the same $\text{Pr}$ to produce $c$.
+	3. prob. taken over $K$ u.r. (random over $\mathcal{K}$)
 
 > [!warning] Exam trap: $\Pr[\text{Enc}(K,m)=c]$ vs. $\Pr[M=m \mid C=c]$ #gemini
 > Property 3 means every $m$ is equally likely to **encrypt to $c$** under uniform $K$. It does **not** mean every $m$ has the same probability of *being* the original plaintext given $c$: $\Pr[M=m \mid C=c] = \Pr[M=m]$ still depends on the prior distribution $M$ (uniform only if $M$ itself is uniform).
@@ -139,18 +142,22 @@ graph LR
 
 **proof thm**:
 * $1 (\text{perfect secrecy}) \implies 2 (I(M; C)=0)$:
-	* **by perfect secrecy** (for $\Pr[C=c] > 0$): $\Pr[M=m] = \Pr[M=m \mid C=c]$
-	* **by def. of cond. prob.**: $\Pr[M=m \mid C=c] = \frac{\Pr[M=m \land C=c]}{\Pr[C=c]}$
-	* $\implies \Pr[M=m \land C=c] = \Pr[M=m]\cdot\Pr[C=c]$ (also holds trivially as $0=0$ if $\Pr[C=c]=0$)
+	* **by perfect sec**, for $\text{Pr[C=c]}>0$: $\text{}$$\textcolor{blue}{\Pr[M=m]} = \Pr[M=m \mid C=c]$
+	* **by def. of cond. prob.**: $\Pr[M=m \mid C=c] = \textcolor{red}{\frac{\Pr[M=m \land C=c]}{\Pr[C=c]}}$
+	* **so**: $\textcolor{blue}{\text{Pr}[M=m]}= \textcolor{red}{\frac{\Pr[M=m \land C=c]}{\Pr[C=c]}}$
+	* $\text{multiply both sides by Pr[C=c]}$
+	* $\implies \textcolor{blue}{\Pr[M=m]}\cdot\Pr[C=c] =  \textcolor{red} {\frac{\Pr[M=m \land C=c]}{\text{Pr[C=c]}}}\cdot\Pr[C=c]$ 
+	* $\text{Pr}[M=m] \Pr[C=c] = \text{Pr}[M=m \land C=c]$
 	* So $M$ and $C$ are **independent** by def. of independence. $\square$
 	* **Note**: $I(M; C)=0 \equiv M, C \text{ have independent distributions}$ #gemini
 * $2 (I(M; C)=0) \implies 3 (\Pr[\text{Enc}(K,m)=c] = \Pr[\text{Enc}(K,m')=c])$:
-	* $(\text{2.1}) \; \Pr[\text{Enc}(K,m)=c] = \Pr[\text{Enc}(K,M) = c \mid M = m]$ (since $K$ and $M$ are independent)
-	* $\text{Enc}(K,M) = C$. $C$ is a distribution over $K,M$ obtained applying $\text{Enc}$ deterministic.
+	* $(\text{2.1}) \; \textcolor{red}{\Pr[\text{Enc}(K,m)=c]} = \Pr[\text{Enc}(K,M) = c \mid M = m]$ (since $K$ and $M$ are independent)
+	* $\text{Enc}(K,M) = C$. 
+		* **means that**: $C$ is a distribution over $K,M$ obtained applying $\text{Enc}$ deterministic.
 	* $(\text{2.1}) = \Pr[C=c \mid M=m]$
-	* $= \Pr[C=c]$ (since $M$ and $C$ are independent by hp. 2)
-	* **by the same steps**, choosing $m'$: $\Pr[\text{Enc}(K,m')=c] = \Pr[C=c]$
-	* **we conclude that**: $\Pr[\text{Enc}(K,m')=c] = \Pr[\text{Enc}(K,m)=c]$
+	* $\textcolor{red}{\Pr[\text{Enc}(K,m)=c]}= \textcolor{orange}{\Pr[C=c]}$ (since $M$ and $C$ are independent by hp. 2)
+	* **by the same steps**, choosing $m'$: $\textcolor{blue}{\Pr[\text{Enc}(K,m')=c]} = \textcolor{orange}{\Pr[C=c]}$
+	* **we conclude that**: $\textcolor{blue}{\Pr[\text{Enc}(K,m')=c]} = \textcolor{red}{\Pr[\text{Enc}(K,m)=c]}$
 	* $\square$
 
 > [!warning] Exam trap: $K \perp M$ vs. $M \perp C$ #gemini
@@ -158,7 +165,7 @@ graph LR
 
 * $3 (\Pr[\text{Enc}(K,m)=c] = \Pr[\text{Enc}(K,m')=c]) \implies 1 (\text{perfect secrecy})$:
 
-$3 \implies 1$, we first show that $\Pr[C=c \mid M=m] = \Pr[C=c]$:
+$3 \implies 1$, we first show that $\Pr[C=c \mid M=m] = \Pr[C=c]$, here's were we use **property 3**.
 * $\Pr[C=c] = \sum_{m'} \Pr[C=c \land M = m'] = \sum_{m'} \Pr[C=c \mid M=m'] \cdot \Pr[M=m']$
 * $= \sum_{m'} \Pr[\text{Enc}(K,M)=c \mid M=m'] \cdot \Pr[M=m']$
 	* switch $C$ with $\text{Enc}(K,M)$
@@ -173,9 +180,13 @@ $3 \implies 1$, we first show that $\Pr[C=c \mid M=m] = \Pr[C=c]$:
 > [!warning] Exam trap: probabilities vs. deterministic outputs #gemini
 > Property 3 states $\Pr[\text{Enc}(K,m')=c] = \Pr[\text{Enc}(K,m)=c]$ (over random $K$), **not** $\text{Enc}(k,m') = \text{Enc}(k,m)$ for a fixed $k$ (which would break decryption correctness when $m \neq m'$).
 
-$3 \implies 1$ we can continue (for $\Pr[C=c] > 0$):
-* **by Bayes**: $\Pr[M=m \mid C=c]\cdot \Pr[C=c]$
-	* we can rewrite $\Pr[M=m \land C=c]$ using $\Pr[C \mid M]$
-* $= \Pr[M=m \land C=c] = \Pr[C=c \mid M=m] \cdot \Pr[M=m]$
+$3 \implies 1$ we can continue (for $\Pr[C=c] > 0$), we work on **property 1**'s statement.
+* **by Bayes**: $\Pr[M=m \land C=c]$
+	* $=\Pr[M=m \mid C=c]\cdot \Pr[C=c]$
+	* $= \Pr[C=c|M=m]\cdot \Pr[M=m]$
+	* we can rewrite $\Pr[M=m \land C=c]$ using $\Pr[C \mid M]$ or $\Pr[M|C]$
+* So by bayes, we choose to use: $\Pr[M=m \land C=c] = \Pr[C=c|M=m] \cdot \Pr[M=m]$
+* divide by $\Pr[C=c|M=m]$
+* obtain: $\frac{\Pr[M=m\land C=c]}{\Pr[C=c|M=m]}=\Pr[M=m]$
+* apply too the above: $\Pr[M=m \land C=c] = \Pr[M=m|C=c]\Pr[C=c]$
 * $\Pr[M=m] = \frac{\Pr[M=m \mid C=c] \cancel{\Pr[C=c]}}{\cancel{\Pr[C=c \mid M=m]}} = \Pr[M=m \mid C=c]$
-* $\square$

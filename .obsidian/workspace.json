@@ -4,24 +4,59 @@
     "type": "split",
     "children": [
       {
-        "id": "0f0cd7b9511efef3",
+        "id": "16d38e5ecaa9756f",
         "type": "tabs",
         "children": [
           {
-            "id": "5c0b80dbefbbe794",
+            "id": "13c21901f9f61c99",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI-SLOP/doc.md",
+                "file": "1o anno M/cockgraphy/study session/resume 18 11 26.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "doc"
+              "title": "resume 18 11 26"
             }
           }
         ]
+      },
+      {
+        "id": "42e774c02c16d5f1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "19a7facb00532727",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1o anno M/cockgraphy/lez. 1.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "lez. 1"
+            }
+          },
+          {
+            "id": "7070dcec2d05afe1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1o anno M/cockgraphy/lez. 2.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "lez. 2"
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -55,7 +90,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#group",
+                "query": "tag:#gemini",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -83,7 +118,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -214,53 +250,54 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "5c0b80dbefbbe794",
+  "active": "13c21901f9f61c99",
   "lastOpenFiles": [
-    "AI-SLOP/ux-mockup-plan.md",
-    "AI-SLOP/product-spec.md",
-    "1o anno M/cockgraphy/lez. 7.md",
-    "1o anno M/cockgraphy/lez. 9.md",
+    "1o anno M/cockgraphy/lez. 2.md",
+    "1o anno M/cockgraphy/study session/resume 18 11 26.md",
+    "1o anno M/cockgraphy/lez. 1.md",
+    "1o anno M/cockgraphy/study session",
+    "1o anno M/piano di studi.md",
+    "1o anno M/cockgraphy/lez. 13 part 1.md",
+    "1o anno M/cockgraphy/lez. 13 part 2.md",
     "1o anno M/cockgraphy/lez. 12 ??.md",
-    "1o anno M/cockgraphy/lez. 12.PC.md",
-    "AI-SLOP/UIMockup.excalidraw.md",
-    "AI-SLOP/ui-vector-preview.svg",
-    "status-skipped-svgrepo-com.svg",
-    "toggle-square-svgrepo-com.svg",
-    "AI-SLOP/doc.md",
-    "AI-SLOP/mockup.html",
-    "AI-SLOP/doc-raw.md",
+    "1o anno M/cockgraphy/lez. 8.md",
+    "1o anno M/cockgraphy/lez. 9.md",
+    "1o anno M/cockgraphy/lez. 10.md",
+    "1o anno M/cockgraphy/lez. 6.md",
+    "1o anno M/distributed cocks/lez. 16 part 2.md",
+    "Senza nome 4.md",
+    "1o anno M/distributed cocks/lez. 16 part 1.md",
+    "1o anno M/asdf.md",
+    "1o anno M/asd.md",
+    "1o anno M/cockgraphy/lez. 7.md",
+    "1o anno M/network cocks/2. transport/lez. 4.md",
     "hackaton-workflow/workflow.md",
+    "ai sbergz competition/implementation pla.md",
+    "ai sbergz competition/Purpouse And What To Do.md",
+    "toggle-square-svgrepo-com.svg",
+    "status-skipped-svgrepo-com.svg",
+    "kubernetes/1. intro.md",
+    "kubernetes",
     "hackaton-workflow/Senza nome.md",
     "hackaton-workflow",
-    "AI-SLOP/UI spec.md",
-    "AI-SLOP/implementation pla.md",
-    "AI-SLOP/SBERS.md",
-    "AI-SLOP/Purpouse And What To Do.md",
-    "1o anno M/asdf.md",
-    "1o anno M/distributed cocks/lez. 7.md",
-    "AI-SLOP",
-    "Pasted image 20261113151132.png",
-    "Pasted image 20261113151121.png",
-    "Pasted image 20261113145005.png",
-    "1o anno M/stacocks/websites/hm6",
-    "1o anno M/stacocks/hm6.md",
-    "1o anno M/network cocks/3. labs/lab. 5.md",
-    "1o anno M/network cocks/3. labs/Kathara VPN.pdf",
-    "1o anno M/network cocks/3. labs",
-    "1o anno M/cockgraphy/lez. 5.md",
-    "1o anno M/cockgraphy/lez. 4.md",
-    "1o anno M/cockgraphy/lez. 3.md",
-    "1o anno M/cockgraphy/lez. 2.md",
-    "1o anno M/cockgraphy/lez. 8.md",
-    "1o anno M/cockgraphy/lez. 6.md",
+    "Senza nome 3.md",
     "Pasted image 20261112153949.png",
     "Pasted image 20261112152537.png",
     "Pasted image 20261112132136.png",
     "Pasted image 20261112085426.png",
-    "1o anno M/stacocks/websites/hm5",
-    "kubernetes",
-    "1o anno M/stacocks/websites/publish.sh",
-    "1o anno M/stacocks/websites/hm4/style.css",
+    "Pasted image 20261112085408.png",
+    "AI-SLOP/ux-mockup-plan.md",
+    "AI-SLOP/ui-vector-preview.svg",
+    "AI-SLOP/product-spec.md",
+    "AI-SLOP/mockup.html",
+    "AI-SLOP",
+    "ai sbergz competition",
+    "Pasted image 20261113151132.png",
+    "Pasted image 20261113151121.png",
+    "1o anno M/stacocks/websites/hm6/script.js",
+    "1o anno M/stacocks/websites/hm6/index.html",
+    "1o anno M/stacocks/websites/hm6/style.css",
+    "1o anno M/stacocks/websites/hm6",
     "Senza nome.canvas"
   ]
 }

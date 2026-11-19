@@ -36,6 +36,7 @@
 	2. Step2: use `preImpl.md` and give UI guidelines to produce `UIMockUpImplementationPlan.md`
 		1. Tell the AI to ASK you questions
 		2. Here you'll define how user interacts with the software and identify
+		3. Someone could produce a "pre" mock up while Step 1 using Excalidraw
 	3. Step 2.1: optional, ask AI to produce the UIMockup.
 	4. Step3: if you have time do the same to produce `ExtendedImplementationPlan.md`
 		1. Here you'll define how the ENTIRE software works
