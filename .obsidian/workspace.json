@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cybersec-htb/olicyber/wireshark.md",
+                "file": "1o anno M/network cocks/3. labs/lez. 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "wireshark"
+              "title": "lez. 1"
             }
           }
         ]
@@ -83,7 +83,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242
+    "width": 218.12369918823242,
+    "collapsed": true
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -216,6 +217,10 @@
   },
   "active": "5c0b80dbefbbe794",
   "lastOpenFiles": [
+    "1o anno M/cockgraphy/lez. 1.md",
+    "1o anno M/network cocks/3. labs/lez. 1.md",
+    "3o anno/critto/1. cifrari e sicurezza perfetta.md",
+    "cybersec-htb/olicyber/wireshark.md",
     "Senza nome 4.md",
     "1o anno M/network cocks/2. transport/lez. 4.md",
     "1o anno M/distributed cocks/lez. 16 part 2.md",
@@ -227,7 +232,6 @@
     "1o anno M/cockgraphy/lez. 10.md",
     "Pasted image 20261119163646.png",
     "cybersec-htb/olicyber/TLS.md",
-    "cybersec-htb/olicyber/wireshark.md",
     "cybersec-htb/machine-enigma.md",
     "cybersec-htb/olicyber/TLS",
     "cybersec-htb/Senza nome",
@@ -249,10 +253,7 @@
     "AI-SLOP/mockup.html",
     "AI-SLOP/doc-raw.md",
     "hackaton-workflow/workflow.md",
-    "hackaton-workflow/Senza nome.md",
     "hackaton-workflow",
-    "AI-SLOP/UI spec.md",
-    "AI-SLOP/implementation pla.md",
     "AI-SLOP",
     "Pasted image 20261113151132.png",
     "Pasted image 20261113151121.png",

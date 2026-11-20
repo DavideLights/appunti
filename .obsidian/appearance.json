@@ -1,6 +1,7 @@
 {
-  "cssTheme": "Typomagical",
+  "cssTheme": "Minimal",
   "baseFontSize": 22,
   "theme": "moonstone",
-  "showRibbon": true
+  "showRibbon": true,
+  "accentColor": "#403d59"
 }
