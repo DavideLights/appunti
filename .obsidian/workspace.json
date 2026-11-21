@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/network cocks/3. labs/lez. 1.md",
+                "file": "cybersec-htb/machine-enigma.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 1"
+              "title": "machine-enigma"
             }
           }
         ]
@@ -83,8 +83,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242,
-    "collapsed": true
+    "width": 218.12369918823242
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -217,11 +216,32 @@
   },
   "active": "5c0b80dbefbbe794",
   "lastOpenFiles": [
+    "cybersec-htb/nmap.md",
+    "cybersec-htb/redis.md",
+    "cybersec-htb/mariadb.md",
+    "cybersec-htb/windows/smb.md",
+    "cybersec-htb/gobuster.md",
+    "cybersec-htb/machine-enigma.md",
+    "cybersec-olicyber/web security.md",
+    "cybersec-olicyber/network security (wireshark).md",
+    "cybersec-olicyber/TLS.md",
+    "Senza nome 6.md",
+    "olicyber/web security",
+    "Pasted image 20261121104340.png",
+    "Pasted image 20261121103703.png",
+    "Pasted image 20261121102412.png",
+    "1o anno M/network cocks/3. labs/lab. 2.md",
+    "Pasted image 20261121014200.png",
+    "Pasted image 20261121002822.png",
+    "Senza nome 5.md",
+    "Pasted image 20261121002208.png",
+    "Pasted image 20261121002159.png",
+    "Pasted image 20261121001207.png",
+    "Pasted image 20261121000156.png",
+    "1o anno M/network cocks/3. labs/lab. 1.md",
     "Pasted image 20261120180619.png",
     "1o anno M/cockgraphy/lez. 1.md",
-    "1o anno M/network cocks/3. labs/lez. 1.md",
     "3o anno/critto/1. cifrari e sicurezza perfetta.md",
-    "cybersec-htb/olicyber/wireshark.md",
     "Senza nome 4.md",
     "1o anno M/network cocks/2. transport/lez. 4.md",
     "1o anno M/distributed cocks/lez. 16 part 2.md",
@@ -231,38 +251,17 @@
     "1o anno M/cockgraphy/lez. 13 part 2.md",
     "1o anno M/cockgraphy/lez. 13 part 1.md",
     "1o anno M/cockgraphy/lez. 10.md",
-    "Pasted image 20261119163646.png",
-    "cybersec-htb/olicyber/TLS.md",
-    "cybersec-htb/machine-enigma.md",
     "cybersec-htb/olicyber/TLS",
     "cybersec-htb/Senza nome",
-    "cybersec-htb/olicyber",
-    "cybersec-htb/nmap/nmap sheet.md",
+    "cybersec-olicyber",
     "cybersec-htb/machine-enigma/Senza nome.md",
     "cybersec-htb/machine-enigma",
     "AI-SLOP/doc.md",
     "AI-SLOP/ux-mockup-plan.md",
-    "AI-SLOP/product-spec.md",
-    "1o anno M/cockgraphy/lez. 7.md",
-    "1o anno M/cockgraphy/lez. 9.md",
-    "1o anno M/cockgraphy/lez. 12 ??.md",
-    "1o anno M/cockgraphy/lez. 12.PC.md",
-    "AI-SLOP/UIMockup.excalidraw.md",
-    "AI-SLOP/ui-vector-preview.svg",
-    "status-skipped-svgrepo-com.svg",
-    "toggle-square-svgrepo-com.svg",
     "AI-SLOP/mockup.html",
-    "AI-SLOP/doc-raw.md",
     "hackaton-workflow",
     "AI-SLOP",
-    "Pasted image 20261113151132.png",
-    "Pasted image 20261113151121.png",
-    "Pasted image 20261113145005.png",
     "1o anno M/stacocks/websites/hm6",
-    "1o anno M/network cocks/3. labs/Kathara VPN.pdf",
-    "Pasted image 20261112153949.png",
-    "Pasted image 20261112152537.png",
-    "Pasted image 20261112132136.png",
     "Senza nome.canvas"
   ]
 }
