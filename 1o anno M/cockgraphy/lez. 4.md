@@ -45,9 +45,9 @@ Let's focus on $\sum_{y \in \mathcal Y} q_{y}^2$:
 * $\to \text{SD}(Y;U) \leq \frac{1}{2}\sqrt{\frac{4 \varepsilon^2}{|\mathcal Y|} |\mathcal Y|} = \varepsilon \;\; \square$
 
 ## Computational Security
-We need to find a way to deploy a provably secure and at the same time efficient crypto system.
+**why**? We need to find a way to deploy a provably secure and at the same time efficient crypto system.
 
-assumptions:
+**how**, here are the assumptions:
 1. $\text{Adv}$ is an "efficient" machine
 2. There are "hard" problems that an "efficient" machine cannot solve
 
@@ -55,7 +55,7 @@ assumptions:
 * $\text{Adv} \equiv \text{Turing Machine}$, an "efficient" **TM**
 	* "efficient" = limited running time = *polynomial time*.
 * We measure $\#$ of steps using the notation $O(n^c)$ (or $\text{poly}(\lambda)$ in the security parameter $\lambda$) #gemini
-* Additionally: $\text{Adv}$ can generate arbitrary (*polynomial*) amount of randomness.
+* **random generation**: $\text{Adv}$ can generate arbitrary (*polynomial*) amount of randomness.
 
 > [!note] What "arbitrary (polynomial) amount of randomness" means #gemini
 > $\text{Adv}$ has an extra **random tape** of independent uniform bits (or can flip a fair coin at each step). Since its running time is bounded by $O(n^c)$, it can read at most $\text{poly}(n)$ random bits. #gemini
@@ -99,6 +99,7 @@ in other words:
 $$
 \text{Pr}[\text{WIN}] = \Pr_{x \gets \mathcal{X}}\big[f(x') = y \;:\; y = f(x),\; x' \gets \mathcal{A}(1^\lambda, y)\big] \leq \text{negl}(\lambda)
 $$
+> so you know that $f(x)=y$, adversary chooses for you $x'$. you have to compute $y$ s.t. $f(x')=y$
 
 **attack game** ($\text{Game}_{\mathcal{A}, f}^{\text{owf}}(\lambda)$): 
 * Challenger $\mathcal C$ samples $x \gets \mathcal X$ u.a.r., computes $y = f(x)$, and sends $(1^\lambda, y \in \mathcal Y)$ to $\mathcal A$ #gemini
@@ -116,11 +117,15 @@ sequenceDiagram
 	Note over C: WIN = 1 iff f(x') == y
 ```
 
+**gemini**: why sends $1^\lambda$
+
 * **candidate OWFs**: Multiplication/Factoring $f_{\text{mult}}(p,q) = p \cdot q$; Subset-Sum $f(\vec{a}, b) = (\vec{a}, \sum b_i a_i \bmod 2^\lambda)$; Modular Exponentiation / Discrete Log $f_{p,g}(x) = g^x \bmod p$. #gemini
 
 **def. negligible**: $\varepsilon(\lambda)$ is negligible ($\varepsilon \in \text{negl}(\lambda)$) iff:
 * $\varepsilon(\lambda) = O\left( \frac{1}{p(\lambda)} \right)$ 
 * for every positive polynomial $p(\lambda) = \text{poly}(\lambda)$ (i.e. $\forall c \in \mathbb{N},\; \exists \lambda_0 \in \mathbb{N} : \forall \lambda > \lambda_0,\; \varepsilon(\lambda) < \lambda^{-c}$) #gemini
+
+gemini: how does $\mathcal E(\lambda)$ grow/decrease over $\lambda$ if it is negligible?
 
 **examples & closure of $\text{negl}(\lambda)$:**
 * $2^{-\lambda} = \text{negl}(\lambda)$ (also $2^{-\sqrt{\lambda}}, \lambda^{-\log \lambda} \in \text{negl}(\lambda)$, whereas $\lambda^{-c} \notin \text{negl}(\lambda)$) #gemini

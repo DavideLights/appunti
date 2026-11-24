@@ -73,9 +73,9 @@ graph LR
 **def. secure encryption for symmetric encryption**: ciphertext $c$ leaks no additional information about plaintext $m$, even against an unbounded adversary.
 * **Shannon**: gives an information-theoretic definition independent from any adversary $\mathcal{A}$ (and its computational resources): observing $c$ does not change the a priori probability of $m$.
 
-> **book**: regardless of any information an attacker already has, a ciphertext should leak no additional information about the plaintext. #gemini
+> **book**: regardless of any information an attacker already has, a ciphertext should leak no additional information about the plaintext. 
 
-> **book**, interesting notes about proving security: a proof of security is always relative to the definition and assumptions considered. So a sec. proof might not imply real world security. #gemini
+> **book**, interesting notes about proving security: a proof of security is always relative to the definition and assumptions considered. So a sec. proof might not imply real world security. 
 
 **def. perfect secrecy assumptions**:
 * Let $M$ be a distribution on $\mathcal{M}$ (independent of $K$). Definition holds for any distribution

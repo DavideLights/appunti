@@ -25,9 +25,6 @@ $$
 **Our goal**: we want to design a system that enables $A,B$ to share a key of length independent of the length of $m \in \mathcal{M}$. #gemini
 
 **Adversary**: with $k \gets \mathcal{K}$ u.r. (unknown to $\mathcal{A}$), $\text{Game}(b,m_{0},m_{1});\; b\in \{ 0,1 \},\; m_{0},m_{1}\in \mathcal{M}$
-* $\mathcal{A} \gets c = \text{Enc}(k,m_{b}) \gets \mathcal{C}$
-* $\mathcal{A} \to b' \in \{ 0,1 \} \to \mathcal{C}$
-
 ```mermaid
 sequenceDiagram
 	participant A as Adversary A
