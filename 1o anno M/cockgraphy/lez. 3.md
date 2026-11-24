@@ -174,6 +174,8 @@ $$
 k \geq \ell + \underbrace{2\log\left( \frac{1}{\varepsilon} \right) - 2}_{\text{min-entropy gap}}
 $$
 
+> **bound**: so $k$ bounding $X$ source of randomness must be at least higher than $\ell$!
+
 > [!warning] Exam trap: $-2$ is outside the $\log$! #gemini
 > Write $2\log(1/\varepsilon) - 2$ (not $2\log(1/\varepsilon - 2)$): we pay an entropy loss of $\approx 2\log(1/\varepsilon)$ bits so that $2^{\ell - k} \leq 2^{2 - 2\log(1/\varepsilon)} = 4\varepsilon^2$ in the proof below. 
 
@@ -204,6 +206,8 @@ $$
 		1. $\text{Pr[X=X]} \leq 2^{-k}$, because $H_{\infty}(X) \geq k$.
 		2. $\text{Pr}[h(S,X)=h(S,X') \land X\neq X'] \leq 2^{-l}$
 * $\dots \leq 2^{-d} \cdot \left(2^{-k} + 2^{-\ell}\right)$
+	* **move**: $2^{-\ell}$ out of the parenthesis
+	* **do not move**: $2^k$
 * $= \frac{1}{2^{d+\ell}}\left(2^{\ell - k} + 1\right) \leq$ 
 	*  using $\ell - k \leq 2 - 2\log(1/\varepsilon)$ #gemini
 	* now we want to use the lemma...

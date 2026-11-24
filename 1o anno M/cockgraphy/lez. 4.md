@@ -9,7 +9,8 @@
 * Ass: $\text{Col}(Y) \leq \frac{1}{|\mathcal Y|}(1+4 \varepsilon^2)$
 * **def. Statistical Distance**: $\text{SD}(Y,U) = \frac{1}{2} \sum_{y\in \mathcal Y} |\text{Pr}[Y=y]-\frac{1}{|\mathcal Y|}|$
 * let $q_{y} = \text{Pr}[Y=y]-\frac{1}{|\mathcal Y|}$
-* also let 
+	* **meaning**: $q_{y}$ is binary variable that is on when $y$ has a positive contribution in $SD(Y,U)$
+* also let  
 $$
 s_{y} = \begin{cases}
 +1 \text{ if } q_{y} \geq 0 \\
@@ -24,7 +25,7 @@ $$
 * From the **def** of Statistical Distance: $\text{SD}(Y,U) = \frac{1}{2} \sum_{y\in\mathcal Y} q_{y}s_{y}$ (since $|q_y| = q_y s_y$) #gemini
 * $\text{SD}(Y,U) = \frac{1}{2}\langle\vec{q}, \vec{s}\rangle$
 * **by cauchy schwarz**: 
-$$\text{SD}(Y,U) \leq \frac{1}{2}\sqrt{ \langle\vec{q}, \vec{q}\rangle\underbrace{\langle\vec{s}, \vec{s}\rangle}_{\sum_{y\in \mathcal Y} s_{y}^2 = |\mathcal Y|} }$$
+$$\text{SD}(Y,U) = \frac{1}{2}\langle\vec{q}, \vec{s}\rangle  \leq \frac{1}{2}\sqrt{ \langle\vec{q}, \vec{q}\rangle\underbrace{\langle\vec{s}, \vec{s}\rangle}_{\sum_{y\in \mathcal Y} s_{y}^2 = |\mathcal Y|} }$$
 
 $$
  = \frac{1}{2} \sqrt{ \sum_{y\in \mathcal Y} q^2_{y} |\mathcal Y|}
@@ -36,10 +37,10 @@ $$
 Let's focus on $\sum_{y \in \mathcal Y} q_{y}^2$:
 * $\sum_{y \in \mathcal Y} q_{y}^2 = \sum_{y \in \mathcal Y}\left( \text{Pr}[Y=y] - \frac{1}{|\mathcal Y|} \right)^2 =$
 	* we square $q_{y} = \text{Pr}[Y=y]-\frac{1}{|\mathcal Y|}$
-* $\sum_{y\in \mathcal Y}\left( \text{Pr}[Y=y]^2 + \frac{1}{|\mathcal Y|^2}-2 \frac{\text{Pr}[Y=y]}{|\mathcal Y|} \right) =$
-	* $\sum_{y \in \mathcal Y} \frac{1}{|\mathcal Y|^2} = |\mathcal Y| \cdot \frac{1}{|\mathcal Y|^2} = \frac{1}{|\mathcal Y|}$ #gemini
-	* $\sum_{y \in \mathcal Y} 2 \frac{\text{Pr}[Y=y]}{|\mathcal Y|}=\frac{2}{|\mathcal Y|}$ because $\sum_{y\in \mathcal Y} \text{Pr}[Y=y] =1$
-* $\text{Col}(Y) + \frac{1}{|\mathcal Y|} - \frac{2}{|\mathcal Y|} =$
+* $\sum_{y\in \mathcal Y}\left( \textcolor{green}{\text{Pr}[Y=y]^2} + \textcolor{red}{\frac{1}{|\mathcal Y|^2}}- \textcolor{blue}{2 \frac{\text{Pr}[Y=y]}{|\mathcal Y|}} \right) =$
+	* $\textcolor{red}{\sum_{y \in \mathcal Y} \frac{1}{|\mathcal Y|^2}} = |\mathcal Y| \cdot \frac{1}{|\mathcal Y|^2} = \frac{1}{|\mathcal Y|}$ #gemini
+	* $\textcolor{blue}{\sum_{y \in \mathcal Y} 2 \frac{\text{Pr}[Y=y]}{|\mathcal Y|}}=\frac{2}{|\mathcal Y|}$ because $\sum_{y\in \mathcal Y} \text{Pr}[Y=y] =1$
+* $\textcolor{green}{\text{Col}(Y)} + \textcolor{red}{\frac{1}{|\mathcal Y|}} - \textcolor{blue}{\frac{2}{|\mathcal Y|}} =$
 	* we assumed $\text{Col}(Y) \leq \frac{1}{|\mathcal Y|}(1+4 \varepsilon^2)$
 * $\leq \frac{1+4 \varepsilon^2}{|\mathcal Y|} - \frac{1}{|\mathcal Y|} = \frac{4 \varepsilon^2}{|\mathcal Y|}$
 * $\to \text{SD}(Y;U) \leq \frac{1}{2}\sqrt{\frac{4 \varepsilon^2}{|\mathcal Y|} |\mathcal Y|} = \varepsilon \;\; \square$
