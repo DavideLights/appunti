@@ -42,6 +42,8 @@ $$
 $$
 * by pairwise independence of any $\mathcal{H}$ (not just $h_{a,b}$ in $(3)$): $(h_K(m), h_K(m'))$ is uniform over $\mathcal{T}^2$ (num. $= \frac{1}{|\mathcal{T}|^2}$) and $h_K(m)$ is uniform over $\mathcal{T}$ (den. $= \frac{1}{|\mathcal{T}|}$). $\square$ #gemini
 * **bad news (thm)**: any $t$-time $2^{-\lambda}$-statistically secure MAC has a key of size $(t+1)\cdot \lambda$ (statistical MACs still require key size linear in $t$). #gemini
+	* $t$ time: how many messages can i uthenticate?
+	
 
 **What does the proof mean?**
 * we found out that $\Pr[\tau' = h_{K}(m') \mid \tau = h_{K}(m)] = \frac{1}{|\mathcal T|}$
@@ -59,9 +61,12 @@ two step process:
 2. **expand** extracted data when needed: pseudorandomness (deterministically)
 3. (additionally) **refresh** randomness that you can expand
 
-**goal**: Let $X$ be a source of randomness, we want to define deterministic $\text{Ext}$ s.t. $\text{Ext}(X)$ is uniform.
-* **impossible in general** (e.g. $X = c$ constant): since $\text{Ext}$ is deterministic, $\Pr[X=c]=1 \implies \Pr[\text{Ext}(X)=\text{Ext}(c)]=1$, so the output is fixed and never uniform. #gemini
-* **unpredictable**: we want $X$ to be unpredictable to some extent.
+**goal**: Let $X$ be an **imperfect source of randomness**, we  to define deterministic $\text{Ext}$ s.t. $\text{Ext}(X)$ is **uniform**.
+* **we need $X$ to be random, otherwise** (e.g. $X = c$ constant): since $\text{Ext}$ is deterministic if $\Pr[X=c]=1 \implies \Pr[\text{Ext}(X)=\text{Ext}(c)]=1$, so the output is fixed and never uniform. #gemini
+* **so unpredictable**: we want $X$ to be unpredictable to some extent.
+
+>[!error] from imperfect source to uniform
+> we start from $X$ **IMPERFECT, NOT UNIFORM**, to reach $\text {Ext}(X)$ completely **UNIFORM**
 
 **def. min-entropy**: the min-entropy of $X$ is
 $$H_{\infty}(X) = -\log \max_{x} \Pr[X=x]$$
@@ -75,11 +80,13 @@ $$H_{\infty}(X) = -\log \max_{x} \Pr[X=x]$$
 
 example:
 * Let $X=0^n \to H_{\infty}(X)=0$, its a bad case.
-	* because its a string where $\Pr[X=0\dots0] = 1 \to -\log 1 =0$.
+	* its a distribution where i can only pick the number 0.
+	* so $\Pr[X=0\dots0] = 1 \to -\log 1 =0$.
 * Let $X \equiv U_{n}$ , so $X \gets \{ 0,1 \}^n$ u.a.r. then we get $H_{\infty}(X)=n$
 	* because $\Pr[X=x]=2^{-n}$, so $H_{\infty}(X)= -\log 2^{-n} = n$
+	* **meaning**: of $n$ bits $n$ are random.
 
-Typically: $H_{\infty}(X) \geq k$ for some $k<n$ and we want to extract as much randomness as possible.
+**Typically**: we want $H_{\infty}(X) \geq k$ for some $k<n$ (because $X$ is an imperfect source) and we want to extract as much randomness as possible.
 
 Trying to understand better what it means:
 $$
@@ -89,14 +96,24 @@ $$
 * $p_{max} = \text{Pr}[X=x]$, intuitively, the maximum rate of occourrenc of a value.
 
 
-**thm**: there is no such deterministic $\text{Ext}: \{ 0,1 \}^n \to \{ 0,1 \}$ even if $k=n-1$.
+> [!note] what does actually mean $H_{\infty}(X) \geq k$?
+> No single outcome $x \in \{ 0,1 \}^n$ jas probability $> 2^{-k}$, and this probability is distributed among all the $n$ bits! 
+> 
+> **What you must not say**: $H_{\infty}(X) \geq k \to k$ bits are completely unpredictable
 
-**why do we need this theorem?** if $X$ is almost completely random (ex, an high value like  $k=n-1$, so $H_{\infty}(X) \geq n-1$) then we canno't build $\text{Ext}: \{ 0,1 \}^n \to \{ 0,1 \}$.
+**thm**: there is no such deterministic $\text{Ext}: \{ 0,1 \}^n \to \{ 0,1 \}$ even if $k=n-1$.
+* $k=n-1$ means that $H(\text{Ext}(X)) = n-1$
+* **meaning**: $n-1$ of $n$ bits coming from $\text{Ext}(X)$ are random
+
+**why do we need this theorem?** if $X$ is almost completely random (ex, the best casem an high value like  $k=n-1$, so $H_{\infty}(X) \geq n-1$) then we canno't build $\text{Ext}: \{ 0,1 \}^n \to \{ 0,1 \}$.
+* **note**: seems strange that we cannot build a completley unifrom bit starting from $X$ almost uniform
 
 **proof assumptions**:
 * take any $\text{Ext}: \{ 0,1 \}^n \to \{ 0,1 \}$
 * Let $b \in \{ 0,1 \}$ s.t. $b$ maximizes $|\text{Ext}^{-1}(b)|$
 * **note**: $\text{Ext}^{-1}$ is the set of alle strings in $x \in \{ 0,1 \}^n$ s.t. $\text{Ext}(x) = b$
+
+gemini: draw visually, using few elemnts and few text, here an svg showing such $\text{Ext}$ how it works for the proof.
 
 **proof**:
 * $|\text{Ext}^{-1}(b)| \geq 2^{n-1}$, because its the larger one (we wanted $b$ s.t. maximizes $|\text{Ext}^{-1}(b)|$)
@@ -107,6 +124,9 @@ $$
 	* $\text{max}_{x} \text{Pr}[X_{\text{bad}} = x] \leq 2^{n-1}$
 	* so if $X_{\text{bad}}$ uniform on $\text{Ext}^{-1}(b)$, then $H_{\infty}(X_{\text{bad}}) \geq n-1$
 * So every string in $\text{Ext}^{-1}(b)$ maps to $b$ with $\text{Pr}=1$
+
+> [!note] domanda prof
+> non ho capito esattamente dove sta la contraddizione, non riesco a formalizzare.
 
 **meaning**: an adversary can always choose $X_{\text{bad}}$  so that $\text{Pr}[\text{Ext}(X_{bad}) = b] = 1$ even with the strong assumptions made.
 
@@ -143,8 +163,16 @@ $$
 (S, \text{Ext}(S,X)) \approx_{\varepsilon} (S,U_{\ell}) \equiv U_{d+\ell}
 $$
 * where $S \gets U_{d}$ (meaning that $S$ is a distribution taken from the set of all distributions on $U_{d}$). **So $S$ is choosen, even by an adversary**
-* where $U_{k}$ is a uniform distribution over $\{ 0,1 \}^k$ (or something like that)
+* where $U_{k}$ is a set of uniform distributions over $\{ 0,1 \}^k$ (or something like that)
 * $\approx_{\varepsilon}$ means that *every unbounded* $\mathcal{A}$ can distinguish $(U_{d},\text{Ext}(U_{d},X))$ from $U_{d+\ell}$ with advantage $\leq \varepsilon$.
+
+> **note**: $X,S$ are discrete random variables. We assume $S$ to be a uniform random variable statistically independent of $X$.
+
+what problem does actually resolve the introduction of a seed?
+1. Turns $\text{Ext}$ into a family of functions. instead of $\text{Ext}(X)$ now we have $\text{Ext}(S,X)$ so actually the $Ext$ we are using depends on S.
+
+> [!note] domana per prof.
+> A che serve introdurre $\text{Ext}$ seeded, se tanto il seed scelto, anche se preso a caso puo' essere fissato e reso pubblico? Allora e' come se non fosse seeded, ho scelto una funzione e utilizzo quella, quindi e' come prima.
 
 > [!note] Why $(S, \text{Ext}(S,X))$ includes $S$ (**strong** seeded extractor) #gemini
 > Since $S$ is **public**, $\text{Ext}(S,X)$ must remain uniform **even given $S$**; otherwise $\text{Ext}(s,x) = s$ would output uniform bits completely known to $\mathcal{A}$! Also, since $S \sim U_d$ and $U_{\ell}$ are independent uniform strings, $(S, U_{\ell}) \equiv U_{d+\ell}$. 
@@ -197,11 +225,12 @@ $$
 	* we just split $\text{Pr}[Y=Y']$ into $\text{Pr}[(S,h(S,X)) = (S', h(S',X'))]$
 	* and we split using $\land$
 * $\dots = \Pr[S = S' \land h(S,X) = h(S,X')]$ 
+	* since $S$ and $S'$ are independent
 * $= \underbrace{\Pr[S = S']}_{\text{Col}(S) = 2^{-d}} \cdot \Pr[h(S,X) = h(S,X')]$ (since $S, S'$ are independent from $X, X'$) #gemini
 * $= 2^{-d} \cdot \left( \underbrace{\Pr[X = X']}_{2^{-k}} \cdot 1 + \underbrace{\Pr[h(S,X) = h(S,X') \land X \neq X']}_{2^{-l}}\right)$ #gemini. 
-	* We have two cases for $h$:
-		1. $X=X'$, then the hash is the same
-		2. $h(S,X) = h(S,X')$ but $X \neq X'$, in case of collision]
+	* We have two cases for $h(S,X)=h(S,X')$:
+		1. $X=X'$, then the hash is the same, no need to check collision.
+		2. $h(S,X) = h(S,X')$ but $X \neq X'$, in case of collision
 	* Now we analyze both terms:
 		1. $\text{Pr[X=X]} \leq 2^{-k}$, because $H_{\infty}(X) \geq k$.
 		2. $\text{Pr}[h(S,X)=h(S,X') \land X\neq X'] \leq 2^{-l}$
@@ -210,6 +239,7 @@ $$
 	* **do not move**: $2^k$
 * $= \frac{1}{2^{d+\ell}}\left(2^{\ell - k} + 1\right) \leq$ 
 	*  using $\ell - k \leq 2 - 2\log(1/\varepsilon)$ #gemini
+		* its $k \geq l + 2\log \frac{1}{\mathcal E}$ rearranged
 	* now we want to use the lemma...
 * $\leq \frac{1}{|\mathcal{Y}|}\left(2^{2 - 2\log(1/\varepsilon)} + 1\right) = \frac{1}{|\mathcal{Y}|}(1 + 4\varepsilon^2)$
 	* and this is exactly the **lemma**

@@ -1,4 +1,4 @@
-**previous lecture**: [[lez. 6]] — **next lecture**: [[lez. 8]] #gemini
+**previous lecture**: [[1o anno M/distributed cocks/lez. 6]] — **next lecture**: [[lez. 8]] #gemini
 
 # perfect failure detection proofs
 **Correctness (Strong Completeness)**: assuming $p_{1}$ crashes at time $t$, then $p_{0}$ detects it at most by time $t+2\Delta$:

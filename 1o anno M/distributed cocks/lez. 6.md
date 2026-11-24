@@ -1,4 +1,4 @@
-**previous lecture**: [[lez. 5|lez. 5 (Happened-before, Logical & Vector Clocks)]] #gemini
+**previous lecture**: [[1o anno M/distributed cocks/lez. 5|lez. 5 (Happened-before, Logical & Vector Clocks)]] #gemini
 
 # lamport's algorithm mutual exclusion
 **assume**: $\text{Request CS} \to \text{Grant CS} \to \text{Release CS}$.

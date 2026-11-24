@@ -2,9 +2,11 @@
 * from a uniform string 
 * we can output bits that look-random
 
-**def. pseudorandomness**: $f$ is pseudorandom iff no $\text{PPT } \mathcal A$ can distinguish it from a random string
-	* except for a negligible probability
-	* so pseudo.rand. is a property that applies to distributions
+**def. pseudorandomness**: $f$ is pseudorandom iff no $\text{PPT } \mathcal A$ can distinguish it from a random string, **except for a negligible probability**
+* so pseudo.rand. is a property that applies to distributions
+
+
+
 
 **assumptions for def. computationally indistinguishable**
 * let $X = \{ X_{\lambda} \}_{\lambda \in \mathbb N}$
@@ -46,7 +48,9 @@ In terms of game $(1)$ becomes:
 $$
 \{ \text{GAME}(\lambda, 0) \} \approx_{C} \{ \text{GAME}(\lambda, 1) \}
 $$
-**Pseudorandom Generators**: P.G. extract and **amplify** "recorded random sources". So a **secure** PRG  is a deterministic poly-time function $G: \{ 0,1 \}^\lambda \to \{ 0,1 \}^{\lambda+l}$ with $l>0$ such that:
+**Pseudorandom Generators**: 
+* **goal**: P.G. extract and **amplify** "recorded random sources".
+* **what it is**: So a **secure** PRG  is a deterministic poly-time function $G: \{ 0,1 \}^\lambda \to \{ 0,1 \}^{\lambda+l}$ with $l>0$ such that:
 1. $\{G(U_{\lambda})\} = \{ X_{\lambda} \}$ 
 	- $X_{\lambda}$ is the distribution $G(U_{\lambda})$
 	- $U$ stands for Uniform.

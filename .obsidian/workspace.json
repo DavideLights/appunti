@@ -4,24 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "0f0cd7b9511efef3",
+        "id": "33e2b4a1ec3fe95a",
         "type": "tabs",
         "children": [
           {
-            "id": "5c0b80dbefbbe794",
+            "id": "ec408ef01caa3b8d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/cockgraphy/lez. 1.md",
+                "file": "1o anno M/cockgraphy/lez. 5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 1"
+              "title": "lez. 5"
+            }
+          },
+          {
+            "id": "26f20199e1691248",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1o anno M/cockgraphy/study session/lez. 5 resume.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "lez. 5 resume"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -83,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 218.12369918823242
+    "width": 218.12369918823242,
+    "collapsed": true
   },
   "right": {
     "id": "15ae8579f38bf862",
@@ -214,54 +230,54 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "5c0b80dbefbbe794",
+  "active": "26f20199e1691248",
   "lastOpenFiles": [
-    "Excalidraw/lez. 1 2026-11-24 01.07.42.excalidraw.md",
-    "1o anno M/cockgraphy/lez. 1.md",
-    "1o anno M/cockgraphy/lez. 6.md",
     "1o anno M/cockgraphy/lez. 5.md",
+    "1o anno M/cockgraphy/study session/lez. 5 resume.md",
+    "1o anno M/cockgraphy/Senza nome.md",
+    "1o anno M/cockgraphy/study session/lez. 1-4 resume.md",
+    "girlbusAG/assets/sprites/map/tile_grass_park.png",
+    "girlbusAG/assets/sprites/map/tile_cobble_plaza.png",
+    "girlbusAG/assets/sprites/map/tile_canal_water.png",
+    "girlbusAG/assets/sprites/map/tile_boardwalk.png",
+    "girlbusAG/assets/sprites/map/prop_tree_lush.png",
+    "girlbusAG/assets/sprites/map/prop_streetlamp.png",
+    "girlbusAG/assets/sprites/map/prop_cats_clutter.png",
+    "girlbusAG/assets/sprites/map/prop_bench_plants.png",
+    "girlbusAG/assets/sprites/map/preview_tile_grass_park_6x.png",
+    "girlbusAG/assets/sprites/map/preview_tile_cobble_plaza_6x.png",
+    "girlbusAG/assets/sprites/map",
     "1o anno M/cockgraphy/lez. 4.md",
-    "1o anno M/cockgraphy/lez. 5 structured.md",
-    "1o anno M/distributed cocks/lez. 3.md",
-    "1o anno M/distributed cocks/lez. 2 hm.md",
-    "1o anno M/distributed cocks/lez. 2.md",
-    "1o anno M/distributed cocks/lez. 13.md",
-    "1o anno M/distributed cocks/lez. 14.md",
-    "1o anno M/distributed cocks/lez. 15.md",
-    "1o anno M/distributed cocks/lez. 12.md",
-    "1o anno M/distributed cocks/lez. 18.md",
-    "1o anno M/distributed cocks/lez. 17.md",
-    "1o anno M/cockgraphy/lez. 13 part 2.md",
-    "1o anno M/cockgraphy/lez. 13 part 1.md",
-    "1o anno M/cockgraphy/study session/lez. 3 notes.md",
     "1o anno M/cockgraphy/lez. 3.md",
-    "cybersec-htb/machine-enigma.md",
-    "cybersec-htb/nmap.md",
-    "cybersec-htb/redis.md",
-    "cybersec-htb/mariadb.md",
-    "cybersec-htb/windows/smb.md",
-    "cybersec-htb/gobuster.md",
-    "cybersec-olicyber/web security.md",
-    "olicyber/web security",
-    "Pasted image 20261121104340.png",
-    "Pasted image 20261121103703.png",
-    "Pasted image 20261121102412.png",
-    "Pasted image 20261121014200.png",
-    "Pasted image 20261121002822.png",
-    "Pasted image 20261121002208.png",
-    "Pasted image 20261121002159.png",
-    "Pasted image 20261121001207.png",
-    "Pasted image 20261121000156.png",
-    "Pasted image 20261120180619.png",
+    "1o anno M/cockgraphy/lez. 2.md",
+    "girlbusAG/assets/sprites/world",
+    "girlbusAG/assets/sprites/characters",
+    "1o anno M/cockgraphy/lez. 1.md",
+    "1o anno M/cockgraphy/study session/lez. 3 notes.md",
+    "1o anno M/distributed cocks/lez. 5.md",
+    "girlbusAG/GIRLBUS_MASTER_BLUEPRINT.md",
+    "girlbusAG/assets/sprites/benchmark",
+    "girlbusAG/assets/sprites",
+    "girlbusAG/assets",
+    "girlbusAG/03_ART_STYLE_AND_SPRITE_BIBLE.md",
+    "1o anno M/distributed cocks/lez. 16 part 1.md",
+    "girlbusAG/ref",
+    "1o anno M/distributed cocks/lez. 16 part 2.md",
+    "girlbusAG/girlbusAG.md",
+    "1o anno M/network cocks/2. transport/lez. 6.md",
+    "1o anno M/network cocks/1. access/lez. 6.md",
+    "1o anno M/network cocks/1. access/lez. 1.md",
+    "1o anno M/network cocks/1. access/lez. 2.md",
+    "1o anno M/network cocks/1. access/lez. 3.md",
+    "1o anno M/network cocks/1. access/lez. 4.md",
+    "1o anno M/network cocks/1. access/lez. 5 katara.md",
+    "1o anno M/network cocks/2. transport/lez. 4.md",
+    "1o anno M/cockgraphy/lez. 7.md",
+    "1o anno M/cockgraphy/lez. 6.md",
+    "1o anno M/cockgraphy/study session/lez. 4 notes.md",
+    "cybersec-olicyber",
     "1o anno M/cockgraphy/study session",
     "cybersec-htb/olicyber/TLS",
-    "cybersec-htb/Senza nome",
-    "cybersec-olicyber",
-    "cybersec-htb/machine-enigma",
-    "AI-SLOP/mockup.html",
-    "hackaton-workflow",
-    "AI-SLOP",
-    "1o anno M/stacocks/websites/hm6",
     "Senza nome.canvas"
   ]
 }
