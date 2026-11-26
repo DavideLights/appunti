@@ -4,39 +4,38 @@
     "type": "split",
     "children": [
       {
-        "id": "33e2b4a1ec3fe95a",
+        "id": "0f0cd7b9511efef3",
         "type": "tabs",
         "children": [
           {
-            "id": "ec408ef01caa3b8d",
+            "id": "5c0b80dbefbbe794",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/cockgraphy/lez. 5.md",
+                "file": "cybersec/cybersec-pwncollege/format string exploits.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 5"
+              "title": "format string exploits"
             }
           },
           {
-            "id": "26f20199e1691248",
+            "id": "ff2b33c14523cb60",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1o anno M/cockgraphy/study session/lez. 5 resume.md",
+                "file": "Senza nome 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lez. 5 resume"
+              "title": "Senza nome 1"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -219,65 +218,62 @@
   "left-ribbon": {
     "hiddenItems": {
       "switcher:Apri selettore rapido": false,
-      "daily-notes:Apri nota giornaliera": false,
       "graph:Apri vista grafo": false,
       "canvas:Crea nuova lavagna": false,
+      "daily-notes:Apri nota giornaliera": false,
       "templates:Inserisci modello": false,
       "command-palette:Apri riquadro comandi": false,
-      "bases:Crea nuova Base": false,
-      "obsidian-excalidraw-plugin:New drawing": false,
-      "consolidate-to-pdf:Consolidate vault to PDF": false,
-      "mermaid-tools:Open Mermaid Toolbar": false
+      "bases:Crea nuova Base": false
     }
   },
-  "active": "26f20199e1691248",
+  "active": "5c0b80dbefbbe794",
   "lastOpenFiles": [
-    "1o anno M/cockgraphy/lez. 5.md",
-    "1o anno M/cockgraphy/study session/lez. 5 resume.md",
-    "1o anno M/cockgraphy/Senza nome.md",
-    "1o anno M/cockgraphy/study session/lez. 1-4 resume.md",
-    "girlbusAG/assets/sprites/map/tile_grass_park.png",
-    "girlbusAG/assets/sprites/map/tile_cobble_plaza.png",
-    "girlbusAG/assets/sprites/map/tile_canal_water.png",
-    "girlbusAG/assets/sprites/map/tile_boardwalk.png",
-    "girlbusAG/assets/sprites/map/prop_tree_lush.png",
-    "girlbusAG/assets/sprites/map/prop_streetlamp.png",
-    "girlbusAG/assets/sprites/map/prop_cats_clutter.png",
-    "girlbusAG/assets/sprites/map/prop_bench_plants.png",
-    "girlbusAG/assets/sprites/map/preview_tile_grass_park_6x.png",
-    "girlbusAG/assets/sprites/map/preview_tile_cobble_plaza_6x.png",
-    "girlbusAG/assets/sprites/map",
-    "1o anno M/cockgraphy/lez. 4.md",
-    "1o anno M/cockgraphy/lez. 3.md",
-    "1o anno M/cockgraphy/lez. 2.md",
+    "cybersec/cybersec-olicyber/crypto.md",
+    "cybersec/cybersec-pwncollege/format string exploits.md",
+    "cybersec/cybersec-pwncollege",
+    "cybersec",
+    "Senza nome 1.md",
+    "girlbusAG/ref/peak-npcref6.jpg",
+    "girlbusAG/ref/peak-npcref5.jpg",
+    "girlbusAG/assets/sprites/world/tile_ztl.png",
+    "girlbusAG/assets/sprites/world/tile_sidewalk.png",
+    "girlbusAG/assets/sprites/world/tile_crosswalk.png",
+    "girlbusAG/assets/sprites/world/tile_asphalt.png",
+    "girlbusAG/assets/sprites/world/stop_student.png",
+    "girlbusAG/assets/sprites/world/stop_kawaii.png",
+    "girlbusAG/assets/sprites/world/stop_gyaru.png",
+    "girlbusAG/assets/sprites/world/stop_emo.png",
     "girlbusAG/assets/sprites/world",
+    "girlbusAG/assets/sprites/map",
     "girlbusAG/assets/sprites/characters",
-    "1o anno M/cockgraphy/lez. 1.md",
-    "1o anno M/cockgraphy/study session/lez. 3 notes.md",
-    "1o anno M/distributed cocks/lez. 5.md",
-    "girlbusAG/GIRLBUS_MASTER_BLUEPRINT.md",
     "girlbusAG/assets/sprites/benchmark",
     "girlbusAG/assets/sprites",
-    "girlbusAG/assets",
-    "girlbusAG/03_ART_STYLE_AND_SPRITE_BIBLE.md",
-    "1o anno M/distributed cocks/lez. 16 part 1.md",
     "girlbusAG/ref",
-    "1o anno M/distributed cocks/lez. 16 part 2.md",
     "girlbusAG/girlbusAG.md",
+    "girlbusAG/assets",
+    "girlbusAG/GIRLBUS_MASTER_BLUEPRINT.md",
+    "girlbusAG/03_ART_STYLE_AND_SPRITE_BIBLE.md",
+    "girlbusAG",
+    "Excalidraw/lez. 1 2026-11-24 01.07.42.excalidraw.md",
     "1o anno M/network cocks/2. transport/lez. 6.md",
-    "1o anno M/network cocks/1. access/lez. 6.md",
-    "1o anno M/network cocks/1. access/lez. 1.md",
-    "1o anno M/network cocks/1. access/lez. 2.md",
-    "1o anno M/network cocks/1. access/lez. 3.md",
-    "1o anno M/network cocks/1. access/lez. 4.md",
-    "1o anno M/network cocks/1. access/lez. 5 katara.md",
-    "1o anno M/network cocks/2. transport/lez. 4.md",
-    "1o anno M/cockgraphy/lez. 7.md",
-    "1o anno M/cockgraphy/lez. 6.md",
-    "1o anno M/cockgraphy/study session/lez. 4 notes.md",
-    "cybersec-olicyber",
-    "1o anno M/cockgraphy/study session",
-    "cybersec-htb/olicyber/TLS",
+    "1o anno M/distributed cocks/lez. 18.md",
+    "1o anno M/distributed cocks/lez. 17.md",
+    "Senza nome.md",
+    "Senza nome 5.md",
+    "cybersec/cybersec-olicyber/SQL inject.md",
+    "cybersec/cybersec-htb/machine-enigma.md",
+    "cybersec/cybersec-htb/nmap.md",
+    "cybersec-htb/redis.md",
+    "cybersec/cybersec-htb/mariadb.md",
+    "cybersec/cybersec-htb/windows/smb.md",
+    "cybersec/cybersec-htb/gobuster.md",
+    "cybersec/cybersec-olicyber/web security.md",
+    "cybersec/cybersec-olicyber/network security (wireshark).md",
+    "cybersec/cybersec-olicyber/TLS.md",
+    "Senza nome 6.md",
+    "1o anno M/network cocks/3. labs/lab. 2.md",
+    "1o anno M/network cocks/3. labs/lab. 1.md",
+    "1o anno M/cockgraphy/lez. 1.md",
     "Senza nome.canvas"
   ]
 }
