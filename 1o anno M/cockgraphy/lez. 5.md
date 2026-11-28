@@ -5,9 +5,6 @@
 **def. pseudorandomness**: $f$ is pseudorandom iff no $\text{PPT } \mathcal A$ can distinguish it from a random string, **except for a negligible probability**
 * so pseudo.rand. is a property that applies to distributions
 
-
-
-
 **assumptions for def. computationally indistinguishable**
 * let $X = \{ X_{\lambda} \}_{\lambda \in \mathbb N}$
 * let $Y = \{ Y_{\lambda} \}_{\lambda \in \mathbb N}$ 
